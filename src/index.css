@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply font-main;
+}
+
+/* nguyen thanh huu dev - nthd */
+
+/* flex  */
+ 
+.nthd_flex{
+    @apply flex justify-center items-center;
+}
+.nthd_flex_between{
+    @apply flex justify-between items-center;
+}
+.nthd_flex_between_full{
+    @apply flex justify-between w-full;
+}
+
+.nthd_flex_col_between{
+    @apply flex flex-col justify-between;
+}
+
+
+/* font  */
+.nthd_text_normal_sm{
+    @apply  font-normal text-sm;
+}
+.nthd_text_normal_lg{
+    @apply  font-normal text-lg;
+}
+
+.nthd_text_medium_lg{
+    @apply  font-medium text-lg;
+}
+.nthd_text_medium_sm{
+    @apply  font-medium text-sm;
+}
+.nthd_text_medium_base{
+    @apply  font-medium text-base;
+}
+.nthd_text_medium_sm_h20{
+    @apply  font-medium text-sm h-[20px];
+}
+/* font color  */
+
+.nthd_text_normal_sm_text{
+    @apply  nthd_text_normal_sm text-[#888888];
+}
+.nthd_text_normal_sm_text2{
+    @apply  nthd_text_normal_sm text-[#B45309];
+}
+.nthd_text_medium_sm_text {
+    @apply  nthd_text_medium_sm text-black;
+}
+.nthd_semibold_2xl_text{
+    @apply  font-semibold text-2xl text-black;
+}
+
+/* category _ item */
+.nthd_category_item{
+    @apply  w-fit h-9 p-2 rounded-lg bg-[#EFF6FF] font-normal text-sm text-[#2563EB];
+}
+
+/* BasicInterior _item  */
+.nthd_basicInterior_item{
+    @apply  w-fit h-5 gap-[7px] flex justify-start col-span-1;
+}
+
+/* Policy _ item  */
+.nthd_policy_item_th{
+    @apply  border-b border-t text-left py-3 px-6 font-medium text-sm tracking-wider text-[#6B7280] uppercase;
+}
+.nthd_policy_item_td{
+    @apply  border-b text-left py-3 px-6 text-gray-500 text-sm leading-5 font-normal;
+}
+
+/* animation */
+
+.nthd_animation_delay{
+    @apply transition delay-150 duration-300 ease-in-out;
+}
+.spinner-border {
+    @apply border-solid border-current border-r-transparent rounded-full;
+  }
