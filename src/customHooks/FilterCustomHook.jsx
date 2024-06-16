@@ -35,7 +35,7 @@ export const FilterCustomHook = ({ children }) => {
         value !== null && 
         value !== undefined && 
         value !== "" && 
-        (!Array.isArray(value) || value.length > 0)
+        (!Array.isArray(value) || value.length === 0)
       ) {
         acc[key] = value;
       }
