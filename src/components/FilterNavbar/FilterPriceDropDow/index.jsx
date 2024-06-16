@@ -23,17 +23,19 @@ const Index = () => {
   const handleChangOfRang = (e) => {
     setValueRang(parseInt(e.target.value));
   };
-  const [_,setFilterData] = useQueryFilterData();
+  const [filterData,setFilterData] = useQueryFilterData();
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev,  Price:valueRang }))
     setIsOpen(false);
   };
 
   const handleReset = () => {
+    setFilterData((prev) => ({ ...prev,  Price:null }))
+    
     console.log("Reset!");
     setValueRang(0);
   };
-
+   
   return (
     <div className="relative cursor-pointer" ref={dropdownRef}>
       <div
