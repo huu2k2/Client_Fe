@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 const APP_URL_IMAGE = import.meta.env.VITE_APP_URL_IMAGE;
 
 const index = ({ item }) => {
-  const img = item.image ? ` ${APP_URL_IMAGE}/ImageRoom/${item.image}` : null;
+  const img = item.image ?  item.image  : null;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
- 
+  
   return (
     <div className="w-[328px] h-[325px] gap-2 flex flex-col justify-between">
       {img ? (

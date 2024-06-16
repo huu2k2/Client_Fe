@@ -20,7 +20,7 @@ const Index = ({ n }) => {
   }
 
   return (
-    <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full h-full">
+    <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
       {data?.response.map((i, index) => (
         <CartRoom key={index} item={i} />
