@@ -10,7 +10,6 @@ const Index = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        border: 1,
         borderColor: 'blue.300',
         boxShadow: 1,
         borderRadius: 2,

@@ -6,7 +6,7 @@ import CustomLoading from "../CustomLoading";
 const Index = ({ n }) => {
   const [data, isFetching, isError] = useQueryData();
   const cartItems = new Array(n).fill(null);
- 
+
   if (isFetching) {
     return (
       <>
@@ -25,7 +25,7 @@ const Index = ({ n }) => {
       {data?.response.map((i, index) => (
         <CartRoom key={index} item={i} />
       ))}
-      
+
     </div>
   );
 };
