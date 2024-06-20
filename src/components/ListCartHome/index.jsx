@@ -11,7 +11,7 @@ const Index = () => {
 
   return (
     <div className='w-[1360px] '>
-      {showGridCart && <GridCart />}
+      {showGridCart && <GridCart id={0}/>}
       {!showGridCart && <SimilarRoom />}
     </div>
   );

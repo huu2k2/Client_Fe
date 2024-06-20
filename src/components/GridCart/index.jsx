@@ -9,7 +9,7 @@ const Index = ({ id }) => {
   const [filterData, setFilterData] = useQueryFilterData();
   const [data, isFetching, isError] = useQueryData();
   useEffect(() => {
-    if (id !== undefined && id !== filterData.HouseId) { 
+    if (id !== undefined && id !== filterData.HouseId && id !== 0) { 
       setFilterData({ ...filterData, HouseId: id });
     }
   }, [id, filterData, setFilterData]);

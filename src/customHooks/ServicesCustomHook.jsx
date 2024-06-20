@@ -4,7 +4,7 @@ import { useGetAllDetailQuery } from "@apis/slice/services";
 export const ServicesContext = createContext();
 
 const ServicesContextHook = ({ children }) => {
-  const [idServices, setIsServices] = useState(0);
+  const [idServices, setIsServices] = useState(1);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
   const [utility, setUtility] = useState([]);

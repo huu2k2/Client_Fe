@@ -6,13 +6,20 @@ import {
   useGetInfoItem,
 } from "@customhooks";
 import { Skeleton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const InfoRoom = () => {
+  const changeLink = useNavigate()
   const [a, serviceInserts] = useDataServices();
   const [address, price] = useGetInfoItem();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
   const handleShowModal = () => {
-    setIsShowModal(!isShowModal);
+    if(localStorage.getItem('token')){
+      setIsShowModal(!isShowModal);
+    }
+    else{
+      changeLink('/login')
+    }
   };
 
   return (
