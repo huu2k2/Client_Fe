@@ -9,7 +9,7 @@ const Cart = () => {
   const handleShowSlideImg =()=>{
     // setIsShow(!isShow)
   }
- 
+
   return (
     <>
     <div className="w-[557px] h-fit gap-2 flex flex-col ">

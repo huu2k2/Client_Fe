@@ -7,7 +7,7 @@ import { ModalPutRoom } from "@components/Modal";
 import { useBooleanIsShowModal } from "@customhooks";
 
 import { useParams } from 'react-router-dom';
-import { useSetIdRoomServices } from "../../../customHooks";
+import { useGetHolder, useSetIdRoomServices } from "../../../customHooks";
 import { useEffect } from "react";
 const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
@@ -16,6 +16,7 @@ const index = () => {
   useEffect(() => {
     setIsServices(roomId)
   }, [roomId])
+  const [holder,rooms] = useGetHolder()
   return (
     <>
       {isShowModal && (
@@ -35,7 +36,7 @@ const index = () => {
         <MainBody />
         <Category />
         <div className="flex flex-col gap-14 h-fit">
-          <RoomOrder title={"Những phòng còn trống tại Patrick"} />
+          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id}/>
 
         </div>
       </div>

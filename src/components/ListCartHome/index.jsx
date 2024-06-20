@@ -1,11 +1,20 @@
-import React from 'react'
-import GridCart from '../GridCart'
-const index = () => {
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import GridCart from '../GridCart';
+import SimilarRoom from '../GridCart/SimilarRoom';
+
+const Index = () => {
+  const location = useLocation();
+
+  // Kiểm tra pathname của location để quyết định khi nào hiển thị GridCart
+  const showGridCart = location.pathname === '/';
+
   return (
     <div className='w-[1360px] '>
-    <GridCart n={8}/>
+      {showGridCart && <GridCart />}
+      {!showGridCart && <SimilarRoom />}
     </div>
-  )
-}
+  );
+};
 
-export default index
+export default Index;

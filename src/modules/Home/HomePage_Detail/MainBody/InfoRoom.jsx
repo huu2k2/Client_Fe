@@ -1,11 +1,15 @@
 import { BsGiftFill } from "react-icons/bs";
 import Button from "@components/Button";
-import { useDataServices } from "@customhooks";
-import { useBooleanIsShowModal } from "@customhooks";
+import {
+  useBooleanIsShowModal,
+  useDataServices,
+  useGetInfoItem,
+} from "@customhooks";
 import { Skeleton } from "@mui/material";
-const InfoRoom = () => {
-  const [a,serviceInserts] = useDataServices();
 
+const InfoRoom = () => {
+  const [a, serviceInserts] = useDataServices();
+  const [address, price] = useGetInfoItem();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
   const handleShowModal = () => {
     setIsShowModal(!isShowModal);
@@ -16,8 +20,11 @@ const InfoRoom = () => {
       <div className="w-[723px] h-[578px] gap-4 flex flex-col ">
         {/* name home in stress */}
         <div className="w-full h-fit">
-          {/* <h1 className="nthd_semibold_2xl_text">Title</h1> */}
-          <Skeleton height={32} variant="rounded" />
+          {address ? (
+            <h1 className="nthd_semibold_2xl_text">{address}</h1>
+          ) : (
+            <Skeleton height={32} variant="rounded" />
+          )}
         </div>
 
         {/* endow  */}
@@ -66,11 +73,9 @@ const InfoRoom = () => {
 
         <div className="flex justify-between w-full items-center h-40">
           <div className="text-[28px] flex font-semibold leading-[28px]   text-red-700">
-            {/* 4.000.000 VND{" "} */}
-            <Skeleton height={28} width={220} variant="rounded" />
+            {price} VND
             <span className="font-normal text-gray-500 text-base">
-              {" "}
-              / Khách
+              {"  "}/ Khách
             </span>
           </div>
 

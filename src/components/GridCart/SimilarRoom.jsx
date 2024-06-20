@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CartRoom from "../Cart_item";
-import {
-  useQueryData,
-  useQueryFilterData,
-} from "@customhooks/FilterCustomHook";
+import { useQueryData } from "@customhooks/FilterCustomHook";
 import CustomLoading from "../CustomLoading";
-const Index = ({ id }) => {
-  const [filterData, setFilterData] = useQueryFilterData();
+const SimilarRoom = ({ id }) => {
   const [data, isFetching, isError] = useQueryData();
-  useEffect(() => {
-    if (id !== undefined && id !== filterData.HouseId) { 
-      setFilterData({ ...filterData, HouseId: id });
-    }
-  }, [id, filterData, setFilterData]);
+
   if (isFetching) {
     return (
       <>
@@ -34,13 +26,7 @@ const Index = ({ id }) => {
     <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
       {items.length > 0 ? (
-        id > 0 ? (
-          items
-            .slice(0, 4)
-            .map((item, index) => <CartRoom key={index} item={item} />)
-        ) : (
-          items.map((item, index) => <CartRoom key={index} item={item} />)
-        )
+        items.map((item, index) => <CartRoom key={index} item={item} />)
       ) : (
         <CustomLoading />
       )}
@@ -48,4 +34,4 @@ const Index = ({ id }) => {
   );
 };
 
-export default Index;
+export default SimilarRoom;

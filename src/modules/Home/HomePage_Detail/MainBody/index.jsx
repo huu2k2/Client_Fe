@@ -4,7 +4,9 @@ import InfoRoom from "./InfoRoom";
 import { ModalPutRoom } from "@components/Modal";
 import MainBodySkeleton from './MainBodySkeleton';
 import InfoRoomSkeleton from "./infoRoomSkeleto";
+import { useLocation } from "react-router-dom";
 const index = () => {
+
   return (
     <>
       <div className="w-full h-fit rounded-lg p-6 gap-8 nthd_flex_between drop-shadow-xl shadow-lg">

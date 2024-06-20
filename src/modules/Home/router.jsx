@@ -22,6 +22,10 @@ const router = {
       element: <HomePage />,
     },
     {
+      path: "similarRooms/:idroom",
+      element: <HomePage />,
+    },
+    {
       path: "detail/:id/room/:roomId",
       element: (
         <ShowModalHook>
