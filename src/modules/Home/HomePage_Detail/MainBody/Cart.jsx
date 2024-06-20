@@ -3,11 +3,13 @@ import { BsFillPersonPlusFill } from "react-icons/bs";
 import cartImg from "@assets/cartImg.png";
 import { useState } from "react";
 import SlideShow from "./SlideShow";
+import { useGetHolder } from "@customhooks";
 const Cart = () => {
- 
+ const [holder,rooms] = useGetHolder()
   const handleShowSlideImg =()=>{
     // setIsShow(!isShow)
   }
+ 
   return (
     <>
     <div className="w-[557px] h-fit gap-2 flex flex-col ">
@@ -37,7 +39,7 @@ const Cart = () => {
           <div className="nthd_flex_between_full">
             <img src={UserImg} alt="hinh anh nguoi dung..." />
             <div>
-              <h1 className="  nthd_text_normal_lg">Nguyen Van A</h1>
+              <h1 className="  nthd_text_normal_lg"> {holder && holder?.fullName}</h1>
               <span className=" nthd_text_normal_sm">Chu nha</span>
             </div>
           </div>
@@ -54,14 +56,14 @@ const Cart = () => {
         <div className="w-[288px] h-[76px] nthd_flex_between">
           <div className="w-[136px] h-full p-2 gap-2">
             <h2 className=" nthd_text_normal_sm_text">Phong sap trong </h2>
-            <h1 className=" nthd_semibold_2xl_text">11</h1>
+            <h1 className=" nthd_semibold_2xl_text">{rooms && rooms?.roomToBeEmpty}</h1>
           </div>
-
+          
           <div className="border border-gray-400 h-[40px] bg-[#E7E7E7]"></div>
 
           <div className="w-[136px] h-full p-2 gap-2">
             <h2 className=" nthd_text_normal_sm_text">Phong trong </h2>
-            <h1 className=" nthd_semibold_2xl_text">07</h1>
+            <h1 className=" nthd_semibold_2xl_text">{rooms && rooms?.emptyRoom}</h1>
           </div>
         </div>
       </div>

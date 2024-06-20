@@ -36,15 +36,19 @@ const FormRegister = () => {
 
   const [postRegister, { isLoading, isError, isSuccess, error }] =
     usePostRegisterMutation();
+  const [isHaveCheckBox, setIsHaveCheckBox] = useState(false);
 
   const onSubmit = async (data) => {
     if (data.isCheckbox) {
+      setIsHaveCheckBox(false);
       const { isCheckbox, ...Data } = data; // Ensure isCheckbox is extracted first
       const response = await postRegister(Data).unwrap();
- 
-      if (response === "Đăng ký thành công") {
+
+      if (response.isSuccess) {
         change("/login");
       }
+    } else {
+      setIsHaveCheckBox(true);
     }
   };
 
@@ -146,6 +150,17 @@ const FormRegister = () => {
             </label>
           </div>
         </div>
+
+        {isHaveCheckBox && (
+          <div className="text-red-500 mt-2 flex justify-center items-center">
+            <span>Bạn chưa đồng ý với các điều khoản sử dụng</span>
+          </div>
+        )}
+        {error && (
+          <div className="text-red-500 mt-2 flex justify-center items-center">
+            <span>Số điện thoại này đã được đăng kí!</span>
+          </div>
+        )}
         <button
           type="submit"
           className="flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
@@ -159,11 +174,6 @@ const FormRegister = () => {
           </Link>
         </div>
       </form>
-      {error && (
-        <div className="text-red-500 mt-2 flex justify-center items-center">
-          <span>Bạn cần nhập lại thông tin !</span>
-        </div>
-      )}
     </>
   );
 };

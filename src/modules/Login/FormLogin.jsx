@@ -69,7 +69,7 @@ const FormLogin = () => {
           <input
             id="userName"
             type="text"
-            placeholder="userName"
+            placeholder="Tên đăng nhập"
             {...register("userName")}
             className={`px-4 py-2 items-center rounded-md border ${error ? "border-red-300 text-red-300" : "border-gray-300"
               } bg-white shadow-sm w-full`}
@@ -90,7 +90,7 @@ const FormLogin = () => {
           <input
             id="password"
             type={!isHide ? "password" : "text"}
-            placeholder="password"
+            placeholder="Mật khẩu"
             {...register("password")}
             className={`px-4 py-2 items-center rounded-md border ${error ? "border-red-300 text-red-300" : "border-gray-300"
               } bg-white shadow-sm w-full`}
@@ -152,7 +152,7 @@ const FormLogin = () => {
 
       {error && (
         <div className="text-red-500 mt-2 flex justify-center items-center">
-          <span>Username và password sai!</span>
+          <span>Tên đăng nhập hoặc mật khẩu không chính xác!</span>
         </div>
       )}
     </div>

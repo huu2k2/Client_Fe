@@ -1,5 +1,8 @@
 import { BsBookmarkCheckFill } from "react-icons/bs";
+import { useDataServices } from "@customhooks";
 const Policy = () => {
+  const [a, b, c, commissions] = useDataServices();
+ 
   return (
     <div className="w-full  gap-5 nthd_flex_col_between">
       <div className="w-[118px] h-6 nthd_text_medium_base nthd_flex_between">
@@ -17,21 +20,14 @@ const Policy = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="h-10">
-              <td className="nthd_policy_item_td ">1 tháng</td>
-              <td className="nthd_policy_item_td">1 tháng</td>
-              <td className="nthd_policy_item_td">1 tháng</td>
-            </tr>
-            <tr className="h-10">
-              <td className="nthd_policy_item_td ">1 tháng</td>
-              <td className="nthd_policy_item_td">1 tháng</td>
-              <td className="nthd_policy_item_td">1 tháng</td>
-            </tr>
-            <tr className="h-10">
-              <td className="nthd_policy_item_td ">1 tháng</td>
-              <td className="nthd_policy_item_td">1 tháng</td>
-              <td className="nthd_policy_item_td">1 tháng</td>
-            </tr>
+            {commissions &&
+              commissions.map((i, index) => (
+                <tr className="h-10" key={index}>
+                  <td className="nthd_policy_item_td ">{i.month} tháng</td>
+                  <td className="nthd_policy_item_td">{i.deposit} tháng</td>
+                  <td className="nthd_policy_item_td">{i.commission} tháng</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

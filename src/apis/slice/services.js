@@ -15,9 +15,13 @@ const ServicesApi = createApi({
         url: `/Deposits/get-services-furnitures-of-room/${id}`,
       }),
     }),
-    
+    getAllDetail: build.query({
+      query: (id) => ({
+        url: `/v2/Room/get-room-details/${id}`,
+      }),
+    }),
   }),
 });
 
-export const {useGetServicesOfRoomQuery} = ServicesApi;
+export const {useGetServicesOfRoomQuery,useGetAllDetailQuery} = ServicesApi;
 export default ServicesApi;

@@ -8,10 +8,11 @@ const index = () => {
   return (
     <>
       <div className="w-full h-fit rounded-lg p-6 gap-8 nthd_flex_between drop-shadow-xl shadow-lg">
-        <MainBodySkeleton />
-        {/* <Cart /> */}
-        {/* <InfoRoom /> */}
-        <InfoRoomSkeleton />
+        {/* <MainBodySkeleton />
+        <InfoRoomSkeleton /> */}
+        <Cart />
+        <InfoRoom />
+        
       </div>
     </>
   );

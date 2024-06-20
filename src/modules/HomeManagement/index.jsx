@@ -1,6 +1,8 @@
 function Management() {
     return (
-        <div></div>
+        <div>
+            
+        </div>
     );
 }
 
