@@ -6,6 +6,7 @@ import {
 } from "@customhooks/FilterCustomHook";
 import CustomLoading from "../CustomLoading";
 const Index = ({ id }) => {
+  const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
   const [data, isFetching, isError] = useQueryData();
   useEffect(() => {
@@ -20,7 +21,7 @@ const Index = ({ id }) => {
       </>
     );
   }
-  const [items, setItems] = useState([]);
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -8,24 +8,25 @@ const AcountsApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
   }),
-  keepUnusedDataFor:600,
+  keepUnusedDataFor: 600,
   endpoints: (build) => ({
     postLogin: build.mutation({
       query: (body) => ({
         url: `/Accounts/sign-in`,
-        method: 'POST',
+        method: "POST",
         data: body,
       }),
     }),
     postRegister: build.mutation({
       query: (body) => ({
         url: `/Accounts/sign-up-with-phone`,
-        method: 'POST',
+        method: "POST",
         data: body,
       }),
     }),
+   
   }),
 });
 
-export const { usePostLoginMutation ,usePostRegisterMutation} = AcountsApi;
+export const { usePostLoginMutation, usePostRegisterMutation } = AcountsApi;
 export default AcountsApi;

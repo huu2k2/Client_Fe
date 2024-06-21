@@ -5,7 +5,7 @@ import InputFiel from "./InputFiel";
 import TitleContainer from "./TitleContainer";
 import InputSelect from "./InputSelect";
 import InputFileImg from "./InputFileImg";
-import { useGetProfileQuery } from "../../apis/slice/profile";
+import { useGetProfileQuery } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 const Index = ({ setShow }) => {
 
@@ -39,8 +39,7 @@ const Index = ({ setShow }) => {
   const handleUploadImg = () => {
     inputFileRef.current.click();
   };
-
-
+ 
   return (
     <div className={`fixed inset-0 z-50 flex justify-end ${isExiting ? 'animate-slide-out' : 'animate-slide-in'}`}>
       <div className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden">
@@ -64,22 +63,22 @@ const Index = ({ setShow }) => {
             </button>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{data?.isSuccess ? data.response.accountName :"Thu Sương" }</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{data?.isSuccess ? data.response.fullName :"Thu Sương" }</h1>
           </div>
         </div>
 
         {/* User Info */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người dùng"} />
-          <InputFiel name={"Họ và tên"} label={data?.response?.accountName} type={"text"} />
+          <InputFiel name={"Họ và tên"} label={data?.response?.fullName} type={"text"} />
           <InputFiel name={"Tên đăng nhập"} label={"Suong123"} type={"text"} />
         </div>
 
         {/* Contract Representative Info */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
-          <InputFiel name={"Họ và tên"} label={"Trần Thị Thu Sương"} type={"text"} />
-          <InputFiel name={"Số điện thoại"} label={"0987654321"} type={"text"} />
+          <InputFiel name={"Họ và tên"} label={data?.response?.fullName || "Trần Thị Thu Sương"} type={"text"} />
+          <InputFiel name={"Số điện thoại"} label={data?.response?.phoneNumber || "0987654321"} type={"text"} />
           <InputFiel name={"Ngày sinh"} label={null} type={"date"} />
           <InputFiel name={"Căn cước công dân"} label={"12237468745698"} type={"text"} />
           <InputFiel name={"Ngày cấp"} label={null} type={"date"} />
