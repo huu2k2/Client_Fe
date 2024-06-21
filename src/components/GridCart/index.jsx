@@ -5,24 +5,21 @@ import {
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
 import CustomLoading from "../CustomLoading";
+
 const Index = ({ id }) => {
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
   const [data, isFetching, isError] = useQueryData();
+
+  // Sử dụng useEffect để cập nhật filterData khi id thay đổi
   useEffect(() => {
-    if (id !== undefined && id !== filterData.HouseId && id !== 0) { 
+    if (id !== undefined && id !== filterData.HouseId && id !== 0) {
       setFilterData({ ...filterData, HouseId: id });
     }
   }, [id, filterData, setFilterData]);
-  if (isFetching) {
-    return (
-      <>
-        <CustomLoading />
-      </>
-    );
-  }
- 
 
+ 
+  // Sử dụng useEffect để cập nhật items khi data thay đổi
   useEffect(() => {
     const timer = setTimeout(() => {
       setItems(data?.response || []);
@@ -31,8 +28,10 @@ const Index = ({ id }) => {
     // Cleanup the timeout if the component unmounts
     return () => clearTimeout(timer);
   }, [data]);
+
+  // Render danh sách items
   return (
-    <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
+    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
       {items.length > 0 ? (
         id > 0 ? (
