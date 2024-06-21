@@ -18,6 +18,7 @@ const InfoRoom = () => {
       setIsShowModal(!isShowModal);
     }
     else{
+      localStorage.setItem('redirectAfterLogin', location.pathname);
       changeLink('/login')
     }
   };

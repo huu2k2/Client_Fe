@@ -39,8 +39,13 @@ const FormLogin = () => {
     console.log(response);
     if (response.data.mesagge === "Đăng nhập thành công") {
       localStorage.setItem("token", response.data.token);
-
-      navigate("/");
+      const redirectUrl = localStorage.getItem("redirectAfterLogin");
+      if (redirectUrl) {
+        localStorage.removeItem("redirectAfterLogin");
+        navigate(redirectUrl);
+      } else {
+        navigate("/");
+      }
     }
   };
 
@@ -71,11 +76,14 @@ const FormLogin = () => {
             type="text"
             placeholder="Tên đăng nhập"
             {...register("userName")}
-            className={`px-4 py-2 items-center rounded-md border ${error ? "border-red-300 text-red-300" : "border-gray-300"
-              } bg-white shadow-sm w-full`}
+            className={`px-4 py-2 items-center rounded-md border ${
+              error ? "border-red-300 text-red-300" : "border-gray-300"
+            } bg-white shadow-sm w-full`}
           />
           {errors.userName && (
-            <span className="text-red-500">Tên Đăng Nhập Dài Hơn 6 Kí tự !</span>
+            <span className="text-red-500">
+              Tên Đăng Nhập Dài Hơn 6 Kí tự !
+            </span>
           )}
         </div>
 
@@ -92,8 +100,9 @@ const FormLogin = () => {
             type={!isHide ? "password" : "text"}
             placeholder="Mật khẩu"
             {...register("password")}
-            className={`px-4 py-2 items-center rounded-md border ${error ? "border-red-300 text-red-300" : "border-gray-300"
-              } bg-white shadow-sm w-full`}
+            className={`px-4 py-2 items-center rounded-md border ${
+              error ? "border-red-300 text-red-300" : "border-gray-300"
+            } bg-white shadow-sm w-full`}
           />
           <span
             className="absolute bottom-3 right-2 cursor-pointer"
