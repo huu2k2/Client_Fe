@@ -7,6 +7,7 @@ import InputSelect from "./InputSelect";
 import InputFileImg from "./InputFileImg";
 import { useGetProfileQuery } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
+import { formatDate } from "../../utils";
 const Index = ({ setShow }) => {
 
   const {data,isLoading} = useGetProfileQuery()
@@ -39,7 +40,9 @@ const Index = ({ setShow }) => {
   const handleUploadImg = () => {
     inputFileRef.current.click();
   };
- 
+ const hanldeCancle =()=>{
+  handleClose()
+ }
   return (
     <div className={`fixed inset-0 z-50 flex justify-end ${isExiting ? 'animate-slide-out' : 'animate-slide-in'}`}>
       <div className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden">
@@ -71,7 +74,7 @@ const Index = ({ setShow }) => {
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người dùng"} />
           <InputFiel name={"Họ và tên"} label={data?.response?.fullName} type={"text"} />
-          <InputFiel name={"Tên đăng nhập"} label={"Suong123"} type={"text"} />
+          <InputFiel name={"Tên đăng nhập"} label={data?.response?.userName} type={"text"} />
         </div>
 
         {/* Contract Representative Info */}
@@ -79,27 +82,27 @@ const Index = ({ setShow }) => {
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel name={"Họ và tên"} label={data?.response?.fullName || "Trần Thị Thu Sương"} type={"text"} />
           <InputFiel name={"Số điện thoại"} label={data?.response?.phoneNumber || "0987654321"} type={"text"} />
-          <InputFiel name={"Ngày sinh"} label={null} type={"date"} />
-          <InputFiel name={"Căn cước công dân"} label={"12237468745698"} type={"text"} />
-          <InputFiel name={"Ngày cấp"} label={null} type={"date"} />
-          <InputFiel name={"Nơi cấp"} label={"Công an tỉnh Quảng Trị"} type={"text"} />
-          <InputFiel name={"Địa chỉ thường trú"} label={""} type={"text"} />
-          <InputFileImg name={'Chữ ký'} />
-          <InputFileImg name={'CCCd (Mặt trước)'} />
-          <InputFileImg name={'CCCd (Mặt sau)'} />
+          <InputFiel name={"Ngày sinh"} value={formatDate(data?.response?.bod)} type={"date"} />
+          <InputFiel name={"Căn cước công dân"} label={data?.response?.identification || "12237468745698"} type={"text"} />
+          <InputFiel name={"Ngày cấp"} value={formatDate(data?.response?.dateRange)} type={"date"} />
+          <InputFiel name={"Nơi cấp"} label={  data?.response?.issuedBy||"Công an tỉnh Quảng Trị"} type={"text"} />
+          <InputFiel name={"Địa chỉ thường trú"} label={ data?.response?.permanentAddress} type={"text"} />
+          <InputFileImg name={'Chữ ký'} img={data?.response?.signatureUrl}/>
+          <InputFileImg name={'CCCd (Mặt trước)'} img={data?.response?.beforeIdentification}/>
+          <InputFileImg name={'CCCd (Mặt sau)'} img={data?.response?.afterIdentification}/>
         </div>
 
         {/* Tài khoản ngân hàng */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Tài khoản ngân hàng"} />
           <InputSelect />
-          <InputFiel name={"Số tài khoản"} label={""} type={"text"} />
-          <InputFiel name={"Chủ tài khoản"} label={""} type={"text"} />
+          <InputFiel name={"Số tài khoản"} label={data?.response?.accountNumber} type={"text"} />
+          <InputFiel name={"Chủ tài khoản"} label={data?.response?.accountName} type={"text"} />
         </div>
 
         {/* Fixed button */}
         <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
-          <button className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm">
+          <button className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm" onClick={hanldeCancle}>
             Hủy
           </button>
           <button className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm">

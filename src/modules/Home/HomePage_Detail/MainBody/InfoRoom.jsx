@@ -4,14 +4,17 @@ import {
   useBooleanIsShowModal,
   useDataServices,
   useGetInfoItem,
+  useGetBrokeragePolicy
 } from "@customhooks";
 import { Skeleton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { formatDateType } from "@utils/ConverDate";
+ 
 const InfoRoom = () => {
   const changeLink = useNavigate()
   const [a, serviceInserts] = useDataServices();
   const [address, price] = useGetInfoItem();
+  const [brokeragePolicy] = useGetBrokeragePolicy()
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
   const handleShowModal = () => {
     if(localStorage.getItem('token')){
@@ -47,11 +50,10 @@ const InfoRoom = () => {
             <div className="w-full h-[48px] gap-2 px-8 mt-2">
               <ul className="list-disc ">
                 <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày 23/04/2024 - 23//05/2024
+                  Chương trình sale áp dụng từ ngày {formatDateType(brokeragePolicy?.startDate)} - {formatDateType(brokeragePolicy?.endDate)}
+
                 </li>
-                <li className="nthd_text_normal_sm_text2 mt-2">
-                  Giảm 300k tiền phòng tháng đầu tiên
-                </li>
+               
               </ul>
             </div>
           </div>
@@ -81,7 +83,7 @@ const InfoRoom = () => {
 
         <div className="flex justify-between w-full items-center h-40">
           <div className="text-[28px] flex font-semibold leading-[28px]   text-red-700">
-            {price} VND
+            {new Intl.NumberFormat("vi-VN").format(price)} VND
             <span className="font-normal text-gray-500 text-base">
               {"  "}/ Khách
             </span>
@@ -97,13 +99,13 @@ const InfoRoom = () => {
               />
             </div>
 
-            <div className="mx-2">
+            <Link to={'/overview/1'} className="mx-2">
               <Button
                 text={"Tổng quan nhà trọ"}
                 color={"text-red-700"}
                 background={"bg-red-100"}
               />
-            </div>
+            </Link >
           </div>
         </div>
       </div>

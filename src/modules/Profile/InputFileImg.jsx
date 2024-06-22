@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import AddImg from '@assets/addImg.png';
 import { AiFillCloseCircle } from "react-icons/ai";
 
-const InputFileImg = ({ name }) => {
+const InputFileImg = ({ name,img}) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
 
   const handleImageChange = (event) => {

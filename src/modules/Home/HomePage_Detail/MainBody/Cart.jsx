@@ -13,7 +13,6 @@ const Cart = () => {
   };
   const { id, roomId } = useParams();
   const { data: images, error, isLoading } = useGetImagesQuery(roomId);
-  console.log(images)
   return (
     <>
       <div className="w-[557px] h-fit gap-2 flex flex-col ">
@@ -33,11 +32,11 @@ const Cart = () => {
 
           {/* img3 */}
           <div
-            className="w-[180px] h-[102px] rounded-md overflow-hidden relative"
+            className="w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50"
             onClick={handleShowSlideImg}
           >
             <img src={cartImg} alt="hinh anh tiep theo" />
-            <div className="absolute top-0 bottom-0 flex justify-center items-center  w-full h-full bg-black opacity-45">
+            <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full">
               <span className="text-white">Xem tất cả hình ảnh</span>
             </div>
           </div>

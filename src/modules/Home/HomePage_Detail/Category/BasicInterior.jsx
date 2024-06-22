@@ -6,6 +6,7 @@ const BasicInterior = () => {
   const [furnitureInserts] = useDataServices();
 
   return (
+    <>
     <div className="w-[552px] h-[136px] gap-5 nthd_flex_col_between">
       <div className="w-[145px] h-6  nthd_text_medium_base nthd_flex_between">
         <BsDoorOpenFill />
@@ -34,6 +35,7 @@ const BasicInterior = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

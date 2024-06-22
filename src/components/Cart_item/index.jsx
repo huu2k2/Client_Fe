@@ -54,21 +54,25 @@ const index = ({ item }) => {
         </div>
 
         <div
-          className="w-fit h-5 rounded-2xl py-[2px] px-2  gap-2 relative"
+          className="w-fit h-5 rounded-2xl py-[2px] px-2  gap-2 relative cursor-pointer"
           onMouseEnter={() => setShow(true)}
           onMouseLeave={() => setShow(false)}
         >
-          {isShow && (
-            <>
-              <div className="w-[224px] h-fit bg-white gap-4 absolute bottom-7 left-24 p-4 flex flex-col justify-start rounded-lg border-2">
-                <div className="  w-full h-5">
-                  <span className="text-sm font-normal text-gray-700">
-                    {item.roomCode}
+          {item.sampleRoomCodes.length > 0 && isShow && (
+            <div className="min-w-fit w-[224px] max-h-[200px] overflow-y-auto bg-white absolute bottom-5 left-[100px] flex flex-col justify-start rounded-lg border-2">
+              <div className="w-full gap-1 flex flex-col justify-center items-start px-4">
+                {item.sampleRoomCodes.map((i, index) => (
+                  <span
+                    className="text-sm font-normal text-gray-700 w-full h-9 py-1 flex items-center"
+                    key={index}
+                  >
+                    P.{i}
                   </span>
-                </div>
+                ))}
               </div>
-            </>
+            </div>
           )}
+
           <p
             className={`font-normal text-sm ${
               item.status === "0"

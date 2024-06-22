@@ -1,9 +1,12 @@
 import { BsBookmarkCheckFill } from "react-icons/bs";
 import { useDataServices } from "@customhooks";
+import PolicySkeleton from './CategorySkeleton/PolicySkeleton'
 const Policy = () => {
   const [a, b, c, commissions] = useDataServices();
  
   return (
+    <>
+    {commissions ? 
     <div className="w-full  gap-5 nthd_flex_col_between">
       <div className="w-[118px] h-6 nthd_text_medium_base nthd_flex_between">
         <BsBookmarkCheckFill />
@@ -32,6 +35,8 @@ const Policy = () => {
         </table>
       </div>
     </div>
+    : <PolicySkeleton /> }
+    </>
   );
 };
 

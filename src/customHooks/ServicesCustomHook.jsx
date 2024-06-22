@@ -13,6 +13,7 @@ const ServicesContextHook = ({ children }) => {
   const [rooms,setRooms] =useState({});
   const [address,setAddress]=useState('');
   const [price,setPrice]=useState(0);
+  const [brokeragePolicy,setBrokeragePolicy]=useState([]);
   const { data, error, isLoading } = useGetAllDetailQuery(idServices);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const ServicesContextHook = ({ children }) => {
       setRooms({roomToBeEmpty:data?.response?.roomToBeEmpty,emptyRoom:data?.response?.emptyRoom})
       setAddress(data?.response?.houseAddress)
       setPrice(data?.response?.rentPrice)
+      setBrokeragePolicy(data?.response?.brokeragePolicy)
     }
   }, [data]); // Dependency should be data
 
@@ -56,7 +58,8 @@ const ServicesContextHook = ({ children }) => {
         holder,
         rooms,
         address,
-        price
+        price,
+        brokeragePolicy
       }}
     >
       {children}
@@ -81,4 +84,8 @@ export const useGetInfoItem = () => {
 export const useSetIdRoomServices = () => {
   const { setIsServices } = useContext(ServicesContext);
   return [setIsServices];
+};
+export const useGetBrokeragePolicy = () => {
+  const { brokeragePolicy } = useContext(ServicesContext);
+  return [brokeragePolicy];
 };

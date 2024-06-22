@@ -36,7 +36,6 @@ const FormLogin = () => {
   const [postLogin, { isLoading, error, data }] = usePostLoginMutation();
   const onSubmit = async (data) => {
     const response = await postLogin(data);
-    console.log(response);
     if (response.data.mesagge === "Đăng nhập thành công") {
       localStorage.setItem("token", response.data.token);
       const redirectUrl = localStorage.getItem("redirectAfterLogin");

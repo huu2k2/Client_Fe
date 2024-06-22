@@ -31,9 +31,8 @@ const Index = () => {
 
   const handleReset = () => {
     setFilterData((prev) => ({ ...prev,  Price:null }))
-    
-    console.log("Reset!");
-    setValueRang(0);
+     
+     setValueRang(0);
   };
    
   return (

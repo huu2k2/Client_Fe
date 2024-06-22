@@ -12,7 +12,7 @@ const ProfilesApi = createApi({
   endpoints: (build) => ({
     getProfile: build.query({
       query: () => ({
-        url: `/Accounts/get-profile`,
+        url: `/v2/Agencies/get-agency-account`,
         method: "GET",
       }),
     }),
