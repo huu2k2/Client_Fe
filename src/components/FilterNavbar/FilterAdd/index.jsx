@@ -105,7 +105,7 @@ const index = () => {
 
         <div className="w-full h-6 gap-2 flex items-center ">
           <AiOutlineInsertRowLeft />
-          <span className="text-Black text-base font-medium leading-6">
+          <span className="text-black text-base font-medium  leading-normal">
             Danh mục tiện ích
           </span>
         </div>

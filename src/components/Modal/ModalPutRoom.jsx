@@ -6,10 +6,10 @@ import TextArea from "./TextArea";
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal }) => {
   return (
     <div
-      className={`w-screen h-screen flex  flex-col justify-center items-center fixed    inset-0 z-50 `}
+      className={`w-screen h-screen flex  flex-col justify-center items-center fixed   bg-gray-500 bg-opacity-50   inset-0 z-50 `}
       ref={dropdownRef}
     >
-      <div className="relative w-[1360px] h-[728px] py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
+      <div className="relative w-[1360px]  h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
         <div
           className="absolute top-2 right-2 cursor-pointer"
           onClick={() => setIsShowModal(false)}

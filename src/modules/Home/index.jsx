@@ -7,7 +7,7 @@ const index = () => {
   const [isShow, setShow] = useState(false);
 
   return ( 
-    <div className="  w-full h-fit ">
+    <div className="  w-full h-fit custom-scrollbar">
       {isShow && <Profile setShow={setShow} /> }
       <div className="w-full h-fit flex flex-col items-center justify-start  ">
         <Header setShow={setShow} isShow={isShow} />

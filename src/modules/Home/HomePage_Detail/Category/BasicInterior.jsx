@@ -13,12 +13,12 @@ const BasicInterior = () => {
         <span> Nội thất cơ bản</span>
       </div>
 
-      <div className="grid grid-cols-2 grid-rows-3 w-full h-[92px]">
+      <div className="grid grid-cols-2  w-full h-[92px]">
         {furnitureInserts ? (
           furnitureInserts.map((i, index) => (
             <div className="nthd_basicInterior_item" key={index}>
               <BsCheckCircle className="bg-green-600 text-white rounded-lg" />
-              <h5 className="nthd_text_medium_sm_text w-fit">
+              <h5 className="nthd_text_medium_sm_text  w-[219px] h-5 flex justify-between">
                 {" "}
                 {i?.furnitureName}{" "}
                 <span className="text-[#6B7280]">
