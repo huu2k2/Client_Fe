@@ -14,11 +14,11 @@ const index = ({ item }) => {
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
       <div className="relative flex justify-center items-center">
-        <Link to={`/detail/${item.houseId}/room/${item.roomId}`}>
+        <Link to={`/detail/${item.houseId}/room/${item.roomId}`} className="w-full h-[185px] overflow-hidden">
           <img
             src={img ? img : ImgHome}
             alt="Images home"
-            className="h-[185px]"
+            className="h-full w-full object-cover"
           />
         </Link>
         <span className="absolute top-2 left-2 text-white rounded-2xl font-normal text-sm bg-red-700 py-1 px-2">

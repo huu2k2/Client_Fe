@@ -4,25 +4,24 @@ import {
   useBooleanIsShowModal,
   useDataServices,
   useGetInfoItem,
-  useGetBrokeragePolicy
+  useGetBrokeragePolicy,
 } from "@customhooks";
 import { Skeleton } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { formatDateType } from "@utils/ConverDate";
- 
+
 const InfoRoom = () => {
-  const changeLink = useNavigate()
+  const changeLink = useNavigate();
   const [a, serviceInserts] = useDataServices();
   const [address, price] = useGetInfoItem();
-  const [brokeragePolicy] = useGetBrokeragePolicy()
+  const [brokeragePolicy] = useGetBrokeragePolicy();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
   const handleShowModal = () => {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem("token")) {
       setIsShowModal(!isShowModal);
-    }
-    else{
-      localStorage.setItem('redirectAfterLogin', location.pathname);
-      changeLink('/login')
+    } else {
+      localStorage.setItem("redirectAfterLogin", location.pathname);
+      changeLink("/login");
     }
   };
 
@@ -39,31 +38,35 @@ const InfoRoom = () => {
         </div>
 
         {/* endow  */}
-        <div className="w-[723px] h-[96px] rounded-[4px] border p-2 gap-[102px] bg-[#FFFBEB] border-[#B45309] ">
-          <div className="w-[707px] h-[80px] gap-2">
+        <div className="w-[723px] h-fit rounded-[4px] border p-2 gap-[102px] bg-[#FFFBEB] border-[#B45309] ">
+          <div className="w-[707px] h-fit gap-2">
             {/* git  */}
             <div className="w-[82px] h-[24px] gap-2 flex">
               <BsGiftFill />
               <span className="font-medium text-base">Ưu đãi</span>
             </div>
             {/*gif content */}
-            <div className="w-full h-[48px] gap-2 px-8 mt-2 overflow-y-auto custom-scrollbar">
+            <div className="w-full h-[60px] gap-2 px-8 mt-2 overflow-y-auto custom-scrollbar scroll-smooth">
               <ul className="list-disc ">
-              <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày {formatDateType(brokeragePolicy?.startDate)} - {formatDateType(brokeragePolicy?.endDate)}
-
+                <li className="nthd_text_normal_sm_text2">
+                  Chương trình sale áp dụng từ ngày{" "}
+                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
+                  {formatDateType(brokeragePolicy?.endDate)}
                 </li>
                 <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày {formatDateType(brokeragePolicy?.startDate)} - {formatDateType(brokeragePolicy?.endDate)}
-
+                  Chương trình sale áp dụng từ ngày{" "}
+                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
+                  {formatDateType(brokeragePolicy?.endDate)}
                 </li>
                 <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày {formatDateType(brokeragePolicy?.startDate)} - {formatDateType(brokeragePolicy?.endDate)}
-
+                  Chương trình sale áp dụng từ ngày{" "}
+                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
+                  {formatDateType(brokeragePolicy?.endDate)}
                 </li>
                 <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày {formatDateType(brokeragePolicy?.startDate)} - {formatDateType(brokeragePolicy?.endDate)}
-
+                  Chương trình sale áp dụng từ ngày{" "}
+                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
+                  {formatDateType(brokeragePolicy?.endDate)}
                 </li>
               </ul>
             </div>
@@ -71,17 +74,20 @@ const InfoRoom = () => {
         </div>
 
         {/* info detail home  */}
-        <div className="mt-2 w-full rounded-[4px] border p-6 gap-6 bg-[#F9FAFB] flex flex-col ">
+        <div className=" w-full rounded-[4px] h-[250px] border px-6 gap-6  py-8 bg-[#F9FAFB] flex flex-col justify-center overflow-y-auto custom-scrollbar scroll-smooth">
           {serviceInserts?.length > 0 ? (
             serviceInserts.map((i, index) => (
-              <div className="h-[20px] gap-2 w-fit flex" key={index}>
-                <h5 className="w-[320px] nthd_text_medium_sm_h20 block">
-                  {i?.serviceName}
-                </h5>
-                <h5 className="nthd_text_medium_sm_h20">
-                  {i.servicePrice} {i.dvt}
-                </h5>
-              </div>
+              <>
+                <div className="h-[20px] gap-2 w-fit flex  " key={index}>
+                  <h5 className="w-[320px] nthd_text_medium_sm_h20 block">
+                    {i?.serviceName}
+                  </h5>
+                  <h5 className="nthd_text_medium_sm_h20">
+                    {i.servicePrice} {i.dvt}
+                  </h5>
+                </div>
+               
+              </>
             ))
           ) : (
             <div className="mt-2 w-full rounded-[4px] border p-6 gap-6 bg-[#F9FAFB] flex flex-col ">
@@ -110,13 +116,13 @@ const InfoRoom = () => {
               />
             </div>
 
-            <Link to={'/overview/1'} className="mx-2">
+            <Link to={"/overview/1"} className="mx-2">
               <Button
                 text={"Tổng quan nhà trọ"}
                 color={"text-red-700"}
                 background={"bg-red-100"}
               />
-            </Link >
+            </Link>
           </div>
         </div>
       </div>
