@@ -10,9 +10,9 @@ const index = ({ item }) => {
   const img = item.image ? `${APP_URL_IMAGE}/${item.image}` : null;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
- 
+ console.log(item)
   return (
-    <div className="w-[328px] h-[325px] gap-2 flex flex-col justify-between">
+    <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
       <div className="relative flex justify-center items-center">
         <Link to={`/detail/${item.houseId}/room/${item.roomId}`}>
           <img
@@ -36,25 +36,27 @@ const index = ({ item }) => {
         </span>
       </div>
 
-      <div className="w-full h-fit flex flex-col justify-between gap-1">
+      <div className="w-full h-fit flex flex-col justify-start gap-1">
+
         <div className="w-fit h-5 rounded-2xl py-[2px] px-2 bg-red-100 text-red-700 gap-2 ">
           <p className="font-normal text-sm">
             {item.category ? item.category : "Studio"}
           </p>
         </div>
+
         <div className="w-full h-6 text-black ">
           <p className="font-medium text-base truncate overflow-hidden whitespace-nowrap uppercase">
-            Mặt Tiền Đặng Văn Ngữ 4x16m 3 Tầng 2...
+          {item.address.split(',')[0].toUpperCase()}
           </p>
         </div>
 
-        <div className="w-full h-5 text-gray-400 flex gap-2 items-center">
+        <div className="w-full h-5 text-gray-400 flex gap-2 items-center py-1">
           <BsGeoAlt />{" "}
-          <span className="truncate max-w-full">{item.address}</span>
+          <span className="truncate max-w-full">{item.address.split(',')[1]+','+ item.address.split(',')[2]}</span>
         </div>
 
         <div
-          className="w-fit h-5 rounded-2xl py-[2px] px-2  gap-2 relative cursor-pointer"
+          className="w-fit h-7 rounded-2xl py-[2px]  gap-2 relative cursor-pointer flex items-center"
           onMouseEnter={() => setShow(true)}
           onMouseLeave={() => setShow(false)}
         >
@@ -74,7 +76,7 @@ const index = ({ item }) => {
           )}
 
           <p
-            className={`font-normal text-sm ${
+            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl rounded${
               item.status === "0"
                 ? "text-[#2563eb]  bg-[#EFF6FF]"
                 : "text-[#D97706]  bg-[#FFFBEB]"
@@ -85,11 +87,8 @@ const index = ({ item }) => {
           </p>
         </div>
 
-        <div className="w-full h-5 text-black">
-          <span>
+        <div className="w-full h-6 text-black ">
             {new Intl.NumberFormat("vi-VN").format(item.price)} VNĐ 
-            <span className="text-gray-400">/khách</span>
-          </span>
         </div>
       </div>
     </div>
