@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from "react-select";
+import { useGetBankQuery } from '@apis/slice/Bank';
 
 const bankOptions = [
   { value: 'VCB', label: 'Vietcombank' },
@@ -40,6 +41,9 @@ const customStyles = {
 };
 
 const InputSelect = () => {
+  const {data, isLoading} = useGetBankQuery()
+  console.log(data)
+  // const options=data?.data.map((i)=>{value:i.id,label:i.name})
   return (
     <div className="w-full gap-4 flex justify-start items-center">
       <span className="w-[180px] h-5 not-italic text-gray-700">Ngân hàng</span>

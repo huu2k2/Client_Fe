@@ -11,7 +11,7 @@ import { formatDate } from "../../utils";
 const Index = ({ setShow }) => {
 
   const {data,isLoading} = useGetProfileQuery()
-  console.log(data)
+  
   const [isExiting, setIsExiting] = useState(false);
 
   const handleClose = () => {

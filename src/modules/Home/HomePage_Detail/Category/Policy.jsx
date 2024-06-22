@@ -17,9 +17,9 @@ const Policy = () => {
         <table className="min-w-full bg-white">
           <thead>
             <tr className="h-10 bg-[#F9FAFB]">
-              <th className="nthd_policy_item_th">Thời hạn hợp đồng</th>
-              <th className="nthd_policy_item_th">Đặt cọc</th>
-              <th className="nthd_policy_item_th">Hoa hồng</th>
+              <th className="nthd_policy_item_th w-1/3">Thời hạn hợp đồng</th>
+              <th className="nthd_policy_item_th w-1/3">Đặt cọc</th>
+              <th className="nthd_policy_item_th w-1/3">Hoa hồng</th>
             </tr>
           </thead>
           <tbody>
