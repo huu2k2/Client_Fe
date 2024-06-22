@@ -25,11 +25,9 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal }) => {
             123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
           </span>
         </div>
-        <form className="w-[1280px] h-[512px] gap-8 flex flex-col justify-start ">
+        <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start ">
           <div className=" w-full h-fit gap-5 flex flex-col justify-start">
-            <Input label={"Nhân viên sale"} />
-            <Input label={"Số điện thoại"} />
-            <Input label={"Tên công ty/nhóm/đơn vị"} />
+            
             <Input label={"Tên khách hàng"} />
             <Input label={"Thời gian xem phòng"} type={"date"} />
             <TextArea label={"Ghi chú"} />

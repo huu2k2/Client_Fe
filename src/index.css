@@ -90,12 +90,12 @@
   /* custom */ 
   /* Thêm CSS này vào file CSS của bạn hoặc trong một thẻ <style> */
 .custom-scrollbar {
-    scrollbar-width: thin;          /* Firefox */
+    scrollbar-width: none;          /* Firefox */
     scrollbar-color: #888 #f1f1f1;  /* Firefox */
   }
   
   .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;                     /* Width of the scrollbar */
+    width: 1px;                     /* Width of the scrollbar */
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
@@ -105,7 +105,7 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: #888;         /* Color of the scrollbar thumb */
     border-radius: 10px;            /* Roundness of the scrollbar thumb */
-    border: 2px solid #f1f1f1;      /* Padding around the scrollbar thumb */
+    border: 1px solid #f1f1f1;      /* Padding around the scrollbar thumb */
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {

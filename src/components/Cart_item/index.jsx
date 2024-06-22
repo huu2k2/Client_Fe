@@ -10,49 +10,56 @@ const index = ({ item }) => {
   const img = item.image ? `${APP_URL_IMAGE}/${item.image}` : null;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
- console.log(item)
+  console.log(item);
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
-      <div className="relative flex justify-center items-center">
-        <Link to={`/detail/${item.houseId}/room/${item.roomId}`} className="w-full h-[185px] overflow-hidden">
+      <div className="relative flex justify-center items-center rounded-lg">
+        <Link
+          to={`/detail/${item.houseId}/room/${item.roomId}`}
+          className="w-[328px] h-[185px] rounded-lg overflow-hidden"
+        >
           <img
             src={img ? img : ImgHome}
             alt="Images home"
             className="h-full w-full object-cover"
           />
         </Link>
-        <span className="absolute top-2 left-2 text-white rounded-2xl font-normal text-sm bg-red-700 py-1 px-2">
-          Ưu đãi
-        </span>
+        <div className="w-[53px] h-5 px-2 py-0.5 bg-rose-600 rounded-2xl backdrop-blur-[28px] flex justify-center items-center gap-2  absolute top-2 left-2">
+          <span className="text-white text-xs font-normal leading-none  h-4  flex justify-center items-center">
+            Ưu đãi
+          </span>
+        </div>
+
         <span
           onClick={() => setIsHeart(!isHeart)}
-          className={`absolute right-2 top-2 cursor-pointer rounded-2xl w-7 h-7 flex justify-center items-center ${
+          className={`absolute right-2 top-2 cursor-pointer  w-7 h-7 bg-white rounded-full flex justify-center items-center ${
             isHeart ? "bg-red-700" : "bg-white"
           } hover:bg-red-700 transition-colors duration-300 text-white`}
         >
           <AiOutlineHeart
-            className={isHeart ? "text-white" : "text-gray-700"}
+            className={`${isHeart ? "text-white" : "text-gray-700"} hover:text-white flex justify-center items-center`}
           />
         </span>
       </div>
 
       <div className="w-full h-fit flex flex-col justify-start gap-1">
-
-        <div className="w-fit h-5 rounded-2xl py-[2px] px-2 bg-red-100 text-red-700 gap-2 ">
-          <p className="font-normal text-sm">
+        <div className="w-fit h-5 rounded-2xl py-[2px] px-2 bg-red-100 text-red-700 gap-2 flex justify-center items-center">
+          <p className="font-normal text-sm flex justify-center items-center">
             {item.category ? item.category : "Studio"}
           </p>
         </div>
 
         <div className="w-full h-6 text-black ">
-          <p className="font-medium text-base truncate overflow-hidden whitespace-nowrap uppercase">
-          {item.address.split(',')[0].toUpperCase()}
+          <p className="text-neutral-800 text-base font-medium font-['Inter'] leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
+            {item.address.split(",")[0].toUpperCase()}
           </p>
         </div>
 
-        <div className="w-full h-5 text-gray-400 flex gap-2 items-center py-1">
+        <div className="w-full h-5 text-neutral-500 text-sm font-normal  leading-tight flex gap-2 items-center py-1">
           <BsGeoAlt />{" "}
-          <span className="truncate max-w-full">{item.address.split(',')[1]+','+ item.address.split(',')[2]}</span>
+          <span className="truncate max-w-full">
+            {item.address.split(",")[1] + "," + item.address.split(",")[2]}
+          </span>
         </div>
 
         <div
@@ -61,7 +68,7 @@ const index = ({ item }) => {
           onMouseLeave={() => setShow(false)}
         >
           {item.sampleRoomCodes.length > 0 && isShow && (
-            <div className="min-w-fit w-[224px] max-h-[200px] overflow-y-auto bg-white absolute bottom-5 left-[100px] flex flex-col justify-start rounded-lg border-2">
+            <div className="min-w-fit w-[224px] max-h-[200px] overflow-y-auto bg-white absolute bottom-5 left-[100px] flex flex-col justify-start rounded-lg border-2 custom-scrollbar">
               <div className="w-full gap-1 flex flex-col justify-center items-start px-4">
                 {item.sampleRoomCodes.map((i, index) => (
                   <span
@@ -87,8 +94,8 @@ const index = ({ item }) => {
           </p>
         </div>
 
-        <div className="w-full h-6 text-black ">
-            {new Intl.NumberFormat("vi-VN").format(item.price)} VNĐ 
+        <div className="w-full h-6 text-neutral-800 text-base font-medium leading-normal">
+          {new Intl.NumberFormat("vi-VN").format(item.price)} VNĐ 
         </div>
       </div>
     </div>

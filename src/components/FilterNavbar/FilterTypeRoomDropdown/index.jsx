@@ -47,7 +47,7 @@ const index = () => {
       >
         <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
         <div className="">
-          <span className="w-full h-full text-gray-500 text-base font-normal leading-5">
+          <span className="w-full h-full text-gray-500 text-sm font-normal leading-tight">
             Loại phòng
           </span>
         </div>

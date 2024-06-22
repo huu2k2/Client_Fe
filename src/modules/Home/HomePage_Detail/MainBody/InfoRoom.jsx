@@ -53,21 +53,7 @@ const InfoRoom = () => {
                   {formatDateType(brokeragePolicy?.startDate)} -{" "}
                   {formatDateType(brokeragePolicy?.endDate)}
                 </li>
-                <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày{" "}
-                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
-                  {formatDateType(brokeragePolicy?.endDate)}
-                </li>
-                <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày{" "}
-                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
-                  {formatDateType(brokeragePolicy?.endDate)}
-                </li>
-                <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày{" "}
-                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
-                  {formatDateType(brokeragePolicy?.endDate)}
-                </li>
+                
               </ul>
             </div>
           </div>
