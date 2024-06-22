@@ -43,6 +43,7 @@ const Index = ({ setShow }) => {
  const hanldeCancle =()=>{
   handleClose()
  }
+ 
   return (
     <div className={`fixed inset-0 z-50 flex justify-end ${isExiting ? 'animate-slide-out' : 'animate-slide-in'}`}>
       <div className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden">
@@ -95,7 +96,7 @@ const Index = ({ setShow }) => {
         {/* Tài khoản ngân hàng */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Tài khoản ngân hàng"} />
-          <InputSelect />
+          <InputSelect  label={data?.response?.bankCode}/>
           <InputFiel name={"Số tài khoản"} label={data?.response?.accountNumber} type={"text"} />
           <InputFiel name={"Chủ tài khoản"} label={data?.response?.accountName} type={"text"} />
         </div>

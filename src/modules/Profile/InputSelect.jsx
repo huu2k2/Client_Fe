@@ -1,26 +1,10 @@
 import React from 'react';
-import Select from "react-select";
+import Select from 'react-select';
 import { useGetBankQuery } from '@apis/slice/Bank';
-
-const bankOptions = [
-  { value: 'VCB', label: 'Vietcombank' },
-  { value: 'TCB', label: 'Techcombank' },
-  { value: 'BIDV', label: 'BIDV' },
-  { value: 'VIB', label: 'VIB' },
-  { value: 'ACB', label: 'ACB' },
-  { value: 'VPB', label: 'VPBank' },
-  { value: 'MBB', label: 'MBBank' },
-  { value: 'SHB', label: 'SHB' },
-  { value: 'OCB', label: 'OCB' },
-  { value: 'SCB', label: 'SCB' },
-  { value: 'HSBC', label: 'HSBC' },
-  { value: 'CITI', label: 'Citibank' },
-];
 
 const customStyles = {
   control: (provided) => ({
     ...provided,
-    
     borderColor: '#D1D5DB', // Màu viền xám (gray-300)
     borderRadius: '6px', // Bo góc 6px
     padding: '2px', // Khoảng cách bên trong
@@ -40,16 +24,33 @@ const customStyles = {
   })
 };
 
-const InputSelect = () => {
-  const {data, isLoading} = useGetBankQuery()
-  console.log(data)
-  // const options=data?.data.map((i)=>{value:i.id,label:i.name})
+const InputSelect = ({ label }) => {
+  const { data, isLoading } = useGetBankQuery();
+
+  // Xử lý khi dữ liệu đang loading
+  if (isLoading) return <div>Loading...</div>;
+
+  // Xử lý khi dữ liệu đã có sẵn
+  const options =data.data && data.data.map((i) => ({
+    value: i.id,
+    label: i.name
+  })) || [];
+
+  // Tìm option có value tương ứng với label truyền vào
+  const selectedOption = options.filter((option) => option?.value === Number(label));
+ 
   return (
     <div className="w-full gap-4 flex justify-start items-center">
       <span className="w-[180px] h-5 not-italic text-gray-700">Ngân hàng</span>
-      <Select styles={customStyles} className='w-[312px]'  options={bankOptions} placeholder="Chọn ngân hàng"/>
+      <Select
+        styles={customStyles}
+        className='w-[312px]'
+        value={selectedOption} // Sử dụng selectedOption thay vì valueCurent.label
+        options={options}
+        placeholder="Chọn ngân hàng"
+      />
     </div>
   );
-}
+};
 
 export default InputSelect;
