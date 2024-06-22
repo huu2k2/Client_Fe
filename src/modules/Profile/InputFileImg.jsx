@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import AddImg from '@assets/addImg.png';
 import { AiFillCloseCircle } from "react-icons/ai";
+import { useFormContext } from 'react-hook-form';
 
-const InputFileImg = ({ name,img}) => {
+const InputFileImg = ({ name,img,nameRegister}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
@@ -27,7 +28,7 @@ const InputFileImg = ({ name,img}) => {
     setImagePreview(null);
   };
 
-
+  const { register } = useFormContext();
 
   return (
     <div className="w-full gap-4 flex justify-start items-center">
@@ -41,7 +42,7 @@ const InputFileImg = ({ name,img}) => {
         ) : (
           <>
             <img src={AddImg} alt="img add" />
-            <input type="file" onChange={handleImageChange} className="hidden" ref={inputFileRef} name="inputimg" accept=".png, .jpg, .jpeg, .gif"/>
+            <input type="file"   {...register(nameRegister)} onChange={handleImageChange} className="hidden" ref={inputFileRef} name="inputimg" accept=".png, .jpg, .jpeg, .gif"/>
             <div className="w-full h-5 flex gap-1 text-sm font-normal justify-center">
               <span className="text-red-600 cursor-pointer" onClick={handleUploadImg}>
                 Tải tệp tin

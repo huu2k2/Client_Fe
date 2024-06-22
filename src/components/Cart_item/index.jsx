@@ -10,7 +10,7 @@ const index = ({ item }) => {
   const img = item.image ? `${APP_URL_IMAGE}/${item.image}` : null;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
-  console.log(item);
+  
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
       <div className="relative flex justify-center items-center rounded-lg">

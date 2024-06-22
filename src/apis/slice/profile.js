@@ -16,8 +16,15 @@ const ProfilesApi = createApi({
         method: "GET",
       }),
     }),
+    postUpdate: build.mutation({
+      query: (body) => ({
+        url: `/v2/Agencies/update-agency-account`,
+        method: "POST",
+        data: body,
+      }),
+    }),
   }),
 });
 
-export const {useGetProfileQuery} = ProfilesApi;
+export const {useGetProfileQuery ,usePostUpdateMutation} = ProfilesApi;
 export default ProfilesApi;

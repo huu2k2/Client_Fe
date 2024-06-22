@@ -90,8 +90,8 @@
   /* custom */ 
   /* Thêm CSS này vào file CSS của bạn hoặc trong một thẻ <style> */
 .custom-scrollbar {
-    scrollbar-width: none;          /* Firefox */
-    scrollbar-color: #888 #f1f1f1;  /* Firefox */
+    scrollbar-width: thin;          /* Firefox */
+    scrollbar-color: #888 #f3f3f3;  /* Firefox F3F3F3*/
   }
   
   .custom-scrollbar::-webkit-scrollbar {

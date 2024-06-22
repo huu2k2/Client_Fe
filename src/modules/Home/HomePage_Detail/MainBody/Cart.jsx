@@ -6,6 +6,8 @@ import SlideShow from "./SlideShow";
 import { useGetHolder } from "@customhooks";
 import { useParams } from "react-router-dom";
 import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
+const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
+
 const Cart = () => {
   const [holder, rooms] = useGetHolder();
   const handleShowSlideImg = () => {
@@ -13,21 +15,22 @@ const Cart = () => {
   };
   const { id, roomId } = useParams();
   const { data: images, error, isLoading } = useGetImagesQuery(roomId);
+
   return (
     <>
       <div className="w-[557px] h-fit gap-2 flex flex-col ">
         {/*start  hình ảnh  */}
         <div className="w-full h-[313px]">
-          <img src={cartImg} alt="Slide 1" />
+        <img src={images  ?  `${API_URL}/${images[0].id}.jpg`:images } alt="Slide 1" className="overflow-hidden object-cover w-[557px] h-[313px] rounded-lg"/>
         </div>
 
         <div className="w-full h-[102px] gap-2 flex ">
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
-            <img src={cartImg} alt="hinh anh tiep theo" />
+            <img src={images  ?  `${API_URL}/${images[1].id}.jpg`:images} alt="hinh anh tiep theo" />
           </div>
 
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
-            <img src={cartImg} alt="hinh anh tiep theo" />
+            <img src={images  ?  `${API_URL}/${images[2].id}.jpg`:images} alt="hinh anh tiep theo" />
           </div>
 
           {/* img3 */}
@@ -35,8 +38,8 @@ const Cart = () => {
             className="w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50"
             onClick={handleShowSlideImg}
           >
-            <img src={cartImg} alt="hinh anh tiep theo" />
-            <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full">
+            <img src={images ?  `${API_URL}/${images[3].id}.jpg`:images} alt="hinh anh tiep theo" />
+            <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
               <span className="text-white">Xem tất cả hình ảnh</span>
             </div>
           </div>
