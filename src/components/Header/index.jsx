@@ -2,9 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
 import { BsBell, BsChatDots } from "react-icons/bs";
-import { useState } from "react";
-import { FiLogOut } from "react-icons/fi";
-import { Dropdown } from "daisyui";
+ 
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -23,7 +21,7 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
-  const [isHovered, setIsHovered] = useState(false);
+ 
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
@@ -67,10 +65,17 @@ const index = ({ isShow, setShow }) => {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-lg w-52"
               >
                 <li onClick={() => setShow(!isShow)} className="cursor-pointer text-base">
-                  Thông tin tài khoản
+                  <span>Thông tin tài khoản</span>
                 </li>
+                <li className="cursor-pointer text-base">
+                  <Link to={'/danh_sach_phong_yeu_thich'}>
+                  
+                  Yêu thích
+                  </Link>
+                </li>
+                
                 <li onClick={handleLogout} className="cursor-pointer text-base">
-                  <FiLogOut size={24} color="white" /> Logout
+                  <span> Logout</span>
                 </li>
               </ul>
             </div>

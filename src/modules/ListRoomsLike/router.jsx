@@ -1,7 +1,7 @@
 import PageHomeManagement from './index'
 
 const router = {
-    path:'/homemanagement',
+    path:'/danh_sach_phong_yeu_thich',
     element: <PageHomeManagement />,
 
 }
