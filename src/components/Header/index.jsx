@@ -4,6 +4,7 @@ import ImgAvatar from "@assets/Avatar.png";
 import { BsBell, BsChatDots } from "react-icons/bs";
 import { useState } from "react";
 import { FiLogOut } from "react-icons/fi";
+import { Dropdown } from "daisyui";
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -23,11 +24,11 @@ const GroudButton = () => {
 
 const index = ({ isShow, setShow }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate()
-  const handleLogout =()=>{
-    localStorage.clear()
-    navigate('/login')
-  }
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <div className="w-full h-[64px] bg-black flex justify-center items-center ">
       <div
@@ -52,32 +53,26 @@ const index = ({ isShow, setShow }) => {
           </div>
 
           {localStorage.getItem("token") ? (
-            <div className="group relative">
+            <div className="group relative dropdown">
               {/* Avatar */}
               <div
-                className="w-8 h-8 rounded-2xl overflow-hidden"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={() => setShow(!isShow)}
+                tabIndex={0}
+                role="button"
+                className="w-8 h-8 rounded-2xl overflow-hidden  "
               >
                 <img src={ImgAvatar} alt="img avatar" />
               </div>
-
-              {isHovered && (
-                <div
-                  onMouseEnter={() => setIsHovered(true)}
-                  onMouseLeave={() => setIsHovered(false)}
-                  className="z-10  absolute top-8  divide-y bg-black  divide-gray-100 rounded-lg shadow w-fit px-2 dark:bg-gray-700"
-                >
-                  <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
-                    <li onClick={handleLogout}>
-                      <span className="flex justify-start gap-2 items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ">
-                        <FiLogOut size={24} color="white" /> Logout
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-lg w-52"
+              >
+                <li onClick={() => setShow(!isShow)} className="cursor-pointer text-base">
+                  Thông tin tài khoản
+                </li>
+                <li onClick={handleLogout} className="cursor-pointer text-base">
+                  <FiLogOut size={24} color="white" /> Logout
+                </li>
+              </ul>
             </div>
           ) : (
             <GroudButton />

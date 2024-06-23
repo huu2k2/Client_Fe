@@ -1,17 +1,10 @@
-import React, { lazy } from "react";
-import LazyWrapper from "@components/LazyLoad";
-
-const PageRegister = lazy(() => import("./index"));
-const FormRegister = lazy(() => import("./FormRegister"));
-const Otp = lazy(() => import("../Login/Otp"));
+import PageRegister from "./index";
+import FormRegister from "./FormRegister";
+import Otp from "../Login/Otp";
 
 const router = {
   path: "/register",
-  element: (
-    <LazyWrapper>
-      <PageRegister />
-    </LazyWrapper>
-  ),
+  element: <PageRegister />,
   children: [
     {
       path: "",

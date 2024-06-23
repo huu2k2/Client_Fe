@@ -1,19 +1,12 @@
-import React, { lazy } from "react";
-import LazyWrapper from "@components/LazyLoad";
-
-const PageLogin = lazy(() => import("./index"));
-const FormLogin = lazy(() => import("./FormLogin"));
-const ForgetPassword = lazy(() => import("./ForgetPassword"));
-const Otp = lazy(() => import("./Otp"));
-const ResetPassword = lazy(() => import("./ResetPassword"));
+import PageLogin from "./index";
+import FormLogin from "./FormLogin";
+import ForgetPassword from "./ForgetPassword";
+import Otp from "./Otp";
+import ResetPassword from "./ResetPassword";
 
 const router = {
   path: "/login",
-  element: (
-    <LazyWrapper>
-      <PageLogin />
-    </LazyWrapper>
-  ),
+  element: <PageLogin />,
   children: [
     {
       path: "",

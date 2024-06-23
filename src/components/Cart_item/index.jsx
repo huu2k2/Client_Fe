@@ -15,7 +15,7 @@ const index = ({ item }) => {
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
       <div className="relative flex justify-center items-center rounded-lg">
         <Link
-          to={`/detail/${item.houseId}/room/${item.roomId}`}
+          to={`/detail/${item?.houseId}/room/${item?.roomId}`}
           className="w-[328px] h-[185px] rounded-lg overflow-hidden"
         >
           <img
