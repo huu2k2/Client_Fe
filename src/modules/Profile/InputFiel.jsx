@@ -1,28 +1,51 @@
-import React, { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { convertToDateISOString } from "@utils/ConverDate"; // Đảm bảo đường dẫn import phù hợp với dự án của bạn
 
-const InputFiel = ({ name, label, type, nameRegister, errors, isEnable = false }) => {
-  const { register,setValue } = useFormContext();
-  const [Val,SetVal] = useState(label)
-const handleChange =(e)=>{
-  SetVal(e.target.value)
-// if(nameRegister==='dateRange' || nameRegister==='bod'){
-//   setValue(e.target.value)
-// }
+const InputFiel = ({
+  name,
+  label,
+  type,
+  isEnable = false,
+  setFormData,
+  variable,
+}) => {
+  const [value, setValue] = useState(label); // Sử dụng label như giá trị ban đầu cho input
 
-}
+  // Đảm bảo cập nhật value khi label thay đổi
+  useEffect(() => {
+    setValue(label);
+  }, [label]);
+
+  // Update formData khi value thay đổi
+  useEffect(() => {
+    if (type === "date" && value !== null) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [variable]: convertToDateISOString(value),
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [variable]: value,
+      }));
+    }
+  }, [value, type, variable, setFormData]);
+
+  // Xử lý sự kiện thay đổi giá trị của input
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
   return (
     <div className="w-full gap-4 flex justify-start items-center">
       <span className="w-[180px] h-5 not-italic text-gray-700">{name}</span>
       <input
-        {...(!isEnable && register(nameRegister))}  // Register only if isEnable is false
         type={type}
-        value={Val}
-        className={`w-[312px] h-[38px] px-[13px] py-[9px] border-2 rounded-md  `}
-        disabled={isEnable}  // Disable input if isEnable is true
+        value={value || ""} // Đảm bảo value không bị undefined
+        className="w-[312px] h-[38px] px-[13px] py-[9px] border-2 rounded-md"
+        disabled={isEnable}
         onChange={handleChange}
       />
-      
     </div>
   );
 };

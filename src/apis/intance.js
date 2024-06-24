@@ -27,28 +27,36 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
+
+    // Kiểm tra xem error.response có tồn tại không
+    if (error.response && (error.response.status === 401 || error.response.status === 403) && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("token");
         if (refreshToken) {
-          const response = await axios.post(`${API_URL}/Accounts/refresh-token`, { refreshToken });
+          const response = await axios.post(`${API_URL}/Accounts/refresh-token`, {}, {
+            headers: {
+              'Authorization': `Bearer ${refreshToken}`,
+              'accept': '*/*'
+            }
+          });
           const newToken = response.data.token;
           localStorage.setItem("token", newToken);
           axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
           originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
           return axiosInstance(originalRequest);
         } else {
-          // Handle no refreshToken case
-          console.error('No refreshToken found.');
+          // Xử lý trường hợp không có refreshToken
+          console.error('Không tìm thấy refreshToken.');
         }
       } catch (refreshError) {
-        // Handle refresh token error
-        console.error('Failed to refresh token:', refreshError);
-        localStorage.clear(); // Clear tokens
-        // Redirect or handle logout
+        // Xử lý lỗi khi làm mới token
+        console.error('Lỗi khi làm mới token:', refreshError);
+        localStorage.clear(); // Xóa token
+        // Redirect hoặc xử lý logout
       }
     }
+
     return Promise.reject(error);
   }
 );

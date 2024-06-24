@@ -24,7 +24,7 @@ const index = ({ isShow, setShow }) => {
  
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem('token')
     navigate("/login");
   };
   return (

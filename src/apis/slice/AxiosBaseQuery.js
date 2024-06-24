@@ -1,6 +1,7 @@
 import axiosInstance from "../intance";
-const axiosBaseQuery =
-  ({ baseUrl } = { baseUrl: "" }) =>
+
+
+const axiosBaseQuery = ({ baseUrl } = { baseUrl: "" }) => 
   async ({ url, method, data, params, headers }) => {
     try {
       const result = await axiosInstance({
@@ -12,14 +13,13 @@ const axiosBaseQuery =
       });
       return { data: result };
     } catch (axiosError) {
-      const err = axiosError;
       return {
         error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
+          status: axiosError.response?.status,
+          data: axiosError.response?.data || axiosError.message,
         },
       };
     }
   };
 
-  export default axiosBaseQuery
+export default axiosBaseQuery;

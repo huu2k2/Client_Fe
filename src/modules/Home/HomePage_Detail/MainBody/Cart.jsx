@@ -6,6 +6,7 @@ import SlideShow from "./SlideShow";
 import { useGetHolder } from "@customhooks";
 import { useParams } from "react-router-dom";
 import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
+import ShowImages from "../../../../components/ShowImages";
 const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
 
 const Cart = () => {
@@ -21,30 +22,44 @@ const Cart = () => {
       <div className="w-[557px] h-fit gap-2 flex flex-col ">
         {/*start  hình ảnh  */}
         <div className="w-full h-[313px]">
-        <img src={images  ?  `${API_URL}/${images[0]?.id}.jpg`:images } alt="Slide 1" className="overflow-hidden object-cover w-[557px] h-[313px] rounded-lg"/>
+          <img
+            src={images ? `${API_URL}/${images[0]?.id}.jpg` : images}
+            alt="Slide 1"
+            className="overflow-hidden object-cover w-[557px] h-[313px] rounded-lg"
+          />
         </div>
 
         <div className="w-full h-[102px] gap-2 flex ">
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
-            <img src={images  ?  `${API_URL}/${images[1]?.id}.jpg`:images} alt="hinh anh tiep theo" />
+            <img
+              src={images ? `${API_URL}/${images[1]?.id}.jpg` : images}
+              alt="hinh anh tiep theo"
+            />
           </div>
 
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
-            <img src={images  ?  `${API_URL}/${images[2]?.id}.jpg`:images} alt="hinh anh tiep theo" />
+            <img
+              src={images ? `${API_URL}/${images[2]?.id}.jpg` : images}
+              alt="hinh anh tiep theo"
+            />
           </div>
 
           {/* img3 */}
+
           <div
+            onClick={() => document.getElementById("my_modal_4").showModal()}
             className="w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50"
-            onClick={handleShowSlideImg}
           >
-            <img src={images ?  `${API_URL}/${images[3]?.id}.jpg`:images} alt="hinh anh tiep theo" />
+            <img
+              src={images ? `${API_URL}/${images[3]?.id}.jpg` : images}
+              alt="hinh anh tiep theo"
+            />
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
               <span className="text-white">Xem tất cả hình ảnh</span>
             </div>
           </div>
         </div>
-
+        <ShowImages />
         {/*end  hình ảnh  */}
         <div className="nthd_flex_between_full h-fit pt-8  ">
           <div className="w-[196px] h-fit gap-6 flex flex-col">

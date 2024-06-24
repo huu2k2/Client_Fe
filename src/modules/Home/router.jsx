@@ -6,7 +6,7 @@ import PageHomeDetail from "./HomePage_Detail";
 import HomePage from "./HomePage";
 import { ShowModalHook } from "@customhooks";
 import ServicesContextHook from "@customhooks/ServicesCustomHook";
-
+import PageHomeManagement from './ListRoomsLike'
 const router = {
   path: "/",
   element: (
@@ -32,6 +32,10 @@ const router = {
           <PageHomeDetail />
         </ShowModalHook>
       ),
+    },
+    {
+      path:'/danh_sach_phong_yeu_thich',
+      element: <PageHomeManagement />,
     },
   ],
 };

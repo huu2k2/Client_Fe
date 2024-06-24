@@ -19,7 +19,7 @@ const ProfilesApi = createApi({
     postUpdate: build.mutation({
       query: (body) => ({
         url: `/v2/Agencies/update-agency-account`,
-        method: "POST",
+        method: "PUT",
         data: body,
       }),
     }),

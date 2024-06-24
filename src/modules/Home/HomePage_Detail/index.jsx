@@ -36,8 +36,8 @@ const index = () => {
         <MainBody />
         <Category />
         <div className="flex flex-col gap-14 h-fit">
-          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id}/>
-
+          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money ={null} address={null}/>
+          <RoomOrder title={`Phòng tương tự `} data={id} money ={0} address={''}/>
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@
 import GridCart from '@components/GridCart'
 import { Link } from 'react-router-dom';
 
-const index = ({ title, data }) => {
+const index = ({ title, data ,money,address}) => {
 
   return (
     <div className="w-full h-[381px] nthd_flex_col_between ">

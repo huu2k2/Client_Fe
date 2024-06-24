@@ -5,7 +5,7 @@ import RouterLogin from "./Login/router";
 import RouterHome from "./Home/router";
 import RouterPageHomeManagement from "./HomeManagement/router";
 import RouterPageOverviewHome from "./OverviewHome/router";
-import RouterPageListRoomsLike from "./ListRoomsLike/router";
+ 
 
 export const routers = createBrowserRouter([
   RouterPage404,
@@ -14,5 +14,5 @@ export const routers = createBrowserRouter([
   RouterHome,
   RouterPageHomeManagement,
   RouterPageOverviewHome,
-  RouterPageListRoomsLike
+ 
 ]);

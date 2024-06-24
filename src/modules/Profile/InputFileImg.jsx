@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import AddImg from '@assets/addImg.png';
 import { AiFillCloseCircle } from "react-icons/ai";
-import { useFormContext } from 'react-hook-form';
 
-const InputFileImg = ({ name,img,nameRegister}) => {
+const InputFileImg = ({ name, img }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
@@ -17,6 +16,8 @@ const InputFileImg = ({ name,img,nameRegister}) => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(imageFile);
+
+     
   };
 
   const handleUploadImg = () => {
@@ -26,9 +27,12 @@ const InputFileImg = ({ name,img,nameRegister}) => {
   const handleRemoveImage = () => {
     setSelectedImage(null);
     setImagePreview(null);
-  };
 
-  const { register } = useFormContext();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [variable]: null,
+    }));
+  };
 
   return (
     <div className="w-full gap-4 flex justify-start items-center">
@@ -37,12 +41,19 @@ const InputFileImg = ({ name,img,nameRegister}) => {
         {imagePreview ? (
           <div className='relative'>
             <img src={imagePreview} alt="Preview" className="w-[260px] h-[180px] object-cover" />
-            <AiFillCloseCircle className='absolute top-2 right-2 cursor-pointer' onClick={handleRemoveImage} />
+            <AiFillCloseCircle className='absolute top-2 right-2 w-6 h-6 rounded-full bg-white text-gray-600 cursor-pointer' onClick={handleRemoveImage} />
           </div>
         ) : (
           <>
-            <img src={AddImg} alt="img add" />
-            <input type="file"   {...register(nameRegister)} onChange={handleImageChange} className="hidden" ref={inputFileRef} name="inputimg" accept=".png, .jpg, .jpeg, .gif"/>
+            <img src={AddImg} alt="img add" onClick={handleUploadImg} className="cursor-pointer" />
+            <input
+              type="file"
+              onChange={handleImageChange}
+              className="hidden"
+              ref={inputFileRef}
+              name="inputimg"
+              accept=".png, .jpg, .jpeg, .gif"
+            />
             <div className="w-full h-5 flex gap-1 text-sm font-normal justify-center">
               <span className="text-red-600 cursor-pointer" onClick={handleUploadImg}>
                 Tải tệp tin

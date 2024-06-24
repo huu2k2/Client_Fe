@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -24,17 +24,32 @@ const schema = yup
   .required();
 
 const FormLogin = () => {
+  
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors },setValue
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const [postLogin, { isLoading, error, data }] = usePostLoginMutation();
+  let saveAcount =JSON.parse(localStorage.getItem('rememberedUser'))
+  useEffect(()=>{
+    
+    if(saveAcount){
+      setValue('userName',saveAcount.userName)
+      setValue('password',saveAcount.password)
+    }
+  },[saveAcount])
   const onSubmit = async (data) => {
+    
+    if(data.remeber ){
+      localStorage.setItem('rememberedUser', JSON.stringify({ userName :data.userName, password :data.password}));
+    }else{
+      localStorage.removeItem('rememberedUser');
+    }
     const response = await postLogin(data);
     if (response.data.mesagge === "Đăng nhập thành công") {
       localStorage.setItem("token", response.data.token);
