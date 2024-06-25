@@ -17,7 +17,7 @@ const ServicesApi = createApi({
     }),
     getAllDetail: build.query({
       query: (id) => ({
-        url: `/v2/Room/get-room-details/${id}`,
+        url: `/v2/Rooms/get-room-details/${id}`,
       }),
     }),
   }),

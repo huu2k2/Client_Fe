@@ -11,8 +11,8 @@ import { formatDate } from "@utils";
 
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
-  const { data, isLoading } = useGetProfileQuery();
-  const [postUpdate, { isLoading: isLoadingUpdate, isError, isSuccess }] =
+  const { data, isLoading,isSuccess } = useGetProfileQuery();
+  const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
     usePostUpdateMutation();
 
   const [isExiting, setIsExiting] = useState(false);
@@ -84,7 +84,7 @@ const Index = ({ setShow }) => {
     userName: "",
   });
   useEffect(() => {
-    if (data) {
+    if (isSuccess && data) {
       setFormData({
         telegramId: data.response.telegramId || "",
         identification: data.response.identification || "",
@@ -110,6 +110,7 @@ const Index = ({ setShow }) => {
    const rs = await postUpdate(formData)
    console.log(rs)
   };
+
    return (
     <div
       className={`fixed inset-0 z-50 flex justify-end   ${

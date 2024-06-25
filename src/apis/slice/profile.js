@@ -8,7 +8,7 @@ const ProfilesApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
   }),
-  keepUnusedDataFor: 600,
+  keepUnusedDataFor: 60,
   endpoints: (build) => ({
     getProfile: build.query({
       query: () => ({

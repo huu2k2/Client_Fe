@@ -12,7 +12,7 @@ const ImagesApi = createApi({
   endpoints: (build) => ({
     getImages: build.query({
       query: (id) => ({
-        url: `/Images/get-image-by-room-id/${id}`,
+        url: `/v2/Rooms/get-pictures-of-room/${id}`,
       }),
     }),
     

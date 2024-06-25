@@ -15,15 +15,15 @@ const Cart = () => {
     // setIsShow(!isShow)
   };
   const { id, roomId } = useParams();
-  const { data: images, error, isLoading } = useGetImagesQuery(roomId);
-
+  const { data: images, error, isLoading } = useGetImagesQuery(id);
+ 
   return (
     <>
       <div className="w-[557px] h-fit gap-2 flex flex-col ">
-        {/*start  hình ảnh  */}
-        <div className="w-full h-[313px]">
+      
+         <div className="w-full h-[313px]">
           <img
-            src={images ? `${API_URL}/${images[0]?.id}.jpg` : images}
+            src={images?.response[0]?.url}
             alt="Slide 1"
             className="overflow-hidden object-cover w-[557px] h-[313px] rounded-lg"
           />
@@ -32,26 +32,26 @@ const Cart = () => {
         <div className="w-full h-[102px] gap-2 flex ">
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
             <img
-              src={images ? `${API_URL}/${images[1]?.id}.jpg` : images}
+              src={images?.response[0]?.url}
               alt="hinh anh tiep theo"
             />
           </div>
 
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
             <img
-              src={images ? `${API_URL}/${images[2]?.id}.jpg` : images}
+              src={images?.response[0]?.url}
               alt="hinh anh tiep theo"
             />
           </div>
 
-          {/* img3 */}
+        
 
           <div
             onClick={() => document.getElementById("my_modal_4").showModal()}
             className="w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50"
           >
             <img
-              src={images ? `${API_URL}/${images[3]?.id}.jpg` : images}
+              src={images?.response[0]?.url }
               alt="hinh anh tiep theo"
             />
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
@@ -59,8 +59,8 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        <ShowImages />
-        {/*end  hình ảnh  */}
+        <ShowImages /> 
+         
         <div className="nthd_flex_between_full h-fit pt-8  ">
           <div className="w-[196px] h-fit gap-6 flex flex-col">
             <div className="nthd_flex_between_full">

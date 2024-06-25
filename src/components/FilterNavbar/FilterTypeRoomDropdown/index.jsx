@@ -38,7 +38,6 @@ const index = () => {
     setFilterData((prev) => ({ ...prev,  Category:[...selectedRooms]}))
     setIsOpen(false)
   };
-
   return (
     <div className="relative cursor-pointer" ref={dropdownRef}>
       <div
@@ -75,20 +74,20 @@ const index = () => {
             <InputCheckBox
               value={"1PN"}
               label={"1 Phòng ngủ"}
-              checked={selectedRooms.includes("1room")}
-              onChange={() => handleCheckboxChange("1room")}
+              checked={selectedRooms.includes("1PN")}
+              onChange={() => handleCheckboxChange("1PN")}
             />
             <InputCheckBox
               value={"2PN"}
               label={"2 Phòng ngủ"}
-              checked={selectedRooms.includes("2room")}
-              onChange={() => handleCheckboxChange("2room")}
+              checked={selectedRooms.includes("2PN")}
+              onChange={() => handleCheckboxChange("2PN")}
             />
             <InputCheckBox
               value={"3PN"}
               label={"3 Phòng ngủ"}
-              checked={selectedRooms.includes("3room")}
-              onChange={() => handleCheckboxChange("3room")}
+              checked={selectedRooms.includes("3PN")}
+              onChange={() => handleCheckboxChange("3PN")}
             />
             <InputCheckBox
               value={"Ground"}

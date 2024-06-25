@@ -11,8 +11,11 @@ export function formatDate(inputDate) {
     const month = ('0' + (dateObj.getMonth() + 1)).slice(-2); // Lấy tháng, đảm bảo 2 chữ số
     const day = ('0' + dateObj.getDate()).slice(-2); // Lấy ngày, đảm bảo 2 chữ số
     const year = dateObj.getFullYear(); // Lấy năm
-  
-   return `${day}/${month}/${year}`; 
+    if(day && month && year){
+
+      return `${day}/${month}/${year}`; 
+    }
+    return '--/--/--'
   }
   export function convertToDateISOString(dateString) {
     if (!dateString) return null; // Return null if dateString is undefined, null, or empty

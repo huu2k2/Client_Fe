@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 const APP_URL_IMAGE = import.meta.env.VITE_APP_URL_IMAGE;
 
 const index = ({ item }) => {
-  const img = item.image ? `${APP_URL_IMAGE}/${item.image}` : null;
+  console.log("item anh",item)
+  const img = item.image ? `${item.image}` : null;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
   

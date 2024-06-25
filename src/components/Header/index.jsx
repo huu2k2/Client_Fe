@@ -37,7 +37,7 @@ const index = ({ isShow, setShow }) => {
           <img src={ImgLogo} alt="Logo" className="w-[135px] h-[24px]" />
         </Link>
 
-        {/* div info login register */}
+ 
 
         <div className="w-[316px] h-[38px] gap-6 flex items-center">
           {/* info */}
@@ -51,7 +51,7 @@ const index = ({ isShow, setShow }) => {
           </div>
 
           {localStorage.getItem("token") ? (
-            <div className="group relative dropdown">
+            <div className="group relative dropdown  ">
               {/* Avatar */}
               <div
                 tabIndex={0}
@@ -62,7 +62,7 @@ const index = ({ isShow, setShow }) => {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-lg w-52"
+                className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52  mt-3  "
               >
                 <li onClick={() => setShow(!isShow)} className="cursor-pointer text-base">
                   <span>Thông tin tài khoản</span>
