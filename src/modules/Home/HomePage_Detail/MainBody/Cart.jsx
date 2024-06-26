@@ -59,7 +59,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        <ShowImages /> 
+        <ShowImages images={images}/> 
          
         <div className="nthd_flex_between_full h-fit pt-8  ">
           <div className="w-[196px] h-fit gap-6 flex flex-col">

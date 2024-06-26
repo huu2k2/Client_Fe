@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiXCircle } from "react-icons/bi";
 
-function ShowImages() {
+function ShowImages({images}) {
   const dataImages = [
     "https://down-vn.img.susercontent.com/file/sg-11134201-7rblx-lo0ikzht804m51",
     "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lqt11epexstzcb",
@@ -13,12 +13,12 @@ function ShowImages() {
 
   const handlePrev = () => {
     setMainImageIndex(
-      (prevIndex) => (prevIndex - 1 + dataImages.length) % dataImages.length
+      (prevIndex) => (prevIndex - 1 + images?.response.length) % images?.response.length
     );
   };
 
   const handleNext = () => {
-    setMainImageIndex((prevIndex) => (prevIndex + 1) % dataImages.length);
+    setMainImageIndex((prevIndex) => (prevIndex + 1) % images?.response.length);
   };
 
   return (
@@ -42,7 +42,7 @@ function ShowImages() {
             {"<"}
           </button>
           <img
-            src={dataImages[mainImageIndex]}
+            src={images?.response[mainImageIndex].url}
             alt="Main Image"
             className="w-96 h-96 object-cover rounded-lg"
           />
@@ -56,10 +56,10 @@ function ShowImages() {
         </div>
         {/* Sidebar */}
         <div className="p-4 list-img grid grid-cols-3 grid-rows-5 gap-2">
-          {dataImages.map((url, index) => (
+          {images?.response.map((i, index) => (
             <img
               key={index}
-              src={url}
+              src={i?.url}
               alt={`Thumbnail ${index + 1}`}
               className="w-20 h-20 object-cover rounded-lg cursor-pointer"
               onClick={() => setMainImageIndex(index)}
