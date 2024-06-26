@@ -66,7 +66,7 @@ const Index = () => {
               name="vol"
               min="0"
               max="15"
-              className="w-full"
+              className="w-full "
               onChange={handleChangOfRang}
               value={valueRang}
             />

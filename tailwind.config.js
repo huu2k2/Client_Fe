@@ -19,6 +19,7 @@ export default {
         gray6a: "#6A6A6A",
         blue600: "text-blue-600",
         blue50: "text-blue-50",
+        'checkbox-red': '#EF4444',
       },
       utilities: {
         ".scroll-hidden": {
@@ -63,6 +64,12 @@ export default {
         "slide-in": "slide-in 0.5s forwards",
         "slide-out": "slide-out 0.5s forwards",
       },
+    },
+  },
+  variants: {
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
     },
   },
   plugins: [

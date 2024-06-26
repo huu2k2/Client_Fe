@@ -15,8 +15,8 @@ const Cart = () => {
     // setIsShow(!isShow)
   };
   const { id, roomId } = useParams();
-  const { data: images, error, isLoading } = useGetImagesQuery(id);
- 
+  const { data: images, error, isLoading } = useGetImagesQuery(roomId);
+
   return (
     <>
       <div className="w-[557px] h-fit gap-2 flex flex-col ">

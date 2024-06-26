@@ -13,7 +13,7 @@ const index = ({ value, label, checked, onChange }) => {
         value={value}
         checked={checked}
         onChange={onChange}
-        className="form-checkbox bg-red-500 border-red-500 "
+        className="custom-checkbox"
       />
       {label}
     </label>
