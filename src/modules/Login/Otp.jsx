@@ -40,7 +40,7 @@ const Otp = () => {
 
   const handleSendOtp = () => {
     const data = parseInt(otp.join(""), 10);
-    console.log(isRegister)
+ 
     if(data && isRegister){
       navigate('/login');
     }else{

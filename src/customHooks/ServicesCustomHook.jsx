@@ -15,7 +15,7 @@ const ServicesContextHook = ({ children }) => {
   const [price,setPrice]=useState(0);
   const [brokeragePolicy,setBrokeragePolicy]=useState([]);
   const { data, error, isLoading } = useGetAllDetailQuery(idServices);
-console.log(data)
+ 
   useEffect(() => {
     if (data) {
       // Check if data is not undefined

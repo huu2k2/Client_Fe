@@ -108,9 +108,9 @@ const Index = ({ setShow }) => {
   }, [data]);
   const handleUpadte = async() => {
    const rs = await postUpdate(formData)
-   console.log(rs)
+ 
   };
-console.log(data)
+ 
    return (
     <div
       className={`fixed inset-0 z-50 flex justify-end   ${
