@@ -1,4 +1,4 @@
-import GridCart from "@components/GridCart/SimilarRoom";
+import SimilarRoom from "@components/GridCart/SimilarRoom";
 import { Link } from "react-router-dom";
 
 const index = ({ title, data, money, address }) => {
@@ -16,7 +16,7 @@ const index = ({ title, data, money, address }) => {
         </Link>
       </div>
 
-      <GridCart id={data} money={money}  address ={address}/>
+      <SimilarRoom id={data} money={money}  address ={address}/>
     </div>
   );
 };

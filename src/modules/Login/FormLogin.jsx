@@ -51,7 +51,7 @@ const FormLogin = () => {
       localStorage.removeItem('rememberedUser');
     }
     const response = await postLogin(data);
-    if (response.data.mesagge === "Đăng nhập thành công") {
+    if (response.data.isSuccess ) {
       localStorage.setItem("token", response.data.token);
       const redirectUrl = localStorage.getItem("redirectAfterLogin");
       if (redirectUrl) {

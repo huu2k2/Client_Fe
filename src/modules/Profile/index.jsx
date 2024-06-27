@@ -107,7 +107,8 @@ const Index = ({ setShow }) => {
     }
   }, [data]);
   const handleUpadte = async() => {
-   const rs = await postUpdate(formData)
+    console.log("formData",formData)
+  //  const rs = await postUpdate(formData)
  
   };
  
