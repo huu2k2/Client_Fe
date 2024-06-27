@@ -6,17 +6,36 @@ import {
 } from "@customhooks/FilterCustomHook";
 import CustomLoading from "../CustomLoading";
 
-const Index = ({ id }) => {
+const Index = ({ id,money ,address}) => {
+ 
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
   const [data, isFetching, isError] = useQueryData();
-
+  const query = {
+    HouseId: id,
+    District: address,
+    Price: Number(money),
+  }
+  const filteredParams = Object.keys(query).reduce((acc, key) => {
+    const value = query[key];
+    if (
+      value !== null &&
+      value !== undefined &&
+      value !== "" &&
+      value !== 0 &&
+      (!Array.isArray(value) || value.length > 0)
+    ) {
+      acc[key] = value;
+    }
+    return acc;
+  }, {});
+ 
   // Sử dụng useEffect để cập nhật filterData khi id thay đổi
   useEffect(() => {
-    if (id !== undefined && id !== filterData.HouseId && id !== 0) {
-      setFilterData({ ...filterData, HouseId: id });
-    }
-  }, [id, filterData, setFilterData]);
+
+      setFilterData({ ...filterData, ...filteredParams });
+    
+  }, []);
 
  
   // Sử dụng useEffect để cập nhật items khi data thay đổi
@@ -28,7 +47,7 @@ const Index = ({ id }) => {
     // Cleanup the timeout if the component unmounts
     return () => clearTimeout(timer);
   }, [data]);
-
+ 
   // Render danh sách items
   return (
     <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">

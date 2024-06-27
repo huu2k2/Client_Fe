@@ -69,7 +69,7 @@ export const FilterCustomHook = ({ children }) => {
     }),
     [filterData, setFilterData, data, isFetching, isError, handleClickSearch]
   );
-console.log("daat",data)
+ 
   return (
     <FilterHookContext.Provider value={contextValue}>
       {children}

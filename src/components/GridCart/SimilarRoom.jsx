@@ -7,7 +7,7 @@ import { useGetRoomsFilterQuery } from "../../apis/slice/rooms";
 const SimilarRoom = ({ id,money,address }) => {
   const query = {
     HouseId: id,
-    Address: address,
+    District: address,
     Price: money,
   }
   const filteredParams = Object.keys(query).reduce((acc, key) => {
@@ -23,7 +23,9 @@ const SimilarRoom = ({ id,money,address }) => {
     }
     return acc;
   }, {});
+
  const {data, isFetching, isError} = useGetRoomsFilterQuery(filteredParams)
+
  if(isFetching){
   return <CustomLoading />
  }

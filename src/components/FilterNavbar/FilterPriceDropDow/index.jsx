@@ -3,6 +3,7 @@ import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import {useQueryFilterData } from "@customhooks";
 const Index = () => {
+  
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [valueRang, setValueRang] = useState(0);
@@ -24,6 +25,10 @@ const Index = () => {
     setValueRang(parseInt(e.target.value));
   };
   const [filterData,setFilterData] = useQueryFilterData();
+  // 
+  useEffect(()=>{
+    setValueRang(filterData.Price/1000000)
+  },[filterData.Price])
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev,  Price:valueRang }))
     setIsOpen(false);
