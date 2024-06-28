@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
-import {useQueryFilterData } from "@customhooks";
+import { useQueryFilterData } from "@customhooks";
+import { useLocation } from "react-router-dom";
 const Index = () => {
-  
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [valueRang, setValueRang] = useState(0);
@@ -24,22 +24,27 @@ const Index = () => {
   const handleChangOfRang = (e) => {
     setValueRang(parseInt(e.target.value));
   };
-  const [filterData,setFilterData] = useQueryFilterData();
-  // 
-  useEffect(()=>{
-    setValueRang(filterData.Price/1000000)
-  },[filterData.Price])
+  const [filterData, setFilterData] = useQueryFilterData();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const idroom = queryParams.get("idRoom") || null;
+  console.log(filterData.Price)
+  useEffect(() => {
+    if (!idroom) {
+      setValueRang(filterData.Price / 1000000);
+    }
+  }, [filterData.Price]);
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev,  Price:valueRang }))
+    setFilterData((prev) => ({ ...prev, Price: valueRang }));
     setIsOpen(false);
   };
 
   const handleReset = () => {
-    setFilterData((prev) => ({ ...prev,  Price:null }))
-     
-     setValueRang(0);
+    setFilterData((prev) => ({ ...prev, Price: null }));
+
+    setValueRang(0);
   };
-   
+
   return (
     <div className="relative cursor-pointer" ref={dropdownRef}>
       <div

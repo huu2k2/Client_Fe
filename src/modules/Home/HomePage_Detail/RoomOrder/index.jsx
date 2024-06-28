@@ -1,23 +1,41 @@
+import React, { useEffect } from 'react';
 import SimilarRoom from "@components/GridCart/SimilarRoom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useClickSearchFilter, useQueryFilterData } from '../../../../customHooks/FilterCustomHook';
 
-const index = ({ title, data, money, address }) => {
-// console.log(title, data, money, address)
+const Index = ({ title, data, money, address }) => {
+ const [filterData, setFilterData]=useQueryFilterData()
+ const handleClickSearch= useClickSearchFilter()
+ useEffect(()=>{
+  setFilterData({})
+ },[])
+ useEffect(()=>{
+  handleClickSearch()
+ },[filterData])
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    const path = data 
+      ? `/similarRooms?idRoom=${data}`
+      : `/similarRooms?Price=${money}&Address=${address}`;
+    navigate(path);
+  };
+
   return (
     <div className="w-full h-[381px] nthd_flex_col_between ">
       <div className="w-full h-8 flex justify-between">
         <h1 className="font-semibold text-2xl">{title}</h1>
-        <Link
-          to={`/similarRooms?${data?`idRoom=${data}`:`Price=${money}&Address=${address}`}`}
-          className=" text-sm font-medium text-red-500"
+        <button
+          onClick={handleNavigate}
+          className="text-sm font-medium text-red-500"
         >
           Xem thêm
-        </Link>
+        </button>
       </div>
 
-      <SimilarRoom id={data} money={money}  address ={address?.replace(/_/g, ' ')}/>
+      <SimilarRoom id={data} money={money} address={address?.replace(/_/g, ' ')} />
     </div>
   );
 };
 
-export default index;
+export default Index;
