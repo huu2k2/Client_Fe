@@ -80,7 +80,7 @@ const InformationApartment = () => {
                   <div className="self-stretch px-[13px] py-[9px] bg-neutral-100 rounded-md shadow border border-gray-300 justify-start items-center inline-flex w-80">
                     <input
                       type="text"
-                      className="w-full text-sm font-normal font-['Inter'] leading-tight outline-none"
+                      className="w-full text-sm font-normal font-['Inter'] leading-tight outline-none bg-neutral-100"
                       placeholder="Nhập số tiền đặt cọc"
                     />
                   </div>
@@ -92,7 +92,7 @@ const InformationApartment = () => {
                   <div className="self-stretch px-[13px] py-[9px] bg-neutral-100 rounded-md shadow border border-gray-300 justify-start items-center inline-flex w-80">
                     <input
                       type="text"
-                      className="w-full text-sm font-normal font-['Inter'] leading-tight outline-none"
+                      className="w-full text-sm font-normal font-['Inter'] leading-tight outline-none bg-neutral-100"
                       placeholder="Nhập hoa hồng"
                     />
                     <div className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
