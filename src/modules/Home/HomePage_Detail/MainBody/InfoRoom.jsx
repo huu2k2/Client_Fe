@@ -7,7 +7,7 @@ import {
   useGetBrokeragePolicy,
 } from "@customhooks";
 import { Skeleton } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDateType } from "@utils/ConverDate";
 
 const InfoRoom = () => {
@@ -27,7 +27,7 @@ const InfoRoom = () => {
   };
 
   let Arr = brokeragePolicy?.saleIncentives?.split('\n')?.map(line => line.trim());
-
+  const { id } = useParams();
   return (
     <>
       <div className="w-[723px] h-[578px] gap-4 flex flex-col justify-between">
@@ -105,7 +105,7 @@ const InfoRoom = () => {
               />
             </div>
 
-            <Link to={"/overview/1"} className="mx-2">
+            <Link to={`/overview/${id}`} className="mx-2">
               <Button
                 text={"Tổng quan nhà trọ"}
                 color={"text-red-700"}
