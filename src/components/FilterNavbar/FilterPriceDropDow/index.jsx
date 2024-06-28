@@ -28,7 +28,6 @@ const Index = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const idroom = queryParams.get("idRoom") || null;
-  console.log(filterData.Price)
   useEffect(() => {
     if (!idroom) {
       setValueRang(filterData.Price / 1000000);
@@ -41,7 +40,6 @@ const Index = () => {
 
   const handleReset = () => {
     setFilterData((prev) => ({ ...prev, Price: null }));
-
     setValueRang(0);
   };
 
@@ -79,6 +77,7 @@ const Index = () => {
               className="w-full "
               onChange={handleChangOfRang}
               value={valueRang}
+               
             />
           </div>
         </div>
