@@ -25,7 +25,7 @@ const FurnitureTable = () => {
                 scope="col"
                 className="w-16 h-10 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" className="custom-checkbox" name="" id="" />
               </th>
               <th
                 scope="col"
@@ -52,7 +52,7 @@ const FurnitureTable = () => {
             {furnitureData.map((item) => (
               <tr key={item.id}>
                 <td className="w-16 h-[72px]  px-6 py-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                <input type="checkbox" name="" id="" />
+                <input type="checkbox" className="custom-checkbox" name="" id="" />
                 </td>
                 <td className="w-20 h-[72px] px-6 py-4 whitespace-nowrap text-sm font-normal text-gray-900">
                   {item.id}
