@@ -1,5 +1,5 @@
 import React from "react";
-import Cart from "./Cart";
+import ImageSpeaker from '../../../assets/Speakerphone.svg'
 import Floor from "./Floor";
 
 const Body = () => {
@@ -13,7 +13,7 @@ const Body = () => {
               <div className="grow shrink basis-0 h-10 justify-start items-center flex">
                 <div className="justify-start items-center gap-3 flex">
                   <div className="p-2 bg-rose-950 rounded-lg justify-center items-center flex">
-                    <div className="w-6 h-6 relative" />
+                    <img src={ImageSpeaker} alt="spearker" />
                   </div>
                   <div className="text-white text-base font-medium font-['Inter'] leading-normal">
                     Nội dung ưu đãi sale

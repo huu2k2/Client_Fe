@@ -30,7 +30,7 @@ const Index = () => {
   const idroom = queryParams.get("idRoom") || null;
   useEffect(() => {
     if (!idroom && filterData.Price > 0) {
-      setValueRang(filterData.Price / 1000000);
+      setValueRang(filterData.Price);
     }
   }, [filterData.Price]);
   

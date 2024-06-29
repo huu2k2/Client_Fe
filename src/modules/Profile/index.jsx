@@ -65,53 +65,50 @@ const Index = ({ setShow }) => {
   // handle data for update
   // select all data for update
   const [formData, setFormData] = useState({
-    telegramId: "",
-    identification: "",
-    issuedBy: "",
-    dateRange: "",
-    signature: "",
-    accountNumber: "",
-    fullName: "",
-    bankCode: "",
-    bod: "",
-    permanentAddress: "",
-    position: "",
-    ownerId: "",
-    role: "",
-    accountName: "",
-    id: "",
-    phoneNumber: "",
-    userName: "",
+    AgencyAccountId: "",
+    SignatureUrl: null,
+    BeforeIdentification: null,
+    AfterIdentification: null,
+    BankCode: "",
+    AccountNumber: "",
+    AccountName: "",
+    FullName: "",
+    PhoneNumber: "",
+    BOD: "",
+    Identification: "",
+    DateRange: "",
+    IssuedBy: "",
+    PermanentAddress: ""
   });
   useEffect(() => {
-    if (isSuccess && data) {
+    if (data) {
       setFormData({
-        telegramId: data.response.telegramId || "",
-        identification: data.response.identification || "",
-        issuedBy: data.response.issuedBy || "",
-        dateRange: data.response.dateRange || "",
-        signature: data.response.signatureUrl || "",
-        accountNumber: data.response.accountNumber || "",
-        fullName: data.response.fullName || "",
-        bankCode: data.response.bankCode || "",
-        bod: data.response.bod || "",
-        permanentAddress: data.response.permanentAddress || "",
-        position: data.response.position || "",
-        ownerId: data.response.ownerId || "",
-        role: data.response.role || "",
-        accountName: data.response.accountName || "",
-        id: data.response.id || "",
-        phoneNumber: data.response.phoneNumber || "",
-        userName: data.response.userName || "",
+        AgencyAccountId: data.response.telegramId || null,
+        SignatureUrl: data.response.signatureUrl || null,
+        BeforeIdentification: data.response.beforeIdentification || null,
+        AfterIdentification: data.response.afterIdentification || null,
+        BankCode: data.response.bankCode || null,
+        AccountNumber: data.response.accountNumber || null,
+        AccountName: data.response.accountName || null,
+        FullName: data.response.fullName || null,
+        PhoneNumber: data.response.phoneNumber || null,
+        BOD: data.response.bod || null,
+        Identification: data.response.identification || null,
+        DateRange: data.response.dateRange || null,
+        IssuedBy: data.response.issuedBy || null,
+        PermanentAddress: data.response.permanentAddress || null,
       });
     }
   }, [data]);
+
   const handleUpadte = async() => {
     console.log("formData",formData)
   //  const rs = await postUpdate(formData)
  
   };
- 
+  const handleFileChange = (name, file) => {
+    setFormData(prevData => ({ ...prevData, [name]: file }));
+  };
    return (
     <div
       className={`fixed inset-0 z-50 flex justify-end   ${
@@ -168,7 +165,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={true}
             setFormData={setFormData}
-            variable={"fullName"}
+            variable={"FullName"}
           />
           <InputFiel
             name={"Tên đăng nhập"}
@@ -185,19 +182,19 @@ const Index = ({ setShow }) => {
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel
             name={"Họ và tên"}
-            label={data?.response?.fullName || "Trần Thị Thu Sương"}
+            label={data?.response?.fullName}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"fullName"}
+            variable={"FullName"}
           />
           <InputFiel
             name={"Số điện thoại"}
-            label={data?.response?.phoneNumber || "0987654321"}
+            label={data?.response?.phoneNumber}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"phoneNumber"}
+            variable={"PhoneNumber"}
           />
           <InputFiel
             name={"Ngày sinh"}
@@ -205,15 +202,15 @@ const Index = ({ setShow }) => {
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"bod"}
+            variable={"BOD"}
           />
           <InputFiel
             name={"Căn cước công dân"}
-            label={data?.response?.identification || "12237468745698"}
+            label={data?.response?.identification }
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"identification"}
+            variable={"Identification"}
           />
           <InputFiel
             name={"Ngày cấp"}
@@ -221,15 +218,15 @@ const Index = ({ setShow }) => {
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"dateRange"}
+            variable={"DateRange"}
           />
           <InputFiel
             name={"Nơi cấp"}
-            label={data?.response?.issuedBy || "Công an tỉnh Quảng Trị"}
+            label={data?.response?.issuedBy }
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"issuedBy"}
+            variable={"IssuedBy"}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
@@ -242,17 +239,17 @@ const Index = ({ setShow }) => {
           <InputFileImg
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-             
+            onChange={(file) => handleFileChange('SignatureUrl', file)}
           />
           <InputFileImg
             name={"CCCd (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-             
+            onChange={(file) => handleFileChange('BeforeIdentification', file)}
           />
           <InputFileImg
             name={"CCCd (Mặt sau)"}
             img={data?.response?.afterIdentification}
-             
+            onChange={(file) => handleFileChange('AfterIdentification', file)}
           />
         </div>
 
@@ -260,9 +257,9 @@ const Index = ({ setShow }) => {
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Tài khoản ngân hàng"} />
           <InputSelect
-            label={data?.response?.bankCode || "bank"}
+            label={data?.response?.bankCode}
             setFormData={setFormData}
-            variable={"bankCode"}
+            variable={"BankCode"}
           />
           <InputFiel
             name={"Số tài khoản"}
@@ -270,7 +267,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"accountNumber"}
+            variable={"AccountNumber"}
           />
           <InputFiel
             name={"Chủ tài khoản"}
@@ -278,7 +275,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"accountName"}
+            variable={"AccountName"}
           />
         </div>
 

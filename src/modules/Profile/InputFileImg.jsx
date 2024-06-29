@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import AddImg from '@assets/addImg.png';
 import { AiFillCloseCircle } from "react-icons/ai";
 
-const InputFileImg = ({ name, img }) => {
+const InputFileImg = ({ name, img ,onChange }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
@@ -10,7 +10,7 @@ const InputFileImg = ({ name, img }) => {
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     setSelectedImage(imageFile);
-
+    onChange(imageFile);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
@@ -27,7 +27,7 @@ const InputFileImg = ({ name, img }) => {
   const handleRemoveImage = () => {
     setSelectedImage(null);
     setImagePreview(null);
-
+    onChange(null); 
     setFormData((prevFormData) => ({
       ...prevFormData,
       [variable]: null,
