@@ -8,7 +8,7 @@ const Index = ({ title, data, money, address }) => {
  const handleClickSearch= useClickSearchFilter()
  useEffect(()=>{
   setFilterData({})
-  // handleClickSearch()
+  handleClickSearch()
  },[])
  
   const navigate = useNavigate();
