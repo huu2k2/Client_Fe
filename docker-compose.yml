@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: FE-Clinet-image # Đặt tên cho image ở đây
-    container_name: FE-Clinet-image-container # Đặt tên cho container ở đây
+    image: fe-clinet-image # Đặt tên cho image ở đây
+    container_name: fe-client-image-container # Đặt tên cho container ở đây
     ports:
       - "80:82"
     volumes:
