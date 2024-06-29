@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fe-clinet-image # Đặt tên cho image ở đây
+    container_name: fe-client-image-container # Đặt tên cho container ở đây
+    ports:
+      - "82:82"
+    volumes:
+      - .:/app
+      - /app/node_modules
