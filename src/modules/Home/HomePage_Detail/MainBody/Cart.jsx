@@ -1,7 +1,7 @@
 import UserImg from "@assets/user.png";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import cartImg from "@assets/cartImg.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SlideShow from "./SlideShow";
 import { useGetHolder } from "@customhooks";
 import { useParams } from "react-router-dom";
@@ -16,14 +16,24 @@ const Cart = () => {
   };
   const { id, roomId } = useParams();
   const { data: images, error, isLoading } = useGetImagesQuery(roomId);
+  const [display, setDisplay] = useState("")
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+
+  useEffect(() => {
+    if (images?.response.length < 4) {
+      setDisplay(" hidden");
+    } else {
+      setDisplay(" block");
+    }
+  }, [images]);
 
   return (
     <>
       <div className="w-[557px] h-fit gap-2 flex flex-col ">
-      
-         <div className="w-full h-[313px]">
+
+        <div className="w-full h-[313px]">
           <img
-            src={images?.response[0]?.url}
+            src={images?.response[mainImageIndex]?.url}
             alt="Slide 1"
             className="overflow-hidden object-cover w-[557px] h-[313px] rounded-lg"
           />
@@ -33,6 +43,7 @@ const Cart = () => {
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
             <img
               src={images?.response[1]?.url}
+              onClick={() => setMainImageIndex(index)}
               alt="hinh anh tiep theo"
             />
           </div>
@@ -44,14 +55,14 @@ const Cart = () => {
             />
           </div>
 
-        
+
 
           <div
             onClick={() => document.getElementById("my_modal_4").showModal()}
-            className="w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50"
+            className={`w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50 ${display}`}
           >
             <img
-              src={images?.response[3]?.url }
+              src={images?.response[3]?.url}
               alt="hinh anh tiep theo"
             />
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
@@ -59,8 +70,8 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        <ShowImages images={images}/> 
-         
+        <ShowImages images={images} />
+
         <div className="nthd_flex_between_full h-fit pt-8  ">
           <div className="w-[196px] h-fit gap-6 flex flex-col">
             <div className="nthd_flex_between_full">

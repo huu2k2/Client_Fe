@@ -53,8 +53,8 @@ const InfoRoom = () => {
               <ul className="list-disc">
                 <li className="nthd_text_normal_sm_text2">
                   Chương trình sale áp dụng từ ngày{" "}
-                  {formatDateType(brokeragePolicy.startDate )} - {" "}
-                  {formatDateType(brokeragePolicy.endDate  )}
+                  {formatDateType(brokeragePolicy?.startDate)} - {" "}
+                  {formatDateType(brokeragePolicy?.endDate)}
                 </li>
                 {Arr &&
                   Arr.map((item, index) => (
