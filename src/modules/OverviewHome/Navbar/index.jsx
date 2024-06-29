@@ -25,10 +25,10 @@ const Index = () => {
   };
 
   return (
-    <div className="w-[1920px] h-16 bg-black justify-between items-center flex flex-col">
+    <div className="w-full h-16 bg-black justify-between items-center flex flex-col">
       <div className="grow shrink basis-0 self-stretch px-[280px] justify-start items-center gap-[738px] flex">
         <div className="justify-start items-center gap-6 flex">
-          <div className="w-[135px] h-6 pr-[0.48px] justify-center items-center flex">
+          <div className="w-fit h-6 pr-[0.48px] justify-center items-center flex">
             <Link to={'/'} className="w-[134.52px] h-6 relative">
               <img className="w-full h-full" src={logo} alt="Logo" />
             </Link>
@@ -42,7 +42,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(0)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">
+              <p className="text-white text-sm font-medium  leading-tight">
                 Danh sách phòng trống
               </p>
             </Link>
@@ -53,7 +53,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(1)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Chính sách</p>
+              <p className="text-white text-sm font-medium  leading-tight">Chính sách</p>
             </Link>
             <Link
               to={`/overview/${idHome}/booking`}
@@ -62,7 +62,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(2)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Đặt lịch dẫn khách</p>
+              <p className="text-white text-sm font-medium  leading-tight">Đặt lịch dẫn khách</p>
             </Link>
             <Link
               to={`/overview/${idHome}/deposit`}
@@ -71,7 +71,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(3)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Đặt cọc giữ chỗ</p>
+              <p className="text-white text-sm font-medium  leading-tight">Đặt cọc giữ chỗ</p>
             </Link>
           </div>
         </div>

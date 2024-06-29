@@ -14,7 +14,7 @@ const FurnitureTable = () => {
 
   return (
     <div className="w-[1280px] h-fit">
-      <div className="text-rose-800 text-lg font-medium font-['Inter'] leading-normal mb-4">
+      <div className="text-rose-800 text-lg font-medium leading-normal mb-4">
         Danh mục nội thất
       </div>
       <div className="bg-white rounded-lg shadow border border-gray-200">

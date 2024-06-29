@@ -49,7 +49,7 @@ const index = ({ item }) => {
         </div>
 
         <div className="w-full h-6 text-black ">
-          <p className="text-neutral-800 text-base font-medium font-['Inter'] leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
+          <p className="text-neutral-800 text-base font-medium leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
             {item.address.split(",")[0].toUpperCase()}
           </p>
         </div>
