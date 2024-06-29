@@ -56,7 +56,7 @@ const Index = ({ id, money, address }) => {
 
   // Render danh sách items
   return (
-    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
+    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit ">
       {isError && <CustomLoading />}
       {items.length > 0 ? (
         items.map((item, index) => <CartRoom key={index} item={item} />)

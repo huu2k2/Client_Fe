@@ -1,4 +1,4 @@
-import ImgHome from "../../assets/notfound.png";
+import ImgHome from "../../assets/notfound(1).png";
 
 import { AiOutlineHeart } from "react-icons/ai";
 import { useState } from "react";
@@ -10,7 +10,7 @@ const index = ({ item }) => {
   const img = item.image ? `${item.image}` : null;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
-  
+
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
       <div className="relative flex justify-center items-center rounded-lg">
@@ -21,7 +21,7 @@ const index = ({ item }) => {
           <img
             src={img ? img : ImgHome}
             alt="Images home"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover bg-[#0000001c]"
           />
         </Link>
         <div className="w-[53px] h-5 px-2 py-0.5 bg-rose-600 rounded-2xl backdrop-blur-[28px] flex justify-center items-center gap-2  absolute top-2 left-2">
@@ -32,12 +32,11 @@ const index = ({ item }) => {
 
         <span
           onClick={() => setIsHeart(!isHeart)}
-          className={`absolute right-2 top-2 cursor-pointer  w-7 h-7   rounded-full flex justify-center items-center ${
-            isHeart ? "bg-red-700" : "bg-white"
-          } hover:bg-red-700 transition-colors    `}
+          className={`absolute right-2 top-2 cursor-pointer  w-7 h-7   rounded-full flex justify-center items-center ${isHeart ? "bg-red-700" : "bg-white"
+            } hover:bg-red-700 transition-colors    `}
         >
           <AiOutlineHeart
-            className={`${isHeart ?  "text-white":"text-black" } hover:text-white   flex justify-center items-center`}
+            className={`${isHeart ? "text-white" : "text-black"} hover:text-white   flex justify-center items-center`}
           />
         </span>
       </div>
@@ -83,11 +82,10 @@ const index = ({ item }) => {
           )}
 
           <p
-            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl rounded${
-              item.status === "0"
-                ? "text-[#2563eb]  bg-[#EFF6FF]"
-                : "text-[#D97706]  bg-[#FFFBEB]"
-            }`}
+            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl rounded${item.status === "0"
+              ? "text-[#2563eb]  bg-[#EFF6FF]"
+              : "text-[#D97706]  bg-[#FFFBEB]"
+              }`}
           >
             {item.status === "0" ? "Phòng trống:" : "Phòng sắp trống:"}{" "}
             <span className="text-black"> {item.emptyRoomTotal}</span>
@@ -95,7 +93,7 @@ const index = ({ item }) => {
         </div>
 
         <div className="w-full h-6 text-neutral-800 text-base font-medium leading-normal">
-          {new Intl.NumberFormat("vi-VN").format(item.price)} VNĐ 
+          {new Intl.NumberFormat("vi-VN").format(item.price)} VNĐ
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
 import ShowImages from "../../../../components/ShowImages";
 const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
 import index from './../../../Register/index';
+import { Skeleton } from "@mui/material";
 
 const Cart = () => {
   const [holder, rooms] = useGetHolder();
@@ -17,7 +18,37 @@ const Cart = () => {
   const [display, setDisplay] = useState("");
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [result, setResult] = useState([]);
+  // if (isLoading || error) {
+  //   return (
 
+  //     <div>
+  //       <div className='w-[557px] h-[313px] relative '>
+  //         <Skeleton
+  //           width={557}
+  //           height={313}
+  //           variant="rounded"
+  //         />
+  //       </div>
+  //       <div className='flex justify-between mt-[10px] ' >
+  //         <Skeleton
+  //           width={180}
+  //           height={102}
+  //           variant="rounded"
+  //         />
+  //         <Skeleton
+  //           width={180}
+  //           height={102}
+  //           variant="rounded"
+  //         />
+  //         <Skeleton
+  //           width={180}
+  //           height={102}
+  //           variant="rounded"
+  //         />
+  //       </div>
+  //     </div>
+  //   )
+  // }
   useEffect(() => {
     if (images?.response?.length < 4) {
       setDisplay(" hidden");
@@ -30,9 +61,6 @@ const Cart = () => {
       setResult(filteredImages);
     }
   }, [images]);
-
-  console.log("🚀 ~ Cart ~ images:", images);
-  console.log("🚀 ~ Cart ~ result:", result);
 
   return (
     <>
@@ -50,7 +78,7 @@ const Cart = () => {
           {result.map((image, index) => (
             <div
               key={index}
-              className="w-[180px] h-[102px] rounded-md overflow-hidden"
+              className="w-[180px] h-[102px] rounded-md overflow-hidden cursor-pointer"
             >
               <img
                 src={image?.url}
@@ -62,7 +90,7 @@ const Cart = () => {
 
           <div
             onClick={() => document.getElementById("my_modal_4").showModal()}
-            className={`w-[180px] h-[102px] rounded-md overflow-hidden absolute  right-0 bg-black translate-x-[-1px] bg-opacity-60 ${display}`}
+            className={`w-[180px] h-[102px] rounded-md overflow-hidden absolute  right-0 bg-black translate-x-[-1px] bg-opacity-60 cursor-pointer ${display}`}
           >
 
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
