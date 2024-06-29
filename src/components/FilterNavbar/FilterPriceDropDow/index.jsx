@@ -35,7 +35,7 @@ const Index = () => {
   }, [filterData.Price]);
   
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, Price: valueRang }));
+    setFilterData((prev) => ({ ...prev, Price: valueRang*100000 }));
     setIsOpen(false);
   };
 
