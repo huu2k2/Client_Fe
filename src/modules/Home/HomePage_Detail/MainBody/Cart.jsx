@@ -62,7 +62,7 @@ const Cart = () => {
 
           <div
             onClick={() => document.getElementById("my_modal_4").showModal()}
-            className={`w-1/3 h-[102px] rounded-md overflow-hidden absolute  right-0 bg-black bg-opacity-50 ${display}`}
+            className={`w-[180px] h-[102px] rounded-md overflow-hidden absolute  right-0 bg-black translate-x-[-1px] bg-opacity-60 ${display}`}
           >
 
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
