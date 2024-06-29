@@ -29,10 +29,11 @@ const Index = () => {
   const queryParams = new URLSearchParams(location.search);
   const idroom = queryParams.get("idRoom") || null;
   useEffect(() => {
-    if (!idroom) {
+    if (!idroom && filterData.Price > 0) {
       setValueRang(filterData.Price / 1000000);
     }
   }, [filterData.Price]);
+  
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, Price: valueRang }));
     setIsOpen(false);

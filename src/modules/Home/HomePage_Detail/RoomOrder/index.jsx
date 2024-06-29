@@ -8,13 +8,13 @@ const Index = ({ title, data, money, address }) => {
  const handleClickSearch= useClickSearchFilter()
  useEffect(()=>{
   setFilterData({})
+  // handleClickSearch()
  },[])
- useEffect(()=>{
-  handleClickSearch()
- },[filterData])
+ 
   const navigate = useNavigate();
 
   const handleNavigate = () => {
+    handleClickSearch()
     const path = data 
       ? `/similarRooms?idRoom=${data}`
       : `/similarRooms?Price=${money}&Address=${address}`;

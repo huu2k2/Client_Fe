@@ -30,19 +30,20 @@ const Index = ({ id, money, address }) => {
     }
     return acc;
   }, {});
-  const handleClickSearch = useClickSearchFilter();
-  const location = useLocation();
+  // const handleClickSearch = useClickSearchFilter();
+  // const location = useLocation();
 
   // Sử dụng useEffect để cập nhật filterData khi id thay đổi hoặc location.pathname là '/similarRooms'
   useEffect(() => {
     setFilterData({ ...filterData, ...filteredParams });
   }, []);
 
-  useEffect(() => {
-    if (location.pathname === "/similarRooms") {
-      handleClickSearch();
-    }
-  }, [filterData]);
+  // useEffect(() => {
+  //   if (location.pathname === "/similarRooms") {
+  //     handleClickSearch();
+  //   }
+  // }, [filterData]);
+
   const [data, isFetching, isError] = useQueryData();
   // Sử dụng useEffect để cập nhật items khi data thay đổi
   useEffect(() => {
