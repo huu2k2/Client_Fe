@@ -4,12 +4,12 @@ import GroupCheckbox from "./GroupCheckbox";
 
 const index = () => {
   return (
-    <div className="w-full h-[225px] bg-black flex-col justify-center items-center  flex  ">
+    <div className="w-full h-fit bg-black flex-col justify-center items-center  flex  ">
       <div className="h-px flex-col justify-start items-start flex">
         <div className="self-stretch h-px bg-zinc-700" />
       </div>
 
-      <div className="self-stretch h-40 py-10 shadow flex-col justify-center items-start gap-6 flex">
+      <div className="self-stretch w-ful h-40 py-10 shadow flex-col justify-center items-start gap-6 flex">
         <div className="self-stretch px-[280px] justify-between items-center  flex">
           <div className="flex flex-col gap-6 w-full  ">
             <div className="text-white text-3xl font-bold font-['Inter'] leading-9">
@@ -18,7 +18,7 @@ const index = () => {
           <GroupCheckbox/>
           </div>
 
-          <div className="w-80 h-[124px] px-4 py-3 bg-neutral-50 rounded-2xl flex-col justify-start items-start gap-4 inline-flex">
+          <div className="w-80 h-fit px-4 py-3 bg-neutral-50 rounded-2xl flex-col justify-start items-start gap-4 inline-flex">
             <div className="  justify-between items-center w-full flex">
               <div className="justify-center items-start gap-2 inline-flex">
                 <img
