@@ -42,7 +42,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(0)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">
+              <p className="text-white text-sm font-medium  leading-tight">
                 Danh sách phòng trống
               </p>
             </Link>
@@ -53,7 +53,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(1)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Chính sách</p>
+              <p className="text-white text-sm font-medium  leading-tight">Chính sách</p>
             </Link>
             <Link
               to={`/overview/${idHome}/booking`}
@@ -62,7 +62,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(2)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Đặt lịch dẫn khách</p>
+              <p className="text-white text-sm font-medium  leading-tight">Đặt lịch dẫn khách</p>
             </Link>
             <Link
               to={`/overview/${idHome}/deposit`}
@@ -71,7 +71,7 @@ const Index = () => {
               }`}
               onClick={() => handleLinkClick(3)}
             >
-              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Đặt cọc giữ chỗ</p>
+              <p className="text-white text-sm font-medium  leading-tight">Đặt cọc giữ chỗ</p>
             </Link>
           </div>
         </div>

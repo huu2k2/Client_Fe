@@ -9,7 +9,7 @@ const index = () => {
     <>
       <div className="w-[1920px] h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
         <div className="grow shrink basis-0 h-9 px-[280px] justify-start items-start flex">
-          <div className="text-white text-3xl font-bold font-['Inter'] leading-9">
+          <div className="text-white text-3xl font-bold leading-9">
             Đặt cọc giữ chỗ
           </div>
         </div>
@@ -32,7 +32,7 @@ const index = () => {
                 </div>
                 <div className="self-stretch justify-end items-center gap-3 inline-flex">
                   <div className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
-                    <button className="cursor-pointer text-white text-sm font-medium font-['Inter'] leading-tight">
+                    <button className="cursor-pointer text-white text-sm font-medium leading-tight">
                       Đặt cọc
                     </button>
                   </div>

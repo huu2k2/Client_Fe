@@ -7,7 +7,7 @@ const Floor = () => {
     <div className="self-stretch h-[488px] flex-col justify-start items-start gap-6 flex">
 
       <div className="self-stretch h-6 flex-col justify-start items-start gap-1 flex">
-        <div className="self-stretch text-gray-900 text-lg font-medium font-['Inter'] leading-normal">
+        <div className="self-stretch text-gray-900 text-lg font-medium leading-normal">
           Tầng 1
         </div>
       </div>

@@ -10,9 +10,9 @@ const index = () => {
       </div>
 
       <div className="self-stretch w-ful h-40 py-10 shadow flex-col justify-center items-start gap-6 flex">
-        <div className="self-stretch px-[280px] justify-between items-center  flex">
+        <div className="self-stretch w-full px-[280px] justify-between items-center  flex">
           <div className="flex flex-col gap-6 w-full  ">
-            <div className="text-white text-3xl font-bold font-['Inter'] leading-9">
+            <div className="text-white text-3xl font-bold  leading-9">
               Danh sách phòng trống
             </div>
           <GroupCheckbox/>
@@ -26,10 +26,10 @@ const index = () => {
                   src="https://via.placeholder.com/44x44"
                 />
                 <div className="flex-col justify-start items-start gap-1 inline-flex">
-                  <div className="text-black text-base font-medium font-['Inter'] leading-normal">
+                  <div className="text-black text-base font-medium  leading-normal">
                     Nguyễn văn A
                   </div>
-                  <div className="text-zinc-500 text-xs font-normal font-['Inter'] leading-none">
+                  <div className="text-zinc-500 text-xs font-normal  leading-none">
                     Chủ nhà
                   </div>
                 </div>
@@ -44,18 +44,18 @@ const index = () => {
            
             <div className="justify-center items-center gap-2 inline-flex">
               <div className="px-2 flex-col justify-start items-start inline-flex">
-                <div className="w-[120px] text-zinc-500 text-xs font-normal font-['Inter'] leading-none">
+                <div className="w-[120px] text-zinc-500 text-xs font-normal  leading-none">
                   Phòng sắp trống
                 </div>
-                <div className="text-black text-base font-medium font-['Inter'] leading-normal">
+                <div className="text-black text-base font-medium  leading-normal">
                   11
                 </div>
               </div>
               <div className="px-2 flex-col justify-start items-start inline-flex">
-                <div className="w-[120px] text-zinc-500 text-xs font-normal font-['Inter'] leading-none">
+                <div className="w-[120px] text-zinc-500 text-xs font-normal  leading-none">
                   Phòng trống
                 </div>
-                <div className="text-black text-base font-medium font-['Inter'] leading-normal">
+                <div className="text-black text-base font-medium  leading-normal">
                   07
                 </div>
               </div>

@@ -15,7 +15,7 @@ const Body = () => {
                   <div className="p-2 bg-rose-950 rounded-lg justify-center items-center flex">
                     <img src={ImageSpeaker} alt="spearker" />
                   </div>
-                  <div className="text-white text-base font-medium font-['Inter'] leading-normal">
+                  <div className="text-white text-base font-medium leading-normal">
                     Nội dung ưu đãi sale
                   </div>
                 </div>
