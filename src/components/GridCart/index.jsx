@@ -38,7 +38,7 @@ const Index = ({ id, money, address }) => {
   }, []);
 
   useEffect(() => {
-    if ((location.pathname === "/similarRooms" && money!== null && address!==null) || id !==null) {
+    if ((location.pathname === "/similarRooms" && money !== null && address !== null) || id !== null) {
       handleClickSearch();
     }
   }, [filterData]);

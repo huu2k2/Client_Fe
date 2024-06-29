@@ -12,7 +12,7 @@ const router = {
   element: (
     <LazyWrapper>
       <ServicesContextHook>
-      <PageHomeMain />
+        <PageHomeMain />
       </ServicesContextHook>
     </LazyWrapper>
   ),
@@ -25,7 +25,7 @@ const router = {
       path: "similarRooms?*",
       element: <HomePage />,
     },
-  
+
     {
       path: "detail/:id/room/:roomId",
       element: (
@@ -35,7 +35,7 @@ const router = {
       ),
     },
     {
-      path:'/danh_sach_phong_yeu_thich',
+      path: '/danh_sach_phong_yeu_thich',
       element: <PageHomeManagement />,
     },
   ],
