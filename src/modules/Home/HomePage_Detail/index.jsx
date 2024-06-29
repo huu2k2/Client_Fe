@@ -7,17 +7,18 @@ import { ModalPutRoom } from "@components/Modal";
 import { useBooleanIsShowModal } from "@customhooks";
 
 import { useParams } from 'react-router-dom';
-import { useGetHolder, useQueryFilterData, useSetIdRoomServices } from "../../../customHooks";
+import { useGetHolder, useGetInfoItem, useQueryFilterData, useSetIdRoomServices } from "../../../customHooks";
 import { useEffect } from "react";
 const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const [setIsServices] = useSetIdRoomServices()
-  const [filterData] = useQueryFilterData()
+ const [address,price] =useGetInfoItem()
   useEffect(() => {
     setIsServices(roomId)
   }, [roomId])
   const [holder,rooms] = useGetHolder()
+ 
   return (
     <>
       {isShowModal && (
@@ -38,7 +39,7 @@ const index = () => {
         <Category />
         <div className="flex flex-col gap-14 h-fit">
           <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money ={null} address={null}/>
-          <RoomOrder title={`Phòng tương tự `} data={id} money ={filterData.Price} address={filterData.Address}/>
+          <RoomOrder title={`Phòng tương tự `} data={null} money ={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')}/>
         </div>
       </div>
     </>

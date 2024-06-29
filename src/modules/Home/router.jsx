@@ -22,9 +22,10 @@ const router = {
       element: <HomePage />,
     },
     {
-      path: "similarRooms/:idroom",
+      path: "similarRooms?*",
       element: <HomePage />,
     },
+  
     {
       path: "detail/:id/room/:roomId",
       element: (

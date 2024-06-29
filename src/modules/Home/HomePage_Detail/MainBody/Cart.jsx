@@ -15,8 +15,8 @@ const Cart = () => {
     // setIsShow(!isShow)
   };
   const { id, roomId } = useParams();
-  const { data: images, error, isLoading } = useGetImagesQuery(id);
- 
+  const { data: images, error, isLoading } = useGetImagesQuery(roomId);
+
   return (
     <>
       <div className="w-[557px] h-fit gap-2 flex flex-col ">
@@ -32,14 +32,14 @@ const Cart = () => {
         <div className="w-full h-[102px] gap-2 flex ">
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
             <img
-              src={images?.response[0]?.url}
+              src={images?.response[1]?.url}
               alt="hinh anh tiep theo"
             />
           </div>
 
           <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
             <img
-              src={images?.response[0]?.url}
+              src={images?.response[2]?.url}
               alt="hinh anh tiep theo"
             />
           </div>
@@ -51,7 +51,7 @@ const Cart = () => {
             className="w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50"
           >
             <img
-              src={images?.response[0]?.url }
+              src={images?.response[3]?.url }
               alt="hinh anh tiep theo"
             />
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
@@ -59,7 +59,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        <ShowImages /> 
+        <ShowImages images={images}/> 
          
         <div className="nthd_flex_between_full h-fit pt-8  ">
           <div className="w-[196px] h-fit gap-6 flex flex-col">

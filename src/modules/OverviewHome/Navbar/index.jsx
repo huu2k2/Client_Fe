@@ -1,90 +1,84 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  HiOutlineMenuAlt3 as Bars3Icon,
-  HiOutlineBell as BellIcon,
-  HiOutlineX as XMarkIcon,
-} from "react-icons/hi";
-import Logo from "../../../assets/logo1.png";
-const navigation = [
-  { name: "Danh sách phòng trống", href: "", current: true },
-  { name: "Chính sách", href: "/policy", current: false },
-  // { name: "Đặt lịch dẫn khách", href: "/book", current: false },
-  // { name: "Đặt cọc giữ chỗ", href: "/deposit", current: false },
-];
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import logo from '../../../assets/logo1.png';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+const Index = () => {
+  const { idHome } = useParams();
+  const location = useLocation();
+  const [activeLink, setActiveLink] = useState(0); // State để lưu trạng thái của liên kết được chọn
 
-export default function index({ page }) {
+  useEffect(() => {
+    if (location.pathname.includes('policies')) {
+      setActiveLink(1);
+    } else if (location.pathname.includes('booking')) {
+      setActiveLink(2);
+    } else if (location.pathname.includes('deposit')) {
+      setActiveLink(3);
+    } else {
+      setActiveLink(0);
+    }
+  }, [location.pathname]);
+
+  // Hàm xử lý khi click vào một liên kết
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
+
   return (
-    <Disclosure as="nav" className="bg-black">
-      {({ open }) => (
-        <>
-          <div className="mx-auto w-4/5 px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between border-b-2 border-gray-600">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-rose-400 hover:bg-rose-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img className="h-6 w-auto" src={Logo} alt="Your Company" />
-                </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <button
-                        onClick={() => {
-                          //   handleLink(item.href, params.id);
-                        }}
-                        key={item.name}
-                        className={
-                          "bg-rose-700 text-white hover:bg-rose-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                        }
-                        // aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"></div>
-            </div>
+    <div className="w-[1920px] h-16 bg-black justify-between items-center flex flex-col">
+      <div className="grow shrink basis-0 self-stretch px-[280px] justify-start items-center gap-[738px] flex">
+        <div className="justify-start items-center gap-6 flex">
+          <div className="w-[135px] h-6 pr-[0.48px] justify-center items-center flex">
+            <Link to={'/'} className="w-[134.52px] h-6 relative">
+              <img className="w-full h-full" src={logo} alt="Logo" />
+            </Link>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-rose-900 text-white"
-                      : "text-rose-300 hover:bg-rose-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+          <div className="justify-start items-start gap-4 flex">
+            {/* Sử dụng Link cho các liên kết và điều chỉnh CSS dựa trên activeLink */}
+            <Link
+              to={`/overview/${idHome}`}
+              className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
+                activeLink === 0 ? 'bg-rose-700' : ''
+              }`}
+              onClick={() => handleLinkClick(0)}
+            >
+              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">
+                Danh sách phòng trống
+              </p>
+            </Link>
+            <Link
+              to={`/overview/${idHome}/policies`}
+              className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
+                activeLink === 1 ? 'bg-rose-700' : ''
+              }`}
+              onClick={() => handleLinkClick(1)}
+            >
+              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Chính sách</p>
+            </Link>
+            <Link
+              to={`/overview/${idHome}/booking`}
+              className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
+                activeLink === 2 ? 'bg-rose-700' : ''
+              }`}
+              onClick={() => handleLinkClick(2)}
+            >
+              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Đặt lịch dẫn khách</p>
+            </Link>
+            <Link
+              to={`/overview/${idHome}/deposit`}
+              className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
+                activeLink === 3 ? 'bg-rose-700' : ''
+              }`}
+              onClick={() => handleLinkClick(3)}
+            >
+              <p className="text-white text-sm font-medium font-['Inter'] leading-tight">Đặt cọc giữ chỗ</p>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="w-[1360px] h-px bg-zinc-700" />
+    </div>
   );
-}
+};
+
+export default Index;

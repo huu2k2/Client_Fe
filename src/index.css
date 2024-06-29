@@ -3,112 +3,130 @@
 @tailwind utilities;
 
 * {
-    @apply font-main;
+  @apply font-main;
 }
-
+@layer components {
+    .custom-checkbox {
+      @apply appearance-none h-4 w-4 border border-rose-500 rounded cursor-pointer relative;
+    }
+  
+    .custom-checkbox:checked {
+      @apply bg-rose-500 border-transparent p-1;
+    }
+  
+    .custom-checkbox:checked::before {
+      content: "";
+      width: 15px;
+      background: white;
+      height: 15px;
+      mask: url('data:image/svg+xml,%3Csvg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M6.667 12L2 7.334l1.194-1.195 3.473 3.472L13.806 2 15 3.195 6.667 12z" fill="white"/%3E%3C/svg%3E') center / contain no-repeat;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  }
 /* nguyen thanh huu dev - nthd */
 
 /* flex  */
- 
-.nthd_flex{
-    @apply flex justify-center items-center;
+
+.nthd_flex {
+  @apply flex justify-center items-center;
 }
-.nthd_flex_between{
-    @apply flex justify-between items-center;
+.nthd_flex_between {
+  @apply flex justify-between items-center;
 }
-.nthd_flex_between_full{
-    @apply flex justify-between w-full;
+.nthd_flex_between_full {
+  @apply flex justify-between w-full;
 }
 
-.nthd_flex_col_between{
-    @apply flex flex-col justify-between;
+.nthd_flex_col_between {
+  @apply flex flex-col justify-between;
 }
-
 
 /* font  */
-.nthd_text_normal_sm{
-    @apply  font-normal text-sm;
+.nthd_text_normal_sm {
+  @apply font-normal text-sm;
 }
-.nthd_text_normal_lg{
-    @apply  font-normal text-lg;
+.nthd_text_normal_lg {
+  @apply font-normal text-lg;
 }
 
-.nthd_text_medium_lg{
-    @apply  font-medium text-lg;
+.nthd_text_medium_lg {
+  @apply font-medium text-lg;
 }
-.nthd_text_medium_sm{
-    @apply  font-medium text-sm;
+.nthd_text_medium_sm {
+  @apply font-medium text-sm;
 }
-.nthd_text_medium_base{
-    @apply  font-medium text-base;
+.nthd_text_medium_base {
+  @apply font-medium text-base;
 }
-.nthd_text_medium_sm_h20{
-    @apply  font-medium text-sm h-[20px];
+.nthd_text_medium_sm_h20 {
+  @apply font-medium text-sm h-[20px];
 }
 /* font color  */
 
-.nthd_text_normal_sm_text{
-    @apply  nthd_text_normal_sm text-[#888888];
+.nthd_text_normal_sm_text {
+  @apply nthd_text_normal_sm text-[#888888];
 }
-.nthd_text_normal_sm_text2{
-    @apply  nthd_text_normal_sm text-[#B45309];
+.nthd_text_normal_sm_text2 {
+  @apply nthd_text_normal_sm text-[#B45309];
 }
 .nthd_text_medium_sm_text {
-    @apply  nthd_text_medium_sm text-black;
+  @apply nthd_text_medium_sm text-black;
 }
-.nthd_semibold_2xl_text{
-    @apply  font-semibold text-2xl text-black;
+.nthd_semibold_2xl_text {
+  @apply font-semibold text-2xl text-black;
 }
 
 /* category _ item */
-.nthd_category_item{
-    @apply  w-fit h-9 p-2 rounded-lg bg-[#EFF6FF] font-normal text-sm text-[#2563EB];
+.nthd_category_item {
+  @apply w-fit h-9 p-2 rounded-lg bg-[#EFF6FF] font-normal text-sm text-[#2563EB];
 }
 
 /* BasicInterior _item  */
-.nthd_basicInterior_item{
-    @apply  w-fit h-5 gap-[7px] flex justify-start col-span-1;
+.nthd_basicInterior_item {
+  @apply w-fit h-5 gap-[7px] flex justify-start col-span-1;
 }
 
 /* Policy _ item  */
-.nthd_policy_item_th{
-    @apply  border-b border-t text-left py-3 px-6 font-medium text-sm tracking-wider text-[#6B7280] uppercase;
+.nthd_policy_item_th {
+  @apply border-b border-t text-left py-3 px-6 font-medium text-sm tracking-wider text-[#6B7280] uppercase;
 }
-.nthd_policy_item_td{
-    @apply  border-b text-left py-3 px-6 text-gray-500 text-sm leading-5 font-normal;
+.nthd_policy_item_td {
+  @apply border-b text-left py-3 px-6 text-gray-500 text-sm leading-5 font-normal;
 }
 
 /* animation */
 
-.nthd_animation_delay{
-    @apply transition delay-150 duration-300 ease-in-out;
+.nthd_animation_delay {
+  @apply transition delay-150 duration-300 ease-in-out;
 }
 .spinner-border {
-    @apply border-solid border-current border-r-transparent rounded-full;
-  }
+  @apply border-solid border-current border-r-transparent rounded-full;
+}
 
-  /* custom */ 
-  /* Thêm CSS này vào file CSS của bạn hoặc trong một thẻ <style> */
+/* custom */
+/* Thêm CSS này vào file CSS của bạn hoặc trong một thẻ <style> */
 .custom-scrollbar {
-    scrollbar-width: thin;          /* Firefox */
-    scrollbar-color: #888 #f3f3f3;  /* Firefox F3F3F3*/
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 1px;                     /* Width of the scrollbar */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1;            /* Background of the scrollbar track */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #888;         /* Color of the scrollbar thumb */
-    border-radius: 10px;            /* Roundness of the scrollbar thumb */
-    border: 1px solid #f1f1f1;      /* Padding around the scrollbar thumb */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #555;               /* Hover effect on the scrollbar thumb */
-  }
-  
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #888 #f3f3f3; /* Firefox F3F3F3*/
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Roundness of the scrollbar thumb */
+  border: 1px solid #f1f1f1; /* Padding around the scrollbar thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Hover effect on the scrollbar thumb */
+}

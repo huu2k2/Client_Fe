@@ -32,12 +32,12 @@ const index = ({ item }) => {
 
         <span
           onClick={() => setIsHeart(!isHeart)}
-          className={`absolute right-2 top-2 cursor-pointer  w-7 h-7 bg-white rounded-full flex justify-center items-center ${
+          className={`absolute right-2 top-2 cursor-pointer  w-7 h-7   rounded-full flex justify-center items-center ${
             isHeart ? "bg-red-700" : "bg-white"
-          } hover:bg-red-700 transition-colors duration-300 text-white`}
+          } hover:bg-red-700 transition-colors    `}
         >
           <AiOutlineHeart
-            className={`${isHeart ? "text-white" : "text-gray-700"} hover:text-white flex justify-center items-center`}
+            className={`${isHeart ?  "text-white":"text-black" } hover:text-white   flex justify-center items-center`}
           />
         </span>
       </div>

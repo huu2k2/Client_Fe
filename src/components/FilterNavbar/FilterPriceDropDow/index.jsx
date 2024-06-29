@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
-import {useQueryFilterData } from "@customhooks";
+import { useQueryFilterData } from "@customhooks";
+import { useLocation } from "react-router-dom";
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -23,18 +24,26 @@ const Index = () => {
   const handleChangOfRang = (e) => {
     setValueRang(parseInt(e.target.value));
   };
-  const [filterData,setFilterData] = useQueryFilterData();
+  const [filterData, setFilterData] = useQueryFilterData();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const idroom = queryParams.get("idRoom") || null;
+  useEffect(() => {
+    if (!idroom && filterData.Price > 0) {
+      setValueRang(filterData.Price/100000);
+    }
+  }, [filterData.Price]);
+  
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev,  Price:valueRang }))
+    setFilterData((prev) => ({ ...prev, Price: valueRang }));
     setIsOpen(false);
   };
 
   const handleReset = () => {
-    setFilterData((prev) => ({ ...prev,  Price:null }))
-     
-     setValueRang(0);
+    setFilterData((prev) => ({ ...prev, Price: null }));
+    setValueRang(0);
   };
-   
+
   return (
     <div className="relative cursor-pointer" ref={dropdownRef}>
       <div
@@ -66,9 +75,10 @@ const Index = () => {
               name="vol"
               min="0"
               max="15"
-              className="w-full"
+              className="w-full "
               onChange={handleChangOfRang}
               value={valueRang}
+               
             />
           </div>
         </div>
