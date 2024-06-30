@@ -2,8 +2,10 @@ import * as yup from "yup";
 
 const schema = yup
   .object({
-    salesMan: yup.string().required(),
-    age: yup.number().positive().integer().required(),
+    phoneNumber: yup.string().required(),
+    customerName: yup.string().required(),
+    dateView: yup.string().required(),
+    note: yup.string().required(),
   })
   .required();
 

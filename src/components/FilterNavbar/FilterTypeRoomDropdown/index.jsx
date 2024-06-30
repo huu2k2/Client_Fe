@@ -35,7 +35,7 @@ const index = () => {
   };
   const [_, setFilterData] = useQueryFilterData();
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, Category: [...selectedRooms] }))
+    setFilterData((prev) => ({ ...prev, categories: [...selectedRooms] }))
     setIsOpen(false)
   };
   return (
@@ -89,7 +89,7 @@ const index = () => {
             onChange={() => handleCheckboxChange("3PN")}
           />
           <InputCheckBox
-            value={"Ground"}
+            value={"MB"}
             label={"Mặt bằng"}
             checked={selectedRooms.includes("Ground")}
             onChange={() => handleCheckboxChange("Ground")}

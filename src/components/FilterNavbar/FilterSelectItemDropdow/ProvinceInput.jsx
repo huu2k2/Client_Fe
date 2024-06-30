@@ -3,8 +3,8 @@ import { AiOutlineEnvironment, AiFillCaretRight } from "react-icons/ai";
 import { BsBuilding } from "react-icons/bs";
 import { useGetDistrictsQuery, useGetWardsQuery } from "@apis/slice/provices";
 import SelectCompoment from "./SelectCompoment";
-import { useQueryFilterData } from "@customhooks";
-const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
+import {useQueryFilterData } from "@customhooks";
+const ProvinceInput = ({ setShow, isShow ,setIsOpen}) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { data: dataProvices } = useGetDistrictsQuery();
   const [selectedOptionWard, setSelectedOptionWard] = useState(null);
@@ -13,16 +13,16 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
   const handleChange = () => {
     setShow(!isShow);
   };
-  const [_, setFilterData] = useQueryFilterData();
+  const [_,setFilterData] = useQueryFilterData();
   const handlePrint = () => {
-    setFilterData((prev) => ({ ...prev, District: selectedOption?.value, Ward: selectedOptionWard?.value }))
+    setFilterData((prev) => ({ ...prev,  districtId:selectedOption?.value,wardId:selectedOptionWard?.value }))
     setIsOpen(false)
   };
 
   const handleDelete = () => {
     setSelectedOption(null);
     setSelectedOptionWard(null);
-    setFilterData((prev) => ({ ...prev, District: "", Ward: "" }))
+    setFilterData((prev) => ({ ...prev,  districtId:null,districtId:null}))
   };
 
   return (
@@ -40,7 +40,7 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
             Nhập vị trí và khoảng cách tìm kiếm
           </button> */}
           {/* <AiFillCaretRight onClick={handleChange} className="cursor-pointer" /> */}
-          <span className="w-[236px] outline-none text-sm">
+          <span  className="w-[236px] outline-none text-sm">
             Tp.Hồ Chí Minh
           </span>
         </div>

@@ -26,8 +26,17 @@ const InfoRoom = () => {
     }
   };
 
-  let Arr = brokeragePolicy?.saleIncentives?.split('\n')?.map(line => line.trim());
-  const { id } = useParams();
+  let Arr = brokeragePolicy?.saleIncentives
+    ?.split("\n")
+    ?.map((line) => line.trim());
+
+  const { id, roomId } = useParams();
+
+  const handleClick = () => {
+    localStorage.setItem("idroom", roomId);
+    // Chuyển hướng
+    changeLink(`/overview/${id}`);
+  };
   return (
     <>
       <div className="w-[723px] h-[578px] gap-4 flex flex-col justify-between">
@@ -53,8 +62,8 @@ const InfoRoom = () => {
               <ul className="list-disc">
                 <li className="nthd_text_normal_sm_text2">
                   Chương trình sale áp dụng từ ngày{" "}
-                  {formatDateType(brokeragePolicy?.startDate )} - {" "}
-                  {formatDateType(brokeragePolicy?.endDate  )}
+                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
+                  {formatDateType(brokeragePolicy?.endDate)}
                 </li>
                 {Arr &&
                   Arr.map((item, index) => (
@@ -92,7 +101,10 @@ const InfoRoom = () => {
         <div className="flex justify-between w-full items-center h-40">
           <div className="text-[28px] flex font-semibold leading-[28px] text-red-700">
             {new Intl.NumberFormat("vi-VN").format(price)} VND
-            <span className="font-normal text-gray-500 text-base"> / Khách</span>
+            <span className="font-normal text-gray-500 text-base">
+              {" "}
+              / Khách
+            </span>
           </div>
 
           {/* button */}
@@ -104,14 +116,13 @@ const InfoRoom = () => {
                 background={"bg-red-700"}
               />
             </div>
-
-            <Link to={`/overview/${id}`} className="mx-2">
+            <div onClick={handleClick}>
               <Button
                 text={"Tổng quan nhà trọ"}
                 color={"text-red-700"}
                 background={"bg-red-100"}
               />
-            </Link>
+            </div>
           </div>
         </div>
       </div>

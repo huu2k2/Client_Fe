@@ -1,9 +1,27 @@
 import React from "react";
 import GroupInput from "./GroupInput";
 import { useGetInfoItem } from "@customhooks/ServicesCustomHook";
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import schema from "./schema";
+import { usePostScheduleRoomMutation } from "../../../apis/slice/ScheduleSeeRoom";
 
 const index = () => {
-  const [address, price] = useGetInfoItem();
+  const [address] = useGetInfoItem();
+ 
+  const [postScheduleRoom, { isLoading, error }] = usePostScheduleRoomMutation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
+  const onSubmit = (data) =>{
+
+    console.log(data)
+    console.log("id",localStorage.getItem('idroom'))
+  }
   return (
     <>
       <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
@@ -18,7 +36,8 @@ const index = () => {
         <div className="w-full h-[778px] relative">
           <div className="w-full h-32 left-0 top-0 absolute bg-black" />
           <div className="h-[728px] px-10 py-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex">
-            <div className="self-stretch h-[680px] flex-col justify-start items-start gap-8 flex">
+          {/* form */}
+            <form onSubmit={handleSubmit(onSubmit)} className="self-stretch h-[680px] flex-col justify-start items-start gap-8 flex">
               <div className="self-stretch h-[589px] flex-col justify-start items-start gap-10 flex">
                 <div className="self-stretch h-[589px] flex-col justify-start items-start gap-5 flex">
                   <div className="self-stretch h-12 flex-col justify-start items-start gap-1 flex">
@@ -30,24 +49,25 @@ const index = () => {
                     </div>
                   </div>
 
-                  <div className="self-stretch h-[521px] flex-col justify-start items-start gap-5 flex">
-                    <GroupInput />
-                  </div>
+                  <GroupInput  register={register} errors={errors}/>
                 </div>
               </div>
+
               <div className="self-stretch h-[59px] flex-col justify-start items-start gap-5 flex">
                 <div className="self-stretch h-px flex-col justify-start items-start flex">
                   <div className="self-stretch h-px bg-gray-200" />
                 </div>
                 <div className="self-stretch justify-end items-center gap-3 inline-flex">
-                  <button className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
+                  <button type="submit" className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
                     <div className="text-white text-sm font-medium leading-tight">
                       Đặt lịch
                     </div>
                   </button>
                 </div>
               </div>
-            </div>
+
+            </form>
+            {/* form */}
           </div>
         </div>
       </div>

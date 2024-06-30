@@ -29,18 +29,18 @@ const Index = () => {
   const queryParams = new URLSearchParams(location.search);
   const idroom = queryParams.get("idRoom") || null;
   useEffect(() => {
-    if (!idroom && filterData.Price > 0) {
-      setValueRang(filterData.Price/100000);
+    if (!idroom && filterData.price > 0) {
+      setValueRang(filterData.price/100000);
     }
-  }, [filterData.Price]);
+  }, [filterData.price]);
   
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, Price: valueRang*100000 }));
+    setFilterData((prev) => ({ ...prev, price: valueRang*100000 }));
     setIsOpen(false);
   };
 
   const handleReset = () => {
-    setFilterData((prev) => ({ ...prev, Price: null }));
+    setFilterData((prev) => ({ ...prev, price: null }));
     setValueRang(0);
   };
 

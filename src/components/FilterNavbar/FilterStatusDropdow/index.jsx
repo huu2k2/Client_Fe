@@ -36,7 +36,7 @@ const index = () => {
   };
   const [_, setFilterData] = useQueryFilterData();
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, Status: [...selectedStatusRooms] }))
+    setFilterData((prev) => ({ ...prev, status: [...selectedStatusRooms] }))
     setIsOpen(false)
   };
   return (

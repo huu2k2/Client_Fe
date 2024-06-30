@@ -56,12 +56,12 @@ const Index = ({ id, money, address }) => {
   }, [data]);
 
   return (
-    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
+    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
       {items.length > 0 ? (
         items.map((item, index) => <CartRoom key={index} item={item} />)
       ) : (
-        !isFetching && <p className="text-rose-500">không tìm thấy phòng!</p>
+        !isFetching &&  ( <div className="w-full  flex justify-center items-center"><p className="text-rose-500">không tìm thấy phòng!</p></div> )
       )}
     </div>
   );

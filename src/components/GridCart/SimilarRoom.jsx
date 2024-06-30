@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartRoom from "../Cart_item";
  
 import CustomLoading from "../CustomLoading";
-import { useGetRoomsFilterQuery } from "../../apis/slice/rooms";
+import { useGetRoomsFilterMutation } from "../../apis/slice/rooms";
 
 const SimilarRoom = ({ id,money,address }) => {
   const query = {
@@ -24,7 +24,7 @@ const SimilarRoom = ({ id,money,address }) => {
     return acc;
   }, {});
 
- const {data, isFetching, isError} = useGetRoomsFilterQuery(filteredParams)
+ const {data, isFetching, isError} = useGetRoomsFilterMutation(filteredParams)
 
  if(isFetching){
   return <CustomLoading />
