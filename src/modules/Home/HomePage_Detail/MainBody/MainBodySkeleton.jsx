@@ -8,10 +8,6 @@ const MainBodySkeleton = () => {
     }
     return (
         <div className="w-[557px] ">
-
-
-
-
             <div className="nthd_flex_between_full h-fit pt-8  ">
                 <div className="w-[196px] h-fit gap-6 flex flex-col">
                     <div className="nthd_flex_between_full">
