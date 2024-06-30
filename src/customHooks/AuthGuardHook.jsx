@@ -1,49 +1,42 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { Navigate } from "react-router-dom";
 
 // Tạo AuthContext
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(undefined);
 
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            // Giả sử bạn có một hàm để kiểm tra token
-            // const isValid = checkTokenExpiration(token);
-            const isValid = true; // Tạm thời để isValid là true cho ví dụ
-            if (isValid) {
-                setIsAuthenticated(true);
-            } else {
-                localStorage.removeItem('accessToken');
-                setIsAuthenticated(false);
-            }
-        } else {
-            setIsAuthenticated(false);
-        }
-    }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && token.split(".").length === 3) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+      localStorage.removeItem("token");
+    }
+  }, []);
 
-    return (
-        <AuthContext.Provider value={{ isAuthenticated }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+  return (
+    <AuthContext.Provider value={{ isAuthenticated }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export default AuthProvider;
 
 // Component bảo vệ route
 export const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
-    if (isAuthenticated === undefined) {
-        return null; // hoặc một spinner loading
-    }
+  if (isAuthenticated === undefined) {
+    return null; // hoặc một spinner loading
+  }
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-    return children;
+  return children;
 };

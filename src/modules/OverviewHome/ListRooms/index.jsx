@@ -5,7 +5,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { useGetHolder } from "../../../customHooks/ServicesCustomHook";
 const index = () => {
   const [holder,rooms] = useGetHolder()
-  console.log(holder,rooms)
+ 
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center  flex  ">
       <div className="h-px flex-col justify-start items-start flex">

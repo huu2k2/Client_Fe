@@ -10,7 +10,7 @@ import { useClickSearchFilter } from "@customhooks/FilterCustomHook";
 
 const index = () => {
   const [setFilterData] = useQueryFilterData();
-  console.log("🚀 ~ index ~ setFilterData:", setFilterData)
+ 
 
   const handleSearch = useClickSearchFilter()
 
