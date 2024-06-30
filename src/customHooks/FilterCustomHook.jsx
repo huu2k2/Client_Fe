@@ -67,7 +67,7 @@ useEffect(()=>{
     }),
     [filterData, setFilterData, data, isLoading, isError, error, handleClickSearch]
   );
-console.log(filterData)
+ 
   return (
     <FilterHookContext.Provider value={contextValue}>
       {children}

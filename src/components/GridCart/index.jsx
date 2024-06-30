@@ -7,37 +7,31 @@ import {
 } from "@customhooks/FilterCustomHook";
 import CustomLoading from "../CustomLoading";
 import { useLocation } from "react-router-dom";
-
+import { useGetDistrictsQuery } from "../../apis/slice/provices";
+const findDistrictId = (address, districts) => {
+  const district = districts?.results.find(
+    (district) => address === district.district_name
+  );
+  return district ? district.district_id : null;
+};
 const Index = ({ id, money, address }) => {
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
 
+  const { data: datadistrict } = useGetDistrictsQuery();
   const query = {
-    HouseId: id,
-    District: address,
-    Price: Number(money),
+    houseId: id,
+    District: findDistrictId(address, datadistrict),
+    price: money,
   };
-
-  const filteredParams = Object.keys(query).reduce((acc, key) => {
-    const value = query[key];
-    if (
-      value !== null &&
-      value !== undefined &&
-      value !== "" &&
-      value !== 0 &&
-      (!Array.isArray(value) || value.length > 0)
-    ) {
-      acc[key] = value;
-    }
-    return acc;
-  }, {});
+ 
 
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
 
   useEffect(() => {
-    setFilterData({ ...filterData, ...filteredParams });
-  }, [id, address, money]);
+    setFilterData({ ...filterData, ...query});
+  }, []);
 
   useEffect(() => {
     if ((location.pathname === "/similarRooms" && money !== null && address !== null) || id !== null) {
@@ -56,7 +50,7 @@ const Index = ({ id, money, address }) => {
   }, [data]);
 
   return (
-    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
+    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
       {items.length > 0 ? (
         items.map((item, index) => <CartRoom key={index} item={item} />)
