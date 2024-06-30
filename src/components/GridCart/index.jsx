@@ -24,17 +24,21 @@ const Index = ({ id, money, address }) => {
     District: findDistrictId(address, datadistrict),
     price: money,
   };
- 
 
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
 
   useEffect(() => {
-    setFilterData({ ...filterData, ...query});
+    setFilterData({ ...filterData, ...query });
   }, []);
 
   useEffect(() => {
-    if ((location.pathname === "/similarRooms" && money !== null && address !== null) || id !== null) {
+    if (
+      (location.pathname === "/similarRooms" &&
+        money !== null &&
+        address !== null) ||
+      id !== null
+    ) {
       handleClickSearch();
     }
   }, [filterData, location.pathname]);
@@ -48,14 +52,17 @@ const Index = ({ id, money, address }) => {
 
     return () => clearTimeout(timer);
   }, [data]);
-
+ 
   return (
     <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
+      {isFetching && <CustomLoading />}
       {items.length > 0 ? (
         items.map((item, index) => <CartRoom key={index} item={item} />)
       ) : (
-        !isFetching &&  ( <div className="w-full  flex justify-center items-center"><p className="text-rose-500">không tìm thấy phòng!</p></div> )
+        <div className="w-full  flex justify-center items-center">
+          <p className="text-rose-500">không tìm thấy phòng!</p>
+        </div>
       )}
     </div>
   );
