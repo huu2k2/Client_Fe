@@ -15,7 +15,7 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
   };
   const [_, setFilterData] = useQueryFilterData();
   const handlePrint = () => {
-    setFilterData((prev) => ({ ...prev, district: selectedOption?.value, ward: selectedOptionWard?.value }))
+    setFilterData((prev) => ({ ...prev, District: selectedOption?.value, Ward: selectedOptionWard?.value }))
     setIsOpen(false)
   };
 

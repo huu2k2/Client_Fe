@@ -60,12 +60,12 @@ const index = () => {
         {/* show select  */}
         <div className="w-fit h-fit flex flex-col justify-start gap-4">
 
-          <InputCheckBox value={"1"} label={"Phòng trống"}
+          <InputCheckBox value={"0"} label={"Phòng trống"}
+            checked={selectedStatusRooms.includes("0")}
+            onChange={() => handleCheckboxChange("0")} />
+          <InputCheckBox value={"1"} label={"Phòng sắp trống"}
             checked={selectedStatusRooms.includes("1")}
             onChange={() => handleCheckboxChange("1")} />
-          <InputCheckBox value={"3"} label={"Phòng sắp trống"}
-            checked={selectedStatusRooms.includes("3")}
-            onChange={() => handleCheckboxChange("3")} />
 
         </div>
 

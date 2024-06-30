@@ -22,7 +22,6 @@ const index = () => {
   }, [dropdownRef]);
 
   const handleCheckboxChange = (value) => {
-    console.log("🚀 ~ handleCheckboxChange ~ value:", value)
 
     setSelectedRooms((prevSelectedRooms) =>
       prevSelectedRooms.includes(value)

@@ -3,19 +3,19 @@ import Select from "react-select";
 import { useQueryFilterData } from "@customhooks";
 
 const SelectCompoment = ({ selectedOption, setSelectedOption, type, data }) => {
-  const [filterData] =useQueryFilterData()
+  const [filterData] = useQueryFilterData()
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
     if (data && data.results) {
       const Datas = data.results;
-      if(filterData.District && type === "district" ){
-        const filteredData = Datas.filter((item) => item.district_name === filterData.District);
-        setSelectedOption({label:filterData.District,value:filteredData[0].district_id })
+      if (filterData.District && type === "district") {
+        const filteredData = Datas.filter((item) => item.district_name === filterData?.District);
+        setSelectedOption({ label: filterData?.District, value: filteredData[0]?.district_id })
       }
       const formattedOptions = Datas.map((Data) => ({
-        value: type === "district" ? Data.district_id : Data.ward_id,
-        label: type === "district" ? Data.district_name : Data.ward_name,
+        value: type === "district" ? Data.district_id : Data?.ward_id,
+        label: type === "district" ? Data.district_name : Data?.ward_name,
       }));
       setOptions(formattedOptions);
     }
@@ -23,13 +23,13 @@ const SelectCompoment = ({ selectedOption, setSelectedOption, type, data }) => {
 
   const handleChange = (option) => {
     setSelectedOption(option);
-   
+
   };
 
   return (
     <div className="w-full h-[38px] rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
       <Select
-        placeholder={type === "district" ? (filterData.District ?filterData.District:"Chọn Quận / Huyện" ): "Chọn Phường"}
+        placeholder={type === "district" ? (filterData?.District ? filterData.District : "Chọn Quận / Huyện") : "Chọn Phường"}
         value={selectedOption}
         onChange={handleChange}
         options={options}
