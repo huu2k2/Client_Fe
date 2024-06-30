@@ -14,9 +14,11 @@ const SimilarRoom = ({ id, money, address }) => {
   const { data: datadistrict } = useGetDistrictsQuery();
   const query = {
     houseId: id,
-    districtId: findDistrictId(address, datadistrict),
+    District: findDistrictId(address, datadistrict),
     price: money,
   };
+  console.log("query", query);
+
   const [getRoomsFilter, { data, isLoading, isError, error }] =
     useGetRoomsFilterMutation();
   useEffect(() => {
