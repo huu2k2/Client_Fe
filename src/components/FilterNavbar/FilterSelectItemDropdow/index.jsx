@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import ProvinceInput from "./ProvinceInput";
- 
+import DistancesInput from "./DistancesInput";
 
 const Location = () => {
   const [isOpen, setIsOpen] = useState(false);

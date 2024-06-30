@@ -33,13 +33,13 @@ const Index = () => {
   const idroom = queryParams.get("idRoom") || null;
 
   useEffect(() => {
-    if (!idroom && filterData.price > 0) {
-      setValueRang(filterData.price / 1000000);
+    if (!idroom && filterData.Price > 0) {
+      setValueRang(filterData.Price / 100000);
     }
   }, [filterData.Price]);
 
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, price: valueRang > 0 ? valueRang * 1000000 : null }));
+    setFilterData((prev) => ({ ...prev, Price: valueRang * 100000 }));
     setIsOpen(false);
   };
 
