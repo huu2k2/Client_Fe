@@ -1,27 +1,35 @@
 import React, { useState } from "react";
-import { AiOutlineEnvironment, AiFillCaretRight } from "react-icons/ai";
+import { AiOutlineEnvironment } from "react-icons/ai";
 import { BsBuilding } from "react-icons/bs";
 import { useGetDistrictsQuery, useGetWardsQuery } from "@apis/slice/provices";
 import SelectCompoment from "./SelectCompoment";
 import { useQueryFilterData } from "@customhooks";
-const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+
+const ProvinceInput = ({
+  setIsOpen,
+  selectedOption,
+  setSelectedOption,
+  selectedOptionWard,
+  setSelectedOptionWard
+}) => {
   const { data: dataProvices } = useGetDistrictsQuery();
   const { data: dataWard } = useGetWardsQuery(selectedOption?.value);
 
-  const handleChange = () => {
-    setShow(!isShow);
-  };
   const [_, setFilterData] = useQueryFilterData();
+
   const handlePrint = () => {
-    setFilterData((prev) => ({ ...prev, districtId: selectedOption?.value, wardId: selectedOptionWard?.value }))
-    setIsOpen(false)
+    setFilterData((prev) => ({
+      ...prev,
+      district: selectedOption?.label,
+      ward: selectedOptionWard?.label
+    }));
+    setIsOpen(false);
   };
 
   const handleDelete = () => {
     setSelectedOption(null);
     setSelectedOptionWard(null);
-    setFilterData((prev) => ({ ...prev, districtId: null, districtId: null }))
+    setFilterData((prev) => ({ ...prev, district: "", ward: "" }));
   };
 
   return (
@@ -29,18 +37,14 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
       <div className="h-[78px] w-full gap-4 flex flex-col items-start self-stretch">
         <div className="w-full h-6 gap-2 flex items-center">
           <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
-          <span className="text-Black text-base font-medium leading-6">
+          <span className="text-black text-base font-medium leading-6">
             Tìm kiếm quanh bạn
           </span>
         </div>
 
         <div className="w-full h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
-          {/* <button type="button" className="w-[236px] outline-none text-sm">
-            Nhập vị trí và khoảng cách tìm kiếm
-          </button> */}
-          {/* <AiFillCaretRight onClick={handleChange} className="cursor-pointer" /> */}
           <span className="w-[236px] outline-none text-sm">
-            Tp.Hồ Chí Minh
+            {selectedOption ? selectedOption.label : "Tp.Hồ Chí Minh"}
           </span>
         </div>
       </div>
@@ -48,7 +52,7 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
       <div className="h-fit w-full gap-4 flex flex-col items-start self-stretch">
         <div className="w-full h-6 gap-2 flex items-center">
           <BsBuilding className="w-5 h-5 text-[#888888]" />
-          <span className="text-Black text-base font-medium leading-6">
+          <span className="text-black text-base font-medium leading-6">
             Tìm theo khu vực
           </span>
         </div>
@@ -60,12 +64,12 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
           type="district"
         />
 
-        {/* <SelectCompoment
+        <SelectCompoment
           data={dataWard}
           selectedOption={selectedOptionWard}
-          setSelectedOption={selectedOptionWard}
+          setSelectedOption={setSelectedOptionWard}
           type="ward"
-        /> */}
+        />
       </div>
 
       <div className="w-full h-[34px] flex justify-start gap-2 self-stretch">

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import ProvinceInput from "./ProvinceInput";
- 
+
 
 const Location = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,8 +41,8 @@ const Location = () => {
         <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
         <div className="w-auto block h-full text-gray-500 text-base font-normal leading-5 truncate">
           <span className=" ">
-            {selectedOption
-              ? `${selectedOption?.label}`
+            {selectedOption || selectedOptionWard
+              ? `${selectedOption?.label}, ${selectedOptionWard.label}`
               : "Toàn quốc"}
           </span>
         </div>
