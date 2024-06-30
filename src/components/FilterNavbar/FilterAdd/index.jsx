@@ -57,13 +57,13 @@ const Index = () => {
   const handleApply = () => {
     setFilterData((prev) => ({
       ...prev,
-      Furnitures: [...selectedAddFurniture],
-      Parking: checkForValueOfUtilities(selectedAddUtilities, "Parking"),
-      Security: checkForValueOfUtilities(selectedAddUtilities, "Security"),
-      Elevator: checkForValueOfUtilities(selectedAddUtilities, "Elevator"),
-      Washing: checkForValueOfUtilities(selectedAddUtilities, "Washing"),
-      Pet: checkForValueOfUtilities(selectedAddUtilities, "Pet"),
-      FreeHours: checkForValueOfUtilities(selectedAddUtilities, "FreeHours"),
+      furnitures: [...selectedAddFurniture],
+      parking: checkForValueOfUtilities(selectedAddUtilities, 'Parking'),
+      security: checkForValueOfUtilities(selectedAddUtilities, 'Parking'),
+      elevator: checkForValueOfUtilities(selectedAddUtilities, 'Elevator'),
+      washing: checkForValueOfUtilities(selectedAddUtilities, 'Washing'),
+      pet: checkForValueOfUtilities(selectedAddUtilities, 'Pet'),
+      freeHour: checkForValueOfUtilities(selectedAddUtilities, 'FreeHours'),
     }));
     setIsOpen(false);
   };

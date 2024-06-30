@@ -1,8 +1,11 @@
 import React from "react";
 import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
-
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { useGetHolder } from "../../../customHooks/ServicesCustomHook";
 const index = () => {
+  const [holder,rooms] = useGetHolder()
+ 
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center  flex  ">
       <div className="h-px flex-col justify-start items-start flex">
@@ -15,7 +18,7 @@ const index = () => {
             <div className="text-white text-3xl font-bold  leading-9">
               Danh sách phòng trống
             </div>
-          <GroupCheckbox/>
+            <GroupCheckbox />
           </div>
 
           <div className="w-80 h-fit px-4 py-3 bg-neutral-50 rounded-2xl flex-col justify-start items-start gap-4 inline-flex">
@@ -27,28 +30,30 @@ const index = () => {
                 />
                 <div className="flex-col justify-start items-start gap-1 inline-flex">
                   <div className="text-black text-base font-medium  leading-normal">
-                    Nguyễn văn A
+                    {holder?.fullName}
                   </div>
-                  <div className="text-zinc-500 text-xs font-normal  leading-none">
+                  <div className="text-zinc-500 text-xs font-normal  leading-none ">
                     Chủ nhà
                   </div>
                 </div>
               </div>
               <div className="w-6 h-6 relative">
-              <div className="w-6 h-6 left-0 top-0 absolute bg-rose-600 rounded-full" />
-              <div className="w-4 h-4 left-[4px] top-[4px] absolute justify-center items-center inline-flex">
-                <div className="w-4 h-4 relative"></div>
+                <div className="w-6 h-6 left-0 top-0 absolute bg-rose-600 rounded-full flex justify-center items-center">
+                  <AiOutlineArrowRight className="text-white"/>
+                </div>
+                <div className="w-4 h-4 left-[4px] top-[4px] absolute justify-center items-center inline-flex">
+                  <div className="w-4 h-4 relative"></div>
+                </div>
               </div>
             </div>
-            </div>
-           
+
             <div className="justify-center items-center gap-2 inline-flex">
               <div className="px-2 flex-col justify-start items-start inline-flex">
                 <div className="w-[120px] text-zinc-500 text-xs font-normal  leading-none">
                   Phòng sắp trống
                 </div>
                 <div className="text-black text-base font-medium  leading-normal">
-                  11
+                {rooms?.roomToBeEmpty}
                 </div>
               </div>
               <div className="px-2 flex-col justify-start items-start inline-flex">
@@ -56,14 +61,14 @@ const index = () => {
                   Phòng trống
                 </div>
                 <div className="text-black text-base font-medium  leading-normal">
-                  07
+                 {rooms?.emptyRoom}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
- 
+
       <Body />
     </div>
   );

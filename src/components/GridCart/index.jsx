@@ -7,31 +7,25 @@ import {
 } from "@customhooks/FilterCustomHook";
 import CustomLoading from "../CustomLoading";
 import { useLocation } from "react-router-dom";
-
+import { useGetDistrictsQuery } from "../../apis/slice/provices";
+const findDistrictId = (address, districts) => {
+  const district = districts?.results.find(
+    (district) => address === district.district_name
+  );
+  return district ? district.district_id : null;
+};
 const Index = ({ id, money, address }) => {
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
   const [error, setError] = useState("");
 
+  const { data: datadistrict } = useGetDistrictsQuery();
   const query = {
-    HouseId: id,
-    District: address,
-    Price: Number(money),
+    houseId: id,
+    District: findDistrictId(address, datadistrict),
+    price: money,
   };
 
-  const filteredParams = Object.keys(query).reduce((acc, key) => {
-    const value = query[key];
-    if (
-      value !== null &&
-      value !== undefined &&
-      value !== "" &&
-      value !== 0 &&
-      (!Array.isArray(value) || value.length > 0)
-    ) {
-      acc[key] = value;
-    }
-    return acc;
-  }, {});
 
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
@@ -39,46 +33,46 @@ const Index = ({ id, money, address }) => {
   useEffect(() => {
     setFilterData((prevData) => ({ ...prevData, ...filteredParams }));
   }, [id, address, money, setFilterData]);
+  setFilterData({ ...filterData, ...query });
+}, []);
 
-  useEffect(() => {
-    if (
-      (location.pathname === "/similarRooms" && money !== null && address !== null) ||
-      id !== null
-    ) {
-      handleClickSearch();
-    }
-  }, [filterData, location.pathname, handleClickSearch, money, address, id]);
+useEffect(() => {
+  if (
+    (location.pathname === "/similarRooms" && money !== null && address !== null) ||
+    id !== null
+  ) {
+    handleClickSearch();
+  }
+}, [filterData, location.pathname, handleClickSearch, money, address, id]);
 
-  const [data, isFetching, isError] = useQueryData();
+const [data, isFetching, isError] = useQueryData();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setItems(data?.response || []);
-    }, 500);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setItems(data?.response || []);
+  }, 500);
 
-    return () => clearTimeout(timer);
-  }, [data]);
+  return () => clearTimeout(timer);
+}, [data]);
 
-  useEffect(() => {
-    if (!data?.response?.length) {
-      setError("không tìm thấy phòng tương tự!");
-    } else {
-      setError("");
-    }
-  }, [data]);
+useEffect(() => {
+  if (!data?.response?.length) {
+    setError("không tìm thấy phòng tương tự!");
+  } else {
+    setError("");
+  }
+}, [data]);
 
-  return (
-    <>
-      {error && <p className="text-rose-500 w-full items-center text-center mt-10">{error}</p>}
-      <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
-        {isFetching && <CustomLoading />}
-        {items.map((item, index) => (
-          <CartRoom key={index} item={item} />
-        ))}
-      </div>
-
-    </>
-  );
+return (
+  <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
+    {isError && <CustomLoading />}
+    {items.length > 0 ? (
+      items.map((item, index) => <CartRoom key={index} item={item} />)
+    ) : (
+      !isFetching && (<div className="w-full  flex justify-center items-center"><p className="text-rose-500">không tìm thấy phòng!</p></div>)
+    )}
+  </div>
+);
 };
 
 export default Index;

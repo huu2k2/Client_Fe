@@ -5,6 +5,7 @@ import ProfilesApi from "@apis/slice/profile";
 import ServicesApi from "@apis/slice/services";
 import ImagesApi from "@apis/slice/ImageOfRoom";
 import BanksApi  from '@apis/slice/Bank' 
+import ScheduleApi  from '@apis/slice/ScheduleSeeRoom' 
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware()
     .concat(ProvicesApi.middleware)
@@ -14,4 +15,5 @@ const middleware = (getDefaultMiddleware) =>
     .concat(ServicesApi.middleware)
     .concat(ImagesApi.middleware)
     .concat(BanksApi.middleware)
+    .concat(ScheduleApi.middleware)
 export default middleware;

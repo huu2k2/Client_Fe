@@ -6,75 +6,66 @@ import React, {
   useMemo,
   useEffect,
 } from "react";
-import { useGetRoomsFilterQuery } from "@apis/slice/rooms";
+import { useGetRoomsFilterMutation } from "@apis/slice/rooms";
+
 // Tạo context
 export const FilterHookContext = createContext();
 
 export const FilterCustomHook = ({ children }) => {
-  const [queryParams, setQueryParams] = useState({});
-  const { data, isFetching, isError } = useGetRoomsFilterQuery(queryParams);
+  // Khởi tạo mutation hook từ RTK Query
+  const [getRoomsFilter, { data, isLoading, isError, error }] = useGetRoomsFilterMutation();
+
+  // Dữ liệu lọc mặc định
   const initialFilterData = {
-    HouseId: null,
-    Address: null,
-    District: null,
-    Ward: null,
-    Category: [],
-    Status: [],
-    Furnitures: [],
-    Price: null,
-    Parking: null,
-    Security: null,
-    Elevator: null,
-    Pet: null,
-    FreeHours: null,
-    Washing: null,
-    RoomQuantity: null,
+    houseId: null,
+    districtId: null,
+    wardId: null,
+    categories: null,
+    status: null,
+    price: null,
+    hasDeposited: null,
+    hasRented: null,
+    furnitures: null,
+    parking: null,
+    security: null,
+    elevator: null,
+    pet: null,
+    freeHour: null,
+    washing: null,
+    roomQuantity: null,
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
+  useEffect(() => {
+    const rs = async () => {
+      await getRoomsFilter(filterData).unwrap();
+    }
+    rs()
+  }, [])
+  // Hàm xử lý tìm kiếm
+  const handleClickSearch = useCallback(async () => {
+    try {
+      // Thực hiện yêu cầu lọc
+      await getRoomsFilter(filterData).unwrap();
+    } catch (err) {
+      // Xử lý lỗi và thông báo cho người dùng
+      console.error('Error fetching rooms:', err);
+      alert('Error fetching rooms. Please try again later.'); // Hoặc xử lý lỗi khác tùy thuộc vào ứng dụng
+    }
+  }, [filterData, getRoomsFilter]);
 
-
-  // Tạo hàm tìm kiếm
-  const handleClickSearch = useCallback(() => {
-    // Loại bỏ các giá trị null và mảng trống khỏi filterData
-    const filteredParams = Object.keys(filterData).reduce((acc, key) => {
-      const value = filterData[key];
-      if (
-        value !== null &&
-        value !== undefined &&
-        value !== "" &&
-        value !== 0 &&
-        (!Array.isArray(value) || value.length > 0)
-      ) {
-        acc[key] = value;
-        // if (Array.isArray(value)) {
-        //   value.forEach(val => {
-        //     acc.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
-        //   });
-        // } else {
-        //   acc.push(`${key}=${value}`);
-        // }
-      }
-      return acc;
-    }, []);
-    //     const queryString = filteredParams.join('&');
-    setQueryParams(filteredParams);
-  }, [filterData]);
-
-
-
-  // Sử dụng useMemo để tránh việc render lại không cần thiết khi context value thay đổi
+  // Sử dụng useMemo để tối ưu hóa giá trị context
   const contextValue = useMemo(
     () => ({
       filterData,
       setFilterData,
       data,
-      isFetching,
+      isLoading,
       isError,
+      error,
       handleClickSearch,
-      setQueryParams
     }),
-    [filterData, setFilterData, data, isFetching, isError, handleClickSearch]
+    [filterData, setFilterData, data, isLoading, isError, error, handleClickSearch]
   );
 
   return (
@@ -91,8 +82,8 @@ export const useQueryFilterData = () => {
 };
 
 export const useQueryData = () => {
-  const { data, isFetching, isError } = useContext(FilterHookContext);
-  return [data, isFetching, isError];
+  const { data, isLoading, isError, error } = useContext(FilterHookContext);
+  return [data, isLoading, isError, error];
 };
 
 export const useClickSearchFilter = () => {

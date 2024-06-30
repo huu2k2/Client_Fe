@@ -4,33 +4,24 @@ import { BsBuilding } from "react-icons/bs";
 import { useGetDistrictsQuery, useGetWardsQuery } from "@apis/slice/provices";
 import SelectCompoment from "./SelectCompoment";
 import { useQueryFilterData } from "@customhooks";
-
-const ProvinceInput = ({
-  setShow,
-  isShow,
-  setIsOpen,
-  selectedOption,
-  setSelectedOption,
-  selectedOptionWard,
-  setSelectedOptionWard,
-}) => {
+const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const { data: dataProvices } = useGetDistrictsQuery();
   const { data: dataWard } = useGetWardsQuery(selectedOption?.value);
 
   const handleChange = () => {
     setShow(!isShow);
   };
-
   const [_, setFilterData] = useQueryFilterData();
   const handlePrint = () => {
-    setFilterData((prev) => ({ ...prev, District: selectedOption?.value, Ward: selectedOptionWard?.value }))
+    setFilterData((prev) => ({ ...prev, districtId: selectedOption?.value, wardId: selectedOptionWard?.value }))
     setIsOpen(false)
   };
 
   const handleDelete = () => {
     setSelectedOption(null);
     setSelectedOptionWard(null);
-    setFilterData((prev) => ({ ...prev, District: "", Ward: "" }))
+    setFilterData((prev) => ({ ...prev, districtId: null, districtId: null }))
   };
 
   return (

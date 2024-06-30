@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
 import Header from "@components/Header";
 import Profile from "../Profile";
-import { useEffect, useState } from "react";
+import {useState } from "react";
  
 const index = () => {
-  const [isShow, setShow] = useState(false);
-
+  const [isShow, setShow] = useState(false);  
   return ( 
     <div className="  w-full h-fit custom-scrollbar">
       {isShow && <Profile setShow={setShow} /> }

@@ -1,37 +1,42 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { Navigate } from "react-router-dom";
 
-
+// Tạo AuthContext
 export const AuthContext = createContext();
-const AuthGuardHook = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // const navigate = useNavigate();
-    useEffect(() => {
-        // Kiểm tra token khi khởi tạo
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-        //   const isValid = checkTokenExpiration();
-          setIsAuthenticated(true);
-        //   if (!isValid) {
-        //     removeTokenFromLocalStorage();
-        //   }
-        }
-      }, []);
+
+const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(undefined);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && token.split(".").length === 3) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+      localStorage.removeItem("token");
+    }
+  }, []);
+
   return (
     <AuthContext.Provider value={{ isAuthenticated }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
-export default AuthGuardHook
+export default AuthProvider;
 
-export const useAuthGuard = ({ children }) => {
-    const { isAuthenticated } = useContext(AuthContext);
-  
-    if (!isAuthenticated) {
-      return <Navigate to="/login" replace />;
-    }
-  
-    return children;
-  };
+// Component bảo vệ route
+export const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useContext(AuthContext);
+
+  if (isAuthenticated === undefined) {
+    return null; // hoặc một spinner loading
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
