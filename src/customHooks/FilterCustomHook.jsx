@@ -46,20 +46,20 @@ export const FilterCustomHook = ({ children }) => {
         value !== 0 &&
         (!Array.isArray(value) || value.length > 0)
       ) {
-        // acc[key] = value;
-        if (Array.isArray(value)) {
-          value.forEach(val => {
-            acc.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
-          });
-        } else {
-          acc.push(`${key}=${value}`);
-        }
+        acc[key] = value;
+        // if (Array.isArray(value)) {
+        //   value.forEach(val => {
+        //     acc.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
+        //   });
+        // } else {
+        //   acc.push(`${key}=${value}`);
+        // }
       }
       return acc;
     }, []);
-    const queryString = filteredParams.join('&');
-console.log(queryString)
-    setQueryParams(queryString);
+//     const queryString = filteredParams.join('&');
+// console.log(queryString)
+    setQueryParams(filteredParams);
   }, [filterData]);
 
 
