@@ -43,7 +43,7 @@ const Location = () => {
         <div className="w-auto block h-full text-gray-500 text-base font-normal leading-5 truncate">
           <span className=" ">
             {selectedOption || selectedOptionWard
-              ? `${selectedOption?.label}, ${selectedOptionWard.label}`
+              ? `${selectedOption?.label}, ${selectedOptionWard?.label}`
               : "Toàn quốc"}
           </span>
         </div>
