@@ -30,12 +30,12 @@ const Index = () => {
   const idroom = queryParams.get("idRoom") || null;
   useEffect(() => {
     if (!idroom && filterData.price > 0) {
-      setValueRang(filterData.price/100000);
+      setValueRang(filterData.price/1000000);
     }
   }, [filterData.price]);
   
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, price: valueRang*100000 }));
+    setFilterData((prev) => ({ ...prev, price: valueRang*1000000 }));
     setIsOpen(false);
   };
 
