@@ -38,7 +38,7 @@ const index = () => {
       <FilterPriceDropDow />
       <FilterAdd />
       <div
-        className="w-[38px]   bg-red-600 rounded-[50%] flex justify-center items-center p-[9px] cursor-pointer"
+        className="w-[38px]   bg-rose-600 rounded-[50%] flex justify-center items-center p-[9px] cursor-pointer  active:bg-rose-700 "
         onClick={debounceHandleSearch}
       >
         <AiOutlineSearch className="w-5 h-5 text-white" />

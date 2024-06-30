@@ -37,8 +37,8 @@ const Index = ({ id, money, address }) => {
   const location = useLocation();
 
   useEffect(() => {
-    setFilterData({ ...filterData, ...filteredParams });
-  }, [id, address, money]);
+    setFilterData((prevData) => ({ ...prevData, ...filteredParams }));
+  }, [id, address, money, setFilterData]);
 
   useEffect(() => {
     if (
@@ -47,7 +47,7 @@ const Index = ({ id, money, address }) => {
     ) {
       handleClickSearch();
     }
-  }, [filterData, location.pathname]);
+  }, [filterData, location.pathname, handleClickSearch, money, address, id]);
 
   const [data, isFetching, isError] = useQueryData();
 
@@ -60,27 +60,23 @@ const Index = ({ id, money, address }) => {
   }, [data]);
 
   useEffect(() => {
-    if (data?.response?.length === 0 || data == null
-    ) {
+    if (!data?.response?.length) {
       setError("không tìm thấy phòng tương tự!");
+    } else {
+      setError("");
     }
   }, [data]);
 
   return (
     <>
+      {error && <p className="text-rose-500 w-full items-center text-center mt-10">{error}</p>}
       <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
         {isFetching && <CustomLoading />}
-        {isError ? (
-          <p className="text-rose-500">{error}</p>
-        ) : (
-          items.length > 0 ? (
-            items.map((item, index) => <CartRoom key={index} item={item} />)
-          ) : (
-            <div></div>
-          )
-        )}
+        {items.map((item, index) => (
+          <CartRoom key={index} item={item} />
+        ))}
       </div>
-      <p className="text-rose-500  ">{error}</p>
+
     </>
   );
 };
