@@ -7,7 +7,7 @@ import { categoryItems, utilitiesItems } from "./categoryItem";
 import { useQueryFilterData } from "@customhooks";
 
 // check isExists item with Utilities
-const checkForValueOfUtilities = (arr,value) => {
+const checkForValueOfUtilities = (arr, value) => {
   return arr.some(item => item === value);
 };
 const index = () => {
@@ -30,10 +30,10 @@ const index = () => {
   const [selectedAddFurniture, setSelectedAddFurniture] = useState([]);
   const [selectedAddUtilities, setSelectedAddUtilities] = useState([]);
   const handleCheckboxChangeFurniture = (value) => {
-    setSelectedAddFurniture((prevSelectedRooms) =>
-      prevSelectedRooms.includes(value)
-        ? prevSelectedRooms.filter((room) => room !== value)
-        : [...prevSelectedRooms, value]
+    setSelectedAddFurniture((prevSelectedItems) =>
+      prevSelectedItems.includes(value)
+        ? prevSelectedItems.filter((item) => item !== value)
+        : [...prevSelectedItems, value]
     );
   };
 
@@ -56,12 +56,12 @@ const index = () => {
     setFilterData((prev) => ({
       ...prev,
       Furnitures: [...selectedAddFurniture],
-      Parking:checkForValueOfUtilities(selectedAddUtilities,'Parking'),
-      Security:checkForValueOfUtilities(selectedAddUtilities,'Parking'),
-      Elevator:checkForValueOfUtilities(selectedAddUtilities,'Elevator'),
-      Washing:checkForValueOfUtilities(selectedAddUtilities,'Washing'),
-      Pet:checkForValueOfUtilities(selectedAddUtilities,'Pet'),
-      FreeHours:checkForValueOfUtilities(selectedAddUtilities,'FreeHours'),
+      Parking: checkForValueOfUtilities(selectedAddUtilities, 'Parking'),
+      Security: checkForValueOfUtilities(selectedAddUtilities, 'Parking'),
+      Elevator: checkForValueOfUtilities(selectedAddUtilities, 'Elevator'),
+      Washing: checkForValueOfUtilities(selectedAddUtilities, 'Washing'),
+      Pet: checkForValueOfUtilities(selectedAddUtilities, 'Pet'),
+      FreeHours: checkForValueOfUtilities(selectedAddUtilities, 'FreeHours'),
     }));
     setIsOpen(false);
   };
@@ -80,9 +80,8 @@ const index = () => {
       </div>
 
       <div
-        className={`absolute z-10 top-12 right-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
-          isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
-        }`}
+        className={`absolute z-10 top-12 right-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+          }`}
       >
         {/* show select  */}
         <div className="w-full h-6 gap-2 flex items-center ">
@@ -95,7 +94,7 @@ const index = () => {
           {categoryItems.map((i) => (
             <InputCheckBox
               key={i.id}
-              value={i.value}
+              value={selectedAddFurniture.includes(i.value)}
               label={i.label}
               checked={selectedAddFurniture.includes(i.value)}
               onChange={() => handleCheckboxChangeFurniture(i.value)}

@@ -17,6 +17,7 @@ const Index = ({ id, money, address }) => {
     District: address,
     Price: Number(money),
   };
+
   const filteredParams = Object.keys(query).reduce((acc, key) => {
     const value = query[key];
     if (
@@ -30,38 +31,37 @@ const Index = ({ id, money, address }) => {
     }
     return acc;
   }, {});
+
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
-  // Sử dụng useEffect để cập nhật filterData khi id thay đổi hoặc location.pathname là '/similarRooms'
+
   useEffect(() => {
     setFilterData({ ...filterData, ...filteredParams });
-  }, []);
+  }, [id, address, money]);
 
   useEffect(() => {
     if ((location.pathname === "/similarRooms" && money !== null && address !== null) || id !== null) {
       handleClickSearch();
     }
-  }, [filterData]);
+  }, [filterData, location.pathname]);
 
   const [data, isFetching, isError] = useQueryData();
-  // Sử dụng useEffect để cập nhật items khi data thay đổi
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setItems(data?.response || []);
     }, 500);
 
-    // Cleanup the timeout if the component unmounts
     return () => clearTimeout(timer);
   }, [data]);
 
-  // Render danh sách items
   return (
-    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit ">
+    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
       {items.length > 0 ? (
         items.map((item, index) => <CartRoom key={index} item={item} />)
       ) : (
-        <CustomLoading />
+        !isFetching && <p className="text-rose-500">không tìm thấy phòng!</p>
       )}
     </div>
   );

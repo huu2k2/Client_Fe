@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
-import {useQueryFilterData } from "@customhooks";
- 
+import { useQueryFilterData } from "@customhooks";
+
 
 const index = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,9 +34,9 @@ const index = () => {
   const handleDelete = () => {
     setSelectedStatusRooms([]);
   };
-  const [_,setFilterData] = useQueryFilterData();
+  const [_, setFilterData] = useQueryFilterData();
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev,  Status:[...selectedStatusRooms]}))
+    setFilterData((prev) => ({ ...prev, Status: [...selectedStatusRooms] }))
     setIsOpen(false)
   };
   return (
@@ -54,20 +54,19 @@ const index = () => {
       </div>
 
       <div
-        className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
-          isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
-        }`}
+        className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+          }`}
       >
         {/* show select  */}
         <div className="w-fit h-fit flex flex-col justify-start gap-4">
 
-          <InputCheckBox value={"EmptyRoom"} label={"Phòng trống"} 
-           checked={selectedStatusRooms.includes("EmptyRoom")}
-           onChange={() => handleCheckboxChange("EmptyRoom")}/>
-          <InputCheckBox value={"isEmptyRoom"} label={"Phòng sắp trống"} 
-           checked={selectedStatusRooms.includes("isEmptyRoom")}
-           onChange={() => handleCheckboxChange("isEmptyRoom")}/>
-           
+          <InputCheckBox value={"1"} label={"Phòng trống"}
+            checked={selectedStatusRooms.includes("1")}
+            onChange={() => handleCheckboxChange("1")} />
+          <InputCheckBox value={"3"} label={"Phòng sắp trống"}
+            checked={selectedStatusRooms.includes("3")}
+            onChange={() => handleCheckboxChange("3")} />
+
         </div>
 
         {/* button delete filter and apply */}

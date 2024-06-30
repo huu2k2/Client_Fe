@@ -12,19 +12,19 @@ const AcountsApi = createApi({
   endpoints: (build) => ({
     postLogin: build.mutation({
       query: (body) => ({
-        url: `/Accounts/sign-in`,
+        url: `/v2/Accounts/sign-in`,
         method: "POST",
         data: body,
       }),
     }),
     postRegister: build.mutation({
       query: (body) => ({
-        url: `/Accounts/sign-up-with-phone`,
+        url: `/v2/Accounts/sign-up-with-phone`,
         method: "POST",
         data: body,
       }),
     }),
-   
+
   }),
 });
 

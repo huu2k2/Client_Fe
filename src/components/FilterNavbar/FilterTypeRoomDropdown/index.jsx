@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
-import {useQueryFilterData } from "@customhooks";
+import { useQueryFilterData } from "@customhooks";
 const index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRooms, setSelectedRooms] = useState([]);
@@ -22,6 +22,7 @@ const index = () => {
   }, [dropdownRef]);
 
   const handleCheckboxChange = (value) => {
+    console.log("🚀 ~ handleCheckboxChange ~ value:", value)
 
     setSelectedRooms((prevSelectedRooms) =>
       prevSelectedRooms.includes(value)
@@ -33,9 +34,9 @@ const index = () => {
   const handleDelete = () => {
     setSelectedRooms([]);
   };
-  const [_,setFilterData] = useQueryFilterData();
+  const [_, setFilterData] = useQueryFilterData();
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev,  Category:[...selectedRooms]}))
+    setFilterData((prev) => ({ ...prev, Category: [...selectedRooms] }))
     setIsOpen(false)
   };
   return (
@@ -53,48 +54,47 @@ const index = () => {
       </div>
 
       <div
-        className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
-          isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
-        }`}
+        className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+          }`}
       >
         {/* show select  */}
         <div className="w-fit h-fit flex flex-col justify-start gap-4">
-        <InputCheckBox
-              value={"Studio"}
-              label={"Studio"}
-              checked={selectedRooms.includes("Studio")}
-              onChange={() => handleCheckboxChange("Studio")}
-            />
-            <InputCheckBox
-              value={"Duplex"}
-              label={"Duplex"}
-              checked={selectedRooms.includes("Duplex")}
-              onChange={() => handleCheckboxChange("Duplex")}
-            />
-            <InputCheckBox
-              value={"1PN"}
-              label={"1 Phòng ngủ"}
-              checked={selectedRooms.includes("1PN")}
-              onChange={() => handleCheckboxChange("1PN")}
-            />
-            <InputCheckBox
-              value={"2PN"}
-              label={"2 Phòng ngủ"}
-              checked={selectedRooms.includes("2PN")}
-              onChange={() => handleCheckboxChange("2PN")}
-            />
-            <InputCheckBox
-              value={"3PN"}
-              label={"3 Phòng ngủ"}
-              checked={selectedRooms.includes("3PN")}
-              onChange={() => handleCheckboxChange("3PN")}
-            />
-            <InputCheckBox
-              value={"Ground"}
-              label={"Mặt bằng"}
-              checked={selectedRooms.includes("Ground")}
-              onChange={() => handleCheckboxChange("Ground")}
-            />
+          <InputCheckBox
+            value={"Studio"}
+            label={"Studio"}
+            checked={selectedRooms.includes("Studio")}
+            onChange={() => handleCheckboxChange("Studio")}
+          />
+          <InputCheckBox
+            value={"Duplex"}
+            label={"Duplex"}
+            checked={selectedRooms.includes("Duplex")}
+            onChange={() => handleCheckboxChange("Duplex")}
+          />
+          <InputCheckBox
+            value={"1PN"}
+            label={"1 Phòng ngủ"}
+            checked={selectedRooms.includes("1PN")}
+            onChange={() => handleCheckboxChange("1PN")}
+          />
+          <InputCheckBox
+            value={"2PN"}
+            label={"2 Phòng ngủ"}
+            checked={selectedRooms.includes("2PN")}
+            onChange={() => handleCheckboxChange("2PN")}
+          />
+          <InputCheckBox
+            value={"3PN"}
+            label={"3 Phòng ngủ"}
+            checked={selectedRooms.includes("3PN")}
+            onChange={() => handleCheckboxChange("3PN")}
+          />
+          <InputCheckBox
+            value={"Ground"}
+            label={"Mặt bằng"}
+            checked={selectedRooms.includes("Ground")}
+            onChange={() => handleCheckboxChange("Ground")}
+          />
         </div>
 
         {/* button delete filter and apply */}
