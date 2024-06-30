@@ -1,7 +1,9 @@
 import React from "react";
 import GroupInput from "./GroupInput";
+import { useGetInfoItem } from "@customhooks/ServicesCustomHook";
 
 const index = () => {
+  const [address, price] = useGetInfoItem();
   return (
     <>
       <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
@@ -21,10 +23,10 @@ const index = () => {
                 <div className="self-stretch h-[589px] flex-col justify-start items-start gap-5 flex">
                   <div className="self-stretch h-12 flex-col justify-start items-start gap-1 flex">
                     <div className="self-stretch text-gray-900 text-lg font-medium leading-normal">
-                      Nhà trọ 123 Lê Hoàng Phái
+                      Nhà trọ {address}
                     </div>
                     <div className="self-stretch text-gray-500 text-sm font-normal leading-tight">
-                      123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
+                      {address}
                     </div>
                   </div>
 

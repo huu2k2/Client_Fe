@@ -1,15 +1,24 @@
 import { lazy } from "react";
 import LazyWrapper from "@components/LazyLoad";
-import ListRooms from './ListRooms'
-import Policies from './Policies'
-import Deposit from './Deposit'
-import Booking from './Booking'
-const Page= lazy(() => import("./index"));
+import ListRooms from "./ListRooms";
+import Policies from "./Policies";
+import Deposit from "./Deposit";
+import Booking from "./Booking";
+import ServicesContextHook from "@customhooks/ServicesCustomHook";
+import { ProtectedRoute } from "@customhooks/AuthGuardHook";
+import AuthProvider from "../../customHooks/AuthGuardHook";
+const Page = lazy(() => import("./index"));
 const router = {
   path: "/overview/:idHome",
   element: (
     <LazyWrapper>
-      <Page />
+       <AuthProvider>
+      <ProtectedRoute>
+      <ServicesContextHook>
+        <Page />
+      </ServicesContextHook>
+      </ProtectedRoute>
+      </AuthProvider>
     </LazyWrapper>
   ),
   children: [

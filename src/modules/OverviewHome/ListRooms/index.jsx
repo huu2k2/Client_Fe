@@ -2,7 +2,10 @@ import React from "react";
 import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useGetHolder } from "../../../customHooks/ServicesCustomHook";
 const index = () => {
+  const [holder,rooms] = useGetHolder()
+  console.log(holder,rooms)
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center  flex  ">
       <div className="h-px flex-col justify-start items-start flex">
@@ -27,7 +30,7 @@ const index = () => {
                 />
                 <div className="flex-col justify-start items-start gap-1 inline-flex">
                   <div className="text-black text-base font-medium  leading-normal">
-                    Nguyễn văn A
+                    {holder?.fullName}
                   </div>
                   <div className="text-zinc-500 text-xs font-normal  leading-none ">
                     Chủ nhà
@@ -50,7 +53,7 @@ const index = () => {
                   Phòng sắp trống
                 </div>
                 <div className="text-black text-base font-medium  leading-normal">
-                  11
+                {rooms?.roomToBeEmpty}
                 </div>
               </div>
               <div className="px-2 flex-col justify-start items-start inline-flex">
@@ -58,7 +61,7 @@ const index = () => {
                   Phòng trống
                 </div>
                 <div className="text-black text-base font-medium  leading-normal">
-                  07
+                 {rooms?.emptyRoom}
                 </div>
               </div>
             </div>

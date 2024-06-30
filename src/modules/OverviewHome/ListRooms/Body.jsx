@@ -1,8 +1,9 @@
 import React from "react";
-import ImageSpeaker from '../../../assets/Speakerphone.svg'
+import ImageSpeaker from '@assets/Speakerphone.svg'
 import Floor from "./Floor";
 
 const Body = () => {
+
   return (
     <>
       <div className="w-full h-fit relative flex flex-col justify-center items-center">
@@ -25,8 +26,7 @@ const Body = () => {
           <div className="h-fit w-full px-8 flex-col justify-start items-center flex">
 
           <Floor/>
-          <Floor/>
-          <Floor/>
+  
           </div>
         </div>
       </div>

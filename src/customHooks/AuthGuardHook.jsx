@@ -1,37 +1,49 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 
-
+// Tạo AuthContext
 export const AuthContext = createContext();
-const AuthGuardHook = ({ children }) => {
+
+const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // const navigate = useNavigate();
+
     useEffect(() => {
-        // Kiểm tra token khi khởi tạo
         const token = localStorage.getItem('accessToken');
         if (token) {
-        //   const isValid = checkTokenExpiration();
-          setIsAuthenticated(true);
-        //   if (!isValid) {
-        //     removeTokenFromLocalStorage();
-        //   }
+            // Giả sử bạn có một hàm để kiểm tra token
+            // const isValid = checkTokenExpiration(token);
+            const isValid = true; // Tạm thời để isValid là true cho ví dụ
+            if (isValid) {
+                setIsAuthenticated(true);
+            } else {
+                localStorage.removeItem('accessToken');
+                setIsAuthenticated(false);
+            }
+        } else {
+            setIsAuthenticated(false);
         }
-      }, []);
-  return (
-    <AuthContext.Provider value={{ isAuthenticated }}>
-      {children}
-    </AuthContext.Provider>
-  )
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ isAuthenticated }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
-export default AuthGuardHook
+export default AuthProvider;
 
-export const useAuthGuard = ({ children }) => {
+// Component bảo vệ route
+export const ProtectedRoute = ({ children }) => {
     const { isAuthenticated } = useContext(AuthContext);
-  
-    if (!isAuthenticated) {
-      return <Navigate to="/login" replace />;
+
+    if (isAuthenticated === undefined) {
+        return null; // hoặc một spinner loading
     }
-  
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
     return children;
-  };
+};

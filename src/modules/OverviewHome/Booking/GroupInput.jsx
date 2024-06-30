@@ -1,6 +1,16 @@
 import React from "react";
-
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import schema from "./schema";
 const GroupInput = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
+  const onSubmit = (data) => console.log(data)
   return (
     <>
       <div className="self-stretch h-px flex-col justify-start items-start flex">
@@ -11,7 +21,7 @@ const GroupInput = () => {
         <div className="w-[411px] text-gray-700 text-sm font-medium  leading-tight">
           Nhân viên sale
         </div>
-        <div className="h-[38px] w-[320px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
+        <div className="h-[38px] w-[320px] px-[13px] py-[4px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
           <input
             type="text"
             className="text-sm font-normal  leading-tight outline-none w-full"
@@ -28,7 +38,7 @@ const GroupInput = () => {
         <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
           Số điện thoại
         </div>
-        <div className="h-[38px] w-[320px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
+        <div className="h-[38px] w-[320px] px-[13px] py-[4px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
           <input
             type="text"
             className="text-sm font-normal leading-tight outline-none w-full"
@@ -45,7 +55,7 @@ const GroupInput = () => {
         <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
           Tên công ty/nhóm/đơn vị
         </div>
-        <div className="h-[38px] w-[320px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
+        <div className="h-[38px] w-[320px] px-[13px] py-[4px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
           <input
             type="text"
             className="text-sm font-normal leading-tight outline-none w-full"
@@ -62,7 +72,7 @@ const GroupInput = () => {
         <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
           Tên khách hàng
         </div>
-        <div className="h-[38px] w-[320px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
+        <div className="h-[38px] w-[320px] px-[13px] py-[4px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
           <input
             type="text"
             className="text-sm font-normal leading-tight outline-none w-full"
@@ -77,7 +87,7 @@ const GroupInput = () => {
         <div className="w-[411px]  text-gray-700 text-sm font-medium leading-tight ">
           Thời gian xem phòng
         </div>
-        <div className="h-[38px] w-[320px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex">
+        <div className="h-[38px] w-[320px] px-[13px] py-[4px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex">
           <input
             type="date"
             className="text-gray-500 text-sm font-normal leading-tight outline-none w-full"
