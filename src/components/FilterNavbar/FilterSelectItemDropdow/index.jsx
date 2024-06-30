@@ -29,8 +29,6 @@ const Location = () => {
   const [isShow, setShow] = useState(false);
 
   // You can now use selectedOption and selectedOptionWard here
-  console.log("Selected District:", selectedOption);
-  console.log("Selected Ward:", selectedOptionWard);
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -41,8 +39,8 @@ const Location = () => {
         <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
         <div className="w-auto block h-full text-gray-500 text-base font-normal leading-5 truncate">
           <span className=" ">
-            {selectedOptionWard && selectedOption
-              ? `${selectedOption.label}, ${selectedOptionWard.label}`
+            {selectedOptionWard || selectedOption
+              ? `${selectedOption?.label}, ${selectedOptionWard?.label}`
               : "Toàn quốc"}
           </span>
         </div>

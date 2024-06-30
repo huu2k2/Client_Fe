@@ -11,7 +11,7 @@ import { formatDate } from "@utils";
 
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
-  const { data, isLoading,isSuccess } = useGetProfileQuery();
+  const { data, isLoading, isSuccess } = useGetProfileQuery();
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
     usePostUpdateMutation();
 
@@ -101,19 +101,17 @@ const Index = ({ setShow }) => {
     }
   }, [data]);
 
-  const handleUpadte = async() => {
-    console.log("formData",formData)
-  //  const rs = await postUpdate(formData)
- 
+  const handleUpadte = async () => {
+    //  const rs = await postUpdate(formData)
+
   };
   const handleFileChange = (name, file) => {
     setFormData(prevData => ({ ...prevData, [name]: file }));
   };
-   return (
+  return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end   ${
-        isExiting ? "animate-slide-out" : "animate-slide-in"
-      }`}
+      className={`fixed inset-0 z-50 flex justify-end   ${isExiting ? "animate-slide-out" : "animate-slide-in"
+        }`}
     >
       <div
         ref={refContainer}
@@ -206,7 +204,7 @@ const Index = ({ setShow }) => {
           />
           <InputFiel
             name={"Căn cước công dân"}
-            label={data?.response?.identification }
+            label={data?.response?.identification}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -222,7 +220,7 @@ const Index = ({ setShow }) => {
           />
           <InputFiel
             name={"Nơi cấp"}
-            label={data?.response?.issuedBy }
+            label={data?.response?.issuedBy}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}

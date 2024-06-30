@@ -57,8 +57,7 @@ export const FilterCustomHook = ({ children }) => {
       }
       return acc;
     }, []);
-//     const queryString = filteredParams.join('&');
-// console.log(queryString)
+    //     const queryString = filteredParams.join('&');
     setQueryParams(filteredParams);
   }, [filterData]);
 
@@ -77,7 +76,7 @@ export const FilterCustomHook = ({ children }) => {
     }),
     [filterData, setFilterData, data, isFetching, isError, handleClickSearch]
   );
- 
+
   return (
     <FilterHookContext.Provider value={contextValue}>
       {children}
@@ -100,7 +99,7 @@ export const useClickSearchFilter = () => {
   const { handleClickSearch } = useContext(FilterHookContext);
   return handleClickSearch;
 };
-export const useQueryparamOfFilter = () =>{
+export const useQueryparamOfFilter = () => {
   const { setQueryParams } = useContext(FilterHookContext);
   return setQueryParams;
 }

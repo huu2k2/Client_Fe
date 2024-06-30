@@ -10,7 +10,6 @@ import { useClickSearchFilter } from "@customhooks/FilterCustomHook";
 
 const index = () => {
   const [setFilterData] = useQueryFilterData();
-  console.log("🚀 ~ index ~ setFilterData:", setFilterData)
 
   const handleSearch = useClickSearchFilter()
 
@@ -21,8 +20,8 @@ const index = () => {
   const debounceTypingInput = debounce(handleChangeInput, 500);
   const debounceHandleSearch = debounce(handleSearch, 500);
   return (
-    <div className="w-[1360px]  h-[70px] p-4 gap-2 flex   items-center bg-white">
-      <div className="flex w-[362px] h-[38px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm">
+    <div className="w-[1360px]  h-[70px] p-4 gap-2 flex   items-center ">
+      <div className="flex w-[362px] h-[38px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 shadow-sm bg-white">
         <AiOutlineSearch className="w-5 h-5" />
 
         <input

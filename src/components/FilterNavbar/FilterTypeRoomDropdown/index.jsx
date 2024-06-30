@@ -8,7 +8,6 @@ import Badge from '@mui/material/Badge';
 const index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRooms, setSelectedRooms] = useState([]);
-  console.log("🚀 ~ index ~ selectedRooms:", selectedRooms)
   const dropdownRef = useRef(null);
 
   useEffect(() => {

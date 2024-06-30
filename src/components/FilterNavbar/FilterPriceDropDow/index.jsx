@@ -9,7 +9,6 @@ const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [valueRang, setValueRang] = useState(0);
-  console.log("🚀 ~ Index ~ valueRang:", valueRang)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
