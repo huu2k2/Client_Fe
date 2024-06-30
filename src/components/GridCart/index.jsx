@@ -21,7 +21,7 @@ const Index = ({ id, money, address }) => {
   const { data: datadistrict } = useGetDistrictsQuery();
   const query = {
     houseId: id,
-    District: findDistrictId(address, datadistrict),
+    districtId: findDistrictId(address, datadistrict),
     price: money,
   };
 
