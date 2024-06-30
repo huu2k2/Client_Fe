@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 const Index = ({ id, money, address }) => {
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
+  const [error, setError] = useState("");
 
   const query = {
     HouseId: id,
@@ -40,7 +41,10 @@ const Index = ({ id, money, address }) => {
   }, [id, address, money]);
 
   useEffect(() => {
-    if ((location.pathname === "/similarRooms" && money !== null && address !== null) || id !== null) {
+    if (
+      (location.pathname === "/similarRooms" && money !== null && address !== null) ||
+      id !== null
+    ) {
       handleClickSearch();
     }
   }, [filterData, location.pathname]);
@@ -55,15 +59,29 @@ const Index = ({ id, money, address }) => {
     return () => clearTimeout(timer);
   }, [data]);
 
+  useEffect(() => {
+    if (data?.response?.length === 0 || data == null
+    ) {
+      setError("không tìm thấy phòng tương tự!");
+    }
+  }, [data]);
+
   return (
-    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
-      {isError && <CustomLoading />}
-      {items.length > 0 ? (
-        items.map((item, index) => <CartRoom key={index} item={item} />)
-      ) : (
-        !isFetching && <p className="text-rose-500">không tìm thấy phòng!</p>
-      )}
-    </div>
+    <>
+      <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
+        {isFetching && <CustomLoading />}
+        {isError ? (
+          <p className="text-rose-500">{error}</p>
+        ) : (
+          items.length > 0 ? (
+            items.map((item, index) => <CartRoom key={index} item={item} />)
+          ) : (
+            <div></div>
+          )
+        )}
+      </div>
+      <p className="text-rose-500  ">{error}</p>
+    </>
   );
 };
 

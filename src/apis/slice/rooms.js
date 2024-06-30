@@ -8,20 +8,16 @@ const RoomsApi = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
   }),
-  keepUnusedDataFor:600,
+  keepUnusedDataFor: 600,
   endpoints: (build) => ({
-    // getRoomsFilter: build.query({
-    //   query: (queries) => ({
-    //     url: `/Rooms/filter-room-of-house?${Object.keys(queries)
-    //       .map((key) => `${key}=${queries[key]}`)
-    //       .join("&")}`,
-    //   }),
-    // }),
     getRoomsFilter: build.query({
       query: (queries) => ({
-        url: `/Rooms/filter-room-of-house?${queries}`,
+        url: `/Rooms/filter-room-of-house?${Object.keys(queries)
+          .map((key) => `${key}=${queries[key]}`)
+          .join("&")}`,
       }),
     }),
+
   }),
 });
 
