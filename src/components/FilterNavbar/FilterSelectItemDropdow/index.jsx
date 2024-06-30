@@ -10,7 +10,9 @@ const Location = () => {
 
   // Lifted state
   const [selectedOption, setSelectedOption] = useState(null);
+  console.log("🚀 ~ Location ~ selectedOption:", selectedOption)
   const [selectedOptionWard, setSelectedOptionWard] = useState(null);
+  console.log("🚀 ~ Location ~ selectedOptionWard:", selectedOptionWard)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,8 +41,8 @@ const Location = () => {
         <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
         <div className="w-auto block h-full text-gray-500 text-base font-normal leading-5 truncate">
           <span className=" ">
-            {selectedOptionWard || selectedOption
-              ? `${selectedOption?.label}, ${selectedOptionWard?.label}`
+            {selectedOption
+              ? `${selectedOption?.label}`
               : "Toàn quốc"}
           </span>
         </div>
@@ -56,7 +58,7 @@ const Location = () => {
           setIsOpen={setIsOpen}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          selectedOptionWard={selectedOptionWard}
+          // selectedOptionWard={selectedOptionWard}
           setSelectedOptionWard={setSelectedOptionWard}
         />
         {/* {isShow ? (

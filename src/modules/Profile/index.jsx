@@ -300,5 +300,5 @@ const Index = ({ setShow }) => {
       </div>
     );
   };
-
-  export default Index;
+}
+export default Index;

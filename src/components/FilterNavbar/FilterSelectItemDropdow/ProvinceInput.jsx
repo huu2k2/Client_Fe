@@ -60,12 +60,12 @@ const ProvinceInput = ({ setShow, isShow, setIsOpen }) => {
           type="district"
         />
 
-        <SelectCompoment
+        {/* <SelectCompoment
           data={dataWard}
           selectedOption={selectedOptionWard}
-          setSelectedOption={setSelectedOptionWard}
+          setSelectedOption={selectedOptionWard}
           type="ward"
-        />
+        /> */}
       </div>
 
       <div className="w-full h-[34px] flex justify-start gap-2 self-stretch">
