@@ -8,22 +8,57 @@ import { useParams } from "react-router-dom";
 import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
 import ShowImages from "../../../../components/ShowImages";
 const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
+import index from './../../../Register/index';
+import { Skeleton } from "@mui/material";
 
 const Cart = () => {
   const [holder, rooms] = useGetHolder();
-  const handleShowSlideImg = () => {
-    // setIsShow(!isShow)
-  };
   const { id, roomId } = useParams();
   const { data: images, error, isLoading } = useGetImagesQuery(roomId);
-  const [display, setDisplay] = useState("")
+  const [display, setDisplay] = useState("");
   const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [result, setResult] = useState([]);
+  // if (isLoading || error) {
+  //   return (
 
+  //     <div>
+  //       <div className='w-[557px] h-[313px] relative '>
+  //         <Skeleton
+  //           width={557}
+  //           height={313}
+  //           variant="rounded"
+  //         />
+  //       </div>
+  //       <div className='flex justify-between mt-[10px] ' >
+  //         <Skeleton
+  //           width={180}
+  //           height={102}
+  //           variant="rounded"
+  //         />
+  //         <Skeleton
+  //           width={180}
+  //           height={102}
+  //           variant="rounded"
+  //         />
+  //         <Skeleton
+  //           width={180}
+  //           height={102}
+  //           variant="rounded"
+  //         />
+  //       </div>
+  //     </div>
+  //   )
+  // }
   useEffect(() => {
-    if (images?.response.length < 4) {
+    if (images?.response?.length < 4) {
       setDisplay(" hidden");
     } else {
       setDisplay(" block");
+    }
+
+    if (images?.response) {
+      const filteredImages = images.response.filter((_, index) => index < 3);
+      setResult(filteredImages);
     }
   }, [images]);
 
@@ -33,38 +68,31 @@ const Cart = () => {
 
         <div className="w-full h-[313px]">
           <img
-            src={images?.response[mainImageIndex]?.url}
+            src={result[mainImageIndex]?.url}
             alt="Slide 1"
             className="overflow-hidden object-cover w-[557px] h-[313px] rounded-lg"
           />
         </div>
 
-        <div className="w-full h-[102px] gap-2 flex ">
-          <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
-            <img
-              src={images?.response[1]?.url}
-              onClick={() => setMainImageIndex(index)}
-              alt="hinh anh tiep theo"
-            />
-          </div>
-
-          <div className="w-[180px] h-[102px] rounded-md overflow-hidden">
-            <img
-              src={images?.response[2]?.url}
-              alt="hinh anh tiep theo"
-            />
-          </div>
-
-
+        <div className="w-full h-[102px] gap-2 relative flex ">
+          {result.map((image, index) => (
+            <div
+              key={index}
+              className="w-[180px] h-[102px] rounded-md overflow-hidden cursor-pointer"
+            >
+              <img
+                src={image?.url}
+                onClick={() => setMainImageIndex(index)}
+                alt={`Image ${index + 1}`}
+              />
+            </div>
+          ))}
 
           <div
             onClick={() => document.getElementById("my_modal_4").showModal()}
-            className={`w-[180px] h-[102px] rounded-md overflow-hidden relative bg-black bg-opacity-50 ${display}`}
+            className={`w-[180px] h-[102px] rounded-md overflow-hidden absolute  right-0 bg-black translate-x-[-1px] bg-opacity-60 cursor-pointer ${display}`}
           >
-            <img
-              src={images?.response[3]?.url}
-              alt="hinh anh tiep theo"
-            />
+
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
               <span className="text-white">Xem tất cả hình ảnh</span>
             </div>
@@ -72,42 +100,40 @@ const Cart = () => {
         </div>
         <ShowImages images={images} />
 
-        <div className="nthd_flex_between_full h-fit pt-8  ">
+        <div className="nthd_flex_between_full h-fit pt-8">
           <div className="w-[196px] h-fit gap-6 flex flex-col">
             <div className="nthd_flex_between_full">
               <img src={UserImg} alt="hinh anh nguoi dung..." />
               <div>
-                <h1 className="  nthd_text_normal_lg">
-                  {" "}
-                  {holder && holder?.fullName}
+                <h1 className="nthd_text_normal_lg">
+                  {holder?.fullName}
                 </h1>
-                <span className=" nthd_text_normal_sm">Chu nha</span>
+                <span className="nthd_text_normal_sm">Chu nha</span>
               </div>
             </div>
 
             <div
-              className="w-full rounded-lg border  px-[9px] py-[17px] 
-          gap-2 nthd_text_medium_sm  text-gray-700 nthd_flex"
+              className="w-full rounded-lg border px-[9px] py-[17px] gap-2 nthd_text_medium_sm text-gray-700 nthd_flex"
             >
               <BsFillPersonPlusFill />
-              <span> Theo doi</span>
+              <span>Theo doi</span>
             </div>
           </div>
 
           <div className="w-[288px] h-[76px] nthd_flex_between">
             <div className="w-[136px] h-full p-2 gap-2">
-              <h2 className=" nthd_text_normal_sm_text">Phong sap trong </h2>
-              <h1 className=" nthd_semibold_2xl_text">
-                {rooms && rooms?.roomToBeEmpty}
+              <h2 className="nthd_text_normal_sm_text">Phong sap trong</h2>
+              <h1 className="nthd_semibold_2xl_text">
+                {rooms?.roomToBeEmpty}
               </h1>
             </div>
 
             <div className="border border-gray-400 h-[40px] bg-[#E7E7E7]"></div>
 
             <div className="w-[136px] h-full p-2 gap-2">
-              <h2 className=" nthd_text_normal_sm_text">Phong trong </h2>
-              <h1 className=" nthd_semibold_2xl_text">
-                {rooms && rooms?.emptyRoom}
+              <h2 className="nthd_text_normal_sm_text">Phong trong</h2>
+              <h1 className="nthd_semibold_2xl_text">
+                {rooms?.emptyRoom}
               </h1>
             </div>
           </div>
