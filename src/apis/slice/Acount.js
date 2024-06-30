@@ -19,7 +19,7 @@ const AcountsApi = createApi({
     }),
     postRegister: build.mutation({
       query: (body) => ({
-        url: `/Accounts/sign-up-with-phone`,
+        url: `/v2/Accounts/sign-up-with-phone`,
         method: "POST",
         data: body,
       }),
