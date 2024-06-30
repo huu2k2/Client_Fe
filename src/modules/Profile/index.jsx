@@ -240,12 +240,12 @@ const Index = ({ setShow }) => {
             onChange={(file) => handleFileChange('SignatureUrl', file)}
           />
           <InputFileImg
-            name={"CCCd (Mặt trước)"}
+            name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
             onChange={(file) => handleFileChange('BeforeIdentification', file)}
           />
           <InputFileImg
-            name={"CCCd (Mặt sau)"}
+            name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
             onChange={(file) => handleFileChange('AfterIdentification', file)}
           />
