@@ -45,7 +45,7 @@ const index = ({ item }) => {
       <div className="w-full h-fit flex flex-col justify-start gap-1">
         <div className="w-fit h-5 rounded-2xl py-[2px] px-2 bg-red-100 text-red-700 gap-2 flex justify-center items-center">
           <p className="font-normal text-sm flex justify-center items-center">
-            {item.category ? item.category : "Studio"}
+            {item.category && item.category}
           </p>
         </div>
 
