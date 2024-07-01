@@ -11,10 +11,7 @@ const Location = () => {
 
   // Lifted state
   const [selectedOption, setSelectedOption] = useState(null);
-  console.log("🚀 ~ Location ~ selectedOption:", selectedOption)
   const [selectedOptionWard, setSelectedOptionWard] = useState(null);
-  console.log("🚀 ~ Location ~ selectedOptionWard:", selectedOptionWard)
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

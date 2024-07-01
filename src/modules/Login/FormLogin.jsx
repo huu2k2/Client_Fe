@@ -24,8 +24,15 @@ const schema = yup
   .required();
 
 const FormLogin = () => {
-  
   const navigate = useNavigate();
+  // check token changepage to home
+  useEffect(()=>{
+if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.split('.')?.length==3){
+  navigate('/')
+}
+  },[])
+  //
+  
   const {
     register,
     handleSubmit,
