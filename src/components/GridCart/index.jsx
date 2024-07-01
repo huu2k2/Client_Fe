@@ -65,7 +65,6 @@ const Index = ({ id, money, address }) => {
 
   return (
     <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
-      {isFetching && <CustomLoading />}
       {items.length > 0 ? (
         items.map((item, index) => <CartRoom key={index} item={item} />)
       ) : (
