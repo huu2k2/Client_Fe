@@ -44,7 +44,7 @@ const ProvinceInput = ({
 
         <div className="w-full h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
           <span className="w-[236px] outline-none text-sm">
-            {selectedOption ? `${selectedOption.label}, ${selectedOptionWard.label}` : "Tp.Hồ Chí Minh"}
+            {selectedOption ? `${selectedOption?.label}, ${selectedOptionWard?.label}` : "Tp.Hồ Chí Minh"}
           </span>
         </div>
       </div>
