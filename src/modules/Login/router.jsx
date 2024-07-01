@@ -3,10 +3,14 @@ import FormLogin from "./FormLogin";
 import ForgetPassword from "./ForgetPassword";
 import Otp from "./Otp";
 import ResetPassword from "./ResetPassword";
-
+import OtpHook from "@customhooks/OtpHook";
 const router = {
   path: "/login",
-  element: <PageLogin />,
+  element: (
+    <OtpHook>
+      <PageLogin />
+    </OtpHook>
+  ),
   children: [
     {
       path: "",
