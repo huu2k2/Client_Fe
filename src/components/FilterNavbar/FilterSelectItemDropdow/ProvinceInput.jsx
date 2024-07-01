@@ -20,8 +20,8 @@ const ProvinceInput = ({
   const handlePrint = () => {
     setFilterData((prev) => ({
       ...prev,
-      district: selectedOption?.label,
-      ward: selectedOptionWard?.label
+      districtId: selectedOption?.value,
+      wardId: selectedOptionWard?.value
     }));
     setIsOpen(false);
   };
@@ -31,7 +31,7 @@ const ProvinceInput = ({
     setSelectedOptionWard(null);
     setFilterData((prev) => ({ ...prev,  districtId:null,wardId:null}))
   };
-
+ 
   return (
     <>
       <div className="h-[78px] w-full gap-4 flex flex-col items-start self-stretch">

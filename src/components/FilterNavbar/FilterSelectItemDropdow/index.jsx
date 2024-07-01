@@ -28,8 +28,7 @@ const Location = () => {
   // hide , show new div
   const [isShow, setShow] = useState(false);
 
-  // You can now use selectedOption and selectedOptionWard here
-
+ 
   return (
     <div className="relative" ref={dropdownRef}>
       <div
@@ -56,7 +55,7 @@ const Location = () => {
           setIsOpen={setIsOpen}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          // selectedOptionWard={selectedOptionWard}
+          selectedOptionWard={selectedOptionWard}
           setSelectedOptionWard={setSelectedOptionWard}
         />
         {/* {isShow ? (
