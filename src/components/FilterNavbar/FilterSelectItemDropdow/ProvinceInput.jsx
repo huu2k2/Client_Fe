@@ -22,7 +22,7 @@ const ProvinceInput = ({ setShow, isShow ,setIsOpen}) => {
   const handleDelete = () => {
     setSelectedOption(null);
     setSelectedOptionWard(null);
-    setFilterData((prev) => ({ ...prev,  districtId:null,districtId:null}))
+    setFilterData((prev) => ({ ...prev,  districtId:null,wardId:null}))
   };
 
   return (
