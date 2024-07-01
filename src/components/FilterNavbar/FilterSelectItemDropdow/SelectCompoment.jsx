@@ -23,12 +23,13 @@ const SelectCompoment = ({ selectedOption, setSelectedOption, type, data }) => {
 
   const handleChange = (option) => {
     setSelectedOption(option);
+
   };
 
   return (
     <div className="w-full h-[38px] rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
       <Select
-        placeholder={type === "district" ? (filterData?.districtId ? filterData.districtId : "Chọn Quận / Huyện") : "Chọn Phường"}
+        placeholder={type === "district" ? (filterData?.District ? filterData.District : "Chọn Quận / Huyện") : "Chọn Phường"}
         value={selectedOption}
         onChange={handleChange}
         options={options}

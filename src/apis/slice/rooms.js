@@ -21,6 +21,7 @@ const RoomsApi = createApi({
         data, // Use `data` instead of `body` for axios
       }),
     }),
+
   }),
 });
 

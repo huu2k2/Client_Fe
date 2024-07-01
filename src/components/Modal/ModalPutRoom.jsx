@@ -4,6 +4,9 @@ import Input from "./Input";
 import TextArea from "./TextArea";
 
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal }) => {
+  const log = () => {
+    console.log();
+  }
   return (
     <div
       className={`w-screen h-screen flex  flex-col justify-center items-center fixed   bg-gray-500 bg-opacity-50   inset-0 z-50 `}
@@ -27,17 +30,26 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal }) => {
         </div>
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start ">
           <div className=" w-full h-fit gap-5 flex flex-col justify-start">
-            
-            <Input label={"Tên khách hàng"} />
-            <Input label={"Thời gian xem phòng"} type={"date"} />
-            <TextArea label={"Ghi chú"} />
+
+            <Input
+              label={"Tên khách hàng"}
+            />
+            <Input
+              label={"Thời gian xem phòng"}
+              type={"date"} />
+            <TextArea
+              label={"Ghi chú"}
+
+            />
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px] ">
-              <button className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5">
-              Đặt lịch 
+              <button
+                onClick={log}
+                className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5">
+                Đặt lịch
               </button>
             </div>
           </div>

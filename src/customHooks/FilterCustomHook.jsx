@@ -14,7 +14,7 @@ export const FilterHookContext = createContext();
 export const FilterCustomHook = ({ children }) => {
   // Khởi tạo mutation hook từ RTK Query
   const [getRoomsFilter, { data, isLoading, isError, error }] = useGetRoomsFilterMutation();
-  
+
   // Dữ liệu lọc mặc định
   const initialFilterData = {
     houseId: null,
@@ -36,12 +36,12 @@ export const FilterCustomHook = ({ children }) => {
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
-useEffect(()=>{
-  const rs = async ()=>{
-    await getRoomsFilter(filterData).unwrap();
-  }
-  rs()
-},[])
+  useEffect(() => {
+    const rs = async () => {
+      await getRoomsFilter(filterData).unwrap();
+    }
+    rs()
+  }, [])
   // Hàm xử lý tìm kiếm
   const handleClickSearch = useCallback(async () => {
     try {
@@ -67,7 +67,7 @@ useEffect(()=>{
     }),
     [filterData, setFilterData, data, isLoading, isError, error, handleClickSearch]
   );
- console.log(filterData)
+
   return (
     <FilterHookContext.Provider value={contextValue}>
       {children}
@@ -90,3 +90,7 @@ export const useClickSearchFilter = () => {
   const { handleClickSearch } = useContext(FilterHookContext);
   return handleClickSearch;
 };
+export const useQueryparamOfFilter = () => {
+  const { setQueryParams } = useContext(FilterHookContext);
+  return setQueryParams;
+}
