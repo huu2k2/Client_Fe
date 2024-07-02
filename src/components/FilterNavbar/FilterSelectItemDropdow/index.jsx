@@ -11,10 +11,7 @@ const Location = () => {
 
   // Lifted state
   const [selectedOption, setSelectedOption] = useState(null);
-  console.log("🚀 ~ Location ~ selectedOption:", selectedOption)
   const [selectedOptionWard, setSelectedOptionWard] = useState(null);
-  console.log("🚀 ~ Location ~ selectedOptionWard:", selectedOptionWard)
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -31,8 +28,7 @@ const Location = () => {
   // hide , show new div
   const [isShow, setShow] = useState(false);
 
-  // You can now use selectedOption and selectedOptionWard here
-
+ 
   return (
     <div className="relative" ref={dropdownRef}>
       <div
@@ -43,7 +39,7 @@ const Location = () => {
         <div className="w-auto block h-full text-gray-500 text-base font-normal leading-5 truncate">
           <span className=" ">
             {selectedOption || selectedOptionWard
-              ? `${selectedOption?.label}, ${selectedOptionWard?.label}`
+              ? `${selectedOption?.label}, ${selectedOptionWard?.label ? selectedOptionWard?.label:''}`
               : "Toàn quốc"}
           </span>
         </div>
@@ -59,7 +55,7 @@ const Location = () => {
           setIsOpen={setIsOpen}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          // selectedOptionWard={selectedOptionWard}
+          selectedOptionWard={selectedOptionWard}
           setSelectedOptionWard={setSelectedOptionWard}
         />
         {/* {isShow ? (

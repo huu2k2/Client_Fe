@@ -20,8 +20,8 @@ const ProvinceInput = ({
   const handlePrint = () => {
     setFilterData((prev) => ({
       ...prev,
-      district: selectedOption?.label,
-      ward: selectedOptionWard?.label
+      districtId: selectedOption?.value,
+      wardId: selectedOptionWard?.value
     }));
     setIsOpen(false);
   };
@@ -29,9 +29,9 @@ const ProvinceInput = ({
   const handleDelete = () => {
     setSelectedOption(null);
     setSelectedOptionWard(null);
-    setFilterData((prev) => ({ ...prev, district: "", ward: "" }));
+    setFilterData((prev) => ({ ...prev,  districtId:null,wardId:null}))
   };
-
+ 
   return (
     <>
       <div className="h-[78px] w-full gap-4 flex flex-col items-start self-stretch">
@@ -44,7 +44,7 @@ const ProvinceInput = ({
 
         <div className="w-full h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
           <span className="w-[236px] outline-none text-sm">
-            {selectedOption ? selectedOption.label : "Tp.Hồ Chí Minh"}
+            {selectedOption ? `${selectedOption?.label}, ${selectedOptionWard?.label ?selectedOptionWard?.label:''}` : "Tp.Hồ Chí Minh"}
           </span>
         </div>
       </div>

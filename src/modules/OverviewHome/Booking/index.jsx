@@ -1,27 +1,57 @@
 import React from "react";
 import GroupInput from "./GroupInput";
 import { useGetInfoItem } from "@customhooks/ServicesCustomHook";
-import { useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./schema";
 import { usePostScheduleRoomMutation } from "../../../apis/slice/ScheduleSeeRoom";
-
+import { convertToDateISOString } from "../../../utils/ConverDate";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const index = () => {
   const [address] = useGetInfoItem();
- 
-  const [postScheduleRoom, { isLoading, error }] = usePostScheduleRoomMutation();
+
+  const [postScheduleRoom, { data: dataOfPost, isLoading, error }] =
+    usePostScheduleRoomMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-  })
-  const onSubmit = (data) =>{
-
-    console.log(data)
-    console.log("id",localStorage.getItem('idroom'))
-  }
+  });
+  const onSubmit = async (data) => {
+    const formData = {
+      roomId: localStorage.getItem("idroom"),
+      ...data,
+      dateView: convertToDateISOString(data.dateView),
+    };
+    console.log(formData);
+    try {
+      await postScheduleRoom(formData).unwrap();
+      toast.success("Schedule posted successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      console.error("Error posting schedule:", err);
+      toast.error(err.data.mesagee, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
   return (
     <>
       <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
@@ -36,8 +66,11 @@ const index = () => {
         <div className="w-full h-[778px] relative">
           <div className="w-full h-32 left-0 top-0 absolute bg-black" />
           <div className="h-[728px] px-10 py-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex">
-          {/* form */}
-            <form onSubmit={handleSubmit(onSubmit)} className="self-stretch h-[680px] flex-col justify-start items-start gap-8 flex">
+            {/* form */}
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="self-stretch h-[680px] flex-col justify-start items-start gap-8 flex"
+            >
               <div className="self-stretch h-[589px] flex-col justify-start items-start gap-10 flex">
                 <div className="self-stretch h-[589px] flex-col justify-start items-start gap-5 flex">
                   <div className="self-stretch h-12 flex-col justify-start items-start gap-1 flex">
@@ -49,7 +82,7 @@ const index = () => {
                     </div>
                   </div>
 
-                  <GroupInput  register={register} errors={errors}/>
+                  <GroupInput register={register} errors={errors} />
                 </div>
               </div>
 
@@ -58,19 +91,22 @@ const index = () => {
                   <div className="self-stretch h-px bg-gray-200" />
                 </div>
                 <div className="self-stretch justify-end items-center gap-3 inline-flex">
-                  <button type="submit" className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
+                  <button
+                    type="submit"
+                    className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex"
+                  >
                     <div className="text-white text-sm font-medium leading-tight">
                       Đặt lịch
                     </div>
                   </button>
                 </div>
               </div>
-
             </form>
             {/* form */}
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

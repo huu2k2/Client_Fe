@@ -34,12 +34,12 @@ const Index = () => {
 
   useEffect(() => {
     if (!idroom && filterData.Price > 0) {
-      setValueRang(filterData.Price / 100000);
+      setValueRang(filterData.Price / 1000000);
     }
   }, [filterData.Price]);
 
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, Price: valueRang * 100000 }));
+    setFilterData((prev) => ({ ...prev, price:valueRang>0? valueRang * 1000000:null }));
     setIsOpen(false);
   };
 
