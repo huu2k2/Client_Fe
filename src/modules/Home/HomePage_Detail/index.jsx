@@ -13,18 +13,20 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const [setIsServices] = useSetIdRoomServices()
- const [address,price] =useGetInfoItem()
+  console.log("🚀 ~ index ~ setIsServices:", setIsServices)
+  const [address, price] = useGetInfoItem()
   useEffect(() => {
     setIsServices(roomId)
   }, [roomId])
-  const [holder,rooms] = useGetHolder()
- 
+  const [holder, rooms] = useGetHolder()
+
   return (
     <>
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}
           setIsShowModal={setIsShowModal}
+          roomId={roomId}
         />
       )}
       <div className="mt-[18px] w-[1360px] h-fit bg-white nthd_flex_col_between mb-10 custom-scrollbar">

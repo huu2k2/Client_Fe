@@ -108,7 +108,7 @@ const Cart = () => {
                 <h1 className="nthd_text_normal_lg">
                   {holder?.fullName}
                 </h1>
-                <span className="nthd_text_normal_sm">Chu nha</span>
+                <span className="nthd_text_normal_sm">Chủ nhà</span>
               </div>
             </div>
 
