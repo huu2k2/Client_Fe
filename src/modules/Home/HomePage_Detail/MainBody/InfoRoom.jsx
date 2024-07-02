@@ -101,10 +101,7 @@ const InfoRoom = () => {
         <div className="flex justify-between w-full items-center h-40">
           <div className="text-[28px] flex font-semibold leading-[28px] text-red-700">
             {new Intl.NumberFormat("vi-VN").format(price)} VND
-            <span className="font-normal text-gray-500 text-base">
-              {" "}
-              / Khách
-            </span>
+ 
           </div>
 
           {/* button */}
