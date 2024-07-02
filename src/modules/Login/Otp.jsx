@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useOTP } from "../../customHooks/OtpHook";
 
 const Otp = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // Get current path
   const length = 6; // Định nghĩa biến length
   const refs = useRef(Array(length).fill(null));
   const [otp, setOtp] = useState(Array(length).fill(""));
@@ -39,21 +41,70 @@ const Otp = () => {
   };
   const [otpErr, setOtpErr] = useState(false);
   const handleSendOtp = () => {
-    const data = parseInt(otp.join(""), 10);
-
     window.confirmationResult
-    .confirm(data)
-    .then((result) => {
-      navigate("/login/reset_password");
-    })
-    .catch((error) => {
-      alert(" loi , nhap sai otp")
-    });
+      .confirm(otp.join(""))
+      .then((result) => {
+        console.log("ke qua", result);
+        navigate("/login/reset_password");
+      })
+      .catch((error) => {
+        alert(" loi , nhap sai otp");
+      });
   };
 
+  const getInitialTime = (path) => {
+    const savedTime = localStorage.getItem("remainingTime");
+    if (path === "/login/otp" && savedTime) {
+      return parseInt(savedTime, 10); // Use saved time if on the correct path
+    }
+    return 60; // Default to 60 seconds if not on the correct path
+  };
+
+  const [seconds, setSeconds] = useState(() =>
+    getInitialTime(location?.pathname)
+  );
+  // Save the remaining time to localStorage
+  const tick = useCallback(() => {
+    setSeconds((prevSeconds) => {
+      const newSeconds = prevSeconds - 1;
+      localStorage.setItem("remainingTime", newSeconds);
+      return newSeconds;
+    });
+  }, []);
+
+  useEffect(() => {
+    // Clear localStorage if the timer reaches 0
+    if (seconds <= 0) {
+      localStorage.removeItem("remainingTime");
+      return;
+    }
+
+    // Setup interval if seconds is positive
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer); // Cleanup interval on component unmount or seconds change
+  }, [seconds, tick]);
+
+  // Format seconds into MM:SS format
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
+  // gui lai
+  const { sendOtp, isRecaptchaReady } = useOTP();
+  const hanldeSendAgaint = () => {
+    if (seconds == 0) {
+      localStorage.setItem("remainingTime", 60);
+      setSeconds(60);
+      if (isRecaptchaReady) {
+        sendOtp(localStorage.getItem("number"));
+      } else {
+        alert("reCAPTCHA is not ready yet.");
+      }
+    }
+  };
   return (
     <div className="flex flex-col space-y-4 w-full gap-6 text-center">
-      
       {/* input otp */}
       <div className="w-[384px] h-[44px] flex justify-center items-center gap-3">
         {[...Array(length)].map((_, i) => (
@@ -74,12 +125,12 @@ const Otp = () => {
       </div>
 
       <span className="text-black text-sm font-medium leading-5">
-        Mã sẽ hết hạn trong 1:00
+        Mã sẽ hết hạn trong {formatTime(seconds)}
       </span>
       {otpErr && (
         <div className="w-full flex flex-col justify-center items-center">
           <p className="text-red-600 text-right text-sm font-medium leading-5 cursor-pointer">
-           OTP INVALID!
+            OTP INVALID!
           </p>
         </div>
       )}
@@ -94,9 +145,12 @@ const Otp = () => {
         <span className="text-gray-600 text-sm font-normal leading-5">
           Bạn không nhận được mã xác thực?
         </span>
-        <p className="text-red-600 text-right text-sm font-medium leading-5 cursor-pointer">
+        <button
+          className="text-red-600 text-right text-sm font-medium leading-5 cursor-pointer"
+          onClick={hanldeSendAgaint}
+        >
           Gửi lại
-        </p>
+        </button>
       </div>
     </div>
   );
