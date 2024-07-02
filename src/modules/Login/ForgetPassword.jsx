@@ -27,37 +27,40 @@ const ForgetPassword = () => {
   });
 
   const { sendOtp, isRecaptchaReady } = useOTP();
-  const [isLoading,setLoading] = useState(false)
-  const [postCheckPassword, {  error }] =
-    usePostCheckPasswordMutation();
-    const onSubmit = async (data) => {
-      setLoading(true);
-      try {
-        if (data.PhoneNumber.length === 10) {
-          const result = await postCheckPassword({
-            phoneNumber: data.PhoneNumber,
-          }).unwrap();
-          localStorage.setItem("remainingTime", 60);
-          
-          if (result.isSuccess && isRecaptchaReady) {
-            sendOtp(data.PhoneNumber);
+  const [isLoading, setLoading] = useState(false);
+  const [postCheckPassword, { error }] = usePostCheckPasswordMutation();
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      if (data.PhoneNumber.length === 10) {
+        const result = await postCheckPassword({
+          phoneNumber: data.PhoneNumber,
+        }).unwrap();
+        localStorage.setItem("remainingTime", 60);
+
+        if (result.isSuccess && isRecaptchaReady) {
+          const checkSendotp = await sendOtp(data.PhoneNumber);
+          if (checkSendotp) {
             setTimeout(() => {
-              localStorage.setItem("number",data.PhoneNumber)
+              loclStorage.setItem("number", data.PhoneNumber);
               setLoading(false);
               change("/login/otp");
             }, 2000);
-          } else {
-            alert("reCAPTCHA is not ready yet.");
-            setLoading(false);
+            alert("reCAPTCHA  ready  .");
           }
+          setLoading(false);
         } else {
+          alert("reCAPTCHA is not ready yet.");
           setLoading(false);
         }
-      } catch (error) {
-        console.error('Error:', error);
+      } else {
         setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error:", error);
+      setLoading(false);
+    }
+  };
 
   return (
     <form
@@ -65,11 +68,13 @@ const ForgetPassword = () => {
       className="flex flex-col space-y-4 w-full gap-6 "
     >
       {/* Phone number */}
-     
+
       <div className="w-[384px] gap-1 relative">
-      {isLoading && <div className="absolute inset-0 flex justify-center items-center w-full h-full">
-        <span className="loading loading-spinner loading-lg  bg-slate-500 "></span>
-      </div>}
+        {isLoading && (
+          <div className="absolute inset-0 flex justify-center items-center w-full h-full">
+            <span className="loading loading-spinner loading-lg  bg-slate-500 "></span>
+          </div>
+        )}
         <label
           htmlFor="PhoneNumber"
           className="text-gray-700 text-sm font-medium"
