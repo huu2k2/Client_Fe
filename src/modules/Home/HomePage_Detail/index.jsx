@@ -13,18 +13,20 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const [setIsServices] = useSetIdRoomServices()
- const [address,price] =useGetInfoItem()
+  console.log("🚀 ~ index ~ setIsServices:", setIsServices)
+  const [address, price] = useGetInfoItem()
   useEffect(() => {
     setIsServices(roomId)
   }, [roomId])
-  const [holder,rooms] = useGetHolder()
- 
+  const [holder, rooms] = useGetHolder()
+
   return (
     <>
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}
           setIsShowModal={setIsShowModal}
+          roomId={roomId}
         />
       )}
       <div className="mt-[18px] w-[1360px] h-fit bg-white nthd_flex_col_between mb-10 custom-scrollbar">
@@ -38,8 +40,8 @@ const index = () => {
         <MainBody />
         <Category />
         <div className="flex flex-col gap-14 h-fit">
-          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money ={null} address={null}/>
-          <RoomOrder title={`Phòng tương tự `} data={null} money ={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')}/>
+          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money={null} address={null} />
+          <RoomOrder title={`Phòng tương tự `} data={null} money={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
         </div>
       </div>
     </>
