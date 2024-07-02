@@ -39,16 +39,14 @@ const ForgetPassword = () => {
         localStorage.setItem("remainingTime", 60);
 
         if (result.isSuccess && isRecaptchaReady) {
-          const checkSendotp = await sendOtp(data.PhoneNumber);
-          if (checkSendotp) {
-            setTimeout(() => {
-              loclStorage.setItem("number", data.PhoneNumber);
-              setLoading(false);
-              change("/login/otp");
-            }, 2000);
-            alert("reCAPTCHA  ready  .");
-          }
-          setLoading(false);
+          await sendOtp(data.PhoneNumber);
+
+          setTimeout(() => {
+            loclStorage.setItem("number", data.PhoneNumber);
+            setLoading(false);
+            change("/login/otp");
+          }, 2000);
+          alert("reCAPTCHA  ready  .");
         } else {
           alert("reCAPTCHA is not ready yet.");
           setLoading(false);
