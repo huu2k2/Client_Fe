@@ -105,7 +105,7 @@ const InfoRoom = () => {
           </div>
 
           {/* button */}
-          <div className="w-fit flex">
+          <div className="w-fit flex gap-2">
             <div onClick={handleShowModal}>
               <Button
                 text={" Đặt lịch xem phòng"}
