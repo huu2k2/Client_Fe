@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
 
     <div className="w-full h-fit flex justify-center items-center ">
-      <div className="w-[1360px] flex flex-col gap-5 mb-20">
+      <div className="w-[1360px] flex flex-col gap-5 my-20">
         <h1 className="font-semibold text-2xl">Danh sách phòng yêu thích</h1>
         <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit ">
           {faveritedata?.response?.length > 0 ? (
