@@ -97,7 +97,7 @@ const ForgetPassword = () => {
       >
         Xác nhận
       </button>
-      <div id="recaptcha-container" className="hidden"></div>
+      <div id="recaptcha-container" ></div>
     </form>
   );
 };

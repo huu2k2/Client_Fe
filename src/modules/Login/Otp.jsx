@@ -41,6 +41,13 @@ const Otp = () => {
   };
   const [otpErr, setOtpErr] = useState(false);
   const handleSendOtp = () => {
+
+    if (!window.confirmationResult) {
+      alert("Confirmation result is not set. Please request an OTP first.");
+      return;
+    }
+ 
+    console.log(otp.join(""));
     window.confirmationResult
       .confirm(otp.join(""))
       .then((result) => {
@@ -152,6 +159,7 @@ const Otp = () => {
           Gửi lại
         </button>
       </div>
+      <div id="recaptcha-container" ></div>
     </div>
   );
 };
