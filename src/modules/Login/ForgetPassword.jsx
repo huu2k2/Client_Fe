@@ -38,15 +38,11 @@ const ForgetPassword = () => {
         }).unwrap();
         localStorage.setItem("remainingTime", 60);
 
+        loclStorage.setItem("number", data.PhoneNumber);
         if (result.isSuccess && isRecaptchaReady) {
           await sendOtp(data.PhoneNumber);
-
-          setTimeout(() => {
-            loclStorage.setItem("number", data.PhoneNumber);
-            setLoading(false);
-            change("/login/otp");
-          }, 2000);
-          alert("reCAPTCHA  ready  .");
+          change("/login/otp");
+          setLoading(false);
         } else {
           alert("reCAPTCHA is not ready yet.");
           setLoading(false);
