@@ -21,11 +21,62 @@ const Agencies = createApi({
             query: (data) => ({
                 url: `/v2/Agencies/schedule-view-room`,
                 method: 'POST',
-                data,
+                data: data,
+            }),
+        }),
+        addFavorite: build.mutation({
+            query: (roomId) => ({
+                url: `/v2/Agencies/add-favorite-room/${roomId}`,
+                method: 'POST',
+            }),
+            // Add the onQueryStarted lifecycle method
+            async onQueryStarted(roomId, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        Agencies.util.updateQueryData('getFavorite', undefined, (draft) => {
+                            draft.push(data); // assuming the API returns the added favorite room details
+                        })
+                    );
+                } catch (error) {
+                    console.error('Failed to update the favorite list:', error);
+                }
+            },
+        }),
+        removeFavorite: build.mutation({
+            query: (roomId) => ({
+                url: `/v2/Agencies/remove-favorite-room/${roomId}`,
+                method: 'DELETE',
+            }),
+            // Add the onQueryStarted lifecycle method
+            async onQueryStarted(roomId, { dispatch, queryFulfilled }) {
+                const patchResult = dispatch(
+                    Agencies.util.updateQueryData('getFavorite', undefined, (draft) => {
+                        return draft.filter(room => room.id !== roomId);
+                    })
+                );
+                try {
+                    await queryFulfilled;
+                } catch (error) {
+                    patchResult.undo();
+                    console.error('Failed to remove from the favorite list:', error);
+                }
+            },
+        }),
+        getFavorite: build.query({
+            query: () => ({
+                url: `/v2/Agencies/get-favorite-rooms`,
+                method: 'GET',
             }),
         }),
     }),
 });
 
-export const { usePostscheduleMutation } = Agencies;
+export const {
+    usePostscheduleMutation,
+    useAddFavoriteMutation,
+    useRemoveFavoriteMutation,
+    useGetFavoriteQuery
+} = Agencies;
+
 export default Agencies;

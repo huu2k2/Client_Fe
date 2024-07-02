@@ -13,7 +13,6 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const [setIsServices] = useSetIdRoomServices()
-  console.log("🚀 ~ index ~ setIsServices:", setIsServices)
   const [address, price] = useGetInfoItem()
   useEffect(() => {
     setIsServices(roomId)
@@ -40,8 +39,8 @@ const index = () => {
         <MainBody />
         <Category />
         <div className="flex flex-col gap-14 h-fit">
-          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money ={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')}/>
-          <RoomOrder title={`Phòng tương tự `} data={null} money ={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')}/>
+          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
+          <RoomOrder title={`Phòng tương tự `} data={null} money={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
         </div>
       </div>
     </>

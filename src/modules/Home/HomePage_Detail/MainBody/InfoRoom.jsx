@@ -103,7 +103,7 @@ const InfoRoom = () => {
             {new Intl.NumberFormat("vi-VN").format(price)} VND
             <span className="font-normal text-gray-500 text-base">
               {" "}
-              / Khách
+
             </span>
           </div>
 

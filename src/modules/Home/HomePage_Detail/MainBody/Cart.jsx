@@ -116,7 +116,7 @@ const Cart = () => {
               className="w-full rounded-lg border px-[9px] py-[17px] gap-2 nthd_text_medium_sm text-gray-700 nthd_flex"
             >
               <BsFillPersonPlusFill />
-              <span>Theo doi</span>
+              <span>Theo dõi</span>
             </div>
           </div>
 

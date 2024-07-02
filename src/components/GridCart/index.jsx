@@ -16,7 +16,7 @@ const findDistrictId = (address, districts) => {
   return district ? district.district_id : null;
 };
 
-const Index = ({ id, money, address }) => {
+const Index = ({ id, money, address, faveritedata }) => {
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
   const [error, setError] = useState("");
@@ -66,11 +66,11 @@ const Index = ({ id, money, address }) => {
   return (
     <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
       {items.length > 0 ? (
-        items.map((item, index) => <CartRoom key={index} item={item} />)
+        items.map((item, index) => <CartRoom key={index} item={item} faveritedata={faveritedata} />)
       ) : (
         !isFetching && (
           <div className="w-full flex justify-center items-center">
-            <p className="text-rose-500">không tìm thấy phòng!</p>
+            <p className="text-rose-500">{error}</p>
           </div>
         )
       )}

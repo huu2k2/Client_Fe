@@ -41,7 +41,7 @@ const MainBodySkeleton = () => {
           gap-2 nthd_text_medium_sm  text-gray-700 nthd_flex"
                     >
                         <BsFillPersonPlusFill />
-                        <span> Theo doi</span>
+                        <span>Theo dõi</span>
                     </div>
                 </div>
 
