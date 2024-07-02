@@ -108,7 +108,7 @@ const Cart = () => {
                 <h1 className="nthd_text_normal_lg">
                   {holder?.fullName}
                 </h1>
-                <span className="nthd_text_normal_sm">Chu nha</span>
+                <span className="nthd_text_normal_sm">Chủ nhà</span>
               </div>
             </div>
 
@@ -122,7 +122,7 @@ const Cart = () => {
 
           <div className="w-[288px] h-[76px] nthd_flex_between">
             <div className="w-[136px] h-full p-2 gap-2">
-              <h2 className="nthd_text_normal_sm_text">Phong sap trong</h2>
+              <h2 className="nthd_text_normal_sm_text">Phòng sắp trống</h2>
               <h1 className="nthd_semibold_2xl_text">
                 {rooms?.roomToBeEmpty}
               </h1>
@@ -131,7 +131,7 @@ const Cart = () => {
             <div className="border border-gray-400 h-[40px] bg-[#E7E7E7]"></div>
 
             <div className="w-[136px] h-full p-2 gap-2">
-              <h2 className="nthd_text_normal_sm_text">Phong trong</h2>
+              <h2 className="nthd_text_normal_sm_text">Phòng trống</h2>
               <h1 className="nthd_semibold_2xl_text">
                 {rooms?.emptyRoom}
               </h1>

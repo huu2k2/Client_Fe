@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy":"yarn build",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -19,6 +21,7 @@
     "add": "^2.0.6",
     "animate.css": "^4.1.1",
     "axios": "^1.7.2",
+    "firebase": "10.11.0",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -29,6 +32,7 @@
     "react-select": "^5.8.0",
     "react-slick": "^0.30.2",
     "react-spinners": "^0.13.8",
+    "react-toastify": "^10.0.5",
     "slick-carousel": "^1.8.1",
     "yarn": "^1.22.22",
     "yup": "^1.4.0"
@@ -43,6 +47,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "gh-pages": "^6.1.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "vite": "^5.2.0"

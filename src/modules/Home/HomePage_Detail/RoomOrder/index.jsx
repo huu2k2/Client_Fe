@@ -16,7 +16,7 @@ const Index = ({ title, data, money, address }) => {
   const handleNavigate = () => {
     handleClickSearch()
     const path = data 
-      ? `/similarRooms?idRoom=${data}`
+      ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}`
       : `/similarRooms?Price=${money}&Address=${address}`;
     navigate(path);
   };

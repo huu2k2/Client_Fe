@@ -67,7 +67,7 @@ export const FilterCustomHook = ({ children }) => {
     }),
     [filterData, setFilterData, data, isLoading, isError, error, handleClickSearch]
   );
-
+ 
   return (
     <FilterHookContext.Provider value={contextValue}>
       {children}
