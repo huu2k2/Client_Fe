@@ -31,7 +31,7 @@ const ResetPassword = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [postResetPassword, { isLoading, error, data }] = usePostResetPasswordMutation();
+  const [postResetPassword, { isLoading, error, data:Data }] = usePostResetPasswordMutation();
   const onSubmit = async(data) => {
     try {
       const query ={
@@ -39,7 +39,12 @@ const ResetPassword = () => {
         newPassword: data.Password,
         confirmPassword: data.Confirm_password
       }
-      await postResetPassword(query).unwrap();
+      const result = await postResetPassword(query).unwrap();
+
+    // Kiểm tra nếu có lỗi trong phản hồi
+    if (result.error) {
+      throw new Error(result.error);
+    }
       alert('Password reset request sent successfully.');
       change("/login");
     } catch (err) {
