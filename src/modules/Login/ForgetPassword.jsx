@@ -42,7 +42,7 @@ const ForgetPassword = () => {
           await sendOtp(data.PhoneNumber);
 
           setTimeout(() => {
-            // loclStorage.setItem("number", data.PhoneNumber);
+            localStorage.setItem("number", data.PhoneNumber);
             setLoading(false);
             change("/login/otp");
           }, 2000);

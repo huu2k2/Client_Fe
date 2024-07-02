@@ -1,18 +1,76 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Input from "./Input";
 import TextArea from "./TextArea";
+import { useGetAllDetailQuery } from "../../apis/slice/services";
+import { usePostscheduleMutation } from "../../apis/slice/Agencies";
 
-export const ModalPutRoom = ({ dropdownRef, setIsShowModal }) => {
-  const log = () => {
-    console.log();
-  }
+const formatDate = (isoString) => {
+  const date = new Date(isoString);
+  return date.toLocaleString("vi-VN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+};
+
+export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
+  const [formData, setFormData] = useState({
+    customerName: "",
+    viewTime: "",
+    notes: ""
+  });
+  const [postschedule] = usePostscheduleMutation();
+  const { data } = useGetAllDetailQuery(roomId);
+  const [response, setResponse] = useState(null);
+
+  const SalerName = data?.response?.managers[0]?.managerName;
+  const SalerPhone = data?.response?.managers[0]?.phoneNumber;
+  const company = data?.response?.holder?.fullName;
+
+  useEffect(() => {
+    if (data?.response?.dateView) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        viewTime: formatDate(data.response.dateView),
+      }));
+    }
+  }, [data]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await postschedule({
+        ...formData,
+        roomId,
+        company,
+        SalerName,
+        SalerPhone
+      }).unwrap();
+      setResponse(response);
+      console.log(response);
+    } catch (error) {
+      console.error('Failed to schedule:', error);
+      setResponse(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log("🚀 ~ handleChange ~ value:", value);
+    setFormData({ ...formData, [name]: value });
+    console.log("🚀 ~ handleChange ~ name:", name);
+  };
+
   return (
     <div
-      className={`w-screen h-screen flex  flex-col justify-center items-center fixed   bg-gray-500 bg-opacity-50   inset-0 z-50 `}
+      className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
       ref={dropdownRef}
     >
-      <div className="relative w-[1360px]  h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
+      <div className="relative w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
         <div
           className="absolute top-2 right-2 cursor-pointer"
           onClick={() => setIsShowModal(false)}
@@ -28,32 +86,42 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal }) => {
             123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
           </span>
         </div>
-        <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start ">
-          <div className=" w-full h-fit gap-5 flex flex-col justify-start">
-
+        <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit}>
+          <div className="w-full h-fit gap-5 flex flex-col justify-start">
             <Input
-              label={"Tên khách hàng"}
+              label="Tên khách hàng"
+              name="customerName"
+              value={formData.customerName}
+              onChange={handleChange}
             />
             <Input
-              label={"Thời gian xem phòng"}
-              type={"date"} />
+              label="Thời gian xem phòng"
+              type="date"
+              name="viewTime"
+              value={formData.viewTime}
+              onChange={handleChange}
+            />
             <TextArea
-              label={"Ghi chú"}
-
+              label="Ghi chú"
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
             />
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
-            <div className="flex justify-end mt-5 w-full h-[38px] ">
+            <div className="flex justify-end mt-5 w-full h-[38px]">
               <button
-                onClick={log}
-                className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5">
+                type="submit"
+                className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"
+              >
                 Đặt lịch
               </button>
             </div>
           </div>
         </form>
+
       </div>
     </div>
   );
