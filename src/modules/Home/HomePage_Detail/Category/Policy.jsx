@@ -28,7 +28,7 @@ const Policy = () => {
                 <tr className="h-10" key={index}>
                   <td className="nthd_policy_item_td ">{i.month} tháng</td>
                   <td className="nthd_policy_item_td">{i.deposit} tháng</td>
-                  <td className="nthd_policy_item_td">{i.commission} tháng</td>
+                  <td className="nthd_policy_item_td">{i.commission} %</td>
                 </tr>
               ))}
           </tbody>
