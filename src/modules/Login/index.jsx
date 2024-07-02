@@ -126,7 +126,7 @@ const Index = () => {
                 ? "Vui lòng nhập số điện thoại đã đăng kí"
                 : "Quản lý nhà trọ dễ dàng với Aloper"}
             </span>
-            {isOtp && <p>+84347503886</p>}
+            {isOtp && <p>+84 {localStorage.getItem('number')?.slice(1)}</p>}
           </div>
         </div>
 

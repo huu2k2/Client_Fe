@@ -24,10 +24,13 @@ export const sendOtp = async (phoneNumber) => {
       .signInWithPhoneNumber(phoneNumberWithCountryCode, appVerifier);
     // Save confirmationResult to the window object for later use
     window.confirmationResult = confirmationResult;
-    alert("OTP is sent");
+   alert('send otp')
+   
   } catch (error) {
+    alert('not send otp')
     // Handle any errors that occur
-    alert("OTP ERROR: " + error.message);
+    console.log("OTP ERROR: " + error.message);
+ 
   }
 };
 

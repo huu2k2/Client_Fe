@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { usePostResetPasswordMutation } from "../../apis/slice/Acount";
 
 const schema = yup.object().shape({
   Password: yup
@@ -30,9 +31,21 @@ const ResetPassword = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = (data) => {
-    change("/login");
+  const [postResetPassword, { isLoading, error, data }] = usePostResetPasswordMutation();
+  const onSubmit = async(data) => {
+    try {
+      const query ={
+        phoneNumber: localStorage.getItem('number'),
+        newPassword: data.Password,
+        confirmPassword: data.Confirm_password
+      }
+      await postResetPassword(query).unwrap();
+      alert('Password reset request sent successfully.');
+      change("/login");
+    } catch (err) {
+      console.error('Failed to send reset request:', err);
+      alert('Failed to send password reset request.');
+    }
   };
   const [isHide, setIsHide] = useState(false);
   const [isHideConfirm, setIsHideConfirm] = useState(false);

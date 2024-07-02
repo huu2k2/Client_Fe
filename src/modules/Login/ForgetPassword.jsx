@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useOTP } from "@customhooks";
- 
+import { usePostCheckPasswordMutation } from "../../apis/slice/Acount";
 
 const schema = yup
   .object({
@@ -27,17 +27,36 @@ const ForgetPassword = () => {
   });
 
   const { sendOtp, isRecaptchaReady } = useOTP();
+  const [isLoading, setLoading] = useState(false);
+  const [postCheckPassword, { error }] = usePostCheckPasswordMutation();
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      if (data.PhoneNumber.length === 10) {
+        const result = await postCheckPassword({
+          phoneNumber: data.PhoneNumber,
+        }).unwrap();
+        localStorage.setItem("remainingTime", 60);
 
-  const onSubmit = (data) => {
-    if (data.PhoneNumber.length === 10) {
-      if (isRecaptchaReady) {
-        sendOtp(data.PhoneNumber);
-        setTimeout(()=>{
-          change('/login/otp')
-        },2000)
+        if (result.isSuccess && isRecaptchaReady) {
+          await sendOtp(data.PhoneNumber);
+
+          setTimeout(() => {
+            // loclStorage.setItem("number", data.PhoneNumber);
+            setLoading(false);
+            change("/login/otp");
+          }, 2000);
+        
+        } else {
+          alert("reCAPTCHA is not ready yet.");
+          setLoading(false);
+        }
       } else {
-        alert('reCAPTCHA is not ready yet.');
+        setLoading(false);
       }
+    } catch (error) {
+      console.error("Error:", error);
+      setLoading(false);
     }
   };
 
@@ -47,7 +66,13 @@ const ForgetPassword = () => {
       className="flex flex-col space-y-4 w-full gap-6 "
     >
       {/* Phone number */}
-      <div className="w-[384px] gap-1">
+
+      <div className="w-[384px] gap-1 relative">
+        {isLoading && (
+          <div className="absolute inset-0 flex justify-center items-center w-full h-full">
+            <span className="loading loading-spinner loading-lg  bg-slate-500 "></span>
+          </div>
+        )}
         <label
           htmlFor="PhoneNumber"
           className="text-gray-700 text-sm font-medium"
@@ -72,7 +97,7 @@ const ForgetPassword = () => {
       >
         Xác nhận
       </button>
-      <div id="recaptcha-container"></div>
+      <div id="recaptcha-container" className="hidden"></div>
     </form>
   );
 };

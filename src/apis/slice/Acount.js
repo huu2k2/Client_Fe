@@ -31,8 +31,16 @@ const AcountsApi = createApi({
         data: body,
       }),
     }),
+
+    postCheckPassword: build.mutation({
+      query: (body) => ({
+        url: `/v2/Accounts/forgot-password`,
+        method: "POST",
+        data: body,
+      }),
+    }),
   }),
 });
 
-export const { usePostLoginMutation, usePostRegisterMutation ,usePostResetPasswordMutation} = AcountsApi;
+export const { usePostLoginMutation, usePostRegisterMutation ,usePostResetPasswordMutation,usePostCheckPasswordMutation} = AcountsApi;
 export default AcountsApi;
