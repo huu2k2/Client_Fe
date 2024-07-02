@@ -38,7 +38,9 @@ const Index = ({ id, money, address, faveritedata }) => {
 
   useEffect(() => {
     if (
-      (location.pathname === "/similarRooms" && money !== null && address !== null) ||
+      (location.pathname === "/similarRooms" &&
+        money !== null &&
+        address !== null) ||
       id !== null
     ) {
       handleClickSearch();
@@ -64,17 +66,20 @@ const Index = ({ id, money, address, faveritedata }) => {
   }, [data]);
 
   return (
-    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
-      {items.length > 0 ? (
-        items.map((item, index) => <CartRoom key={index} item={item} faveritedata={faveritedata} />)
-      ) : (
-        !isFetching && (
-          <div className="w-full flex justify-center items-center">
-            <p className="text-rose-500">{error}</p>
-          </div>
-        )
+    <>
+      {items.length===0 && (
+        <div className="w-full h-full flex justify-center items-center">
+          <p className="text-rose-500">{error}</p>
+        </div>
       )}
-    </div>
+      {items.length > 0 && (
+        <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit ">
+          {items.map((item, index) => (
+            <CartRoom key={index} item={item} faveritedata={faveritedata} />
+          ))}
+        </div>
+      )}
+    </>
   );
 };
 
