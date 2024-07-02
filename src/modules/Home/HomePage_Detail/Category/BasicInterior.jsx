@@ -9,7 +9,7 @@ const BasicInterior = () => {
   return (
     <>
     <div className="w-[552px] h-fit gap-5 nthd_flex_col_between">
-      <div className="w-[145px] h-6  nthd_text_medium_base nthd_flex_between">
+      <div className="w-[145px] h-6 gap-2  nthd_text_medium_base nthd_flex_start">
         <BsDoorOpenFill />
         <span> Nội thất cơ bản</span>
       </div>

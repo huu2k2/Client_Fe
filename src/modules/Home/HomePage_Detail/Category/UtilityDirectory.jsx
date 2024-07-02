@@ -9,7 +9,7 @@ const UtilityDirectory = () => {
     <>
       {utility.length > 0 ? (
         <div className="w-full h-[80px] gap-5 mt-5 nthd_flex_col_between">
-          <div className="w-[165px] h-6 gap-2 flex justify-between nthd_text_medium_base items-center">
+          <div className="w-[165px] h-6 gap-2 flex justify-start nthd_text_medium_base items-center">
             <BsWifi />
             <span>Danh mục tiện ích</span>
           </div>
