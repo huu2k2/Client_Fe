@@ -36,6 +36,9 @@
 .nthd_flex_between {
   @apply flex justify-between items-center;
 }
+.nthd_flex_start {
+  @apply flex justify-start items-center;
+}
 .nthd_flex_between_full {
   @apply flex justify-between w-full;
 }

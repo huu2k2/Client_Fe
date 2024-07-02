@@ -119,7 +119,7 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="w-full h-6 gap-2 flex items-center ">
+          <div className="w-full h-6 gap-2 flex items-center justify-start">
             <AiOutlineInsertRowLeft />
             <span className="text-black text-base font-medium leading-normal">
               Danh mục tiện ích
