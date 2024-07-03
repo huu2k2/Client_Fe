@@ -2,6 +2,10 @@ export const categoryItems = [
   { id: 1, value: "Máy lạnh", label: "Máy lạnh" },
   { id: 2, value: "Tủ lạnh", label: "Tủ lạnh" },
   { id: 3, value: "Tủ quần áo", label: "Tủ quần áo" },
+  { id: 4, value: "Nệm", label: "Nệm" },
+  { id: 5, value: "Máy giặt", label: "Máy giặt" },
+  { id: 6, value: "Máy nóng lạnh", label: "Máy nóng lạnh" },
+  { id: 7, value: "Kệ bếp", label: "Kệ bếp" },
 ];
 
 export const utilitiesItems = [
