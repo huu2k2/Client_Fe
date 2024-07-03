@@ -51,6 +51,7 @@ const index = () => {
       handleClickSearch();
     }
   }, [filterData]);
+ 
   return (
     <>
       {isShowModal && (
@@ -80,6 +81,7 @@ const index = () => {
               ?.toString()
               ?.trim()
               ?.replace(/\s+/g, "_")}
+              category={data?.response?.category}
           />
           <RoomOrder
             title={`Phòng tương tự của `}
@@ -90,6 +92,7 @@ const index = () => {
               ?.toString()
               ?.trim()
               ?.replace(/\s+/g, "_")}
+              category={null}
           />
         </div>
       </div>

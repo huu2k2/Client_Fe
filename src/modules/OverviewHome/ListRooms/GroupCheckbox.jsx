@@ -17,18 +17,7 @@ const GroupCheckbox = () => {
               Sắp trống(0)
             </div>
           </div>
-          <div className="justify-start items-center gap-2 flex">
-            <input type="checkbox" className="custom-checkbox  bg-white" />
-            <div className="text-white text-sm font-medium leading-tight">
-              Đã đặt cọc (0)
-            </div>
-          </div>
-          <div className="justify-start items-center gap-2 flex">
-            <input type="checkbox" className="custom-checkbox bg-white" />
-            <div className="text-white text-sm font-medium leading-tight">
-              Đã cho thuê (3)
-            </div>
-          </div>
+          
         </div>
       </div>
     </>

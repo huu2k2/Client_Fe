@@ -3,7 +3,7 @@ import SimilarRoom from "@components/GridCart/SimilarRoom";
 import { useNavigate } from "react-router-dom";
 
 
-const Index = ({ title, data, money, address }) => {
+const Index = ({ title, data, money, address,category }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -32,6 +32,7 @@ const Index = ({ title, data, money, address }) => {
         id={data}
         money={money}
         address={address?.replace(/_/g, " ")}
+        category={category}
       />
     </div>
   );

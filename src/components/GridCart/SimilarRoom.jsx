@@ -10,12 +10,13 @@ const findDistrictId = (address, districts) => {
   );
   return district ? district.district_id : null;
 };
-const SimilarRoom = ({ id, money, address }) => {
+const SimilarRoom = ({ id, money, address,category }) => {
   const { data: datadistrict } = useGetDistrictsQuery();
   const query = {
     houseId: id,
     districtId: findDistrictId(address, datadistrict),
     price: money,
+    categories:category&&[category]
   };
   
   const [getRoomsFilter, { data, isLoading, isError, error }] =
@@ -29,8 +30,7 @@ const SimilarRoom = ({ id, money, address }) => {
   if (isLoading) {
     return <CustomLoading />;
   }
-
-  console.log("query",query)
+ 
   return (
     <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}
