@@ -39,7 +39,7 @@ const Index = () => {
   }, [filterData.price]);
 
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, price:valueRang>0? valueRang * 1000000:null }));
+    setFilterData((prev) => ({ ...prev, price:Number(valueRang) === 0?null :valueRang * 1000000 }));
     setIsOpen(false);
   };
 

@@ -29,7 +29,7 @@ const Index = ({ id, money, address,category, faveritedata }) => {
     price: Number(money),
     categories:category ? [category]:null
   };
-console.log("query",query)
+
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
 
