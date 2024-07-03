@@ -36,7 +36,7 @@ const Index = () => {
     if (!idroom && filterData.price > 0) {
       setValueRang(filterData.price / 1000000);
     }
-  }, [filterData.Price]);
+  }, [filterData.price]);
 
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, price:valueRang>0? valueRang * 1000000:null }));
