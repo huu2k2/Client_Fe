@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
@@ -8,6 +8,7 @@ const axiosInstance = axios.create({
   },
 });
 
+// Bộ lọc yêu cầu để thêm token vào header
 axiosInstance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem("token");
@@ -21,6 +22,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// Bộ lọc phản hồi để xử lý làm mới token
 axiosInstance.interceptors.response.use(
   (response) => {
     return response.data;
@@ -28,18 +30,20 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Kiểm tra xem error.response có tồn tại không
+    // Kiểm tra lỗi có phải là 401 Unauthorized và nếu đây không phải là lần thử lại
     if (error.response && (error.response.status === 401 || error.response.status === 403) && !originalRequest._retry) {
       originalRequest._retry = true;
+      const refreshToken = localStorage.getItem("token"); // Đảm bảo bạn có token làm mới riêng
       try {
-        const refreshToken = localStorage.getItem("token");
+
         if (refreshToken) {
-          const response = await axios.post(`${API_URL}/Accounts/refresh-token`, {}, {
+          const response = await axios.post(`http://14.225.254.188:8080/api/Accounts/refresh-token`, {}, {
             headers: {
               'Authorization': `Bearer ${refreshToken}`,
               'accept': '*/*'
             }
           });
+
           const newToken = response.data.token;
           localStorage.setItem("token", newToken);
           axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
@@ -47,13 +51,13 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalRequest);
         } else {
           // Xử lý trường hợp không có refreshToken
-          console.error('Không tìm thấy refreshToken.');
+          console.error('Không tìm thấy refresh token.');
         }
       } catch (refreshError) {
         // Xử lý lỗi khi làm mới token
         console.error('Lỗi khi làm mới token:', refreshError);
-        localStorage.clear(); // Xóa token
-        // Redirect hoặc xử lý logout
+        // localStorage.clear(); // Xóa tất cả các token
+        // Điều hướng đến trang đăng nhập hoặc hiển thị thông báo cho người dùng
       }
     }
 

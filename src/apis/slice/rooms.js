@@ -21,10 +21,16 @@ const RoomsApi = createApi({
         data, // Use `data` instead of `body` for axios
       }),
     }),
-
+    getRoomsofhouse: build.query({
+      query: (id) => ({
+        url: `/Rooms/get-rooms-of-house/${id}`,
+        method: 'get',
+       
+      }),
+    }),
   }),
 });
 
 
-export const { useGetRoomsFilterMutation } = RoomsApi;
+export const { useGetRoomsFilterMutation ,useGetRoomsofhouseQuery} = RoomsApi;
 export default RoomsApi;

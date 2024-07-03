@@ -11,10 +11,10 @@ const groupByFloor = (data) => {
     return acc;
   }, {});
 };
-
+ 
 const Floor = ({ data }) => {
-  const groupedData = groupByFloor(data?.response || []);
-
+  const groupedData = groupByFloor(data || []);
+ 
   return (
     <div className="flex-col w-full justify-start items-start gap-8 flex">
       {Object.keys(groupedData).map(floorNumber => (

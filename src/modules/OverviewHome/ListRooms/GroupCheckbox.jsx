@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-const GroupCheckbox = ({ query, setQuery, rooms }) => {
+const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
   const [isEmptyRoomChecked, setIsEmptyRoomChecked] = useState(false);
   const [isRoomToBeEmptyChecked, setIsRoomToBeEmptyChecked] = useState(false);
+  const [isBookedRoomChecked, setIsBookedRoomChecked] = useState(false);
 
   useEffect(() => {
     const updatedQuery = [];
@@ -15,8 +16,12 @@ const GroupCheckbox = ({ query, setQuery, rooms }) => {
       updatedQuery.push('1');
     }
 
+    if (isBookedRoomChecked) {
+      updatedQuery.push('2');
+    }
+
     setQuery(updatedQuery);
-  }, [isEmptyRoomChecked, isRoomToBeEmptyChecked]);
+  }, [isEmptyRoomChecked, isRoomToBeEmptyChecked, isBookedRoomChecked]);
 
   const handleEmptyRoomChange = () => {
     setIsEmptyRoomChecked(!isEmptyRoomChecked);
@@ -24,6 +29,10 @@ const GroupCheckbox = ({ query, setQuery, rooms }) => {
 
   const handleRoomToBeEmptyChange = () => {
     setIsRoomToBeEmptyChecked(!isRoomToBeEmptyChecked);
+  };
+
+  const handleBookedRoomChange = () => {
+    setIsBookedRoomChecked(!isBookedRoomChecked);
   };
 
   return (
@@ -37,7 +46,7 @@ const GroupCheckbox = ({ query, setQuery, rooms }) => {
             onChange={handleEmptyRoomChange}
           />
           <div className="text-white text-sm font-medium leading-tight">
-            Phòng trống ({rooms?.emptyRoom})
+            Phòng trống ({statusTotals?.empty})
           </div>
         </div>
         <div className="justify-start items-center gap-2 flex">
@@ -48,7 +57,19 @@ const GroupCheckbox = ({ query, setQuery, rooms }) => {
             onChange={handleRoomToBeEmptyChange}
           />
           <div className="text-white text-sm font-medium leading-tight">
-            Sắp trống ({rooms?.roomToBeEmpty})
+            Sắp trống ({statusTotals?.toBeEmpty})
+          </div>
+        </div>
+
+        <div className="justify-start items-center gap-2 flex">
+          <input
+            type="checkbox"
+            className="custom-checkbox bg-white"
+            checked={isBookedRoomChecked}
+            onChange={handleBookedRoomChange}
+          />
+          <div className="text-white text-sm font-medium leading-tight">
+            Đã đặt cọc ({statusTotals?.booked})
           </div>
         </div>
       </div>
