@@ -61,11 +61,11 @@ const InfoRoomSkeleton = () => {
                             width={220}
                             variant="rounded"
                         />
-                        <span className="font-normal text-gray-500 text-base ml-1 "> / Khách</span>
+                       
                     </div>
 
                     {/* button  */}
-                    <div className="w-fit flex">
+                    <div className="w-fit flex gap-2">
                         <div >
                             <Button
                                 text={" Đặt lịch xem phòng"}

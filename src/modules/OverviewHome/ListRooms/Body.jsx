@@ -1,12 +1,12 @@
 import React from "react";
-import ImageSpeaker from '@assets/Speakerphone.svg'
+import ImageSpeaker from "@assets/Speakerphone.svg";
 import Floor from "./Floor";
+import CustomLoading from "../../../components/CustomLoading";
 
-const Body = ({data}) => {
-
+const Body = ({ data, isLoading }) => {
   return (
     <>
-      <div className="w-full h-fit relative flex flex-col justify-center items-center">
+      <div className="w-full h-fit  relative flex flex-col justify-center items-center">
         <div className="w-full h-32 left-0 top-0 absolute bg-black" />
         <div className="w-[1360px] h-fit pb-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-4 inline-flex">
           <div className="self-stretch h-16 bg-rose-800 flex-col justify-start items-center flex rounded-t-md">
@@ -23,10 +23,8 @@ const Body = ({data}) => {
               </div>
             </div>
           </div>
-          <div className="h-fit w-full px-8 flex-col justify-start items-center flex">
-
-          <Floor data={data}/>
-  
+          <div className="h-fit w-full px-8 flex-col justify-start items-center flex min-h-6 mb-20">
+            {isLoading ? <CustomLoading /> : <Floor data={data} />}
           </div>
         </div>
       </div>

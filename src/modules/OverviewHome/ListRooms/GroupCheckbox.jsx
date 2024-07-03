@@ -37,7 +37,7 @@ const GroupCheckbox = ({ query, setQuery, rooms }) => {
             onChange={handleEmptyRoomChange}
           />
           <div className="text-white text-sm font-medium leading-tight">
-            Phòng trống ({rooms.emptyRoom})
+            Phòng trống ({rooms?.emptyRoom})
           </div>
         </div>
         <div className="justify-start items-center gap-2 flex">
@@ -48,7 +48,7 @@ const GroupCheckbox = ({ query, setQuery, rooms }) => {
             onChange={handleRoomToBeEmptyChange}
           />
           <div className="text-white text-sm font-medium leading-tight">
-            Sắp trống ({rooms.roomToBeEmpty})
+            Sắp trống ({rooms?.roomToBeEmpty})
           </div>
         </div>
       </div>
