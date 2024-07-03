@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useGetHolder } from "../../../customHooks/ServicesCustomHook";
+import { useGetRoomsFilterMutation } from "@apis/slice/rooms";
+import { useParams } from "react-router-dom";
+
 const index = () => {
+  const {idHome} =useParams()
   const [holder,rooms] = useGetHolder()
+ const [query,setQuery] = useState(null)
+
+ const [getRoomsFilter, { data, isLoading, isError, error }] = useGetRoomsFilterMutation();
+ useEffect(()=>{
+    async function rs(){
+        await getRoomsFilter({houseId:idHome,status:query?.length>0?query:null})
+    }
+    rs()
+ },[query,idHome])
  
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center  flex  ">
@@ -18,7 +31,7 @@ const index = () => {
             <div className="text-white text-3xl font-bold  leading-9">
               Danh sách phòng trống
             </div>
-            <GroupCheckbox />
+            <GroupCheckbox setQuery={setQuery} query={query} rooms={rooms}/>
           </div>
 
           <div className="w-80 h-fit px-4 py-3 bg-neutral-50 rounded-2xl flex-col justify-start items-start gap-4 inline-flex">
@@ -69,7 +82,7 @@ const index = () => {
         </div>
       </div>
 
-      <Body />
+      <Body data={data}/>
     </div>
   );
 };

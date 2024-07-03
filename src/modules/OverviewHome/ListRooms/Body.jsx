@@ -2,7 +2,7 @@ import React from "react";
 import ImageSpeaker from '@assets/Speakerphone.svg'
 import Floor from "./Floor";
 
-const Body = () => {
+const Body = ({data}) => {
 
   return (
     <>
@@ -25,7 +25,7 @@ const Body = () => {
           </div>
           <div className="h-fit w-full px-8 flex-col justify-start items-center flex">
 
-          <Floor/>
+          <Floor data={data}/>
   
           </div>
         </div>
