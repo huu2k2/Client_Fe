@@ -32,7 +32,7 @@ const index = () => {
 
             <BuildingPolicy data={data?.response}/>
 
-            <Deposit />
+            <Deposit data={data?.response}/>
 
             <Tips />
 

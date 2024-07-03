@@ -1,6 +1,6 @@
 import React from "react";
 
-const Deposit = () => {
+const Deposit = ({data}) => {
   return (
     <div className="self-stretch h-[186px] bg-white rounded-lg shadow flex-col justify-start items-start flex">
       <div className="self-stretch h-16 px-6 py-5 bg-neutral-100 flex-col justify-start items-start gap-1 flex">

@@ -1,8 +1,8 @@
 import React from "react";
 
-const BuildingPolicy = ({data}) => {
+const BuildingPolicy = ({ data }) => {
   return (
-    <div className="self-stretch h-[507px] bg-white rounded-lg shadow flex-col justify-start items-start flex">
+    <div className="self-stretch h-fit bg-white rounded-lg shadow flex-col justify-start items-start flex">
       <div className="self-stretch h-16 px-6 py-5 bg-neutral-100 flex-col justify-start items-start gap-1 flex">
         <div className="self-stretch text-rose-800 text-lg font-medium leading-normal">
           Chính sách toà nhà
@@ -28,27 +28,29 @@ const BuildingPolicy = ({data}) => {
               </div>
             </div>
           </div>
-          
           <div className="self-stretch h-px bg-gray-200" />
-          <div className="self-stretch flex flex-row">
-            <div className="w-1/3 px-6 py-4 justify-start items-center flex">
-              <div className="text-gray-500 text-sm font-normal leading-tight">
-                6 tháng
+          {data?.commissionPolicies?.map((i, index) => (
+            <div key={index} className="w-[1312px] flex justify-between items-center ">
+              <div className="self-stretch flex flex-row w-full">
+                <div className="w-1/3 px-6 py-4 justify-start items-center flex">
+                  <div className="text-gray-500 text-sm font-normal leading-tight">
+                    {i.month} tháng
+                  </div>
+                </div>
+                <div className="w-1/3 px-6 py-4 justify-start items-center flex">
+                  <div className="text-gray-500 text-sm font-normal leading-tight">
+                    {i.deposit} tháng
+                  </div>
+                </div>
+                <div className="w-1/3 px-6 py-4 justify-start items-center flex">
+                  <div className="text-gray-500 text-sm font-normal leading-tight">
+                    {i.commission}%
+                  </div>
+                </div>
               </div>
+              <div className="self-stretch h-px bg-gray-200" />
             </div>
-            <div className="w-1/3 px-6 py-4 justify-start items-center flex">
-              <div className="text-gray-500 text-sm font-normal leading-tight">
-                1 tháng
-              </div>
-            </div>
-            <div className="w-1/3 px-6 py-4 justify-start items-center flex">
-              <div className="text-gray-500 text-sm font-normal leading-tight">
-                30%
-              </div>
-            </div>
-          </div>
-          
-           
+          ))}
         </div>
         <div className="self-stretch h-px bg-gray-200" />
         <div className="self-stretch h-[60px] px-6 py-5 flex-col justify-center items-start flex">
@@ -57,7 +59,7 @@ const BuildingPolicy = ({data}) => {
               Số lượng người ở
             </div>
             <div className="w-2/3 text-gray-900 text-sm font-normal leading-tight">
-              Không giới hạn
+              {data?.numberOfPeople || "Không giới hạn"}
             </div>
           </div>
         </div>
@@ -68,7 +70,7 @@ const BuildingPolicy = ({data}) => {
               Số lượng xe
             </div>
             <div className="w-2/3 text-gray-900 text-sm font-normal leading-tight">
-              3
+              {data?.numberOfVehicle}
             </div>
           </div>
         </div>
@@ -79,7 +81,7 @@ const BuildingPolicy = ({data}) => {
               Ghi chú
             </div>
             <div className="w-2/3 text-gray-900 text-sm font-normal leading-tight">
-              -
+              {data?.note || "-"}
             </div>
           </div>
         </div>
