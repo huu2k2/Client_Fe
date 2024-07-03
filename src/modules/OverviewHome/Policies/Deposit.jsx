@@ -27,7 +27,7 @@ const Deposit = ({data}) => {
               Giữ phòng tối đa
             </div>
             <div className="w-[838px] text-gray-900 text-sm font-normal  leading-tight">
-              {data.numberOfDaysKeepRoom} ngày
+              {data?.numberOfDaysKeepRoom} ngày
             </div>
           </div>
         </div>
