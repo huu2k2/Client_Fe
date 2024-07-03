@@ -6,7 +6,7 @@ import { BsLightningCharge } from "react-icons/bs";
 import { ModalPutRoom } from "@components/Modal";
 import { useBooleanIsShowModal } from "@customhooks";
 
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useGetDataDetail } from "../../../customHooks";
 import { useEffect } from "react";
 import { useGetAllDetailQuery } from "@apis/slice/services";
@@ -14,24 +14,43 @@ import {
   useClickSearchFilter,
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
+
+const initialFilterData = {
+  houseId: null,
+  districtId: null,
+  wardId: null,
+  categories: null,
+  status: null,
+  price: null,
+  hasDeposited: null,
+  hasRented: null,
+  furnitures: null,
+  parking: null,
+  security: null,
+  elevator: null,
+  pet: null,
+  freeHour: null,
+  washing: null,
+  roomQuantity: null,
+};
+
 const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
-  const  setData = useGetDataDetail()
+  const setData = useGetDataDetail();
   const { data, error, isLoading } = useGetAllDetailQuery(roomId);
   useEffect(() => {
-    setData(data)
-    
-  }, [data])
-  const [filterData, setFilterData]=useQueryFilterData()
-  const handleClickSearch= useClickSearchFilter()
-  useEffect(()=>{
-   setFilterData(null)
-   if(!filterData){
+    setData(data);
+  }, [data]);
+  const [filterData, setFilterData] = useQueryFilterData();
+  const handleClickSearch = useClickSearchFilter();
+  useEffect(() => {
+    setFilterData(initialFilterData);
+    if(filterData===initialFilterData){
 
-     handleClickSearch()
-   }
-  },[])
+      handleClickSearch();
+    }
+  }, [filterData]);
   return (
     <>
       {isShowModal && (
@@ -52,9 +71,27 @@ const index = () => {
         <MainBody />
         <Category />
         <div className="flex flex-col gap-14 h-fit">
-          <RoomOrder title={`Phòng tương tự của ${data?.response?.holder?.fullName}`} data={id} money={data?.response?.rentPrice} address={data?.response?.houseAddress?.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
-          <RoomOrder title={`Phòng tương tự của `} data={null} money={data?.response?.rentPrice} address={data?.response?.houseAddress?.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />       
-           </div>
+          <RoomOrder
+            title={`Phòng tương tự của ${data?.response?.holder?.fullName}`}
+            data={id}
+            money={data?.response?.rentPrice}
+            address={data?.response?.houseAddress
+              ?.split(",")[1]
+              ?.toString()
+              ?.trim()
+              ?.replace(/\s+/g, "_")}
+          />
+          <RoomOrder
+            title={`Phòng tương tự của `}
+            data={null}
+            money={data?.response?.rentPrice}
+            address={data?.response?.houseAddress
+              ?.split(",")[1]
+              ?.toString()
+              ?.trim()
+              ?.replace(/\s+/g, "_")}
+          />
+        </div>
       </div>
     </>
   );
