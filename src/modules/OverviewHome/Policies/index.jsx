@@ -1,3 +1,4 @@
+import { useGetFullInformationOFHomeQuery } from "@apis/slice/Houses";
 import BasicInterior from "./BasicInterior";
 import BuildingPolicy from "./BuildingPolicy";
 import ContactManagement from "./ContactManagement";
@@ -7,6 +8,8 @@ import Tips from "./Tips";
 import UtilityDirectory from "./UtilityDirectory";
 
 const index = () => {
+  const {data}= useGetFullInformationOFHomeQuery(1)
+  console.log(data)
   return (
     <>
       <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
