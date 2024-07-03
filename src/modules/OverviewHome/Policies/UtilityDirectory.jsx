@@ -6,18 +6,18 @@ const UtilityDirectory = ({ data }) => {
 
   useEffect(() => {
     setIsHave([
-      { name: 'Bãi đỗ xe', have: data.parking },
-      { name: 'Cầu thang', have: data.stair },
-      { name: 'Giặt giũ', have: data.washing },
-      { name: 'An ninh', have: data.security },
-      { name: 'WiFi', have: data.wifi },
-      { name: 'Thang máy', have: data.elevator },
-      { name: 'Dọn hành lang', have: data.hallwayCleaning },
-      { name: 'Khóa vân tay', have: data.fingerprintLock },
-      { name: 'Giờ giấc tự do', have: data.freeHours },
-      { name: 'Dọn phòng', have: data.cleanRoom },
-      { name: 'Thú cưng', have: data.pet },
-      { name: 'Camera', have: data.camera },
+      { name: 'Bãi đỗ xe', have: data?.parking },
+      { name: 'Cầu thang', have: data?.stair },
+      { name: 'Giặt giũ', have: data?.washing },
+      { name: 'An ninh', have: data?.security },
+      { name: 'WiFi', have: data?.wifi },
+      { name: 'Thang máy', have: data?.elevator },
+      { name: 'Dọn hành lang', have: data?.hallwayCleaning },
+      { name: 'Khóa vân tay', have: data?.fingerprintLock },
+      { name: 'Giờ giấc tự do', have: data?.freeHours },
+      { name: 'Dọn phòng', have: data?.cleanRoom },
+      { name: 'Thú cưng', have: data?.pet },
+      { name: 'Camera', have: data?.camera },
     ]);
   }, [data]);
 
