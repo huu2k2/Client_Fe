@@ -24,9 +24,9 @@ const Index = ({ id, money, address,category, faveritedata }) => {
   const { data: datadistrict } = useGetDistrictsQuery();
 
   const query = {
-    houseId: id,
-    districtId: findDistrictId(address, datadistrict),
-    price: Number(money),
+    houseId: id || null,
+    districtId: findDistrictId(address, datadistrict)||null,
+    price: Number(money) || null,
     categories:category ? [category]:null
   };
 

@@ -8,7 +8,7 @@ import { Badge } from "@mui/material"; // Ensure Badge is imported
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [valueRang, setValueRang] = useState(0);
+  const [valueRang, setValueRang] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,7 +39,8 @@ const Index = () => {
   }, [filterData.price]);
 
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, price:Number(valueRang) === 0?null :valueRang * 1000000 }));
+    console.log(valueRang ? valueRang * 1000000 :null)
+    setFilterData((prev) => ({ ...prev, price:valueRang  ? valueRang * 1000000 :null}));
     setIsOpen(false);
   };
 

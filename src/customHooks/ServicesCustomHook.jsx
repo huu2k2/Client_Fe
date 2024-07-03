@@ -12,7 +12,7 @@ const ServicesContextHook = ({ children }) => {
   const [holder, setHolder] = useState({});
   const [rooms, setRooms] = useState({});
   const [address, setAddress] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(null);
   const [brokeragePolicy, setBrokeragePolicy] = useState([]);
 
   // const { data, error, isLoading } = useGetAllDetailQuery(idServices);
