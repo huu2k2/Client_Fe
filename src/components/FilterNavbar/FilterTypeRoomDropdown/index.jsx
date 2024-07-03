@@ -32,13 +32,15 @@ const index = () => {
     );
   };
 
-  const handleDelete = () => {
-    setSelectedRooms([]);
-  };
+  
   const [_, setFilterData] = useQueryFilterData();
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, categories: [...selectedRooms] }))
     setIsOpen(false)
+  };
+  const handleDelete = () => {
+    setSelectedRooms([]);
+    setFilterData((prev) => ({ ...prev, categories: null }))
   };
   return (
 

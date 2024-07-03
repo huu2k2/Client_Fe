@@ -48,10 +48,7 @@ const Index = () => {
     );
   };
 
-  const handleDelete = () => {
-    setSelectedAddFurniture([]);
-    setSelectedAddUtilities([]);
-  };
+ 
 
   const [_, setFilterData] = useQueryFilterData();
   const handleApply = () => {
@@ -67,14 +64,27 @@ const Index = () => {
     }));
     setIsOpen(false);
   };
-
+  const handleDelete = () => {
+    setSelectedAddFurniture([]);
+    setSelectedAddUtilities([]);
+    setFilterData((prev) => ({
+      ...prev,
+      furnitures: null,
+      parking: null,
+      security: null,
+      elevator: null,
+      washing:null,
+      pet: null,
+      freeHour: null,
+    }));
+  };
   return (
     <Badge
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",
       }}
-      badgeContent={selectedAddFurniture.length + selectedAddUtilities.length || 0}
+      badgeContent={selectedAddFurniture?.length + selectedAddUtilities?.length || 0}
       sx={{
         "& .MuiBadge-badge": {
           backgroundColor: "#dc2626",

@@ -32,9 +32,7 @@ const Index = () => {
     );
   };
 
-  const handleDelete = () => {
-    setSelectedStatusRooms([]);
-  };
+  
 
   const [_, setFilterData] = useQueryFilterData();
 
@@ -42,7 +40,10 @@ const Index = () => {
     setFilterData((prev) => ({ ...prev, status: [...selectedStatusRooms] }))
     setIsOpen(false)
   };
-
+  const handleDelete = () => {
+    setSelectedStatusRooms([]);
+    setFilterData((prev) => ({ ...prev, status: null }))
+  };
   return (
     <Badge
       anchorOrigin={{
