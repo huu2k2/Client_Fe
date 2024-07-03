@@ -1,4 +1,5 @@
-import { useGetFullInformationOFHomeQuery } from "@apis/slice/Houses";
+
+import { useParams } from "react-router-dom";
 import BasicInterior from "./BasicInterior";
 import BuildingPolicy from "./BuildingPolicy";
 import ContactManagement from "./ContactManagement";
@@ -6,10 +7,13 @@ import Deposit from "./Deposit";
 import Policy from "./Policy";
 import Tips from "./Tips";
 import UtilityDirectory from "./UtilityDirectory";
+import { useGetPolicyOfHomeQuery,useGetFullInformationOFHomeQuery } from "@apis/slice/Houses";
 
 const index = () => {
-  const {data}= useGetFullInformationOFHomeQuery(1)
-  console.log(data)
+  const { idHome } = useParams();
+  const {data:Data} = useGetFullInformationOFHomeQuery(idHome)
+  const {data}= useGetPolicyOfHomeQuery(idHome)
+  console.log(Data)
   return (
     <>
       <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
@@ -20,19 +24,19 @@ const index = () => {
         <div className="w-full h-[2027px] relative">
           <div className="w-full h-32 left-0 top-0 absolute bg-black" />
           <div className="h-fit p-6 left-[280px] top-[-100.50px] absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex">
-            <Policy />
+            <Policy data={data?.response}/>
 
-            <UtilityDirectory />
+            <UtilityDirectory data={data?.response}/>
 
-            <BasicInterior />
+            <BasicInterior data={data?.response}/>
 
-            <BuildingPolicy />
+            <BuildingPolicy data={data?.response}/>
 
             <Deposit />
 
             <Tips />
 
-            <ContactManagement />
+            <ContactManagement data={data?.response}/>
           </div>
         </div>
       </div>

@@ -51,6 +51,7 @@ const Otp = () => {
     window.confirmationResult
       .confirm(otp.join(""))
       .then((result) => {
+        
         console.log("ke qua", result);
         navigate("/login/reset_password");
       })

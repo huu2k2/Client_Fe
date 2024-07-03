@@ -39,14 +39,14 @@ const ForgetPassword = () => {
         localStorage.setItem("remainingTime", 60);
 
         if (result.isSuccess && isRecaptchaReady) {
-          await sendOtp(data.PhoneNumber);
-
-          setTimeout(() => {
-            localStorage.setItem("number", data.PhoneNumber);
-            setLoading(false);
-            change("/login/otp");
-          }, 2000);
-        
+          const rs = await sendOtp(data.PhoneNumber);
+          if (rs) {
+            setTimeout(() => {
+              localStorage.setItem("number", data.PhoneNumber);
+              setLoading(false);
+              change("/login/otp");
+            }, 2000);
+          }
         } else {
           alert("reCAPTCHA is not ready yet.");
           setLoading(false);
@@ -97,7 +97,7 @@ const ForgetPassword = () => {
       >
         Xác nhận
       </button>
-      <div id="recaptcha-container" ></div>
+      <div id="recaptcha-container"></div>
     </form>
   );
 };
