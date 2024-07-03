@@ -17,6 +17,7 @@ const SimilarRoom = ({ id, money, address }) => {
     districtId: findDistrictId(address, datadistrict),
     price: money,
   };
+  
   const [getRoomsFilter, { data, isLoading, isError, error }] =
     useGetRoomsFilterMutation();
   useEffect(() => {
@@ -24,10 +25,12 @@ const SimilarRoom = ({ id, money, address }) => {
       await getRoomsFilter(query).unwrap();
     };
     rs();
-  }, []);
+  }, [money, address]);
   if (isLoading) {
     return <CustomLoading />;
   }
+
+  console.log("query",query)
   return (
     <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
       {isError && <CustomLoading />}

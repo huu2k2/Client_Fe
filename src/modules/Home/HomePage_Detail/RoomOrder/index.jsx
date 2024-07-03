@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import SimilarRoom from "@components/GridCart/SimilarRoom";
 import { useNavigate } from "react-router-dom";
-import { useClickSearchFilter, useQueryFilterData } from '../../../../customHooks/FilterCustomHook';
+
 
 const Index = ({ title, data, money, address }) => {
- const [filterData, setFilterData]=useQueryFilterData()
- const handleClickSearch= useClickSearchFilter()
- useEffect(()=>{
-  setFilterData({})
-  handleClickSearch()
- },[])
- 
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    handleClickSearch()
-    const path = data 
+    const path = data
       ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}`
       : `/similarRooms?Price=${money}&Address=${address}`;
     navigate(path);
@@ -32,8 +24,15 @@ const Index = ({ title, data, money, address }) => {
           Xem thêm
         </button>
       </div>
-
-      <SimilarRoom id={data} money={money} address={address?.replace(/_/g, ' ')} />
+      {/* {
+      data?<SimilarRoom id={data} money={money} address={address?.replace(/_/g, ' ')} />
+      : <SimilarRoom id={null} money={money} address={address?.replace(/_/g, ' ')} />
+    } */}
+      <SimilarRoom
+        id={data}
+        money={money}
+        address={address?.replace(/_/g, " ")}
+      />
     </div>
   );
 };

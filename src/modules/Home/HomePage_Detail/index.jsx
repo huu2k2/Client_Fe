@@ -7,18 +7,31 @@ import { ModalPutRoom } from "@components/Modal";
 import { useBooleanIsShowModal } from "@customhooks";
 
 import { useParams } from 'react-router-dom';
-import { useGetHolder, useGetInfoItem, useQueryFilterData, useSetIdRoomServices } from "../../../customHooks";
+import { useGetDataDetail } from "../../../customHooks";
 import { useEffect } from "react";
+import { useGetAllDetailQuery } from "@apis/slice/services";
+import {
+  useClickSearchFilter,
+  useQueryFilterData,
+} from "@customhooks/FilterCustomHook";
 const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
-  const [setIsServices] = useSetIdRoomServices()
-  const [address, price] = useGetInfoItem()
+  const  setData = useGetDataDetail()
+  const { data, error, isLoading } = useGetAllDetailQuery(roomId);
   useEffect(() => {
-    setIsServices(roomId)
-  }, [roomId])
-  const [holder, rooms] = useGetHolder()
+    setData(data)
+    
+  }, [data])
+  const [filterData, setFilterData]=useQueryFilterData()
+  const handleClickSearch= useClickSearchFilter()
+  useEffect(()=>{
+   setFilterData(null)
+   if(!filterData){
 
+     handleClickSearch()
+   }
+  },[])
   return (
     <>
       {isShowModal && (
@@ -39,9 +52,9 @@ const index = () => {
         <MainBody />
         <Category />
         <div className="flex flex-col gap-14 h-fit">
-          <RoomOrder title={`Phòng tương tự của ${holder.fullName}`} data={id} money={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
-          <RoomOrder title={`Phòng tương tự `} data={null} money={price} address={address.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
-        </div>
+          <RoomOrder title={`Phòng tương tự của ${data?.response?.holder?.fullName}`} data={id} money={data?.response?.rentPrice} address={data?.response?.houseAddress?.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />
+          <RoomOrder title={`Phòng tương tự của `} data={null} money={data?.response?.rentPrice} address={data?.response?.houseAddress?.split(',')[1]?.toString()?.trim()?.replace(/\s+/g, '_')} />       
+           </div>
       </div>
     </>
   );

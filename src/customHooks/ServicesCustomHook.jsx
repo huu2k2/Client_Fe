@@ -4,7 +4,7 @@ import { useGetAllDetailQuery } from "@apis/slice/services";
 export const ServicesContext = createContext();
 
 const ServicesContextHook = ({ children }) => {
-  const [idServices, setIsServices] = useState(null);
+  const [data, setData] = useState(null);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
   const [utility, setUtility] = useState([]);
@@ -15,10 +15,10 @@ const ServicesContextHook = ({ children }) => {
   const [price, setPrice] = useState(0);
   const [brokeragePolicy, setBrokeragePolicy] = useState([]);
 
-  const { data, error, isLoading } = useGetAllDetailQuery(idServices);
+  // const { data, error, isLoading } = useGetAllDetailQuery(idServices);
 
   useEffect(() => {
-    if (idServices) {
+    
       if (data) {
         // Check if data is not undefined
         setFurnitureInserts(data?.response?.houseFurnitureViewModels);
@@ -47,16 +47,14 @@ const ServicesContextHook = ({ children }) => {
         setPrice(data?.response?.rentPrice);
         setBrokeragePolicy(data?.response?.brokeragePolicy);
       }
-    }
+    
   }, [data]); // Dependency should be data
 
   return (
     <ServicesContext.Provider
       value={{
-        setIsServices,
+        setData,
         data,
-        error,
-        isLoading,
         furnitureInserts,
         serviceInserts,
         utility,
@@ -80,16 +78,13 @@ export const useDataServices = () => {
     serviceInserts,
     utility,
     commissions,
-    error,
-    isLoading,
+
   } = useContext(ServicesContext);
   return [
     furnitureInserts,
     serviceInserts,
     utility,
     commissions,
-    error,
-    isLoading,
   ];
 };
 export const useGetHolder = () => {
@@ -100,11 +95,12 @@ export const useGetInfoItem = () => {
   const { address, price } = useContext(ServicesContext);
   return [address, price];
 };
-export const useSetIdRoomServices = () => {
-  const { setIsServices } = useContext(ServicesContext);
-  return [setIsServices];
-};
 export const useGetBrokeragePolicy = () => {
   const { brokeragePolicy } = useContext(ServicesContext);
   return [brokeragePolicy];
 };
+
+export const useGetDataDetail =()=>{
+  const {setData} = useContext(ServicesContext);
+  return setData
+}
