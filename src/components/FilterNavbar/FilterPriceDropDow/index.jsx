@@ -113,8 +113,8 @@ const Index = () => {
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={valueRang * 100000}
-                onChange={(e) => setValueRang(parseInt(e.target.value) / 100000)}
+                value={valueRang * 1000000}
+                onChange={(e) => setValueRang(parseInt(e.target.value) / 1000000)}
                 className="w-full outline-none text-sm border-none"
               />
               <span>VND</span>

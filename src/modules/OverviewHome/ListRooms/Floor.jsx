@@ -21,7 +21,7 @@ const Floor = ({ data }) => {
         <div key={floorNumber} className="self-stretch h-fit flex-col justify-start items-start gap-6 flex">
           <div className="self-stretch h-6 flex-col justify-start items-start gap-1 flex">
             <div className="self-stretch text-gray-900 text-lg font-medium leading-normal">
-              Tầng {floorNumber===0?"G":floorNumber}
+              Tầng {floorNumber === 0? "G" :floorNumber}
             </div>
           </div>
 

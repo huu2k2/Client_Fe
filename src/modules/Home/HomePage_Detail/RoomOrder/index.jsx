@@ -8,7 +8,7 @@ const Index = ({ title, data, money, address,category }) => {
 
   const handleNavigate = () => {
     const path = data
-      ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}`
+      ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}&category=${category}`
       : `/similarRooms?Price=${money}&Address=${address}`;
     navigate(path);
   };

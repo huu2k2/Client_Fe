@@ -10,9 +10,9 @@ const Index = () => {
   const idroom = queryParams.get("idRoom") || null;
   const money = queryParams.get("Price") || null;
   const address = queryParams.get("Address")?.replace(/_/g, " ") || null;
-
+  const category = queryParams.get("category") || null;
   // const [rooms] = useGetFavoriteQuery();
-  // console.log("🚀 ~ Index ~ favoriteRooms:", favoriteRooms)
+ 
   const { data: faveritedata, isLoading, isSuccess } = useGetFavoriteQuery();
   // // Kiểm tra pathname của location để quyết định khi nào hiển thị GridCart
   // const showGridCart = location.pathname === /;
@@ -25,6 +25,7 @@ const Index = () => {
         id={idroom}
         money={money}
         address={address}
+        category={category}
         faveritedata={faveritedata}
       />
     </div>

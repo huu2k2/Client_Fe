@@ -16,7 +16,7 @@ const findDistrictId = (address, districts) => {
   return district ? district.district_id : null;
 };
 
-const Index = ({ id, money, address, faveritedata }) => {
+const Index = ({ id, money, address,category, faveritedata }) => {
   const [items, setItems] = useState([]);
   const [filterData, setFilterData] = useQueryFilterData();
   const [error, setError] = useState("");
@@ -26,9 +26,10 @@ const Index = ({ id, money, address, faveritedata }) => {
   const query = {
     houseId: id,
     districtId: findDistrictId(address, datadistrict),
-    price: money,
+    price: Number(money),
+    categories:category ? [category]:null
   };
-
+console.log("query",query)
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
 
