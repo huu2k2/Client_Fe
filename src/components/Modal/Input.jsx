@@ -1,6 +1,7 @@
 import React from "react";
 
-const Input = ({ label, name, value, onChange, type = "text" }) => {
+const Input = ({ label, name, value, onChange, type = "text", defaultValue }) => {
+  console.log("🚀 ~ Input ~ value:", value)
   return (
     <>
       <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
@@ -12,12 +13,13 @@ const Input = ({ label, name, value, onChange, type = "text" }) => {
           className="px-4 py-2 border rounded-md"
           type={type}
           name={name}
-          value={value}
           onChange={onChange}
+          defaultValue={defaultValue}
         />
       </div>
     </>
   );
 };
+
 
 export default Input;

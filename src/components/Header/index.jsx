@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
 import { BsBell, BsChatDots } from "react-icons/bs";
- 
+
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -21,7 +21,11 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
- 
+  const SetShow = () => {
+    setShow(!isShow);
+    console.log(isShow); // This will log the updated state
+  }
+
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('token')
@@ -37,7 +41,7 @@ const index = ({ isShow, setShow }) => {
           <img src={ImgLogo} alt="Logo" className="w-[135px] h-[24px]" />
         </Link>
 
- 
+
 
         <div className="w-[316px] h-[38px] gap-6 flex items-center">
           {/* info */}
@@ -64,16 +68,19 @@ const index = ({ isShow, setShow }) => {
                 tabIndex={0}
                 className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52  mt-3  "
               >
-                <li onClick={() => setShow(!isShow)} className="cursor-pointer text-base">
+                <li
+                  // onClick={() => setShow(!isShow)}
+                  onClick={SetShow}
+                  className="cursor-pointer text-base">
                   <span>Thông tin tài khoản</span>
                 </li>
                 <li className="cursor-pointer text-base">
                   <Link to={'/danh_sach_phong_yeu_thich'}>
-                  
-                  Yêu thích
+
+                    Yêu thích
                   </Link>
                 </li>
-                
+
                 <li onClick={handleLogout} className="cursor-pointer text-base">
                   <span> Logout</span>
                 </li>

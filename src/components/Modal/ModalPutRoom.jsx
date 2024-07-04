@@ -20,10 +20,13 @@ const formatDate = (isoString) => {
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
   const [formData, setFormData] = useState({
     customerName: "",
+    viewDate: "",
     viewTime: "",
+    customerPhone: "",
     notes: ""
   });
-  const [postschedule] = usePostscheduleMutation();
+  const [postschedule, { error }] = usePostscheduleMutation();
+  console.log("🚀 ~ ModalPutRoom ~ error:", error)
   const { data } = useGetAllDetailQuery(roomId);
   const [response, setResponse] = useState(null);
 
@@ -33,9 +36,13 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
 
   useEffect(() => {
     if (data?.response?.dateView) {
+      const date = new Date(data.response.dateView);
+      const viewDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
+      const viewTime = date.toTimeString().split(" ")[0].substring(0, 5); // HH:MM format
       setFormData((prevFormData) => ({
         ...prevFormData,
-        viewTime: formatDate(data.response.dateView),
+        viewDate,
+        viewTime,
       }));
     }
   }, [data]);
@@ -43,8 +50,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}`);
       const response = await postschedule({
         ...formData,
+        viewTime: viewTime.toISOString(),
         roomId,
         company,
         SalerName,
@@ -60,9 +69,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log("🚀 ~ handleChange ~ value:", value);
     setFormData({ ...formData, [name]: value });
-    console.log("🚀 ~ handleChange ~ name:", name);
   };
 
   return (
@@ -95,11 +102,25 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               onChange={handleChange}
             />
             <Input
-              label="Thời gian xem phòng"
+              label="SĐT khách hàng"
+              name="customerPhone"
+              value={formData.customerPhone}
+              onChange={handleChange}
+            />
+            <Input
+              label="Ngày xem phòng"
               type="date"
+              name="viewDate"
+              value={formData.viewDate}
+              onChange={handleChange}
+            />
+            <Input
+              label="Giờ xem phòng"
+              type="time"
               name="viewTime"
               value={formData.viewTime}
               onChange={handleChange}
+              defaultValue={'00:00'}
             />
             <TextArea
               label="Ghi chú"
@@ -112,6 +133,8 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
+              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee} !</p>}
+              {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee} !</p>}
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"
@@ -121,7 +144,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
             </div>
           </div>
         </form>
-
       </div>
     </div>
   );

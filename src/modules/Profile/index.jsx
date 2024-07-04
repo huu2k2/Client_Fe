@@ -114,7 +114,8 @@ const Index = ({ setShow }) => {
     };
     return (
       <div
-        className={`fixed inset-0 z-50 flex justify-end   ${isExiting ? "animate-slide-out" : "animate-slide-in"
+        className={`fixed inset-0 z-50 flex justify-end  profile  animate-slide-in
+         ${isExiting ? "animate-slide-out" : "animate-slide-in"
           }`}
       >
         <div
