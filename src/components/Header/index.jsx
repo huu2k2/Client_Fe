@@ -31,15 +31,20 @@ const index = ({ isShow, setShow }) => {
     localStorage.removeItem('token')
     navigate("/login");
   };
+  const handleLinkClick = (event) => {
+    event.preventDefault();
+    navigate("/");
+    window.location.reload();
+  };
   return (
     <div className="w-full h-[64px] bg-black flex justify-center items-center ">
       <div
         className="w-[1360px] 
        h-full flex justify-between items-center"
       >
-        <Link to={"/"}>
+        <div onClick={handleLinkClick}>
           <img src={ImgLogo} alt="Logo" className="w-[135px] h-[24px]" />
-        </Link>
+        </div>
 
 
 
