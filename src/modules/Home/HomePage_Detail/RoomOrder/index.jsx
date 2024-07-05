@@ -7,6 +7,7 @@ const Index = ({ title, data, money, address,category }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
+    
     const path = data
       ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}&category=${category}`
       : `/similarRooms?Price=${money}&Address=${address}`;
@@ -24,10 +25,7 @@ const Index = ({ title, data, money, address,category }) => {
           Xem thêm
         </button>
       </div>
-      {/* {
-      data?<SimilarRoom id={data} money={money} address={address?.replace(/_/g, ' ')} />
-      : <SimilarRoom id={null} money={money} address={address?.replace(/_/g, ' ')} />
-    } */}
+       
       <SimilarRoom
         id={data}
         money={money}

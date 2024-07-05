@@ -3,12 +3,13 @@ import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import { useQueryFilterData } from "@customhooks";
 import { useLocation } from "react-router-dom";
-import { Badge } from "@mui/material"; // Ensure Badge is imported
+import { Badge } from "@mui/material";
 
 const Index = () => {
+  const [filterData, setFilterData] = useQueryFilterData();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [valueRang, setValueRang] = useState(null);
+  const [valueRange, setValueRange] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -23,30 +24,28 @@ const Index = () => {
     };
   }, [dropdownRef]);
 
-  const handleChangOfRang = (e) => {
-    setValueRang(parseInt(e.target.value));
+  const handleChangeOfRange = (e) => {
+    setValueRange(parseInt(e.target.value));
   };
 
-  const [filterData, setFilterData] = useQueryFilterData();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const idroom = queryParams.get("idRoom") || null;
+  const idRoom = queryParams.get("idRoom") || null;
 
   useEffect(() => {
-    if (!idroom && filterData.price > 0) {
-      setValueRang(filterData.price / 1000000);
+    if (filterData.price && filterData.price > 0) {
+      setValueRange(filterData.price / 1000000);
     }
-  }, [filterData.price]);
+  }, [filterData]);
 
   const handleApply = () => {
-    console.log(valueRang ? valueRang * 1000000 :null)
-    setFilterData((prev) => ({ ...prev, price:valueRang  ? valueRang * 1000000 :null}));
+    setFilterData((prev) => ({ ...prev, price: valueRange ? valueRange * 1000000 : null }));
     setIsOpen(false);
   };
 
   const handleReset = () => {
     setFilterData((prev) => ({ ...prev, price: null }));
-    setValueRang(0);
+    setValueRange(0);
   };
 
   return (
@@ -55,7 +54,7 @@ const Index = () => {
         vertical: "top",
         horizontal: "right",
       }}
-      badgeContent={valueRang > 0 ? 1 : 0}
+      badgeContent={valueRange > 0 ? 1 : 0}
       sx={{
         "& .MuiBadge-badge": {
           backgroundColor: "#dc2626",
@@ -70,7 +69,7 @@ const Index = () => {
           onClick={() => setIsOpen(!isOpen)}
         >
           <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
-          <div className="">
+          <div>
             <span className="w-full h-full text-gray-500 text-base font-normal leading-5">
               Giá Thuê
             </span>
@@ -78,8 +77,7 @@ const Index = () => {
         </div>
 
         <div
-          className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
-            }`}
+          className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"}`}
         >
           <div className="flex flex-col gap-2">
             <div className="w-full flex justify-between items-center">
@@ -94,8 +92,8 @@ const Index = () => {
                 min="0"
                 max="15"
                 className="w-full"
-                onChange={handleChangOfRang}
-                value={valueRang}
+                onChange={handleChangeOfRange}
+                value={valueRange || 0}
               />
             </div>
           </div>
@@ -104,7 +102,7 @@ const Index = () => {
               <input
                 type="text"
                 value={0}
-                onChange={() => { }}
+                onChange={() => {}}
                 className="w-full outline-none text-sm border-none"
                 readOnly
               />
@@ -114,8 +112,8 @@ const Index = () => {
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={valueRang * 1000000}
-                onChange={(e) => setValueRang(parseInt(e.target.value) / 1000000)}
+                value={valueRange ? valueRange * 1000000 : 0}
+                onChange={(e) => setValueRange(parseInt(e.target.value) / 1000000)}
                 className="w-full outline-none text-sm border-none"
               />
               <span>VND</span>

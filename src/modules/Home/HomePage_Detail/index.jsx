@@ -47,7 +47,7 @@ const index = () => {
   useEffect(() => {
     setFilterData(initialFilterData);
     if(filterData===initialFilterData){
-
+      
       handleClickSearch();
     }
   }, [filterData]);
