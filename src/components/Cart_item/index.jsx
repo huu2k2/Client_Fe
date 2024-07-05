@@ -63,16 +63,16 @@ const Index = ({ item, faveritedata }) => {
       </div>
 
       <div className="w-full h-fit flex flex-col justify-start gap-1">
-        <div className={`w-fit h-5 rounded-2xl py-[2px] px-2 ${item.category ? 'bg-red-100' : 'bg-white'}  text-red-700 gap-2 flex justify-center items-center`}>
-          <p className="font-normal text-sm flex justify-center items-center">
+        <div className={`w-fit h-5 rounded-2xl py-[2px] px-2 ${item.category ? 'bg-red-100' : 'bg-white'} text-red-700 gap-2 flex justify-center items-center`}>
+          <span className="font-normal text-sm flex justify-center items-center">
             {item.category && item.category}
-          </p>
+          </span>
         </div>
 
         <div className="w-full h-6 text-black">
-          <p className="text-neutral-800 text-base font-medium leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
+          <span className="text-neutral-800 text-base font-medium leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
             {item.address.split(",")[0].toUpperCase()}
-          </p>
+          </span>
         </div>
 
         <div className="w-full h-5 text-neutral-500 text-sm font-normal leading-tight flex gap-2 items-center py-1">
@@ -83,7 +83,7 @@ const Index = ({ item, faveritedata }) => {
         </div>
 
         <div
-          className="w-fit h-7 rounded-2xl py-[2px]  gap-2 relative cursor-pointer flex items-center"
+          className="w-fit h-7 rounded-2xl py-[2px] gap-2 relative cursor-pointer flex items-center"
           onMouseEnter={() => setShow(true)}
           onMouseLeave={() => setShow(false)}
         >
@@ -102,15 +102,15 @@ const Index = ({ item, faveritedata }) => {
             </div>
           )}
 
-          <p
-            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl rounded${item.status === "0"
-              ? "text-[#2563eb]  bg-[#EFF6FF]"
-              : "text-[#D97706]  bg-[#FFFBEB]"
+          <span
+            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl ${item.status === "0"
+              ? "text-[#2563eb] bg-[#EFF6FF]"
+              : "text-[#D97706] bg-[#FFFBEB]"
               }`}
           >
             {item.status === "0" ? "Phòng trống:" : "Phòng sắp trống:"}{" "}
-            <span className="text-black"> {item.emptyRoomTotal}</span>
-          </p>
+            <span className="text-black">{item.emptyRoomTotal}</span>
+          </span>
         </div>
 
         <div className="w-full h-6 text-neutral-800 text-base font-medium leading-normal">

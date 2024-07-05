@@ -28,7 +28,7 @@ const InfoRoom = () => {
 
   let Arr = brokeragePolicy?.saleIncentives
     ?.split("\n")
-    ?.map((line) => line.trim());
+    ?.map((line) => line?.trim());
 
   const { id, roomId } = useParams();
 
@@ -37,6 +37,7 @@ const InfoRoom = () => {
     // Chuyển hướng
     changeLink(`/overview/${id}`);
   };
+
   return (
     <>
       <div className="w-[723px] h-[578px] gap-4 flex flex-col justify-between">
@@ -81,12 +82,12 @@ const InfoRoom = () => {
           {serviceInserts?.length > 0 ? (
             serviceInserts.map((service, index) => (
               <div className="h-[20px] gap-2 w-fit flex" key={index}>
-                <h5 className="w-[320px] nthd_text_medium_sm_h20 block">
+                <div className="w-[320px] nthd_text_medium_sm_h20 block">
                   {service?.serviceName}
-                </h5>
-                <h5 className="nthd_text_medium_sm_h20">
+                </div>
+                <div className="nthd_text_medium_sm_h20">
                   {service.servicePrice} {service.dvt}
-                </h5>
+                </div>
               </div>
             ))
           ) : (
@@ -101,7 +102,6 @@ const InfoRoom = () => {
         <div className="flex justify-between w-full items-center h-40">
           <div className="text-[28px] flex font-semibold leading-[28px] text-red-700">
             {new Intl.NumberFormat("vi-VN").format(price)} VND
- 
           </div>
 
           {/* button */}
