@@ -23,10 +23,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
     viewDate: "",
     viewTime: "",
     customerPhone: "",
-    notes: ""
+    notes: "",
   });
   const [postschedule, { error }] = usePostscheduleMutation();
-  console.log("🚀 ~ ModalPutRoom ~ error:", error)
+  console.log("🚀 ~ ModalPutRoom ~ error:", error);
   const { data } = useGetAllDetailQuery(roomId);
   const [response, setResponse] = useState(null);
 
@@ -57,12 +57,12 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
         roomId,
         company,
         SalerName,
-        SalerPhone
+        SalerPhone,
       }).unwrap();
       setResponse(response);
       console.log(response);
     } catch (error) {
-      console.error('Failed to schedule:', error);
+      console.error("Failed to schedule:", error);
       setResponse(error);
     }
   };
@@ -93,7 +93,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
             123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
           </span>
         </div>
-        <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit}>
+        <form
+          className="w-[1280px] h-fit gap-8 flex flex-col justify-start"
+          onSubmit={handleSubmit}
+        >
           <div className="w-full h-fit gap-5 flex flex-col justify-start">
             <Input
               label="Tên khách hàng"
@@ -123,7 +126,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               name="viewTime"
               value={formData.viewTime}
               onChange={handleChange}
-              defaultValue={'00:00'}
+              defaultValue={"00:00"}
               width={"w-[400px]"}
             />
             <TextArea
@@ -138,13 +141,17 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-<<<<<<< HEAD
-              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee}</p>}
-              {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee}</p>}
-=======
-              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee} </p>}
-              {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee} </p>}
->>>>>>> 2b835500e0ff60623f1e8852ef904cca6d6c60bc
+              {error && (
+                <p className="text-rose-600 mr-10 flex items-center">
+                  {error?.data?.mesagee}{" "}
+                </p>
+              )}
+              {response && (
+                <p className="text-green-600 mr-10 flex items-center">
+                  {response?.mesagee}{" "}
+                </p>
+              )}
+
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"
