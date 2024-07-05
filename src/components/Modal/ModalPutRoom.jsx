@@ -100,12 +100,14 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               name="customerName"
               value={formData.customerName}
               onChange={handleChange}
+              width={"w-[400px]"}
             />
             <Input
               label="SĐT khách hàng"
               name="customerPhone"
               value={formData.customerPhone}
               onChange={handleChange}
+              width={"w-[400px]"}
             />
             <Input
               label="Ngày xem phòng"
@@ -113,6 +115,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               name="viewDate"
               value={formData.viewDate}
               onChange={handleChange}
+              width={"w-[400px]"}
             />
             <Input
               label="Giờ xem phòng"
@@ -121,20 +124,22 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               value={formData.viewTime}
               onChange={handleChange}
               defaultValue={'00:00'}
+              width={"w-[400px]"}
             />
             <TextArea
               label="Ghi chú"
               name="notes"
               value={formData.notes}
               onChange={handleChange}
+              width={"w-[400px]"}
             />
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee} !</p>}
-              {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee} !</p>}
+              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee} </p>}
+              {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee} </p>}
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"

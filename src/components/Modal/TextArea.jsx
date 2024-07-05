@@ -1,6 +1,6 @@
 
 
-const TextArea = ({ label, name, value, onChange }) => {
+const TextArea = ({ label, name, value, onChange, width }) => {
   return (
     <>
       <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
@@ -9,7 +9,7 @@ const TextArea = ({ label, name, value, onChange }) => {
           {label}
         </span>
         <textarea
-          className="px-4 py-2 border rounded-md"
+          className={`px-4 py-2 border rounded-md ${width}`}
           name={name}
           value={value}
           onChange={onChange}
