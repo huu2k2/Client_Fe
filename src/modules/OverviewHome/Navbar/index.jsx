@@ -64,7 +64,7 @@ const Index = () => {
             >
               <p className="text-white text-sm font-medium  leading-tight">Đặt lịch dẫn khách</p>
             </Link>
-            <Link
+            {/* <Link
               to={`/overview/${idHome}/deposit`}
               className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
                 activeLink === 3 ? 'bg-rose-700' : ''
@@ -72,7 +72,7 @@ const Index = () => {
               onClick={() => handleLinkClick(3)}
             >
               <p className="text-white text-sm font-medium  leading-tight">Đặt cọc giữ chỗ</p>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

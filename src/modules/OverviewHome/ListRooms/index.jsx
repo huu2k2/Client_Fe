@@ -37,7 +37,7 @@ const Index = () => {
       setFilteredData(newFilteredData);
     }
   }, [query, DataOF]);
-
+ 
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center flex">
       <div className="h-px flex-col justify-start items-start flex">
