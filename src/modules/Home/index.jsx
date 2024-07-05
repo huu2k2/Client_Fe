@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const Index = () => {
   const [isShow, setShow] = useState(false);
-  console.log("🚀 ~ index ~ isShow:", isShow)
+ 
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">
