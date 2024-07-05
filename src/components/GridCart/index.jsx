@@ -46,7 +46,7 @@ const Index = ({ id, money, address,category, faveritedata }) => {
     ) {
       handleClickSearch();
     }
-  }, [filterData, location.pathname, handleClickSearch, money, address, id]);
+  }, [filterData, location.pathname, handleClickSearch, money, address]);
 
   const [data, isFetching, isError] = useQueryData();
 
