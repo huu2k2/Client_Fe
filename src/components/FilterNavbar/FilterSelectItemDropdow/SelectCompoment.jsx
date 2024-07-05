@@ -9,10 +9,6 @@ const SelectCompoment = ({ selectedOption, setSelectedOption, type, data }) => {
   useEffect(() => {
     if (data && data.results) {
       const Datas = data.results;
-      if (filterData.districtId && type === "district") {
-        const filteredData = Datas.filter((item) => item.district_id === filterData.districtId);
-        setSelectedOption({ label: filteredData[0]?.district_name, value: filteredData[0]?.district_id })
-      }
       const formattedOptions = Datas.map((Data) => ({
         value: type === "district" ? Data.district_id : Data?.ward_id,
         label: type === "district" ? Data.district_name : Data?.ward_name,

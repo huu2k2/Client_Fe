@@ -6,10 +6,15 @@ import { useQueryFilterData } from "@customhooks";
 import Badge from '@mui/material/Badge';
 
 const index = () => {
+  const [filterData, setFilterData] = useQueryFilterData();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRooms, setSelectedRooms] = useState([]);
   const dropdownRef = useRef(null);
-
+useEffect(()=>{
+if(filterData.categories){
+  setSelectedRooms([...filterData.categories])
+}
+},[filterData])
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -33,7 +38,7 @@ const index = () => {
   };
 
   
-  const [_, setFilterData] = useQueryFilterData();
+ 
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, categories: [...selectedRooms] }))
     setIsOpen(false)

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEnvironment } from "react-icons/ai";
 import { BsBuilding } from "react-icons/bs";
 import { useGetDistrictsQuery, useGetWardsQuery } from "@apis/slice/provices";
@@ -15,8 +15,13 @@ const ProvinceInput = ({
   const { data: dataProvices } = useGetDistrictsQuery();
   const { data: dataWard } = useGetWardsQuery(selectedOption?.value);
 
-  const [_, setFilterData] = useQueryFilterData();
-
+  const [filterData, setFilterData] = useQueryFilterData();
+useEffect(()=>{
+  if(filterData.districtId ){
+    const filteredData = dataProvices?.results?.filter((item) => item.district_id === filterData.districtId);
+    setSelectedOption({label: filteredData[0]?.district_name,value:filterData.districtId})
+  }
+},[filterData])
   const handlePrint = () => {
     setFilterData((prev) => ({
       ...prev,

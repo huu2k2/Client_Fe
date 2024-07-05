@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ label, name, value, onChange, type = "text", defaultValue }) => {
+const Input = ({ label, name, value, onChange, type = "text", defaultValue, width }) => {
   console.log("🚀 ~ Input ~ value:", value)
   return (
     <>
@@ -10,7 +10,7 @@ const Input = ({ label, name, value, onChange, type = "text", defaultValue }) =>
           {label}
         </span>
         <input
-          className="px-4 py-2 border rounded-md"
+          className={`px-4 py-2 border rounded-md ${width}`}
           type={type}
           name={name}
           onChange={onChange}
