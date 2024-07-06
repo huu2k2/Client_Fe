@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const Index = () => {
   const [isShow, setShow] = useState(false);
- 
+
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">
@@ -15,7 +15,6 @@ const Index = () => {
           <Outlet />
         </div>
       </div>
-      <Profile />
     </p>
   );
 };

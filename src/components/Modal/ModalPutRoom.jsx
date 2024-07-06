@@ -7,6 +7,7 @@ import { useGetSchedulesQuery, usePostscheduleMutation } from "../../apis/slice/
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import index from './../../modules/Home/HomePage_Detail/MainBody/index';
 
 // Validation schema
 const validationSchema = yup.object().shape({
@@ -22,6 +23,8 @@ const validationSchema = yup.object().shape({
 });
 
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
+  console.log("🚀 ~ ModalPutRoom ~ roomId:", roomId);
+
   const [formData, setFormData] = useState({
     customerName: "",
     viewDate: "",
@@ -30,7 +33,9 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
     notes: ""
   });
   const [postschedule, { error }] = usePostscheduleMutation();
-  const { data } = useGetAllDetailQuery(roomId);
+  const { data } = useGetAllDetailQuery(roomId, {
+    skip: !roomId, // Skip query if roomId is undefined
+  });
   const [response, setResponse] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -38,8 +43,12 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
   const SalerPhone = data?.response?.managers?.[0]?.phoneNumber || "";
   const company = data?.response?.holder?.fullName || "";
 
-  const { data: Schedulesdata, isLoading, isSuccess } = useGetSchedulesQuery();
+  const { data: Schedulesdata, isLoading, isSuccess } = useGetSchedulesQuery(
+    { roomId },
+    { skip: !roomId } // Skip query if roomId is undefined
+  );
   console.log("🚀 ~ ModalPutRoom ~ Schedulesdata:", Schedulesdata)
+
 
   const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
@@ -76,8 +85,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
       if (response.statusCode === 200) {
         setMessage("Đặt lịch thành công !");
         reset();
-        setIsShowModal(false)
-
+        setIsShowModal(false);
       } else {
         setMessage("Đặt lịch thất bại !");
       }
@@ -109,7 +117,8 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
           </span>
         </div>
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
-          <div className=" flex">
+          <div className="gap-5 flex">
+
             <div className=" w-2/3 h-fit gap-5 flex flex-col justify-start">
               <Input
                 label="Tên khách hàng"
@@ -174,78 +183,41 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
                 ref={register}
               />
             </div>
-            <div>
+
+            <div className="w-full">
               <h2>danh sách lịch hẹn { }</h2>
-              <nav>
-                <ul className=" p-[30px] overflow-y-auto h-[500px]">
-                  <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li>
-                  <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li>
-                  <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li> <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li> <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li>
-                  <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li>
-                  <li className="flex w-[500px] border-b py-3">
-                    <div className="flex-grow">
-                      <p>Tên</p>
-                      <span>sđt :8192640981274</span>
-                    </div>
-                    <div className=" flex-grow justify-end" >
-                      <p className="flex justify-end">nhà</p>
-                      <span className="flex justify-end">ngày Xem</span>
-                    </div>
-                  </li>
+              <nav className="border border-gray-400 p-3 rounded">
+                <ul className="overflow-y-auto h-[500px]">
+
+                  {
+                    Schedulesdata?.response?.map((item, index) => {
+                      const date = new Date(item.dateView);
+                      const formattedDateTime = date.toLocaleString('en-GB', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      });
+
+                      return (
+                        <li key={index} className="flex border-b py-3 mr-1">
+                          <div className="flex-grow">
+                            <p className="  text-gray-900 text-base font-normal leading-5 truncate flex text-[18px] pb-3 ">Tên: {item.customerName}</p>
+                            <span className="">SĐT: {item.customerPhoneNumber}</span>
+                          </div>
+                          <div className="flex-grow justify-end ">
+                            <div className="  text-gray-900 text-base font-normal leading-5  flex justify-end text-[18px] pb-3  ">
+                              <p className="  w-[300px] truncate  ">Địa chỉ: {item.houseAddress}</p>
+                            </div>
+                            <span className="flex justify-end mr-6 ">ngày Xem {formattedDateTime}</span>
+                          </div>
+                        </li>
+                      );
+                    })
+                  }
+
                 </ul>
               </nav>
             </div>
@@ -267,7 +239,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
             </div>
           </div>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };

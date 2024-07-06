@@ -21,6 +21,8 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
+  console.log(isShow); // This will log the updated state
+
   const SetShow = () => {
     setShow(!isShow);
     console.log(isShow); // This will log the updated state

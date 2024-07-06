@@ -28,7 +28,7 @@ const Location = () => {
   // hide , show new div
   const [isShow, setShow] = useState(false);
 
- 
+
   return (
     <div className="relative" ref={dropdownRef}>
       <div
@@ -36,10 +36,10 @@ const Location = () => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
-        <div className="w-auto block h-full text-gray-500 text-base font-normal leading-5 truncate">
+        <div className="w-auto block h-full text-gray-500 truncate">
           <span className=" ">
             {selectedOption || selectedOptionWard
-              ? `${selectedOption?.label}, ${selectedOptionWard?.label ? selectedOptionWard?.label:''}`
+              ? `${selectedOption?.label}, ${selectedOptionWard?.label ? selectedOptionWard?.label : ''}`
               : "Toàn quốc"}
           </span>
         </div>

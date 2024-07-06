@@ -25,8 +25,8 @@ const Agencies = createApi({
             }),
         }),
         getSchedules: build.query({
-            query: () => ({
-                url: `/v2/Agencies/get-schedules`,
+            query: ({ roomId }) => ({
+                url: `/v2/Agencies/get-schedules/${roomId}`,
                 method: 'GET',
             }),
         }),
@@ -51,7 +51,7 @@ const Agencies = createApi({
         }),
         removeFavorite: build.mutation({
             query: (roomId) => ({
-                url: `/v2/Agencies/remove-favorite-room/${roomId}`,
+                url: `/v2/Agencies/remove-favorite-room`,
                 method: 'DELETE',
             }),
             // Add the onQueryStarted lifecycle method
