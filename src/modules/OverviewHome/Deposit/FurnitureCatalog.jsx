@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMore } from "react-icons/ai";
+import CheckedLine from "../../../assets/CheckedInput.svg";
 const FurnitureTable = () => {
   // Dữ liệu giả cho bảng
   const furnitureData = [
@@ -11,6 +12,31 @@ const FurnitureTable = () => {
     { id: 6, name: "Máy nóng lạnh", rentalPrice: 300000 },
     { id: 7, name: "Kệ bếp", rentalPrice: 300000 },
   ];
+
+  const [checkedItems, setCheckedItems] = useState(
+    furnitureData.reduce((acc, item) => {
+      acc[item.id] = false;
+      return acc;
+    }, {})
+  );
+
+  const allChecked = Object.values(checkedItems).every(Boolean);
+  const someChecked = Object.values(checkedItems).some(Boolean);
+
+  const handleParentCheckboxChange = () => {
+    const newCheckedItems = furnitureData.reduce((acc, item) => {
+      acc[item.id] = !allChecked;
+      return acc;
+    }, {});
+    setCheckedItems(newCheckedItems);
+  };
+
+  const handleChildCheckboxChange = (id) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <div className="w-[1280px] h-fit">
@@ -25,7 +51,21 @@ const FurnitureTable = () => {
                 scope="col"
                 className="w-16 h-10 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                <input type="checkbox" className="custom-checkbox" name="" id="" />
+                {someChecked && !allChecked ? (
+                  <img src={CheckedLine} alt="checked line icon" onClick={handleParentCheckboxChange} className="w-5 h-5"/>
+                ): (
+                  <input
+                    type="checkbox"
+                    className="custom-checkbox"
+                    onChange={handleParentCheckboxChange}
+                    checked={allChecked}
+                    ref={(el) => {
+                      if (el) {
+                        el.indeterminate = !allChecked && someChecked;
+                      }
+                    }}
+                  />
+                )}
               </th>
               <th
                 scope="col"
@@ -51,8 +91,13 @@ const FurnitureTable = () => {
           <tbody className="divide-y divide-gray-200">
             {furnitureData.map((item) => (
               <tr key={item.id}>
-                <td className="w-16 h-[72px]  px-6 py-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                <input type="checkbox" className="custom-checkbox" name="" id="" />
+                <td className="w-16 h-[72px] px-6 py-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                  <input
+                    type="checkbox"
+                    className="custom-checkbox"
+                    checked={checkedItems[item.id]}
+                    onChange={() => handleChildCheckboxChange(item.id)}
+                  />
                 </td>
                 <td className="w-20 h-[72px] px-6 py-4 whitespace-nowrap text-sm font-normal text-gray-900">
                   {item.id}

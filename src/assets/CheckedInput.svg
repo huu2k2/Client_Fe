@@ -1,0 +1,7 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Form Fields/Checkbox input">
+<rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill="#EC103F"/>
+<rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#EC103F"/>
+<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M3 8C3 7.73478 3.07525 7.48043 3.20921 7.29289C3.34316 7.10536 3.52485 7 3.71429 7H12.2857C12.4752 7 12.6568 7.10536 12.7908 7.29289C12.9247 7.48043 13 7.73478 13 8C13 8.26522 12.9247 8.51957 12.7908 8.70711C12.6568 8.89464 12.4752 9 12.2857 9H3.71429C3.52485 9 3.34316 8.89464 3.20921 8.70711C3.07525 8.51957 3 8.26522 3 8Z" fill="white"/>
+</g>
+</svg>

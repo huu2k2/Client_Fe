@@ -13,7 +13,7 @@ const InfoAccount = () => {
           <div className="w-[411px] text-gray-700 text-sm font-medium  leading-tight">
             Tên khách hàng
           </div>
-          <div className="h-[38px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex w-80">
+          <div className="h-[38px] px-[13px] py-[1px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex w-80">
             <input
               type="text"
               className="w-full text-sm font-normal  leading-tight outline-none"
@@ -43,11 +43,11 @@ const InfoAccount = () => {
           </div>
           <div className="h-[38px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex w-80">
             <input
-              type="text"
+              type="date"
               className="w-full text-sm font-normal text-gray-500 leading-tight outline-none"
               placeholder="dd/mm/yyyy"
             />
-            <div className="w-5 h-5 relative" />
+           
           </div>
         </div>
         <div className="self-stretch h-px bg-gray-200" />
@@ -70,11 +70,11 @@ const InfoAccount = () => {
           </div>
           <div className="h-[38px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex w-80">
             <input
-              type="text"
+              type="date"
               className="w-full text-sm font-normal text-gray-500 leading-tight outline-none"
               placeholder="dd/mm/yyyy"
             />
-            <div className="w-5 h-5 relative" />
+           
           </div>
         </div>
         <div className="self-stretch h-px bg-gray-200" />

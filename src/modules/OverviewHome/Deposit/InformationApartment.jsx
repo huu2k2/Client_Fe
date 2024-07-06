@@ -39,7 +39,7 @@ const InformationApartment = () => {
                     className="w-full text-sm font-normal leading-tight outline-none"
                     placeholder="Nhập mã phòng"
                   />
-                  <div className="w-5 h-5 relative" />
+                  
                 </div>
               </div>
               <div className="self-stretch h-px bg-gray-200" />
@@ -70,7 +70,7 @@ const InformationApartment = () => {
                       className="w-full text-sm font-normal leading-tight outline-none"
                       placeholder="Nhập thời hạn hợp đồng"
                     />
-                    <div className="w-5 h-5 relative" />
+                    
                   </div>
                 </div>
                 <div className="pr-[525px] justify-start items-center gap-6 inline-flex">
@@ -108,11 +108,11 @@ const InformationApartment = () => {
                 </div>
                 <div className="h-[38px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex w-80">
                   <input
-                    type="text"
+                    type="date"
                     className="w-full text-sm font-normal text-gray-500 leading-tight outline-none"
                     placeholder="dd/mm/yyyy"
                   />
-                  <div className="w-5 h-5 relative" />
+                  
                 </div>
               </div>
               <div className="self-stretch h-px bg-gray-200" />
@@ -154,11 +154,11 @@ const InformationApartment = () => {
                 </div>
                 <div className="h-[38px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex w-80">
                   <input
-                    type="text"
+                    type="date"
                     className="w-full text-sm font-normal text-gray-500 leading-tight outline-none"
                     placeholder="dd/mm/yyyy"
                   />
-                  <div className="w-5 h-5 relative" />
+                  
                 </div>
               </div>
               <div className="self-stretch h-px bg-gray-200" />
@@ -168,11 +168,11 @@ const InformationApartment = () => {
                 </div>
                 <div className="h-[38px] px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex w-80">
                   <input
-                    type="text"
+                    type="date"
                     className="w-full text-sm font-normal text-gray-500 leading-tight outline-none"
                     placeholder="dd/mm/yyyy"
                   />
-                  <div className="w-5 h-5 relative" />
+                  
                 </div>
               </div>
               <div className="self-stretch h-px bg-gray-200" />
@@ -186,7 +186,7 @@ const InformationApartment = () => {
                     className="w-full text-sm font-normal text-gray-900 leading-tight outline-none"
                     placeholder="Nhập số lượng người ở"
                   />
-                  <div className="w-5 h-5 relative" />
+                  
                 </div>
               </div>
               <div className="self-stretch h-px bg-gray-200" />
@@ -200,7 +200,7 @@ const InformationApartment = () => {
                     className="w-full text-sm font-normal text-gray-900 leading-tight outline-none"
                     placeholder="Nhập số lượng xe"
                   />
-                  <div className="w-5 h-5 relative" />
+                  
                 </div>
               </div>
               <div className="self-stretch h-px bg-gray-200" />
