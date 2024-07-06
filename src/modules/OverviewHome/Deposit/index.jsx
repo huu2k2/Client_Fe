@@ -42,7 +42,7 @@ const FormWrapper = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="h-fit px-10 py-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex"
     >
-      <div className="self-stretch h-[3754px] flex-col justify-start items-start gap-8 flex">
+      <div className="self-stretch h-fit flex-col justify-start items-start gap-8 flex">
         <InfoTitle register={register} errors={errors} />
         <InformationApartment
           register={register}
@@ -84,8 +84,8 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="w-[1920px] h-[3872px] flex-col justify-start items-center inline-flex">
-        <div className="w-[1920px] h-[3872px] relative">
+      <div className="w-[1920px] h-[3000px] flex-col justify-start items-center inline-flex">
+        <div className="w-[1920px] h-[3000px] relative">
           <div className="w-[1920px] h-32 left-0 top-0 absolute bg-black" />
           <FormWrapper />
         </div>
