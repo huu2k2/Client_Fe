@@ -12,8 +12,7 @@ const AcountsApi = createApi({
   endpoints: (build) => ({
     postLogin: build.mutation({
       query: (body) => ({
-        url: `/Accounts/sign-in`,
-        // url: `/v2/Agencies/sign-in`,
+        url: `/v2/Agencies/sign-in`,
 
         method: "POST",
         data: body,

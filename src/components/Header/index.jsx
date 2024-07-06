@@ -74,8 +74,7 @@ const index = ({ isShow, setShow }) => {
                 className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52  mt-3  "
               >
                 <li
-                  // onClick={() => setShow(!isShow)}
-                  onClick={SetShow}
+                  onClick={() => setShow(!isShow)}
                   className="cursor-pointer text-base">
                   <span>Thông tin tài khoản</span>
                 </li>

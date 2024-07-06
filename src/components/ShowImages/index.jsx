@@ -39,6 +39,7 @@ function ShowImages({ images }) {
             src={images?.response[mainImageIndex]?.url}
             alt="Main Image"
             className="w-96 h-96 object-cover rounded-lg"
+            loading="lazy"
           />
           <button
             onClick={handleNext}

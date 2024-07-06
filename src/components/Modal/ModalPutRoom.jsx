@@ -3,7 +3,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Input from "./Input";
 import TextArea from "./TextArea";
 import { useGetAllDetailQuery } from "../../apis/slice/services";
-import { usePostscheduleMutation } from "../../apis/slice/Agencies";
+import { useGetSchedulesQuery, usePostscheduleMutation } from "../../apis/slice/Agencies";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -30,7 +30,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
     notes: ""
   });
   const [postschedule, { error }] = usePostscheduleMutation();
-  console.log("🚀 ~ ModalPutRoom ~ error:", error);
   const { data } = useGetAllDetailQuery(roomId);
   const [response, setResponse] = useState(null);
   const [message, setMessage] = useState("");
@@ -39,12 +38,14 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
   const SalerPhone = data?.response?.managers?.[0]?.phoneNumber || "";
   const company = data?.response?.holder?.fullName || "";
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+  const { data: Schedulesdata, isLoading, isSuccess } = useGetSchedulesQuery();
+  console.log("🚀 ~ ModalPutRoom ~ Schedulesdata:", Schedulesdata)
+
+  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
   useEffect(() => {
-    console.log("🚀 ~ ModalPutRoom ~ formData:", formData);
     if (data?.response?.dateView) {
       const date = new Date(data.response.dateView);
       const viewDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
@@ -74,6 +75,9 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
       console.log(response);
       if (response.statusCode === 200) {
         setMessage("Đặt lịch thành công !");
+        reset();
+        setIsShowModal(false)
+
       } else {
         setMessage("Đặt lịch thất bại !");
       }
@@ -105,76 +109,155 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
           </span>
         </div>
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
-          <div className="w-full h-fit gap-5 flex flex-col justify-start">
-            <Input
-              label="Tên khách hàng"
-              name="customerName"
-              value={formData.customerName}
-              onChange={(e) => {
-                setFormData({ ...formData, customerName: e.target.value });
-                setValue("customerName", e.target.value);
-              }}
-              width={"w-[400px]"}
-              ref={register}
-            />
-            <p className="text-rose-500">{errors.customerName?.message}</p>
-            <Input
-              label="SĐT khách hàng"
-              name="customerPhone"
-              value={formData.customerPhone}
-              onChange={(e) => {
-                setFormData({ ...formData, customerPhone: e.target.value });
-                setValue("customerPhone", e.target.value);
-              }}
-              width={"w-[400px]"}
-              ref={register}
-            />
-            <p className="text-rose-500">{errors.customerPhone?.message}</p>
-            <Input
-              label="Ngày xem phòng"
-              type="date"
-              name="viewDate"
-              value={formData.viewDate}
-              onChange={(e) => {
-                setFormData({ ...formData, viewDate: e.target.value });
-                setValue("viewDate", e.target.value);
-              }}
-              width={"w-[400px]"}
-              ref={register}
-            />
-            <p className="text-rose-500">{errors.viewDate?.message}</p>
-            <Input
-              label="Giờ xem phòng"
-              type="time"
-              name="viewTime"
-              value={formData.viewTime}
-              onChange={(e) => {
-                setFormData({ ...formData, viewTime: e.target.value });
-                setValue("viewTime", e.target.value);
-              }}
-              defaultValue={'00:00'}
-              width={"w-[400px]"}
-              ref={register}
-            />
-            <p className="text-rose-500">{errors.viewTime?.message}</p>
-            <TextArea
-              label="Ghi chú"
-              name="notes"
-              value={formData.notes}
-              onChange={(e) => {
-                setFormData({ ...formData, notes: e.target.value });
-                setValue("notes", e.target.value);
-              }}
-              width={"w-[400px]"}
-              ref={register}
-            />
+          <div className=" flex">
+            <div className=" w-2/3 h-fit gap-5 flex flex-col justify-start">
+              <Input
+                label="Tên khách hàng"
+                name="customerName"
+                value={formData.customerName}
+                onChange={(e) => {
+                  setFormData({ ...formData, customerName: e.target.value });
+                  setValue("customerName", e.target.value);
+                }}
+                width={"w-[400px]"}
+                ref={register}
+              />
+              <p className="text-rose-500">{errors.customerName?.message}</p>
+              <Input
+                label="SĐT khách hàng"
+                name="customerPhone"
+                value={formData.customerPhone}
+                onChange={(e) => {
+                  setFormData({ ...formData, customerPhone: e.target.value });
+                  setValue("customerPhone", e.target.value);
+                }}
+                width={"w-[400px]"}
+                ref={register}
+              />
+              <p className="text-rose-500">{errors.customerPhone?.message}</p>
+              <Input
+                label="Ngày xem phòng"
+                type="date"
+                name="viewDate"
+                value={formData.viewDate}
+                onChange={(e) => {
+                  setFormData({ ...formData, viewDate: e.target.value });
+                  setValue("viewDate", e.target.value);
+                }}
+                width={"w-[400px]"}
+                ref={register}
+              />
+              <p className="text-rose-500">{errors.viewDate?.message}</p>
+              <Input
+                label="Giờ xem phòng"
+                type="time"
+                name="viewTime"
+                value={formData.viewTime}
+                onChange={(e) => {
+                  setFormData({ ...formData, viewTime: e.target.value });
+                  setValue("viewTime", e.target.value);
+                }}
+                defaultValue={'00:00'}
+                width={"w-[400px]"}
+                ref={register}
+              />
+              <p className="text-rose-500">{errors.viewTime?.message}</p>
+              <TextArea
+                label="Ghi chú"
+                name="notes"
+                value={formData.notes}
+                onChange={(e) => {
+                  setFormData({ ...formData, notes: e.target.value });
+                  setValue("notes", e.target.value);
+                }}
+                width={"w-[400px]"}
+                ref={register}
+              />
+            </div>
+            <div>
+              <h2>danh sách lịch hẹn { }</h2>
+              <nav>
+                <ul className=" p-[30px] overflow-y-auto h-[500px]">
+                  <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li>
+                  <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li>
+                  <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li> <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li> <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li>
+                  <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li>
+                  <li className="flex w-[500px] border-b py-3">
+                    <div className="flex-grow">
+                      <p>Tên</p>
+                      <span>sđt :8192640981274</span>
+                    </div>
+                    <div className=" flex-grow justify-end" >
+                      <p className="flex justify-end">nhà</p>
+                      <span className="flex justify-end">ngày Xem</span>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
               {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>}
-              {message && <p className={`mr-10 flex items-center ${response.statusCode === 200 ? "text-green-600" : "text-rose-600"}`}>{message}</p>}
+              {message && <p className={`mr-10 flex items-center ${response.statusCode === 200 ? "text-green-600" : "text-red-600"}`}>{message}</p>}
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"

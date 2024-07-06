@@ -24,6 +24,12 @@ const Agencies = createApi({
                 data: data,
             }),
         }),
+        getSchedules: build.query({
+            query: () => ({
+                url: `/v2/Agencies/get-schedules`,
+                method: 'GET',
+            }),
+        }),
         addFavorite: build.mutation({
             query: (roomId) => ({
                 url: `/v2/Agencies/add-favorite-room/${roomId}`,
@@ -76,7 +82,8 @@ export const {
     usePostscheduleMutation,
     useAddFavoriteMutation,
     useRemoveFavoriteMutation,
-    useGetFavoriteQuery
+    useGetFavoriteQuery,
+    useGetSchedulesQuery
 } = Agencies;
 
 export default Agencies;
