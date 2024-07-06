@@ -74,7 +74,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
       const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}`);
       const response = await postschedule({
         ...formData,
-        viewTime: viewTime.toISOString(),
+        dateView: viewTime.toISOString(),
         roomId,
         company,
         SalerName,

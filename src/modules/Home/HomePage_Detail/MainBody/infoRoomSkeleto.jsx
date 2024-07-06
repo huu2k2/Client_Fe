@@ -61,7 +61,7 @@ const InfoRoomSkeleton = () => {
                             width={220}
                             variant="rounded"
                         />
-                       
+
                     </div>
 
                     {/* button  */}
@@ -75,7 +75,7 @@ const InfoRoomSkeleton = () => {
                         </div>
                         <div className="mx-2">
                             <Button
-                                text={"Tổng quan nhà trọ"}
+                                text={"Đặt cọc"}
                                 color={"text-red-700"}
                                 background={"bg-red-100"}
                             />
