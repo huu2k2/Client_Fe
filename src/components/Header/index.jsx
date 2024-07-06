@@ -43,7 +43,7 @@ const index = ({ isShow, setShow }) => {
        h-full flex justify-between items-center"
       >
         <div onClick={handleLinkClick}>
-          <img src={ImgLogo} alt="Logo" className="w-[135px] h-[24px]" />
+          <img src={ImgLogo} alt="Logo" className="w-[135px] h-[24px] cursor-pointer" />
         </div>
 
 
@@ -67,7 +67,7 @@ const index = ({ isShow, setShow }) => {
                 role="button"
                 className="w-8 h-8 rounded-2xl overflow-hidden  "
               >
-                <img src={ImgAvatar} alt="img avatar" />
+                <img src={ImgAvatar} alt="img avatar" className="cursor-pointer" />
               </div>
               <ul
                 tabIndex={0}

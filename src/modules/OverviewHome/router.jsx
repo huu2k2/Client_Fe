@@ -27,11 +27,11 @@ const router = {
       element: <Policies />,
     },
     {
-      path: "deposit",
+      path: "deposit/:idRoom",
       element: <Deposit />,
     },
     {
-      path: "booking",
+      path: "booking/:idRoom",
       element:<Booking /> ,
     },
   ],

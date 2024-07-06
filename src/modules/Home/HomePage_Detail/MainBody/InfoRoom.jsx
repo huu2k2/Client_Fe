@@ -33,9 +33,15 @@ const InfoRoom = () => {
   const { id, roomId } = useParams();
 
   const handleClick = () => {
-    localStorage.setItem("idroom", roomId);
+    if (localStorage.getItem("token")) {
+      localStorage.setItem("idroom", roomId);
     // Chuyển hướng
     changeLink(`/overview/${id}`);
+    } else {
+      localStorage.setItem("redirectAfterLogin", location.pathname);
+      changeLink("/login");
+    }
+    
   };
 
   return (
