@@ -31,7 +31,7 @@ const router = {
       element: <Deposit />,
     },
     {
-      path: "booking",
+      path: "booking/:idRoom",
       element:<Booking /> ,
     },
   ],

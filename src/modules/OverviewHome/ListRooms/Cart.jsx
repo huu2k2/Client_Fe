@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ data }) => {
   // Define the background color based on status
@@ -24,9 +25,12 @@ const Cart = ({ data }) => {
         return 'Đã đặt cọc';
     }
   };
-
+  const navigate = useNavigate()
+ const handleChangePage=()=>{
+  navigate(`booking/${data?.roomId}`)
+ }
   return (
-    <div className="flex-col justify-start items-start inline-flex">
+    <div className="flex-col justify-start items-start inline-flex" onClick={handleChangePage}>
       <div
         className={`w-[200px] px-5 py-2 ${getStatusBgColor(data?.status)} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >
@@ -46,7 +50,7 @@ const Cart = ({ data }) => {
       </div>
       <div className="h-9 w-full py-2 bg-white rounded-bl-lg rounded-br-lg shadow flex justify-center items-center">
         <div className="text-gray-800 text-base font-bold leading-tight">
-          {new Intl.NumberFormat("vi-VN").format(data.rentPrice)} đ
+          {new Intl.NumberFormat("vi-VN").format(data.price)} đ
         </div>
       </div>
     </div>
