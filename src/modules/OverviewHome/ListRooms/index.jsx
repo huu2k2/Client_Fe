@@ -49,26 +49,31 @@ const Index = () => {
   };
   const [getRoomsFilter, { data: DataOF, isLoading }] =
     useGetRoomsofhouseMutation();
-
+    const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
   useEffect(() => {
     const rs = async () => {
-      await getRoomsFilter(initialFilterData).unwrap();
+     const  kq = await getRoomsFilter(initialFilterData).unwrap();
+     setFilteredData(kq?.response);
     };
     rs();
   }, []);
-  const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
+
 
   // Cập nhật dữ liệu lọc khi query thay đổi
   useEffect(() => {
-    if (DataOF?.response) {
+    if (DataOF?.response?.length>0) {
       
       const newFilteredData = DataOF?.response.filter((item) =>
         query.includes(item.status)
       );
-       
-      setFilteredData(newFilteredData ? newFilteredData:[]);
+       if(query.length>0){
+
+         setFilteredData(newFilteredData);
+       }else{
+        setFilteredData(DataOF?.response)
+       }
     }
-  }, [query, DataOF?.response]);
+  }, [query]);
 
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
@@ -138,7 +143,7 @@ const Index = () => {
       </div>
 
       <Body
-         data={filteredData && filteredData.length > 0 ? filteredData : (filteredData.length === 0?[]:DataOF?.response)}
+         data={filteredData && filteredData.length >= 0? filteredData :[]}
         isLoading={isLoading}
       />
     </div>
