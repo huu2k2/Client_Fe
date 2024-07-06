@@ -51,6 +51,7 @@ const Cart = () => {
   // }
   useEffect(() => {
     if (images?.response?.length < 4) {
+      console.log("🚀 ~ useEffect ~ images:", images)
       setDisplay(" hidden");
     } else {
       setDisplay(" block");
