@@ -27,7 +27,7 @@ const Cart = ({ data }) => {
   };
   const navigate = useNavigate()
  const handleChangePage=()=>{
-  navigate(`booking/${data?.roomId}`)
+  navigate(`deposit/${data?.roomId}`)
  }
   return (
     <div className="flex-col justify-start items-start inline-flex" onClick={handleChangePage}>
