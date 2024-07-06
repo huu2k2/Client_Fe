@@ -22,6 +22,7 @@ const index = () => {
           <div className="h-[3802px] px-10 py-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex">
             <div className="self-stretch h-[3754px] flex-col justify-start items-start gap-8 flex">
               <InfoTitle />
+           
               <InformationApartment />
               <AdditionalCharges />
               <FurnitureCatalog />

@@ -1,6 +1,15 @@
 import React from "react";
+import InputExpense from './InputExpense';
 
 const AdditionalCharges = () => {
+  // Danh sách các khoản phụ thu
+  const expenses = [
+    { title: "Phí điện", price: 3500, dvt: "kwh" },
+    { title: "Phí nước", price: 100000, dvt: "m3" },
+    { title: "Phí giữ xe", price: 3500, dvt: "Xe" },
+    { title: "Phí quản lý", price: 3500, dvt: "Phòng" }
+  ];
+
   return (
     <>
       <div className="self-stretch h-px flex-col justify-start items-start flex">
@@ -10,87 +19,23 @@ const AdditionalCharges = () => {
         <div className="self-stretch h-[437px] flex-col justify-start items-start gap-5 flex">
           <div className="self-stretch h-[437px] flex-col justify-start items-start gap-6 flex">
             <div className="self-stretch h-6 flex-col justify-start items-start flex">
-              <div className="self-stretch text-rose-800 text-lg font-medium leading-normal">
+              <div className="self-stretch text-rose-800 text-lg font-bold leading-normal">
                 Các khoản phụ thu
               </div>
             </div>
             <div className="self-stretch h-[389px] flex-col justify-start items-start gap-4 flex">
-              <div className="pr-[525px] justify-start items-center gap-8 inline-flex">
-                <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
-                  Phí điện
-                </div>
-                <div className="h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
-                  <input
-                    type="text"
-                    defaultValue={new Intl.NumberFormat("vi-VN").format(3500)}
-                    className="w-56 h-[38px] pl-[13px] pr-3 py-[9px] justify-start items-center gap-2 text-sm font-normal leading-tight"
+              {expenses.map((expense, index) => (
+                <React.Fragment key={index}>
+                  <InputExpense 
+                    title={expense.title}
+                    price={expense.price}
+                    dvt={expense.dvt}
                   />
-                  <div className="w-[88px] pl-[15px] pr-[17px] py-[9px] bg-gray-50 rounded-tr-md rounded-br-md border border-gray-300 justify-center items-center gap-2 flex">
-                    <div className="text-gray-500 text-sm font-normal leading-tight">
-                      kwh
-                    </div>
-                    <div className="w-5 h-5 relative" />
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch h-px bg-gray-200" />
-              <div className="pr-[525px] justify-start items-center gap-8 inline-flex">
-                <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
-                  Phí nước
-                </div>
-                <div className="h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
-                  <input
-                    type="text"
-                    defaultValue={new Intl.NumberFormat("vi-VN").format(100000)}
-                    className="w-56 h-[38px] pl-[13px] pr-3 py-[9px] justify-start items-center gap-2 text-sm font-normal leading-tight"
-                  />
-                  <div className=" w-[88px] pl-[15px] pr-[17px] py-[9px] bg-gray-50 rounded-tr-md rounded-br-md border border-gray-300 justify-center items-center gap-2 flex">
-                    <div className="text-gray-500 text-sm font-normal leading-tight">
-                      m3
-                    </div>
-                    <div className="w-5 h-5 relative" />
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch h-px bg-gray-200" />
-              <div className="pr-[525px] justify-start items-center gap-8 inline-flex">
-                <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
-                  Phí giữ xe
-                </div>
-                <div className="h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
-                  <input
-                    type="text"
-                    defaultValue={new Intl.NumberFormat("vi-VN").format(3500)}
-                    className="w-56 h-[38px] pl-[13px] pr-3 py-[9px] justify-start items-center gap-2 text-sm font-normal leading-tight text-gray-900"
-                  />
-                  <div className="w-[88px] pl-[15px] pr-[17px] py-[9px] bg-gray-50 rounded-tr-md rounded-br-md border border-gray-300 justify-center items-center gap-2 flex">
-                    <div className="text-gray-500 text-sm font-normal leading-tight">
-                      Xe
-                    </div>
-                    <div className="w-5 h-5 relative" />
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch h-px bg-gray-200" />
-              <div className="pr-[525px] justify-start items-center gap-8 inline-flex">
-                <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
-                  Phí quản lý
-                </div>
-                <div className="h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center inline-flex">
-                  <input
-                    type="text"
-                    defaultValue={new Intl.NumberFormat("vi-VN").format(3500)}
-                    className="w-56 h-[38px] pl-[13px] pr-3 py-[9px] justify-start items-center gap-2 text-sm font-normal leading-tight text-gray-900"
-                  />
-                  <div className="w-[88px] pl-[15px] pr-[17px] py-[9px] bg-gray-50 rounded-tr-md rounded-br-md border border-gray-300 justify-center items-center gap-2 flex">
-                    <div className="text-gray-500 text-sm font-normal leading-tight">
-                      Phòng
-                    </div>
-                    <div className="w-5 h-5 relative" />
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch h-px bg-gray-200" />
+                  {index < expenses.length - 1 && (
+                    <div className="self-stretch h-px bg-gray-200" />
+                  )}
+                </React.Fragment>
+              ))}
               <div className="w-full flex gap-8">
                 <div className="w-[411px] text-gray-700 text-sm font-medium leading-tight">
                   Ghi chú

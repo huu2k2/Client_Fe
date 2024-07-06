@@ -3,10 +3,7 @@ import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import {
-  useGetRoomsFilterMutation,
-  useGetRoomsofhouseQuery,
-} from "../../../apis/slice/rooms";
+import { useGetRoomsofhouseMutation } from "@apis/slice/rooms";
 
 const calculateRoomStatusTotals = (data) => {
   return data.reduce(
@@ -50,7 +47,8 @@ const Index = () => {
     washing: null,
     roomQuantity: null,
   };
-  const [getRoomsFilter, { data: DataOF, isLoading, isError, error }] = useGetRoomsFilterMutation();
+  const [getRoomsFilter, { data: DataOF, isLoading }] =
+    useGetRoomsofhouseMutation();
 
   useEffect(() => {
     const rs = async () => {
@@ -63,11 +61,13 @@ const Index = () => {
   // Cập nhật dữ liệu lọc khi query thay đổi
   useEffect(() => {
     if (DataOF?.response) {
-      const newFilteredData = DataOF?.response.filter((item) => query.includes(item.status));
+      const newFilteredData = DataOF?.response.filter((item) =>
+        query.includes(item.status)
+      );
       setFilteredData(newFilteredData);
     }
   }, [query, DataOF?.response]);
-  console.log(DataOF?.response)
+
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
       <div className="w-full h-px flex-col justify-start items-start flex">
@@ -135,7 +135,10 @@ const Index = () => {
         </div>
       </div>
 
-       <Body data={filteredData?.length > 0 ? filteredData : DataOF?.response} isLoading={isLoading} /> 
+      <Body
+        data={filteredData?.length > 0 ? filteredData :[]}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

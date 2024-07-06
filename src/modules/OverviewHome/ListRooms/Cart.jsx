@@ -27,7 +27,10 @@ const Cart = ({ data }) => {
   };
   const navigate = useNavigate()
  const handleChangePage=()=>{
-  navigate(`deposit/${data?.roomId}`)
+  if(data?.status !=='2'){
+
+    navigate(`deposit/${data?.roomId}`)
+  }
  }
   return (
     <div className="flex-col justify-start items-start inline-flex" onClick={handleChangePage}>
