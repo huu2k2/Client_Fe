@@ -18,9 +18,9 @@ export const serviceSchema = yup.object({
 
 export const schema = yup.object({
   fullName: yup.string().required("Tên đầy đủ là bắt buộc"),
-  phoneNumber: yup.string().required("Số điện thoại là bắt buộc"),
+  phoneNumber: yup.string().required("Số điện thoại là bắt buộc").length(10, "Số điện thoại phải có 10 ký tự"),
   birthOfDay: yup.date().required("Ngày sinh là bắt buộc").typeError("Ngày sinh không hợp lệ"),
-  identification: yup.string().required("Số chứng minh thư là bắt buộc"),
+  identification: yup.string().required("Số chứng minh thư là bắt buộc").length(12, "Số chứng minh thư phải có 12 ký tự"),
   dateRange: yup.date().required("Ngày hợp lệ là bắt buộc").typeError("Ngày không hợp lệ"),
   issuedBy: yup.string().required("Nơi cấp là bắt buộc"),
   permanentAddress: yup.string().required("Địa chỉ thường trú là bắt buộc"),
@@ -28,26 +28,26 @@ export const schema = yup.object({
   // Thông tin căn hộ
   roomId: yup.number().required("ID phòng là bắt buộc"),
   houseAddress: yup.string().required("Địa chỉ căn hộ là bắt buộc"),
-  rentalPrice: yup.number().required("Giá cho thuê là bắt buộc").positive("Giá cho thuê phải là số dương"),
+  rentalPrice: yup.number().required("Giá cho thuê là bắt buộc"),
   depositDate: yup.date().required("Ngày đặt cọc là bắt buộc").typeError("Ngày không hợp lệ"),
-  depositAmount: yup.number().required("Số tiền cọc giữ phòng là bắt buộc").positive("Số tiền cọc giữ phòng phải là số dương"),
-  additionalDepositAmount: yup.number().required("Số tiền cọc bổ sung là bắt buộc").positive("Số tiền cọc bổ sung phải là số dương"),
+  depositAmount: yup.number().required("Số tiền cọc giữ phòng là bắt buộc"),
+  additionalDepositAmount: yup.number().required("Số tiền cọc bổ sung là bắt buộc"),
   depositPaymentDeadline: yup.date().required("Hạn thanh toán tiền cọc là bắt buộc").typeError("Ngày không hợp lệ"),
   rentalStartDate: yup.date().required("Ngày bắt đầu thuê là bắt buộc").typeError("Ngày không hợp lệ"),
-  numberOfPeople: yup.number().required("Số người là bắt buộc").integer("Số người phải là số nguyên").min(0, "Số người không thể âm"),
-  numberOfVehicle: yup.number().required("Số xe là bắt buộc").integer("Số xe phải là số nguyên").min(0, "Số xe không thể âm"),
+  numberOfPeople: yup.number().required("Số người là bắt buộc"),
+  numberOfVehicle: yup.number().required("Số xe là bắt buộc"),
   chuongTrinhUuDai: yup.string().required("Chương trình ưu đãi là bắt buộc"),
   note: yup.string().required("Ghi chú là bắt buộc"),
-  rentalTerm: yup.number().required("Thời hạn hợp đồng là bắt buộc").integer("Thời hạn hợp đồng phải là số nguyên").min(0, "Thời hạn hợp đồng không thể âm"),
+  rentalTerm: yup.number().required("Thời hạn hợp đồng là bắt buộc"),
 
   // Thông tin nhân viên sale
-  commissionPolicyId: yup.number().required("ID chính sách hoa hồng là bắt buộc"),
-  saleEmployeeCompany: yup.string().required("Tên công ty nhân viên sale là bắt buộc"),
-  makerId: yup.string().required("ID người tạo là bắt buộc"),
+  // commissionPolicyId: yup.number().required("ID chính sách hoa hồng là bắt buộc"),
+  // saleEmployeeCompany: yup.string().required("Tên công ty nhân viên sale là bắt buộc"),
+  // makerId: yup.string().required("ID người tạo là bắt buộc"),
 
-  // Thông tin nội thất
-  furnitures: yup.array().of(furnitureSchema).required("Danh sách nội thất là bắt buộc"),
+  // // Thông tin nội thất
+  // furnitures: yup.array().of(furnitureSchema).required("Danh sách nội thất là bắt buộc"),
 
-  // Thông tin dịch vụ
-  services: yup.array().of(serviceSchema).required("Danh sách dịch vụ là bắt buộc"),
+  // // Thông tin dịch vụ
+  // services: yup.array().of(serviceSchema).required("Danh sách dịch vụ là bắt buộc"),
 }).required();

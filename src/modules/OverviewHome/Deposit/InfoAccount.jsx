@@ -1,17 +1,18 @@
 import React from "react";
 import InputComponent from "./InputCompoment"; // Đảm bảo tên component chính xác
 
-const InfoAccount = () => {
+const InfoAccount = ({register,errors}) => {
   // Danh sách các trường thông tin
   const fields = [
-    { title: "Tên khách hàng", type: "text" },
-    { title: "Số điện thoại", type: "text" },
-    { title: "Ngày sinh", type: "date" },
-    { title: "CCCD/CMND", type: "text" },
-    { title: "Ngày cấp", type: "date" },
-    { title: "Nơi cấp", type: "text" },
-    { title: "Địa chỉ thường trú", type: "text" }
+    { title: "Tên khách hàng", type: "text", name: "fullName" },
+    { title: "Số điện thoại", type: "text", name: "phoneNumber" },
+    { title: "Ngày sinh", type: "date", name: "birthOfDay" },
+    { title: "CCCD/CMND", type: "text", name: "identification" },
+    { title: "Ngày cấp", type: "date", name: "dateRange" },
+    { title: "Nơi cấp", type: "text", name: "issuedBy" },
+    { title: "Địa chỉ thường trú", type: "text", name: "permanentAddress" }
   ];
+
 
   return (
     <div className="self-stretch h-[512px] flex-col justify-start items-start gap-6 flex">
@@ -23,7 +24,7 @@ const InfoAccount = () => {
       <div className="self-stretch h-[464px] flex-col justify-start items-start gap-4 flex">
         {fields.map((field, index) => (
           <React.Fragment key={index}>
-            <InputComponent title={field.title} type={field.type} />
+            <InputComponent title={field.title} type={field.type} name={field.name} register={register} errors={errors}/>
             {index < fields.length - 1 && (
               <div className="self-stretch h-px bg-gray-200" />
             )}

@@ -1,14 +1,28 @@
-import React from "react";
-import InputExpense from './InputExpense';
+import React, { useState, useEffect } from "react";
+import InputExpense from "./InputExpense";
 
-const AdditionalCharges = () => {
-  // Danh sách các khoản phụ thu
-  const expenses = [
-    { title: "Phí điện", price: 3500, dvt: "kwh" },
-    { title: "Phí nước", price: 100000, dvt: "m3" },
-    { title: "Phí giữ xe", price: 3500, dvt: "Xe" },
-    { title: "Phí quản lý", price: 3500, dvt: "Phòng" }
-  ];
+const AdditionalCharges = ({ serviceInserts, setPickServiceInserts, register, errors }) => {
+  const [serviceData, setServiceData] = useState(serviceInserts || []);
+
+  useEffect(() => {
+    // Update serviceData when serviceInserts changes
+    setServiceData(serviceInserts || []);
+  }, [serviceInserts]);
+
+  useEffect(() => {
+    // Notify parent component of changes in serviceData
+    setPickServiceInserts(serviceData);
+  }, [serviceData, setPickServiceInserts]);
+
+  const handlePriceChange = (id, value) => {
+    // Remove non-numeric characters
+    const formattedValue = value.replace(/[^0-9]/g, "");
+    setServiceData((prevData) =>
+      prevData.map((item) =>
+        item.id === id ? { ...item, servicePrice: parseInt(formattedValue, 10) || 0 } : item
+      )
+    );
+  };
 
   return (
     <>
@@ -24,16 +38,16 @@ const AdditionalCharges = () => {
               </div>
             </div>
             <div className="self-stretch h-[389px] flex-col justify-start items-start gap-4 flex">
-              {expenses.map((expense, index) => (
+              {serviceData.map((expense, index) => (
                 <React.Fragment key={index}>
-                  <InputExpense 
-                    title={expense.title}
-                    price={expense.price}
+                  <InputExpense
+                    id={expense.id}
+                    title={expense.serviceName}
+                    price={expense.servicePrice}
                     dvt={expense.dvt}
+                    onPriceChange={handlePriceChange}
                   />
-                  {index < expenses.length - 1 && (
-                    <div className="self-stretch h-px bg-gray-200" />
-                  )}
+                  <div className="self-stretch h-px bg-gray-200" />
                 </React.Fragment>
               ))}
               <div className="w-full flex gap-8">
@@ -42,9 +56,13 @@ const AdditionalCharges = () => {
                 </div>
                 <div className="h-[105px] w-[320px] bg-white rounded-md shadow border border-gray-300 flex items-start px-3 py-2">
                   <textarea
+                    {...register("note")} // Register the textarea field
                     className="text-sm font-normal leading-tight outline-none w-full h-full"
                     placeholder="Ghi chú"
                   ></textarea>
+                  {errors.note && (
+                    <span className="text-red-500 text-sm">{errors.note.message}</span>
+                  )}
                 </div>
               </div>
             </div>

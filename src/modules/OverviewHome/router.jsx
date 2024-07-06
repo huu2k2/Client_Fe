@@ -12,9 +12,9 @@ const router = {
   path: "/overview/:idHome",
   element: (
     <LazyWrapper>
-          <ServicesContextHook>
-            <Page />
-          </ServicesContextHook>
+      <ServicesContextHook>
+        <Page />
+      </ServicesContextHook>
     </LazyWrapper>
   ),
   children: [
@@ -32,7 +32,7 @@ const router = {
     },
     {
       path: "booking/:idRoom",
-      element:<Booking /> ,
+      element: <Booking />,
     },
   ],
 };

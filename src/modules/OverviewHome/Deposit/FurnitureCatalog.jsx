@@ -1,26 +1,48 @@
-import React, { useState } from "react";
-import { AiOutlineMore } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
 import CheckedLine from "../../../assets/CheckedInput.svg";
 
-const FurnitureTable = () => {
-  // Dữ liệu giả cho bảng
-  const initialFurnitureData = [
-    { id: 1, name: "Máy lạnh", rentalPrice: 0, dvt: "VND" },
-    { id: 2, name: "Tủ lạnh", rentalPrice: 0, dvt: "VND" },
-    { id: 3, name: "Tủ quần áo", rentalPrice: 0, dvt: "VND" },
-    { id: 4, name: "Nệm", rentalPrice: 0, dvt: "VND" },
-    { id: 5, name: "Máy giặt", rentalPrice: 0, dvt: "VND" },
-    { id: 6, name: "Máy nóng lạnh", rentalPrice: 0, dvt: "VND" },
-    { id: 7, name: "Kệ bếp", rentalPrice: 0, dvt: "VND" },
-  ];
+const FurnitureTable = ({ furnitureInserts, setPickFurnitureInserts }) => {
+  // Convert furnitureInserts to the format used in the component
+  const initialFurnitureData = furnitureInserts?.map((item, index) => ({
+    id: index + 1, // Using index+1 as a unique id
+    name: item.furnitureName,
+    rentalPrice: item.price,
+    dvt: "VNĐ", // Assuming all items have the same unit "VNĐ"
+    idReal: item.furnitureId,
+    isActived: item.isActived || false // Ensure isActived is part of the item
+  })) || [];
 
   const [furnitureData, setFurnitureData] = useState(initialFurnitureData);
   const [checkedItems, setCheckedItems] = useState(
-    furnitureData.reduce((acc, item) => {
-      acc[item.id] = false;
+    initialFurnitureData.reduce((acc, item) => {
+      acc[item.id] = item.isActived;
       return acc;
     }, {})
   );
+
+  useEffect(() => {
+    // Update furnitureData and checkedItems when furnitureInserts changes
+    const updatedFurnitureData = furnitureInserts?.map((item, index) => ({
+      id: index + 1,
+      name: item.furnitureName,
+      rentalPrice: item.price,
+      dvt: "VNĐ",
+      idReal: item.furnitureId,
+      isActived: (item.isActived || item.price ===0)?true : false
+    })) || [];
+
+    setFurnitureData(updatedFurnitureData);
+    setCheckedItems(updatedFurnitureData.reduce((acc, item) => {
+      acc[item.id] = item.isActived;
+      return acc;
+    }, {}));
+  }, [furnitureInserts]);
+
+  useEffect(() => {
+    // Update pickFurnitureInserts when checkedItems changes
+    const selectedItems = furnitureData.filter(item => checkedItems[item.id]);
+    setPickFurnitureInserts(selectedItems);
+  }, [checkedItems, furnitureData, setPickFurnitureInserts]);
 
   const allChecked = Object.values(checkedItems).every(Boolean);
   const someChecked = Object.values(checkedItems).some(Boolean);
@@ -44,7 +66,7 @@ const FurnitureTable = () => {
     const formattedValue = value.replace(/[^0-9]/g, ""); // Chỉ giữ số
     setFurnitureData((prevData) =>
       prevData.map((item) =>
-        item.id === id ? { ...item, rentalPrice: formattedValue } : item
+        item.id === id ? { ...item, rentalPrice: parseInt(formattedValue, 10) } : item
       )
     );
   };
@@ -124,17 +146,12 @@ const FurnitureTable = () => {
                 <td className="w-[536px] h-fit px-6 py-4 whitespace-nowrap text-sm font-normal text-gray-900 flex justify-start items-center gap-5">
                   <input
                     type="text"
-                    value={new Intl.NumberFormat("vi-VN").format(
-                      item.rentalPrice
-                    )}
+                    value={new Intl.NumberFormat("vi-VN").format(item.rentalPrice || 0)}
                     onChange={(e) => handlePriceChange(item.id, e.target.value)}
                     className="w-[80%] border border-gray-300 rounded-md px-2 py-1"
                   />
                   <h1 className="font-bold">{item.dvt}</h1>
                 </td>
-                {/* <td className="w-16 h-[72px] px-6 py-4 whitespace-nowrap text-right text-sm font-normal flex">
-                  <AiOutlineMore />
-                </td> */}
               </tr>
             ))}
           </tbody>

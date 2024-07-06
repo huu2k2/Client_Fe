@@ -1,7 +1,7 @@
 import React from 'react'
 import InfoAccount from './InfoAccount'
 
-const InfoTitle = () => {
+const InfoTitle = ({register,errors}) => {
   return (
     <div className="self-stretch h-[580px] flex-col justify-start items-start gap-10 flex">
     <div className="self-stretch h-[580px] flex-col justify-start items-start gap-5 flex">
@@ -14,7 +14,7 @@ const InfoTitle = () => {
         </div>
       </div>
 
-     <InfoAccount/>
+     <InfoAccount register={register} errors={errors}/>
       
     </div>
   </div>
