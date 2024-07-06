@@ -12,6 +12,8 @@ const InputCompoment = ({ title, type, suffix, bgColor }) => {
           className={`w-full text-sm font-normal leading-tight outline-none ${bgColor ? 'bg-neutral-100 ' : ''}`}
           placeholder={title}
           disabled={bgColor ?true :false}
+          defaultValue={new Intl.NumberFormat("vi-VN").format(5000)}
+          // new Intl.NumberFormat("vi-VN").format(price) suffix==="đ"
         />
         {suffix && (
           <div className="text-gray-500 text-sm font-normal leading-tight ml-2">

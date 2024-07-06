@@ -61,10 +61,12 @@ const Index = () => {
   // Cập nhật dữ liệu lọc khi query thay đổi
   useEffect(() => {
     if (DataOF?.response) {
+      
       const newFilteredData = DataOF?.response.filter((item) =>
         query.includes(item.status)
       );
-      setFilteredData(newFilteredData);
+       
+      setFilteredData(newFilteredData ? newFilteredData:[]);
     }
   }, [query, DataOF?.response]);
 
@@ -136,7 +138,7 @@ const Index = () => {
       </div>
 
       <Body
-        data={filteredData?.length > 0 ? filteredData :[]}
+         data={filteredData && filteredData.length > 0 ? filteredData : (filteredData.length === 0?[]:DataOF?.response)}
         isLoading={isLoading}
       />
     </div>
