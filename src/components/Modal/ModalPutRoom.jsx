@@ -3,7 +3,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Input from "./Input";
 import TextArea from "./TextArea";
 import { useGetAllDetailQuery } from "../../apis/slice/services";
-import { useGetSchedulesQuery, usePostscheduleMutation } from "../../apis/slice/Agencies";
+import { usePostscheduleMutation } from "../../apis/slice/Agencies";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -43,11 +43,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
   const SalerPhone = data?.response?.managers?.[0]?.phoneNumber || "";
   const company = data?.response?.holder?.fullName || "";
 
-  const { data: Schedulesdata, isLoading, isSuccess } = useGetSchedulesQuery(
-    { roomId },
-    { skip: !roomId } // Skip query if roomId is undefined
-  );
-  console.log("🚀 ~ ModalPutRoom ~ Schedulesdata:", Schedulesdata)
+
 
 
   const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
@@ -119,7 +115,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
           <div className="gap-5 flex">
 
-            <div className=" w-2/3 h-fit gap-5 flex flex-col justify-start">
+            <div className=" w-full h-fit gap-5 flex flex-col justify-start">
               <Input
                 label="Tên khách hàng"
                 name="customerName"
@@ -184,7 +180,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               />
             </div>
 
-            <div className="w-full">
+            {/* <div className="w-full">
               <h2>danh sách lịch hẹn { }</h2>
               <nav className="border border-gray-400 p-3 rounded">
                 <ul className="overflow-y-auto h-[500px]">
@@ -220,7 +216,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
 
                 </ul>
               </nav>
-            </div>
+            </div> */}
 
 
           </div>
