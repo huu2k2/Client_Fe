@@ -21,6 +21,8 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
+  console.log(isShow); // This will log the updated state
+
   const SetShow = () => {
     setShow(!isShow);
     console.log(isShow); // This will log the updated state
@@ -80,10 +82,9 @@ const index = ({ isShow, setShow }) => {
                 className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52  mt-3  "
               >
                 <li
-                  // onClick={() => setShow(!isShow)}
-                  onClick={SetShow}
-                  className="cursor-pointer text-base"
-                >
+                  onClick={() => setShow(!isShow)}
+                  
+                  className="cursor-pointer text-base">
                   <span>Thông tin tài khoản</span>
                 </li>
                 <li className="cursor-pointer text-base">

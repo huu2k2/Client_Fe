@@ -9,20 +9,20 @@ const BasicInterior = () => {
 
   return (
     <>
-      <div className="w-[552px] h-fit gap-5 nthd_flex_col_between">
+      <div className="w-full h-fit gap-5 nthd_flex_col_between">
         <div className="w-[145px] h-6 gap-2 nthd_text_medium_base nthd_flex_start">
           <BsDoorOpenFill />
           <span>Nội thất cơ bản</span>
         </div>
 
-        <div className="grid grid-cols-2 w-full h-fit gap-4">
+        <div className="grid grid-cols-3 w-full h-fit gap-x-10 gap-y-4">
           {furnitureInserts ? (
             furnitureInserts.map((i, index) => (
-              <div className="nthd_basicInterior_item" key={index}>
+              <div className="nthd_basicInterioritem  gap-[7px] flex  w-full" key={index}>
                 <img src={CheckCircle} alt="Check Circle" />
-                <div className="nthd_text_medium_sm_text w-[219px] h-5 flex justify-between">
+                <div className="nthd_text_medium_sm_text  h-5 w-full flex justify-between">
                   {i?.furnitureName}
-                  <span className="text-[#6B7280]">
+                  <span className="text-[#6B7280] flex justify-end ">
                     {i.price.toLocaleString("en-US")} đ/tháng
                   </span>
                 </div>
