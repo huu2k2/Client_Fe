@@ -10,11 +10,14 @@ const Index = () => {
   useEffect(() => {
     if (location.pathname.includes('policies')) {
       setActiveLink(1);
-    } else if (location.pathname.includes('booking')) {
-      setActiveLink(2);
-    } else if (location.pathname.includes('deposit')) {
-      setActiveLink(3);
-    } else {
+    } 
+    // else if (location.pathname.includes('booking')) {
+    //   setActiveLink(2);
+    // }
+    //  else if (location.pathname.includes('deposit')) {
+    //   setActiveLink(3);
+    // } 
+    else {
       setActiveLink(0);
     }
   }, [location.pathname]);
@@ -26,8 +29,8 @@ const Index = () => {
 
   return (
     <div className="w-full h-16 bg-black justify-between items-center flex flex-col">
-      <div className="grow shrink basis-0 self-stretch px-[280px] justify-start items-center gap-[738px] flex">
-        <div className="justify-start items-center gap-6 flex">
+      <div className="w-full grow shrink basis-0 self-stretch px-[280px] justify-start items-center gap-[738px] flex">
+        <div className="w-full justify-start items-center gap-6 flex">
           <div className="w-fit h-6 pr-[0.48px] justify-center items-center flex">
             <Link to={'/'} className="w-[134.52px] h-6 relative">
               <img className="w-full h-full" src={logo} alt="Logo" />
@@ -55,7 +58,7 @@ const Index = () => {
             >
               <p className="text-white text-sm font-medium  leading-tight">Chính sách</p>
             </Link>
-            <Link
+            {/* <Link
               to={`/overview/${idHome}/booking`}
               className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
                 activeLink === 2 ? 'bg-rose-700' : ''
@@ -63,8 +66,8 @@ const Index = () => {
               onClick={() => handleLinkClick(2)}
             >
               <p className="text-white text-sm font-medium  leading-tight">Đặt lịch dẫn khách</p>
-            </Link>
-            <Link
+            </Link> */}
+            {/* <Link
               to={`/overview/${idHome}/deposit`}
               className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
                 activeLink === 3 ? 'bg-rose-700' : ''
@@ -72,11 +75,11 @@ const Index = () => {
               onClick={() => handleLinkClick(3)}
             >
               <p className="text-white text-sm font-medium  leading-tight">Đặt cọc giữ chỗ</p>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
-      <div className="w-[1360px] h-px bg-zinc-700" />
+      <div className="w-full h-px bg-zinc-700" />
     </div>
   );
 };
