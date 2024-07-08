@@ -81,7 +81,7 @@ const index = () => {
               ?.toString()
               ?.trim()
               ?.replace(/\s+/g, "_")}
-              category={data?.response?.category}
+              category={data?.response?.category ? data?.response?.category :null}
           />
           <RoomOrder
             title={`Phòng tương tự của `}
