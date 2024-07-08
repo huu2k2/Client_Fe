@@ -7,7 +7,9 @@ import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
 const BodyTable = ({ isShow, setIsShow }) => {
-  const [date, setDate] = useState([]);
+  const now = new Date();
+  const formattedDate = format(now, 'dd/MM/yyyy', { locale: vi });
+  const [date,setDate] = useState([formattedDate])
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {

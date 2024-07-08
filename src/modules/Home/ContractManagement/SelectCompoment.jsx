@@ -44,7 +44,7 @@ const SelectCompoment = ({setIsShow,setDate}) => {
         setIsShow(true);
         break;
       default:
-        setDate([]);
+        setDate([formattedDate]);
         break;
     }
   }
