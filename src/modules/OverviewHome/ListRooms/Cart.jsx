@@ -33,7 +33,7 @@ const Cart = ({ data }) => {
   }
  }
   return (
-    <div className="flex-col justify-start items-start inline-flex" onClick={handleChangePage}>
+    <div className="flex-col justify-start items-start inline-flex">
       <div
         className={`w-[200px] px-5 py-2 ${getStatusBgColor(data?.status)} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >
