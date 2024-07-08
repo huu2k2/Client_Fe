@@ -3,44 +3,81 @@ import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { useGetRoomsofhouseQuery } from "../../../apis/slice/rooms";
+import { useGetRoomsofhouseMutation } from "@apis/slice/rooms";
 
 const calculateRoomStatusTotals = (data) => {
-  return data.reduce((totals, item) => {
-    if (item.status === "0") {
-      totals.empty += 1;
-    } else if (item.status === "1") {
-      totals.toBeEmpty += 1;
-    } else if (item.status === "2") {
-      totals.booked += 1;
+  return data.reduce(
+    (totals, item) => {
+      if (item.status === "0") {
+        totals.empty += 1;
+      } else if (item.status === "1") {
+        totals.toBeEmpty += 1;
+      } else if (item.status === "2") {
+        totals.booked += 1;
+      }
+      return totals;
+    },
+    {
+      empty: 0,
+      toBeEmpty: 0,
+      booked: 0,
     }
-    return totals;
-  }, {
-    empty: 0,
-    toBeEmpty: 0,
-    booked: 0
-  });
+  );
 };
 
 const Index = () => {
   const { idHome } = useParams();
   const [query, setQuery] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const { data: DataOF, isLoading } = useGetRoomsofhouseQuery(idHome);
+  const initialFilterData = {
+    houseId: idHome,
+    districtId: null,
+    wardId: null,
+    categories: null,
+    status: null,
+    price: null,
+    hasDeposited: null,
+    hasRented: null,
+    furnitures: null,
+    parking: null,
+    security: null,
+    elevator: null,
+    pet: null,
+    freeHour: null,
+    washing: null,
+    roomQuantity: null,
+  };
+  const [getRoomsFilter, { data: DataOF, isLoading }] =
+    useGetRoomsofhouseMutation();
+    const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
+  useEffect(() => {
+    const rs = async () => {
+     const  kq = await getRoomsFilter(initialFilterData).unwrap();
+     setFilteredData(kq?.response);
+    };
+    rs();
+  }, []);
 
-  const statusTotals = calculateRoomStatusTotals(DataOF || []);
 
   // Cập nhật dữ liệu lọc khi query thay đổi
   useEffect(() => {
-    if (DataOF) {
-      const newFilteredData = DataOF.filter((item) => query.includes(item.status));
-      setFilteredData(newFilteredData);
-    }
-  }, [query, DataOF]);
+    if (DataOF?.response?.length>0) {
+      
+      const newFilteredData = DataOF?.response.filter((item) =>
+        query.includes(item.status)
+      );
+       if(query.length>0){
 
+         setFilteredData(newFilteredData);
+       }else{
+        setFilteredData(DataOF?.response)
+       }
+    }
+  }, [query]);
+console.log(DataOF)
   return (
-    <div className="w-full h-fit bg-black flex-col justify-center items-center flex">
-      <div className="h-px flex-col justify-start items-start flex">
+    <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
+      <div className="w-full h-px flex-col justify-start items-start flex">
         <div className="self-stretch h-px bg-zinc-700" />
       </div>
 
@@ -50,7 +87,11 @@ const Index = () => {
             <div className="text-white text-3xl font-bold leading-9">
               Danh sách phòng trống
             </div>
-            <GroupCheckbox setQuery={setQuery} query={query} statusTotals={statusTotals} />
+            <GroupCheckbox
+              setQuery={setQuery}
+              query={query}
+              statusTotals={statusTotals}
+            />
           </div>
 
           <div className="w-80 h-fit px-4 py-3 bg-neutral-50 rounded-2xl flex-col justify-start items-start gap-4 inline-flex">
@@ -101,7 +142,10 @@ const Index = () => {
         </div>
       </div>
 
-      <Body data={filteredData.length > 0 ? filteredData : DataOF} isLoading={isLoading} />
+      <Body
+         data={filteredData && filteredData.length >= 0? filteredData :[]}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
