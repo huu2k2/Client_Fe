@@ -4,7 +4,7 @@ import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 const Pagination = () => {
   // Giả sử có 10 trang và trang hiện tại là 2
   const totalPages = 10;
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Tạo danh sách số trang cần hiển thị
   const createPageNumbers = (currentPage, totalPages) => {

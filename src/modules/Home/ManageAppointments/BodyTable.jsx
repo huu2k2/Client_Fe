@@ -1,30 +1,48 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsArrowRight, BsChevronDown } from "react-icons/bs";
 import { AiOutlineMore } from "react-icons/ai";
- 
+import { format } from 'date-fns';
 import Pagination from "./Pagination";
-const BodyTable = () => {
+import SelectCompoment from "./SelectCompoment";
+import DatePicker from "./DatePicker";
+import { vi } from 'date-fns/locale';
+const BodyTable = ({isShow,setIsShow}) => {
+  const [date,setDate] = useState([])
+  const refOfModel = useRef(null)
+  useEffect(()=>{
+    const handleClickOutside = (event) => {
+      if (refOfModel.current && !refOfModel.current.contains(event.target)) {
+        setIsShow(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  },[])
+ 
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 inline-flex">
-      <div className="flex justify-start items-start gap-4">
-        <div className="pl-[17px] pr-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 flex items-center gap-2">
-          <div className="text-gray-700 text-sm font-medium leading-tight">
-            Hôm nay
-          </div>
-          <BsChevronDown className="text-gray-700 font-bold leading-tight" />
-        </div>
+      <div className="flex justify-start items-start gap-4 relative">
+        <SelectCompoment setIsShow={setIsShow} setDate={setDate}/>
         <div className="flex">
-          <div className="h-[38px] px-4 py-[9px] bg-blue-50 rounded-tl-md rounded-bl-md flex items-center gap-3">
+          <div className=" w-[405px] h-[38px] px-4 py-[9px] bg-blue-50 rounded-tl-md rounded-bl-md flex items-center gap-3">
             <div className="w-5 h-5 relative"></div>
             <div className="text-blue-800 text-sm font-normal leading-tight">
-              Tổng số lịch hẹn từ 23/04/2024 - 23/05/2024
+              Tổng số lịch hẹn từ  {date[0] && date[0] } {date[1] && '-'}  {date[1] && date[1]}
             </div>
           </div>
+
           <div className="h-[38px] px-4 py-[9px] bg-blue-800 rounded-tr-md rounded-br-md flex items-center">
             <div className="text-white text-sm font-normal leading-tight">
               16
             </div>
           </div>
+        </div>
+        {/* date picker */}
+        <div className={`${isShow ? '' :'hidden'} absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`} ref={refOfModel}>
+            <DatePicker setDate={setDate}/>
         </div>
       </div>
 
@@ -70,12 +88,12 @@ const BodyTable = () => {
                       Mã lịch hẹn
                     </span>
                   </th>
-                  <th className="w-16 h-10 px-6 py-3 bg-gray-50 justify-start items-center inline-flex">
+                  <th className="w-16 h-10 px-6 py-3 bg-gray-50 justify-start items-center inline-flex cursor-pointer">
                     <AiOutlineMore />
                   </th>
                 </tr>
               </thead>
-              <tbody  >
+              <tbody>
                 <tr className="flex">
                   <td className="w-16 h-[72px] px-6 py-4 justify-start items-center inline-flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
@@ -84,14 +102,14 @@ const BodyTable = () => {
                   </td>
                   <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 inline-flex">
                     <img
-                      className="w-10 h-10 rounded-[20px]"
+                      className="w-10 h-10 rounded-full"
                       src="https://via.placeholder.com/40x40"
                     />
                     <div className="grow shrink basis-0 flex-col justify-center items-start inline-flex">
-                      <div className="self-stretch text-gray-900 text-sm font-medium font-['Inter'] leading-tight">
+                      <div className="self-stretch text-gray-900 text-sm font-medium  leading-tight">
                         Jane Cooper
                       </div>
-                      <div className="self-stretch text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
+                      <div className="self-stretch text-gray-500 text-sm font-normal  leading-tight">
                         0987654321
                       </div>
                     </div>
@@ -103,7 +121,7 @@ const BodyTable = () => {
                   </td>
 
                   <td className="w-[120px] h-[72px] px-6 py-4 justify-start items-center inline-flex">
-                    <span className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
+                    <span className="text-gray-500 text-sm font-normal  leading-tight">
                       A.101
                     </span>
                   </td>
@@ -113,25 +131,39 @@ const BodyTable = () => {
                     </span>
                   </td>
                   <td className="w-[196px] h-[72px] px-6 py-4 justify-start items-center inline-flex">
-                    <span className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
+                    <span className="text-gray-500 text-sm font-normal  leading-tight">
                       11:32 20/11/2024
                     </span>
                   </td>
                   <td className="w-36 h-[72px] px-6 py-4 justify-start items-center inline-flex">
-                    <span className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
+                    <span className="text-gray-500 text-sm font-normal  leading-tight">
                       123456
                     </span>
                   </td>
-                  <td className="w-16 h-[72px] px-6 py-4 justify-end items-center inline-flex">
-                    <span className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
-                      <AiOutlineMore />
-                    </span>
+                  <td className="w-16 h-[72px] justify-center items-center flex  ">
+                    <div className="w-full dropdown dropdown-end">
+                      <div tabIndex={0} role="button" className="btn m-1 bg-white hover:bg-white outline-none border-0 divide-transparent shadow-none border-transparent">
+                        <AiOutlineMore />
+                      </div>
+
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content menu rounded-md z-[1] w-52 p-2 shadow"
+                      >
+                        <li>
+                          <a  className="text-gray-700 text-sm font-normal  leading-tight">Đặt cọc</a>
+                        </li>
+                        <li>
+                          <a  className="text-gray-700 text-sm font-normal  leading-tight">Xuất hợp đồng cọc</a>
+                        </li>
+                      </ul>
+                    </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <Pagination/>
+          <Pagination />
         </div>
       </div>
       {/* end table */}

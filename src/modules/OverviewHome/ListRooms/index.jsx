@@ -74,7 +74,7 @@ const Index = () => {
        }
     }
   }, [query]);
-
+console.log(DataOF)
   return (
     <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
       <div className="w-full h-px flex-col justify-start items-start flex">
