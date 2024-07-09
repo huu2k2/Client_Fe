@@ -75,6 +75,15 @@ const Agencies = createApi({
                 method: 'GET',
             }),
         }),
+        getListOfAppointments:build.mutation({
+            query: ({queries,body}) => ({
+                url: `/v2/Agencies/get-schedules?${Object.keys(queries)
+          .map((key) => `${key}=${queries[key]}`)
+          .join("&")}`,
+                method: 'POST',
+                data:body
+            }),
+        }),
     }),
 });
 
@@ -83,7 +92,11 @@ export const {
     useAddFavoriteMutation,
     useRemoveFavoriteMutation,
     useGetFavoriteQuery,
+<<<<<<< HEAD
     useGetSchedulesQuery
+=======
+    useGetListOfAppointmentsMutation
+>>>>>>> 370efd7b4f12d90c7a48f0ca500d07759a91b669
 } = Agencies;
 
 export default Agencies;

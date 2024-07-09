@@ -1,3 +1,4 @@
+import { parse, formatISO } from 'date-fns';
 export function formatDate(inputDate) {
     const dateObj = new Date(inputDate);
     const month = ('0' + (dateObj.getMonth() + 1)).slice(-2); // Lấy tháng, đảm bảo 2 chữ số
@@ -34,4 +35,23 @@ export function formatDate(inputDate) {
 
     const isoString = dateObj.toISOString(); // Convert to ISO string
     return isoString;
+}
+
+export function convertDateToISO(dateString) {
+  // Tách các phần của ngày tháng năm
+  const parsedDate = parse(dateString, 'dd/MM/yyyy', new Date());
+
+  // Lấy thời gian hiện tại
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+  const milliseconds = now.getMilliseconds();
+
+  // Thêm thời gian thực vào đối tượng ngày
+  parsedDate.setHours(hours, minutes, seconds, milliseconds);
+
+  // Chuyển đổi sang định dạng ISO 8601
+  const isoString = formatISO(parsedDate);
+  return isoString;
 }
