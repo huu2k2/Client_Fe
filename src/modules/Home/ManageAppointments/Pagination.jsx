@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 
-const Pagination = () => {
+import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
+const Pagination = ({currentPage, setCurrentPage , totalPages}) => {
   // Giả sử có 10 trang và trang hiện tại là 2
-  const totalPages = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+
 
   // Tạo danh sách số trang cần hiển thị
   const createPageNumbers = (currentPage, totalPages) => {
@@ -56,7 +54,7 @@ const Pagination = () => {
       setCurrentPage(page);
     }
   };
-
+ 
   return (
     <div className="w-[1360px] h-[38px] relative">
       <div className="w-[1360px] h-px absolute top-0 left-0 bg-gray-200" />
