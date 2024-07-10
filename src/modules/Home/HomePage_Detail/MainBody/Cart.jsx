@@ -18,37 +18,7 @@ const Cart = () => {
   const [display, setDisplay] = useState("");
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [result, setResult] = useState([]);
-  // if (isLoading || error) {
-  //   return (
 
-  //     <div>
-  //       <div className='w-[557px] h-[313px] relative '>
-  //         <Skeleton
-  //           width={557}
-  //           height={313}
-  //           variant="rounded"
-  //         />
-  //       </div>
-  //       <div className='flex justify-between mt-[10px] ' >
-  //         <Skeleton
-  //           width={180}
-  //           height={102}
-  //           variant="rounded"
-  //         />
-  //         <Skeleton
-  //           width={180}
-  //           height={102}
-  //           variant="rounded"
-  //         />
-  //         <Skeleton
-  //           width={180}
-  //           height={102}
-  //           variant="rounded"
-  //         />
-  //       </div>
-  //     </div>
-  //   )
-  // }
   useEffect(() => {
     if (images?.response?.length < 4) {
       setDisplay(" hidden");

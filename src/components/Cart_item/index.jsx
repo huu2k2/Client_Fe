@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import { IoMdHeart } from "react-icons/io";
 import { BsGeoAlt } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useAddFavoriteMutation, useRemoveFavoriteMutation, useGetFavoriteQuery } from "../../apis/slice/Agencies";
+import {
+  useAddFavoriteMutation,
+  useRemoveFavoriteMutation,
+  useGetFavoriteQuery,
+} from "../../apis/slice/Agencies";
 import ImgHome from "../../assets/notfound(1).png";
 
 const Index = ({ item, faveritedata }) => {
-  const img = item.image ? `${item.image}` : null;
+  const img = item.image || ImgHome;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
 
@@ -14,22 +18,24 @@ const Index = ({ item, faveritedata }) => {
   const [removeFavorite] = useRemoveFavoriteMutation();
   const { refetch } = useGetFavoriteQuery();
 
-  // Check if the item is in faveritedata on component mount
   useEffect(() => {
     if (faveritedata && faveritedata.response) {
-      const isFavorite = faveritedata.response.some((favItem) => favItem.roomId === item.roomId);
+      const isFavorite = faveritedata.response.some(
+        (favItem) => favItem.roomId === item.roomId
+      );
       setIsHeart(isFavorite);
     }
   }, [faveritedata, item.roomId]);
 
   const handleFavoriteClick = async () => {
+
+    // if ()
     if (isHeart) {
       await removeFavorite(item.roomId);
     } else {
       await addFavorite(item.roomId);
     }
     setIsHeart(!isHeart);
-    // Refetch the favorite rooms to ensure the state is updated correctly after a mutation
     refetch();
   };
 
@@ -41,7 +47,7 @@ const Index = ({ item, faveritedata }) => {
           className="w-[328px] h-[185px] rounded-lg overflow-hidden"
         >
           <img
-            src={img ? img : ImgHome}
+            src={img}
             alt="Images home"
             className="h-full w-full object-cover bg-[#0000001c]"
           />
@@ -54,31 +60,35 @@ const Index = ({ item, faveritedata }) => {
 
         <span
           onClick={handleFavoriteClick}
-          className={`absolute right-2 top-2 cursor-pointer w-7 h-7 rounded-full flex justify-center items-center ${isHeart ? "bg-red-700" : "bg-white"} hover:bg-red-700 transition-colors`}
+          className={`absolute right-2 top-2 cursor-pointer w-7 h-7 rounded-full flex justify-center items-center active:bg-gray-300 bg-white group transition-colors`}
         >
-          <AiOutlineHeart
-            className={`${isHeart ? "text-white" : "text-black"} hover:text-white flex justify-center items-center`}
+          <IoMdHeart
+            className={`${isHeart ? "text-red-500" : "text-[#d1d1d1]"
+              } hover:text-red-500 group-hover:text-red-500 flex justify-center items-center`}
           />
         </span>
       </div>
 
       <div className="w-full h-fit flex flex-col justify-start gap-1">
-        <div className={`w-fit h-5 rounded-2xl py-[2px] px-2 ${item.category ? 'bg-red-100' : 'bg-white'} text-red-700 gap-2 flex justify-center items-center`}>
+        <div
+          className={`w-fit h-5 rounded-2xl py-[2px] px-2 ${item.category ? "bg-red-100" : "bg-white"
+            } text-red-700 gap-2 flex justify-center items-center`}
+        >
           <span className="font-normal text-sm flex justify-center items-center">
-            {item.category && item.category}
+            {item.category}
           </span>
         </div>
 
         <div className="w-full h-6 text-black">
           <span className="text-neutral-800 text-base font-medium leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
-            {item.address.split(",")[0].toUpperCase()}
+            {item.address.split(",")[0]?.toUpperCase()}
           </span>
         </div>
 
         <div className="w-full h-5 text-neutral-500 text-sm font-normal leading-tight flex gap-2 items-center py-1">
           <BsGeoAlt />{" "}
           <span className="truncate max-w-full">
-            {item.address.split(",")[1] + "," + item.address.split(",")[2]}
+            {item.address.split(",")[1]},{item.address.split(",")[2]}
           </span>
         </div>
 
@@ -90,12 +100,12 @@ const Index = ({ item, faveritedata }) => {
           {item.sampleRoomCodes.length > 0 && isShow && (
             <div className="min-w-fit w-[224px] max-h-[200px] overflow-y-auto bg-white absolute bottom-5 left-[100px] flex flex-col justify-start rounded-lg border-2 custom-scrollbar">
               <div className="w-full gap-1 flex flex-col justify-center items-start px-4">
-                {item.sampleRoomCodes.map((i, index) => (
+                {item.sampleRoomCodes.map((code, index) => (
                   <span
                     className="text-sm font-normal text-gray-700 w-full h-9 py-1 flex items-center"
                     key={index}
                   >
-                    P.{i}
+                    P.{code}
                   </span>
                 ))}
               </div>

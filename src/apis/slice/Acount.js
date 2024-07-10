@@ -12,7 +12,8 @@ const AcountsApi = createApi({
   endpoints: (build) => ({
     postLogin: build.mutation({
       query: (body) => ({
-        url: `/Accounts/sign-in`,
+        url: `/v2/Agencies/sign-in`,
+
         method: "POST",
         data: body,
       }),
@@ -42,5 +43,5 @@ const AcountsApi = createApi({
   }),
 });
 
-export const { usePostLoginMutation, usePostRegisterMutation ,usePostResetPasswordMutation,usePostCheckPasswordMutation} = AcountsApi;
+export const { usePostLoginMutation, usePostRegisterMutation, usePostResetPasswordMutation, usePostCheckPasswordMutation } = AcountsApi;
 export default AcountsApi;
