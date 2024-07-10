@@ -27,10 +27,13 @@ const Cart = ({ data }) => {
   };
   const navigate = useNavigate()
  const handleChangePage=()=>{
-  navigate(`deposit/${data?.roomId}`)
+  if(data?.status !=='2'){
+
+    navigate(`deposit/${data?.roomId}`)
+  }
  }
   return (
-    <div className="flex-col justify-start items-start inline-flex" onClick={handleChangePage}>
+    <div className="flex-col justify-start items-start inline-flex">
       <div
         className={`w-[200px] px-5 py-2 ${getStatusBgColor(data?.status)} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >

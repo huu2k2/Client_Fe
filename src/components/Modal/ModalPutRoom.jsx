@@ -224,8 +224,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>}
-              {message && <p className={`mr-10 flex items-center ${response.statusCode === 200 ? "text-green-600" : "text-red-600"}`}>{message}</p>}
+
+              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee}</p>}
+              {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee}</p>}
+
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"

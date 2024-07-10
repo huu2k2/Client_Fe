@@ -26,6 +26,46 @@
       right: 0;
     }
   }
+
+  
+  @layer components {
+    .custom-checkbox-line {
+      @apply appearance-none h-4 w-4 border border-rose-500 rounded cursor-pointer relative;
+    }
+  
+    .custom-checkbox-line:checked {
+      @apply bg-rose-500 border-transparent p-1;
+    }
+  
+    .custom-checkbox-line:checked::before {
+      content: "";
+      width: 15px;
+      background: white;
+      height: 15px;
+      mask: url('data:image/svg+xml,%3Csvg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M6.667 12L2 7.334l1.194-1.195 3.473 3.472L13.806 2 15 3.195 6.667 12z" fill="white"/%3E%3C/svg%3E') center / contain no-repeat;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  
+    .custom-checkbox-line.indeterminate {
+      @apply bg-rose-500 border-transparent p-1;
+    }
+  
+    .custom-checkbox-line.indeterminate::before {
+      content: "";
+      width: 15px;
+      background: white;
+      height: 15px;
+      mask: url('data:image/svg+xml,%3Csvg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M2 8h12v2H2z" fill="white"/%3E%3C/svg%3E') center / contain no-repeat;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+  
 /* nguyen thanh huu dev - nthd */
 
 /* flex  */

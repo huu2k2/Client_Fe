@@ -24,11 +24,12 @@ const index = ({ isShow, setShow }) => {
 
   const SetShow = () => {
     setShow(!isShow);
-  }
+    console.log(isShow); // This will log the updated state
+  };
 
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
     navigate("/login");
   };
   const handleLinkClick = (event) => {
@@ -37,18 +38,20 @@ const index = ({ isShow, setShow }) => {
     window.location.reload();
   };
   return (
-    <div className="w-full h-[64px] bg-black flex justify-center items-center ">
+    <div className="w-screen h-[64px] bg-black flex justify-center items-center ">
       <div
         className="w-[1360px] 
        h-full flex justify-between items-center"
       >
         <div onClick={handleLinkClick}>
-          <img src={ImgLogo} alt="Logo" className="w-[135px] h-[24px] cursor-pointer" />
+          <img
+            src={ImgLogo}
+            alt="Logo"
+            className="w-[135px] h-[24px] cursor-pointer"
+          />
         </div>
 
-
-
-        <div className="w-[316px] h-[38px] gap-6 flex items-center">
+        <div className="w-[316px] h-[38px] gap-6 flex items-center justify-end">
           {/* info */}
           <div className="w-fit h-full gap-3  flex items-center ">
             <div className="p-[7px]">
@@ -67,7 +70,11 @@ const index = ({ isShow, setShow }) => {
                 role="button"
                 className="w-8 h-8 rounded-2xl overflow-hidden  "
               >
-                <img src={ImgAvatar} alt="img avatar" className="cursor-pointer" />
+                <img
+                  src={ImgAvatar}
+                  alt="img avatar"
+                  className="cursor-pointer"
+                />
               </div>
               <ul
                 tabIndex={0}
@@ -75,18 +82,25 @@ const index = ({ isShow, setShow }) => {
               >
                 <li
                   onClick={() => setShow(!isShow)}
+
                   className="cursor-pointer text-base">
                   <span>Thông tin tài khoản</span>
                 </li>
                 <li className="cursor-pointer text-base">
-                  <Link to={'/danh_sach_phong_yeu_thich'}>
-
-                    Yêu thích
+                  <Link to={"/danh_sach_phong_yeu_thich"}>Yêu thích</Link>
+                </li>
+                <li className="cursor-pointer text-base">
+                  <Link to={"/quan_ly_hop_dong"}>
+                    Quản lý hợp đồng
                   </Link>
                 </li>
-
+                <li className="cursor-pointer text-base">
+                  <Link to={"/quan_ly_lich_hen"}>
+                    Quản lý lịch hẹn
+                  </Link>
+                </li>
                 <li onClick={handleLogout} className="cursor-pointer text-base">
-                  <span> Logout</span>
+                  <span> Đăng xuất</span>
                 </li>
               </ul>
             </div>
