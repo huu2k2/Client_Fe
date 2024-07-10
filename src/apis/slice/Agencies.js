@@ -84,6 +84,15 @@ const Agencies = createApi({
         data: body,
       }),
     }),
+    getListOfContractManagement: build.mutation({
+      query: ({ queries, body }) => ({
+        url: `/v2/Agencies/get-agency-deposits?${Object.keys(queries)
+          .map((key) => `${key}=${queries[key]}`)
+          .join("&")}`,
+        method: "POST",
+        data: body,
+      }),
+    }),
   }),
 });
 
@@ -93,6 +102,7 @@ export const {
   useRemoveFavoriteMutation,
   useGetFavoriteQuery,
   useGetListOfAppointmentsMutation,
+  useGetListOfContractManagementMutation
 } = Agencies;
 
 export default Agencies;

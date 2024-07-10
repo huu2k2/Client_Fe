@@ -185,7 +185,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                     <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
-                        {i.rentalPrice}
+                        {i.rentalPrice.toLocaleString('vi-VN')}
                       </span>
                     </td>
 
@@ -206,16 +206,16 @@ const BodyTable = ({ isShow, setIsShow }) => {
                     <td className="w-16 h-[72px] justify-center items-center flex  ">
                       <div className="w-full dropdown dropdown-end">
                         <div
-                          tabIndex={0}
+                          tabIndex={index}
                           role="button"
-                          className="btn m-1 bg-white hover:bg-white outline-none border-0 divide-transparent shadow-none border-transparent"
+                          className="btn m-1 -z-10 bg-white hover:bg-white outline-none border-0  shadow-none border-transparent"
                         >
                           <AiOutlineMore />
                         </div>
 
                         <ul
-                          tabIndex={0}
-                          className="dropdown-content menu rounded-md z-[1] w-52 p-2 shadow"
+                          tabIndex={index}
+                          className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
                         >
                           <li>
                             <a className="text-gray-700 text-sm font-normal  leading-tight">

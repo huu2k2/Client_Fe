@@ -67,7 +67,7 @@ const Pagination = ({currentPage, setCurrentPage , totalPages}) => {
           <div className="self-stretch h-0.5" />
           <div className="self-stretch pr-1 pt-4 flex justify-start items-center gap-3">
             <BsArrowLeft className="w-5 h-5" />
-            <div className="text-gray-500 text-sm font-medium font-['Inter'] leading-tight">
+            <div className="text-gray-500 text-sm font-medium leading-tight">
               Trước
             </div>
           </div>
@@ -98,7 +98,7 @@ const Pagination = ({currentPage, setCurrentPage , totalPages}) => {
         >
           <div className="self-stretch h-0.5" />
           <div className="self-stretch pl-1 pt-4 flex justify-start items-center gap-3">
-            <div className="text-gray-500 text-sm font-medium font-['Inter'] leading-tight">Tiếp theo</div>
+            <div className="text-gray-500 text-sm font-medium leading-tight">Tiếp theo</div>
             <BsArrowRight className="w-5 h-5" />
           </div>
         </div>
