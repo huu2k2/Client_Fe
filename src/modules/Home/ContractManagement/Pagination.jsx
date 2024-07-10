@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
 
-const Pagination = () => {
+import { BsArrowRight, BsArrowLeft } from 'react-icons/bs';
+const Pagination = ({currentPage, setCurrentPage , totalPages}) => {
   // Giả sử có 10 trang và trang hiện tại là 2
-  const totalPages = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+
 
   // Tạo danh sách số trang cần hiển thị
   const createPageNumbers = (currentPage, totalPages) => {
@@ -56,7 +54,7 @@ const Pagination = () => {
       setCurrentPage(page);
     }
   };
-
+ 
   return (
     <div className="w-[1360px] h-[38px] relative">
       <div className="w-[1360px] h-px absolute top-0 left-0 bg-gray-200" />
@@ -69,7 +67,7 @@ const Pagination = () => {
           <div className="self-stretch h-0.5" />
           <div className="self-stretch pr-1 pt-4 flex justify-start items-center gap-3">
             <BsArrowLeft className="w-5 h-5" />
-            <div className="text-gray-500 text-sm font-medium font-['Inter'] leading-tight">
+            <div className="text-gray-500 text-sm font-medium leading-tight">
               Trước
             </div>
           </div>
@@ -100,7 +98,7 @@ const Pagination = () => {
         >
           <div className="self-stretch h-0.5" />
           <div className="self-stretch pl-1 pt-4 flex justify-start items-center gap-3">
-            <div className="text-gray-500 text-sm font-medium font-['Inter'] leading-tight">Tiếp theo</div>
+            <div className="text-gray-500 text-sm font-medium leading-tight">Tiếp theo</div>
             <BsArrowRight className="w-5 h-5" />
           </div>
         </div>

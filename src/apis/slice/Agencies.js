@@ -51,7 +51,7 @@ const Agencies = createApi({
         }),
         removeFavorite: build.mutation({
             query: (roomId) => ({
-                url: `/v2/Agencies/remove-favorite-room/${roomId}`,
+                url: `/v2/Agencies/remove-favorite-room`,
                 method: 'DELETE',
             }),
             // Add the onQueryStarted lifecycle method
@@ -79,11 +79,12 @@ const Agencies = createApi({
 });
 
 export const {
-    usePostscheduleMutation,
-    useAddFavoriteMutation,
-    useRemoveFavoriteMutation,
-    useGetFavoriteQuery,
-    useGetSchedulesQuery
+  usePostscheduleMutation,
+  useAddFavoriteMutation,
+  useRemoveFavoriteMutation,
+  useGetFavoriteQuery,
+  useGetListOfAppointmentsMutation,
+  useGetListOfContractManagementMutation
 } = Agencies;
 
 export default Agencies;

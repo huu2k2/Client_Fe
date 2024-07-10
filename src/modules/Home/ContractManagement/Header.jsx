@@ -9,7 +9,7 @@ const Header = () => {
         <AiFillHome className="w-5 h-5 text-gray-400"/>
         <BsChevronRight />
         <div className="justify-center items-center flex">
-          <div className="text-gray-500 text-sm font-medium font-['Inter'] leading-tight">
+          <div className="text-gray-500 text-sm font-medium leading-tight">
             Quản lý hợp đồng
           </div>
         </div>
