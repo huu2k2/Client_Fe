@@ -30,12 +30,14 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
     viewDate: "",
     viewTime: "",
     customerPhone: "",
-    notes: ""
+    notes: "",
   });
   const [postschedule, { error }] = usePostscheduleMutation();
+ 
   const { data } = useGetAllDetailQuery(roomId, {
     skip: !roomId, // Skip query if roomId is undefined
   });
+ 
   const [response, setResponse] = useState(null);
   const [message, setMessage] = useState("");
 
@@ -74,7 +76,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
         roomId,
         company,
         SalerName,
-        SalerPhone
+        SalerPhone,
       }).unwrap();
       setResponse(response);
       console.log(response);
@@ -86,7 +88,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
         setMessage("Đặt lịch thất bại !");
       }
     } catch (error) {
-      console.error('Failed to schedule:', error);
+      console.error("Failed to schedule:", error);
       setResponse(error);
     }
   };
@@ -112,6 +114,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
             123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
           </span>
         </div>
+ 
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
           <div className="gap-5 flex">
 
@@ -219,14 +222,16 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
             </div> */}
 
 
+ 
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-
+ 
               {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee}</p>}
               {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee}</p>}
+ 
 
               <button
                 type="submit"
