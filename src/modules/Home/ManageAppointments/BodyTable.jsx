@@ -39,13 +39,14 @@ const BodyTable = ({ isShow, setIsShow }) => {
   const [totalItems, setTotalItems] = useState(1);
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfAppointmentsMutation();
+    const pageSize =4
   const fetchAppointments = useCallback(async () => {
     try {
       const startDateISO = convertDateToISO(date[0]);
       const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
 
       await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: 4 },
+        queries: { pageIndex: currentPage, pageSize: pageSize },
         body: { start: startDateISO, end: endDateISO },
       }).unwrap();
     } catch (err) {
@@ -65,13 +66,12 @@ const BodyTable = ({ isShow, setIsShow }) => {
   );
   const totalItemsMemo = useMemo(
     () => (data?.response?.items ? data?.response?.items?.length : totalItems),
-    [data,date]
+    [data, date]
   );
 
   useEffect(() => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
-  
   }, [data, date]);
 
   return (
@@ -154,7 +154,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
-                        10
+                      {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
                     <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
@@ -185,7 +185,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                     <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
-                        {i.rentalPrice.toLocaleString('vi-VN')}
+                        {i.rentalPrice.toLocaleString("vi-VN")}
                       </span>
                     </td>
 
@@ -217,10 +217,9 @@ const BodyTable = ({ isShow, setIsShow }) => {
                           tabIndex={index}
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
                         >
+ 
                           <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
-                              Đặt cọc
-                            </a>
+                          <label htmlFor="my-drawer-4" className="drawer-button text-gray-700 text-sm font-normal  leading-tight">Đặt cọc</label>
                           </li>
                           <li>
                             <a className="text-gray-700 text-sm font-normal  leading-tight">
@@ -230,10 +229,8 @@ const BodyTable = ({ isShow, setIsShow }) => {
                         </ul>
                       </div>
                     </td>
-
                   </tr>
                 ))}
-                
               </tbody>
             </table>
           </div>
