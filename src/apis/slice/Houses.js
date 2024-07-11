@@ -20,8 +20,13 @@ const HousesApi = createApi({
         url: `/v2/Houses/get-policies/${id}`,
       }),
     }),
+    getHouseName: build.query({
+      query: () => ({
+        url: `/v2/Houses/get-house-names`,
+      }),
+    }),
   }),
 });
 
-export const { useGetFullInformationOFHomeQuery ,useGetPolicyOfHomeQuery} = HousesApi;
+export const { useGetFullInformationOFHomeQuery, useGetPolicyOfHomeQuery, useGetHouseNameQuery } = HousesApi;
 export default HousesApi;
