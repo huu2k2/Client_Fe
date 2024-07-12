@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "@components/Header";
 import Profile from "../Profile/index";
 import { useState } from "react";
-import SideBar from "./ManageAppointments/SideBar";
+ 
 
 const Index = () => {
   const [isShow, setShow] = useState(false);
@@ -15,7 +15,7 @@ const Index = () => {
           <Header setShow={setShow} isShow={isShow} />
           <Outlet />
          
-          <SideBar/>
+        
         </div>
       </div>
     </p>

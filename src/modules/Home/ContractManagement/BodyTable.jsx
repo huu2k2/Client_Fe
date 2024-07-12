@@ -37,6 +37,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
+  const pageSize =4
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfContractManagementMutation();
   const fetchAppointments = useCallback(async () => {
@@ -45,7 +46,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
       const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
 
       await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: 4 },
+        queries: { pageIndex: currentPage, pageSize: pageSize },
         body: { start: startDateISO, end: endDateISO },
       }).unwrap();
     } catch (err) {
@@ -72,7 +73,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
-
+ console.log(data)
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -153,7 +154,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
-                        10
+                      {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
                     <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
@@ -190,14 +191,14 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                     <td className="w-40 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
                     <span className=" text-black text-sm font-normal  leading-tight">
-                      (2000).toLocaleString('vi-VN')
+                    {i.commission}
                     </span>
                   </td>
 
                   <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
                     <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
                       <div className="text-center text-emerald-800 text-xs font-medium leading-none">
-                        Đặt cọc
+                        {i.status === '1'?'Đặt cọc':''}
                       </div>
                     </div>
                   </td>

@@ -13,7 +13,7 @@ const index = () => {
   const { idHome } = useParams();
   const {data:Data} = useGetFullInformationOFHomeQuery(idHome)
   const {data}= useGetPolicyOfHomeQuery(idHome)
-  console.log(Data)
+ 
   return (
     <>
       <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">

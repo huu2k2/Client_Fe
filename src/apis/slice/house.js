@@ -17,7 +17,11 @@ const HousesApi = createApi({
           .join("&")}`,
       }),
     }),
-    
+    get: build.query({
+      query: (id) => ({
+        url: `/v2/Houses/get-commisstion-policies/${id}`,
+      }),
+    }),
   }),
 });
 

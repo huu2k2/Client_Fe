@@ -16,7 +16,7 @@ import { parse, formatISO } from "date-fns";
 import { useGetListOfAppointmentsMutation } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 
-const BodyTable = ({ isShow, setIsShow }) => {
+const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
@@ -73,7 +73,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
-
+ console.log(data)
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -218,7 +218,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
                         >
  
-                          <li>
+                          <li onClick={()=>setInfo((prev) => ({ ...prev, roomId: i.roomCode,houseAddress:i.houseAddress,rentalPrice:i.rentalPrice ,id:i.roomId}))}>
                           <label htmlFor="my-drawer-4" className="drawer-button text-gray-700 text-sm font-normal  leading-tight">Đặt cọc</label>
                           </li>
                           <li>
