@@ -154,6 +154,7 @@
 .custom-scrollbar {
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: #888 #f3f3f3; /* Firefox F3F3F3*/
+  
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -173,3 +174,13 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555; /* Hover effect on the scrollbar thumb */
 }
+
+/*  change màu */
+.my-day-picker .rdp-day_range_start,
+.my-day-picker .rdp-day_range_end,
+.my-day-picker .rdp-day_range_middle {
+  
+  @apply bg-blue-50 text-black;
+}
+
+

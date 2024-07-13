@@ -73,7 +73,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
- console.log(data)
+
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">

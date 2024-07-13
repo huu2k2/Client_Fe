@@ -8,7 +8,7 @@ import InputFileImg from "./InputFileImg";
 import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
-
+import { BsCameraFill } from "react-icons/bs";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
@@ -78,7 +78,7 @@ const Index = ({ setShow }) => {
     Identification: "",
     DateRange: "",
     IssuedBy: "",
-    PermanentAddress: ""
+    PermanentAddress: "",
   });
   useEffect(() => {
     if (data) {
@@ -92,7 +92,7 @@ const Index = ({ setShow }) => {
         AccountName: data.response.accountName || null,
         FullName: data.response.fullName || null,
         PhoneNumber: data.response.phoneNumber || null,
-        BOD: data.response.bod || null,
+        // BOD: data.response.bod || null,
         Identification: data.response.identification || null,
         DateRange: data.response.dateRange || null,
         IssuedBy: data.response.issuedBy || null,
@@ -105,18 +105,15 @@ const Index = ({ setShow }) => {
   //  const rs = await postUpdate(formData)
 
   const handleUpadte = async () => {
-
     //  const rs = await postUpdate(formData)
-
   };
   const handleFileChange = (name, file) => {
-    setFormData(prevData => ({ ...prevData, [name]: file }));
+    setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
   return (
     <div
       className={`fixed inset-0 z-50 flex justify-end  profile 
-         ${isExiting ? "animate-slide-out" : "animate-slide-in"
-        }`}
+         ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
       <div
         ref={refContainer}
@@ -136,12 +133,17 @@ const Index = ({ setShow }) => {
 
         {/* Info */}
         <div className="gap-4 w-full py-6 flex flex-col justify-center items-center bg-white">
-          <div className="w-full h-fit flex justify-center items-center flex-col gap-2">
+ 
+          <div className="indicator">
+            <div className="indicator-item indicator-bottom top-10 right-4">
+              <div className="rounded-full w-10 h-10 bg-gray-200 flex justify-center items-center" onClick={handleUploadImg}><BsCameraFill /></div>
+            </div>
+            <div className="w-full h-fit flex justify-center items-center flex-col gap-2">
             <img
               src={imagePreview ? imagePreview : ImgAvatar}
               alt="Avatar"
               className="w-[120px] h-[120px] rounded-[50%]   object-cover"
-              onClick={handleUploadImg}
+               
             />
             <input
               type="file"
@@ -151,6 +153,7 @@ const Index = ({ setShow }) => {
               onChange={handleImageChange}
               accept=".png, .jpg, .jpeg, .gif"
             />
+          </div>
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
@@ -199,14 +202,14 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"PhoneNumber"}
           />
-          <InputFiel
+          {/* <InputFiel
             name={"Ngày sinh"}
             label={formatDate(data?.response?.bod)}
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
             variable={"BOD"}
-          />
+          /> */}
           <InputFiel
             name={"Căn cước công dân"}
             label={data?.response?.identification}
@@ -242,17 +245,17 @@ const Index = ({ setShow }) => {
           <InputFileImg
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange('SignatureUrl', file)}
+            onChange={(file) => handleFileChange("SignatureUrl", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange('BeforeIdentification', file)}
+            onChange={(file) => handleFileChange("BeforeIdentification", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange('AfterIdentification', file)}
+            onChange={(file) => handleFileChange("AfterIdentification", file)}
           />
         </div>
 
