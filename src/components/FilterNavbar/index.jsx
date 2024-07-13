@@ -68,8 +68,8 @@ const FilterNavbar = ({ setOption }) => {
                   <p
                     key={index}
                     onClick={() => setOption(option.houseId)}
-                    className="px-4 py-3 rounded-md hover:after:w-full duration-500 cursor-pointer  relative
-                    after:content-['']  after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-[-0px] after:duration-500 after:bottom-0 after:flex after:justify-center "
+                    className="px-4 py-3 rounded-md hover:after:w-full cursor-pointer  relative
+                    after:content-['']  after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-[-0px] after:duration-200 after:bottom-0 after:flex after:justify-center "
                   >
 
                     {option.houseName}
