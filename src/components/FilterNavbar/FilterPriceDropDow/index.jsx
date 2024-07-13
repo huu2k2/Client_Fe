@@ -5,7 +5,7 @@ import { useQueryFilterData } from "@customhooks";
 import { useLocation } from "react-router-dom";
 import { Badge } from "@mui/material";
 
-const Index = () => {
+const Index = ({ clear, setClear }) => {
   const [filterData, setFilterData] = useQueryFilterData();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -38,9 +38,18 @@ const Index = () => {
     }
   }, [filterData]);
 
+  useEffect(() => {
+    if (clear) {
+      setValueRange(0);
+      setFilterData((prev) => ({ ...prev, price: null }));
+    }
+  }, [clear]);
+
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, price: valueRange ? valueRange * 1000000 : null }));
     setIsOpen(false);
+    setClear(false)
+
   };
 
   const handleReset = () => {
@@ -102,7 +111,7 @@ const Index = () => {
               <input
                 type="text"
                 value={0}
-                onChange={() => {}}
+                onChange={() => { }}
                 className="w-full outline-none text-sm border-none"
                 readOnly
               />

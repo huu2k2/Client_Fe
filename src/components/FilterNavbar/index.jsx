@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import Location from "./FilterSelectItemDropdow";
 import TypeRoom from "./FilterTypeRoomDropdown";
 import FilterStatusDropdow from "./FilterStatusDropdow";
@@ -7,8 +8,7 @@ import FilterPriceDropDow from "./FilterPriceDropDow";
 import FilterAdd from "./FilterAdd";
 import { useQueryFilterData } from "@customhooks";
 import { debounce } from "@utils";
-import { useClickSearchFilter } from "@customhooks/FilterCustomHook";
-import { useEffect, useState } from "react";
+import { useClickRemoveFilter } from "@customhooks/FilterCustomHook";
 import { useGetHouseNameQuery } from "../../apis/slice/Houses";
 
 const removeDiacritics = (str) => {
@@ -16,27 +16,13 @@ const removeDiacritics = (str) => {
 };
 
 const FilterNavbar = ({ setOption }) => {
+  const [clear, setClear] = useState(false);
   const [filterData, setFilterData] = useQueryFilterData();
-  const handleSearch = useClickSearchFilter();
+  const handleRemoveFilter = useClickRemoveFilter();
   const [searchInput, setSearchInput] = useState("");
 
   const [filteredOptions, setFilteredOptions] = useState([]);
   const { data: dataHousesName, isLoading, error } = useGetHouseNameQuery();
-
-  useEffect(() => {
-    if (searchInput) {
-      const debouncedFilter = debounce(filterFunction, 500);
-      debouncedFilter();
-    }
-  }, [searchInput]);
-
-  const handleChangeInput = (e) => {
-    const value = e.target.value;
-    setSearchInput(value);
-    setFilterData((prev) => ({ ...prev, Address: value }));
-  };
-
-  const debounceHandleSearch = debounce(handleSearch, 500);
 
   const filterFunction = () => {
     const filter = removeDiacritics(searchInput).toUpperCase();
@@ -46,6 +32,26 @@ const FilterNavbar = ({ setOption }) => {
     );
     setFilteredOptions(filtered);
   };
+
+  const debouncedFilterFunction = debounce(filterFunction, 500);
+
+  useEffect(() => {
+    if (searchInput) {
+      debouncedFilterFunction();
+    }
+  }, [searchInput])
+
+  //input search
+  const handleChangeInput = (e) => {
+    const value = e.target.value;
+    setSearchInput(value);
+  };
+
+  const debounceHandleRemoveFilter = debounce(() => {
+    handleRemoveFilter();
+    setClear(true);
+
+  }, 500);
 
   return (
     <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
@@ -62,16 +68,15 @@ const FilterNavbar = ({ setOption }) => {
           {searchInput && (
             <div
               id="myDropdown"
-              className="absolute mt-3 left-[-42px] bg-white border border-gray-300 rounded-md shadow-lg z-50  w-[330px] ">
+              className="absolute mt-3 left-[-42px] bg-white border border-gray-300 rounded-md shadow-lg z-50 w-[330px]"
+            >
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
                   <p
                     key={index}
                     onClick={() => setOption(option.houseId)}
-                    className="px-4 py-3 rounded-md hover:after:w-full cursor-pointer  relative
-                    after:content-['']  after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-[-0px] after:duration-200 after:bottom-0 after:flex after:justify-center "
+                    className="px-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
                   >
-
                     {option.houseName}
                   </p>
                 ))
@@ -82,16 +87,31 @@ const FilterNavbar = ({ setOption }) => {
           )}
         </div>
       </div>
-      <Location />
-      <TypeRoom />
-      <FilterStatusDropdow />
-      <FilterPriceDropDow />
-      <FilterAdd />
+      <Location
+        clear={clear}
+        setClear={setClear}
+      />
+      <TypeRoom
+        clear={clear}
+        setClear={setClear}
+      />
+      <FilterStatusDropdow
+        clear={clear}
+        setClear={setClear}
+      />
+      <FilterPriceDropDow
+        clear={clear}
+        setClear={setClear}
+      />
+      <FilterAdd
+        clear={clear}
+        setClear={setClear}
+      />
       <div
         className="w-[38px] bg-rose-600 rounded-full flex justify-center items-center p-[9px] cursor-pointer active:bg-rose-700"
-        onClick={debounceHandleSearch}
+        onClick={debounceHandleRemoveFilter}
       >
-        <AiOutlineSearch className="w-5 h-5 text-white" />
+        <RiDeleteBin6Line className="w-5 h-5 text-white" />
       </div>
     </div>
   );

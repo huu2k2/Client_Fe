@@ -17,9 +17,7 @@ const findDistrictId = (address, districts) => {
 };
 
 const Index = ({ id, money, address, category, faveritedata, option }) => {
-  console.log("🚀 ~ Index ~ option:", option)
   const [items, setItems] = useState([]);
-  console.log("🚀 ~ Index ~ items:", items)
   const [filterData, setFilterData] = useQueryFilterData();
   const [error, setError] = useState("");
 

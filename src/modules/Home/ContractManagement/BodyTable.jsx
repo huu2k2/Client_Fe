@@ -94,9 +94,8 @@ const BodyTable = ({ isShow, setIsShow }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${
-            isShow ? "" : "hidden"
-          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${isShow ? "" : "hidden"
+            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
@@ -184,23 +183,23 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                     <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
-                      {i.rentalPrice.toLocaleString('vi-VN')}
+                        {i.rentalPrice.toLocaleString('vi-VN')}
                       </span>
                     </td>
 
                     <td className="w-40 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
-                    <span className=" text-black text-sm font-normal  leading-tight">
-                      (2000).toLocaleString('vi-VN')
-                    </span>
-                  </td>
+                      <span className=" text-black text-sm font-normal  leading-tight">
+                        (2000).toLocaleString('vi-VN')
+                      </span>
+                    </td>
 
-                  <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
-                    <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
-                      <div className="text-center text-emerald-800 text-xs font-medium leading-none">
-                        Đặt cọc
+                    <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
+                      <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
+                        <div className="text-center text-emerald-800 text-xs font-medium leading-none">
+                          Đặt cọc
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
                     <td className="w-16 h-[72px] justify-center items-center flex  ">
                       <div className="w-full dropdown dropdown-end">
@@ -232,7 +231,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                   </tr>
                 ))}
-                 
+
               </tbody>
             </table>
           </div>

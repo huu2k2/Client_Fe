@@ -3,18 +3,20 @@ import { AiOutlineEnvironment } from "react-icons/ai";
 import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
 import { useQueryFilterData } from "@customhooks";
-import Badge from '@mui/material/Badge';
+import Badge from "@mui/material/Badge";
 
-const index = () => {
+const Index = ({ clear, setClear }) => {
   const [filterData, setFilterData] = useQueryFilterData();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRooms, setSelectedRooms] = useState([]);
   const dropdownRef = useRef(null);
-useEffect(()=>{
-if(filterData.categories){
-  setSelectedRooms([...filterData.categories])
-}
-},[filterData])
+
+  useEffect(() => {
+    if (filterData.categories) {
+      setSelectedRooms([...filterData.categories]);
+    }
+  }, [filterData]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -28,8 +30,14 @@ if(filterData.categories){
     };
   }, [dropdownRef]);
 
-  const handleCheckboxChange = (value) => {
+  useEffect(() => {
+    if (clear) {
+      setSelectedRooms([]);
+      setFilterData((prev) => ({ ...prev, categories: null }));
+    }
+  }, [clear]);
 
+  const handleCheckboxChange = (value) => {
     setSelectedRooms((prevSelectedRooms) =>
       prevSelectedRooms.includes(value)
         ? prevSelectedRooms.filter((room) => room !== value)
@@ -37,33 +45,32 @@ if(filterData.categories){
     );
   };
 
-  
- 
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, categories: [...selectedRooms] }))
-    setIsOpen(false)
+    setFilterData((prev) => ({ ...prev, categories: [...selectedRooms] }));
+    setIsOpen(false);
+    setClear(false)
   };
+
   const handleDelete = () => {
     setSelectedRooms([]);
-    setFilterData((prev) => ({ ...prev, categories: null }))
+    setFilterData((prev) => ({ ...prev, categories: null }));
   };
-  return (
 
+  return (
     <Badge
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       badgeContent={selectedRooms?.length || 0}
       sx={{
-        '& .MuiBadge-badge': {
-          backgroundColor: '#dc2626',
-          color: '#fff', // Set text color if needed  
+        "& .MuiBadge-badge": {
+          backgroundColor: "#dc2626",
+          color: "#fff", // Set text color if needed
         },
       }}
       className="mr-2 text-center "
     >
-
       <div className="relative cursor-pointer" ref={dropdownRef}>
         <div
           className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
@@ -147,4 +154,4 @@ if(filterData.categories){
   );
 };
 
-export default index;
+export default Index;

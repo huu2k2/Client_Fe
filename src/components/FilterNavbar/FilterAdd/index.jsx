@@ -12,7 +12,7 @@ const checkForValueOfUtilities = (arr, value) => {
   return arr.some((item) => item === value);
 };
 
-const Index = () => {
+const Index = ({ clear, setClear }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -48,9 +48,17 @@ const Index = () => {
     );
   };
 
- 
+
 
   const [_, setFilterData] = useQueryFilterData();
+
+  useEffect(() => {
+    if (clear) {
+      setSelectedAddFurniture([]);
+      setSelectedAddUtilities([]);
+    }
+  }, [clear]);
+
   const handleApply = () => {
     setFilterData((prev) => ({
       ...prev,
@@ -63,6 +71,8 @@ const Index = () => {
       freeHour: checkForValueOfUtilities(selectedAddUtilities, 'FreeHours'),
     }));
     setIsOpen(false);
+    setClear(false)
+
   };
   const handleDelete = () => {
     setSelectedAddFurniture([]);
@@ -73,7 +83,7 @@ const Index = () => {
       parking: null,
       security: null,
       elevator: null,
-      washing:null,
+      washing: null,
       pet: null,
       freeHour: null,
     }));

@@ -65,13 +65,13 @@ const BodyTable = ({ isShow, setIsShow }) => {
   );
   const totalItemsMemo = useMemo(
     () => (data?.response?.items ? data?.response?.items?.length : totalItems),
-    [data,date]
+    [data, date]
   );
 
   useEffect(() => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
-  
+
   }, [data, date]);
 
   return (
@@ -95,9 +95,8 @@ const BodyTable = ({ isShow, setIsShow }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${
-            isShow ? "" : "hidden"
-          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${isShow ? "" : "hidden"
+            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
@@ -233,7 +232,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                   </tr>
                 ))}
-                
+
               </tbody>
             </table>
           </div>

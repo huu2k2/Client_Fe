@@ -5,7 +5,7 @@ import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
 import { useQueryFilterData } from "@customhooks";
 
-const Index = () => {
+const Index = ({ clear, setClear }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -32,13 +32,19 @@ const Index = () => {
     );
   };
 
-  
+  useEffect(() => {
+    if (clear) {
+      setSelectedStatusRooms([]);
+    }
+  }, [clear]);
+
 
   const [_, setFilterData] = useQueryFilterData();
 
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, status: [...selectedStatusRooms] }))
     setIsOpen(false)
+    setClear(false)
   };
   const handleDelete = () => {
     setSelectedStatusRooms([]);
