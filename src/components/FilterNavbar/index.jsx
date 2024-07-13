@@ -51,13 +51,13 @@ const FilterNavbar = ({ setOption }) => {
     <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
       <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 shadow-sm bg-white">
         <AiOutlineSearch className="w-5 h-5" />
-        <div className="relative mt-4 ">
+        <div className="relative mt-4 h-full ">
           <input
             type="text"
             placeholder="Search.."
             value={searchInput}
             onChange={handleChangeInput}
-            className="w-full border-none outline-none"
+            className="w-full border-none outline-none mt-[-8px] block "
           />
           {searchInput && (
             <div
