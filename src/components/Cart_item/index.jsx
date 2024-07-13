@@ -10,7 +10,6 @@ import {
 import ImgHome from "../../assets/notfound(1).png";
 
 const Index = ({ item, faveritedata }) => {
-  console.log("🚀 ~ Index ~ item:", item)
 
   const img = item.image || ImgHome;
   const [isHeart, setIsHeart] = useState(false);
