@@ -62,7 +62,7 @@ const FilterNavbar = ({ setOption }) => {
           {searchInput && (
             <div
               id="myDropdown"
-              className="absolute mt-2 left-[-42px] bg-white border border-gray-300 rounded-md shadow-lg z-50  w-[330px] ">
+              className="absolute mt-3 left-[-42px] bg-white border border-gray-300 rounded-md shadow-lg z-50  w-[330px] ">
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
                   <p
