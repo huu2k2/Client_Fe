@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineFilter } from "react-icons/ai";
 import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
-import { AiOutlineInsertRowLeft } from "react-icons/ai";
 import { categoryItems, utilitiesItems } from "./categoryItem";
 import { useQueryFilterData } from "@customhooks";
 import { Badge } from "@mui/material"; // Ensure Badge is imported
+import { BsWifi ,BsCardList } from "react-icons/bs";
 
 // check if an item exists in Utilities
 const checkForValueOfUtilities = (arr, value) => {
@@ -112,7 +112,7 @@ const Index = () => {
         >
           {/* show select */}
           <div className="w-full h-6 gap-2 flex items-center ">
-            <AiOutlineInsertRowLeft />
+            <BsCardList />
             <span className="text-black text-base font-medium leading-6">
               Danh mục nội thất
             </span>
@@ -130,7 +130,7 @@ const Index = () => {
           </div>
 
           <div className="w-full h-6 gap-2 flex items-center justify-start">
-            <AiOutlineInsertRowLeft />
+            <BsWifi />
             <span className="text-black text-base font-medium leading-normal">
               Danh mục tiện ích
             </span>
