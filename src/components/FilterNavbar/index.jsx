@@ -49,9 +49,9 @@ const FilterNavbar = ({ setOption }) => {
 
   return (
     <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
-      <div className="flex w-[362px] h-[38px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 shadow-sm bg-white">
+      <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 shadow-sm bg-white">
         <AiOutlineSearch className="w-5 h-5" />
-        <div className="relative">
+        <div className="relative mt-4 ">
           <input
             type="text"
             placeholder="Search.."
@@ -60,14 +60,18 @@ const FilterNavbar = ({ setOption }) => {
             className="w-full border-none outline-none"
           />
           {searchInput && (
-            <div id="myDropdown" className="absolute mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg z-50">
+            <div
+              id="myDropdown"
+              className="absolute mt-2 left-[-42px] bg-white border border-gray-300 rounded-md shadow-lg z-50  w-[330px] ">
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
                   <p
                     key={index}
                     onClick={() => setOption(option.houseId)}
-                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    className="px-4 py-3 rounded-md hover:after:w-full duration-500 cursor-pointer  relative
+                    after:content-['']  after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-[-0px] after:duration-500 after:bottom-0 after:flex after:justify-center "
                   >
+
                     {option.houseName}
                   </p>
                 ))
