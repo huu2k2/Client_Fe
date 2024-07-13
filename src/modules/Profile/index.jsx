@@ -9,6 +9,7 @@ import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
+import Signature from "./Signature";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
@@ -133,27 +134,30 @@ const Index = ({ setShow }) => {
 
         {/* Info */}
         <div className="gap-4 w-full py-6 flex flex-col justify-center items-center bg-white">
- 
           <div className="indicator">
             <div className="indicator-item indicator-bottom top-10 right-4">
-              <div className="rounded-full w-10 h-10 bg-gray-200 flex justify-center items-center" onClick={handleUploadImg}><BsCameraFill /></div>
+              <div
+                className="rounded-full w-10 h-10 bg-gray-200 flex justify-center items-center"
+                onClick={handleUploadImg}
+              >
+                <BsCameraFill />
+              </div>
             </div>
             <div className="w-full h-fit flex justify-center items-center flex-col gap-2">
-            <img
-              src={imagePreview ? imagePreview : ImgAvatar}
-              alt="Avatar"
-              className="w-[120px] h-[120px] rounded-[50%]   object-cover"
-               
-            />
-            <input
-              type="file"
-              name="imgProfile"
-              ref={inputFileRef}
-              className="hidden"
-              onChange={handleImageChange}
-              accept=".png, .jpg, .jpeg, .gif"
-            />
-          </div>
+              <img
+                src={imagePreview ? imagePreview : ImgAvatar}
+                alt="Avatar"
+                className="w-[120px] h-[120px] rounded-[50%]   object-cover"
+              />
+              <input
+                type="file"
+                name="imgProfile"
+                ref={inputFileRef}
+                className="hidden"
+                onChange={handleImageChange}
+                accept=".png, .jpg, .jpeg, .gif"
+              />
+            </div>
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
@@ -242,7 +246,8 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"permanentAddress"}
           />
-          <InputFileImg
+ 
+          <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
             onChange={(file) => handleFileChange("SignatureUrl", file)}

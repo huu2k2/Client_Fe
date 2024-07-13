@@ -177,10 +177,15 @@
 
 /*  change màu */
 .my-day-picker .rdp-day_range_start,
-.my-day-picker .rdp-day_range_end,
+.my-day-picker .rdp-day_range_end{
+  @apply bg-blue-700 text-white;
+}
+ 
 .my-day-picker .rdp-day_range_middle {
   
   @apply bg-blue-50 text-black;
 }
 
-
+.my-day-picker .rdp-day:hover {
+  @apply bg-blue-700 text-black;
+}
