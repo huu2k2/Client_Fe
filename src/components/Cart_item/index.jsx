@@ -10,6 +10,7 @@ import {
 import ImgHome from "../../assets/notfound(1).png";
 
 const Index = ({ item, faveritedata }) => {
+
   const img = item.image || ImgHome;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
@@ -79,9 +80,9 @@ const Index = ({ item, faveritedata }) => {
           </span>
         </div>
 
-        <div className="w-full h-6 text-black">
-          <span className="text-neutral-800 text-base font-medium leading-normal truncate overflow-hidden whitespace-nowrap uppercase">
-            {item.address.split(",")[0]?.toUpperCase()}
+        <div className="w-full h-6 text-black truncate">
+          <span className="text-neutral-800  text-base font-medium leading-normal truncate overflow-hidden whitespace-nowrap uppercase ">
+            {item.houseName}
           </span>
         </div>
 

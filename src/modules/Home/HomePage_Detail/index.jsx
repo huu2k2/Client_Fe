@@ -14,6 +14,7 @@ import {
   useClickSearchFilter,
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
+import { ToastContainer } from "react-toastify";
 
 const initialFilterData = {
   houseId: null,
@@ -46,14 +47,15 @@ const index = () => {
   const handleClickSearch = useClickSearchFilter();
   useEffect(() => {
     setFilterData(initialFilterData);
-    if(filterData===initialFilterData){
-      
+    if (filterData === initialFilterData) {
+
       handleClickSearch();
     }
   }, [filterData]);
- 
+
   return (
     <>
+      <ToastContainer />
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}
@@ -81,7 +83,7 @@ const index = () => {
               ?.toString()
               ?.trim()
               ?.replace(/\s+/g, "_")}
-              category={data?.response?.category ? data?.response?.category :null}
+            category={data?.response?.category ? data?.response?.category : null}
           />
           <RoomOrder
             title={`Phòng tương tự của `}
@@ -92,7 +94,7 @@ const index = () => {
               ?.toString()
               ?.trim()
               ?.replace(/\s+/g, "_")}
-              category={null}
+            category={null}
           />
         </div>
       </div>

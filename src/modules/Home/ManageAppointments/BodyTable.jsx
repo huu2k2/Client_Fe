@@ -96,9 +96,8 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${
-            isShow ? "" : "hidden"
-          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${isShow ? "" : "hidden"
+            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />

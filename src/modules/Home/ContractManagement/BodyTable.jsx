@@ -95,9 +95,8 @@ const BodyTable = ({ isShow, setIsShow }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${
-            isShow ? "" : "hidden"
-          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${isShow ? "" : "hidden"
+            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
@@ -185,7 +184,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                     <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
-                      {i.rentalPrice.toLocaleString('vi-VN')}
+                        {i.rentalPrice.toLocaleString('vi-VN')}
                       </span>
                     </td>
 
@@ -233,7 +232,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                   </tr>
                 ))}
-                 
+
               </tbody>
             </table>
           </div>

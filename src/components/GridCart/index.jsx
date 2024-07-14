@@ -16,8 +16,7 @@ const findDistrictId = (address, districts) => {
   return district ? district.district_id : null;
 };
 
-const Index = ({ id, money, address,category, faveritedata }) => {
-  const [items, setItems] = useState([]);
+const Index = ({ id, money, address, category, faveritedata, option }) => {
   const [filterData, setFilterData] = useQueryFilterData();
   const [error, setError] = useState("");
 
@@ -25,9 +24,9 @@ const Index = ({ id, money, address,category, faveritedata }) => {
 
   const query = {
     houseId: id || null,
-    districtId: findDistrictId(address, datadistrict)||null,
+    districtId: findDistrictId(address, datadistrict) || null,
     price: Number(money) || null,
-    categories:category ? [category]:null
+    categories: category ? [category] : null,
   };
 
   const handleClickSearch = useClickSearchFilter();
@@ -49,6 +48,7 @@ const Index = ({ id, money, address,category, faveritedata }) => {
   }, [filterData, location.pathname, handleClickSearch, money, address]);
 
   const [data, isFetching, isError] = useQueryData();
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,22 +59,34 @@ const Index = ({ id, money, address,category, faveritedata }) => {
   }, [data]);
 
   useEffect(() => {
-    if (!data?.response?.length) {
+    if (data && (!data.response || !data.response.length)) {
       setError("không tìm thấy phòng tương tự!");
     } else {
       setError("");
     }
   }, [data]);
 
+  useEffect(() => {
+    if (option && option.selectedOption && data?.response) {
+      const filteredRooms = data.response.filter(
+        (room) => room.houseId === option.selectedOption
+      );
+      setItems(filteredRooms);
+    } else if (option && option.selectedOption === "") {
+      setItems(data?.response || []);
+    }
+  }, [option, data]);
+
   return (
     <>
-      {items.length===0 && (
+      {isFetching ? (
+        <CustomLoading />
+      ) : items.length === 0 ? (
         <div className="w-full h-full flex justify-center items-center">
           <p className="text-rose-500">{error}</p>
         </div>
-      )}
-      {items.length > 0 && (
-        <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit ">
+      ) : (
+        <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
           {items.map((item, index) => (
             <CartRoom key={index} item={item} faveritedata={faveritedata} />
           ))}
