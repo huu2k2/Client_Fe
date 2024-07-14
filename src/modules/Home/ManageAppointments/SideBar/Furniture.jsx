@@ -20,7 +20,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
 
   return (
     <div className="w-[556px] h-fit px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
-      <div className="text-rose-800 text-lg font-medium font-['Inter'] leading-7">
+      <div className="text-rose-800 text-lg font-medium leading-7">
         Nội thất bàn giao
       </div>
 
@@ -44,7 +44,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
                   );
                 }}
               />
-              <div className="text-gray-700 text-sm font-medium font-['Inter'] leading-tight">
+              <div className="text-gray-700 text-sm font-medium leading-tight">
                 {item.furnitureName}
               </div>
             </div>
@@ -62,7 +62,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
                     readOnly // Make price input read-only if you don't want to edit it
                   />
                 </div>
-                <div className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
+                <div className="text-gray-500 text-sm font-normal leading-tight">
                   đ
                 </div>
               </div>

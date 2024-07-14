@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
+import { useGetCommisstionPoliciesQuery } from "@apis/slice/Houses";
 
-const SelectTips = ({
-  title,
-  placeholder,
- 
-  register,
- 
-}) => {
+const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId}) => {
   const [value, setValues] = useState(null);
+  const { data } = useGetCommisstionPoliciesQuery(getInfo.houseId||0);
 
+  const [options,setOptions] = useState([])
+  useEffect(() => {
+    const CovertData = data?.response?.map((i) => ({
+      value: i.id,
+      label: `${i.month} Tháng - Cọc ${i.deposit} - Hoa hồng ${i.commission} %`,
+    }));
+    setOptions(CovertData || []);
+  }, [data]);
   const handleChangeValue = (selectedOption) => {
     setValues(selectedOption);
+    setValue('commissionPolicyId',selectedOption.value)
+    const val =selectedOption.label?.split('-')[2].trim().split(' ')[2]
+   
+    setNamecommissionPolicyId(val)
   };
-  const options = [
-    { value: "option1", label: "12 tháng - Cọc 1,5 - Hoa hồng 30%" },
-    { value: "option2", label: "12 tháng - Cọc 1,5 - Hoa hồng 30%" },
-    { value: "option3", label: "12 tháng - Cọc 1,5 - Hoa hồng 30%" },
-  ];
+ 
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
       <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight ">
@@ -34,7 +38,7 @@ const SelectTips = ({
           value={value}
           onChange={handleChangeValue}
           options={options}
-          placeholder={placeholder}
+         
         />
         
       </div>

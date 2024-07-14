@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillCloseSquare } from "react-icons/ai";
 import InfoClient from "./InfoClient";
 import InfoRoom from "./InfoRoom";
@@ -17,9 +17,9 @@ function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
-const SideBar = ({ getInfo}) => {
+const SideBar = ({ getInfo }) => {
   const [addDeposit] = useAddDepositMutation();
-  const { data: Data } = useGetServicesOfRoomQuery(getInfo.id);
+  const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
 
   // State for service and furniture inserts
   const [furnitureInserts, setFurnitureInserts] = useState([]);
@@ -43,7 +43,6 @@ const SideBar = ({ getInfo}) => {
 
   // Form submission handler
   const onSubmit = async (data) => {
-
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -55,24 +54,15 @@ const SideBar = ({ getInfo}) => {
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
       roomId: Number(getInfo.id),
       rentalPrice: Number(data.rentalPrice),
-      commissionPolicyId: Number( 9),
+      commissionPolicyId: Number(data.commissionPolicyId),
+      houseId: getInfo.houseId,
     };
- 
-    try {
-     const kq= await addDeposit(convertData);
-     if(!kq?.error?.data.isSuccess){
 
-       toast.error(kq?.error?.data.message);
-      }
-      else if(kq?.data?.isSuccess){
-       toast.success(kq.data.message)
-     }
-     else{
-      
-     }
-    } catch (error) {
-      console.log(error)
-      toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
+    const kq = await addDeposit(convertData);
+    if (kq?.error) {
+      toast.error(kq?.error?.data.message);
+    } else {
+      toast.success(kq.data.message);
     }
   };
 
@@ -80,20 +70,33 @@ const SideBar = ({ getInfo}) => {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => toast.error(error.message));
-      console.log(errors)
+      console.log(errors);
     }
   }, [errors]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
   const handleDrawerChange = (event) => {
     setIsSidebarOpen(event.target.checked);
+    if (event.target.checked) {
+      sidebarRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
   return (
-    <div className="drawer drawer-end" >
+    <div className="drawer drawer-end">
       <ToastContainer />
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle"  onChange={handleDrawerChange} 
-        checked={isSidebarOpen}/>
+      <input
+        id="my-drawer-4"
+        type="checkbox"
+        className="drawer-toggle"
+        onChange={handleDrawerChange}
+        checked={isSidebarOpen}
+      />
       <div className="drawer-content">{/* Page content here */}</div>
-      <div className="drawer-side">
+      <div className="drawer-side" ref={sidebarRef}>
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"
@@ -126,8 +129,13 @@ const SideBar = ({ getInfo}) => {
           {/* Header End */}
 
           {/* Form Sections */}
-          <InfoClient register={register} isSidebarOpen={isSidebarOpen}/>
-          <InfoRoom register={register} getInfo={getInfo} setValue={setValue} isSidebarOpen={isSidebarOpen}/>
+          <InfoClient register={register} isSidebarOpen={isSidebarOpen} />
+          <InfoRoom
+            register={register}
+            getInfo={getInfo}
+            setValue={setValue}
+            isSidebarOpen={isSidebarOpen}
+          />
           <Surcharges
             register={register}
             serviceInserts={serviceInserts}

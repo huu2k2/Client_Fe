@@ -33,7 +33,7 @@ const UtilityDirectory = ({ data }) => {
         {HaveData.filter(i => i.have).map((i, index) => (
           <div className="w-[1312px] h-[60px] px-6 py-5 justify-start items-center gap-2 inline-flex" key={index}>
             <img src={IMGICON} alt="" className="w-5 h-5 relative" />
-            <div className="grow shrink basis-0 text-gray-500 text-sm font-medium font-['Inter'] leading-tight">
+            <div className="grow shrink basis-0 text-gray-500 text-sm font-medium leading-tight">
               {i.name}
             </div>
           </div>

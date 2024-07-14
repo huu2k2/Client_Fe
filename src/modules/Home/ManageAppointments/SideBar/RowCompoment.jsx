@@ -10,7 +10,8 @@ const RowComponent = ({
   name,
   getInfo,
   setValue,
-  isSidebarOpen
+  isSidebarOpen,
+  getNamecommissionPolicyId
 }) => {
   const isDisabled = [
     "roomId",
@@ -31,6 +32,9 @@ const RowComponent = ({
         return getInfo.rentalPrice.toLocaleString("vi-VN");
       case "datcoc":
         return 1;
+        case "chuongTrinhUuDai":
+        return " ";
+ 
       default:
         return placeholder;
     }
@@ -42,7 +46,7 @@ const RowComponent = ({
     "additionalDepositAmount",
   ].includes(name);
 
-  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(
+  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice" ].includes(
     name
   );
 
@@ -50,6 +54,7 @@ const RowComponent = ({
   useEffect(()=>{
     setValues("")
   },[isSidebarOpen])
+
   useEffect(() => {
     if (priceValue && getInfo[name] !== undefined) {
       setValues(getInfo[name].toLocaleString("vi-VN"));
@@ -62,7 +67,7 @@ const RowComponent = ({
     }
   }, [name, plaValue, dynamicPlaceholder, setValue]);
 
-  const NameValue = ["fullName"].includes(
+  const NameValue = ["fullName","issuedBy","permanentAddress"].includes(
     name
   );
   const handleChangeValue = (e) => {
@@ -83,7 +88,7 @@ const RowComponent = ({
 
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
-      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight font-['Inter']">
+      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight">
         {title}
       </div>
       <div
@@ -101,11 +106,11 @@ const RowComponent = ({
           className={`w-full outline-none text-sm font-normal leading-tight  `}
           placeholder={placeholder}
           disabled={isDisabled}
-          value={value}
+          value={name ==='tips' ?getNamecommissionPolicyId:value}
           onChange={handleChangeValue}
         />
         {unit && (
-          <div className="text-gray-500 text-sm font-normal leading-tight font-['Inter']">
+          <div className="text-gray-500 text-sm font-normal leading-tight">
             {unit}
           </div>
         )}

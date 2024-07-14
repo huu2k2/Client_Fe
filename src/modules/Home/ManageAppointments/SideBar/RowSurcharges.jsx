@@ -22,7 +22,7 @@ const RowSurcharges = ({ label, unit, price, onChange }) => {
 
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
-      <div className="w-[180px] text-gray-700 text-sm font-medium font-['Inter'] leading-tight">
+      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight">
         {label}
       </div>
       <div className="grow shrink basis-0 h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center flex">
@@ -36,7 +36,7 @@ const RowSurcharges = ({ label, unit, price, onChange }) => {
           />
         </div>
         <div className="w-16 pl-[15px] pr-[17px] py-[9px] bg-gray-50 rounded-tr-md rounded-br-md border border-gray-300 justify-center items-center gap-2 flex">
-          <div className="text-gray-500 text-sm font-normal font-['Inter'] leading-tight">
+          <div className="text-gray-500 text-sm font-normal leading-tight">
             {unit}
           </div>
         </div>

@@ -20,8 +20,13 @@ const HousesApi = createApi({
         url: `/v2/Houses/get-policies/${id}`,
       }),
     }),
+    getCommisstionPolicies: build.query({
+      query: (id) => ({
+        url: `/v2/Houses/get-commisstion-policies/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetFullInformationOFHomeQuery ,useGetPolicyOfHomeQuery} = HousesApi;
+export const { useGetFullInformationOFHomeQuery ,useGetPolicyOfHomeQuery ,useGetCommisstionPoliciesQuery} = HousesApi;
 export default HousesApi;

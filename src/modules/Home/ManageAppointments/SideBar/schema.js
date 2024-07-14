@@ -41,7 +41,7 @@ const schema = yup
     rentalStartDate: yup.string().required("Ngày bắt đầu thuê là bắt buộc"),
     numberOfPeople: yup.string().required("Số người là bắt buộc").matches(/^\d+$/, "Số người phải là số"),
     numberOfVehicle: yup.string().required("Số xe là bắt buộc").matches(/^\d+$/, "Số xe phải là số"),
-    chuongTrinhUuDai: yup.string().required("Chương trình ưu đãi là bắt buộc"),
+    chuongTrinhUuDai: yup.string(),
     note: yup.string() ,
     rentalTerm: yup.string().required("Thời hạn hợp đồng là bắt buộc"),
     commissionPolicyId:yup.string() 
