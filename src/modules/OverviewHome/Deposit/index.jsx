@@ -32,7 +32,7 @@ const FormWrapper = () => {
   }, [idRoom, Data]);
 
   const onSubmit = (data) =>{
-     console.log(data)
+    console.log(data)
     console.log(PickServiceInserts)
     console.log(PickFurnitureInserts)
     }

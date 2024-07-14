@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
 import { BsBell, BsChatDots } from "react-icons/bs";
-
+import { AiOutlinePicRight ,AiOutlineRead } from "react-icons/ai";
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -55,12 +55,16 @@ const index = ({ isShow, setShow }) => {
         <div className="w-[316px] h-[38px] gap-6 flex items-center justify-end">
           {/* info */}
           <div className="w-fit h-full gap-3  flex items-center ">
-            <div className="p-[7px]">
+            <div className="p-[7px] cursor-pointer">
               <BsBell color="white" size={24} />
             </div>
-            <div className="p-[7px]">
-              <BsChatDots color="white" size={24} />
-            </div>
+             
+            <Link to={"/quan_ly_lich_hen"} className="p-[7px]  cursor-pointer" >
+              <AiOutlinePicRight color="white" size={24} />
+            </Link>
+            <Link to={"/quan_ly_hop_dong"} className="p-[7px]  cursor-pointer" >
+              <AiOutlineRead color="white" size={24} />
+            </Link>
           </div>
 
           {localStorage.getItem("token") ? (
@@ -90,7 +94,7 @@ const index = ({ isShow, setShow }) => {
                 <li className="cursor-pointer text-base">
                   <Link to={"/danh_sach_phong_yeu_thich"}>Yêu thích</Link>
                 </li>
-                <li className="cursor-pointer text-base">
+                {/* <li className="cursor-pointer text-base">
                   <Link to={"/quan_ly_hop_dong"}>
                     Quản lý hợp đồng
                   </Link>
@@ -99,7 +103,7 @@ const index = ({ isShow, setShow }) => {
                   <Link to={"/quan_ly_lich_hen"}>
                     Quản lý lịch hẹn
                   </Link>
-                </li>
+                </li> */}
                 <li onClick={handleLogout} className="cursor-pointer text-base">
                   <span> Đăng xuất</span>
                 </li>
