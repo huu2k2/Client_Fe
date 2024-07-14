@@ -39,7 +39,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
   const [totalItems, setTotalItems] = useState(1);
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfAppointmentsMutation();
-    const pageSize =4
+    const pageSize =6
   const fetchAppointments = useCallback(async () => {
     try {
       const startDateISO = convertDateToISO(date[0]);
