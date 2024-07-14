@@ -4,6 +4,7 @@ import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
 import { useQueryFilterData } from "@customhooks";
 import Badge from "@mui/material/Badge";
+import { TbBuildingEstate } from "react-icons/tb";
 
 const Index = ({ clear, setClear }) => {
   const [filterData, setFilterData] = useQueryFilterData();
@@ -76,7 +77,7 @@ const Index = ({ clear, setClear }) => {
           className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
+          <TbBuildingEstate className="w-5 h-5 text-[#888888]" />
           <div className="">
             <span className="w-full h-full text-gray-500 text-sm font-normal leading-tight">
               Loại phòng

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AiOutlineEnvironment } from "react-icons/ai";
+import { TbCoin } from "react-icons/tb";
 import "animate.css";
 import { useQueryFilterData } from "@customhooks";
 import { useLocation } from "react-router-dom";
@@ -77,7 +77,7 @@ const Index = ({ clear, setClear }) => {
           className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
+          <TbCoin className="w-5 h-5 text-[#888888]" />
           <div>
             <span className="w-full h-full text-gray-500 text-base font-normal leading-5">
               Giá Thuê

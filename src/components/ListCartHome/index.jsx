@@ -11,11 +11,11 @@ const Index = (option) => {
   const money = queryParams.get("Price") || null;
   const address = queryParams.get("Address")?.replace(/_/g, " ") || null;
   const category = queryParams.get("category") || null;
-  // const [rooms] = useGetFavoriteQuery();
+
 
   const { data: faveritedata, isLoading, isSuccess } = useGetFavoriteQuery();
   // // Kiểm tra pathname của location để quyết định khi nào hiển thị GridCart
-  // const showGridCart = location.pathname === /;
+
 
   return (
     <div className="w-[1360px] flex flex-col gap-5 mb-20">

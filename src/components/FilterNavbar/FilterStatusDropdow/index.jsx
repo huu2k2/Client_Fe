@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AiOutlineEnvironment } from "react-icons/ai";
+import { TbCopyCheckFilled } from "react-icons/tb";
 import { Badge } from '@mui/material'; // Ensure Badge is imported
 import "animate.css";
 import InputCheckBox from "../../InputCheckBox";
@@ -70,7 +70,7 @@ const Index = ({ clear, setClear }) => {
           className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
+          <TbCopyCheckFilled className="w-5 h-5 text-[#888888]" />
           <div className="">
             <span className="w-full h-full text-gray-500 text-base font-normal leading-5">
               Trạng thái
