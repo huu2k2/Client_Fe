@@ -39,13 +39,17 @@ const SelectCompoment = ({setIsShow,setDate}) => {
           setIsShow(false); // Ẩn DatePicker nếu cần
           break;
         case "month ago":
-          const monthAgo = new Date(now);
-          monthAgo.setMonth(now.getMonth() - 1);
-          setDate([
-            format(monthAgo, "dd/MM/yyyy", { locale: vi }),
-            format(now, "dd/MM/yyyy", { locale: vi }),
-          ]);
-          setIsShow(false); // Ẩn DatePicker nếu cần
+          const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          const startOfLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1);
+          const endOfLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0);
+          
+          // Định dạng ngày tháng
+          const formattedStartOfLastMonth = format(startOfLastMonth, "dd/MM/yyyy", { locale: vi });
+          const formattedEndOfLastMonth = format(endOfLastMonth, "dd/MM/yyyy", { locale: vi });
+      
+          // Thiết lập ngày
+          setDate([formattedStartOfLastMonth, formattedEndOfLastMonth]);
+          setIsShow(false);
           break;
         case "select":
           setIsShow(true);
