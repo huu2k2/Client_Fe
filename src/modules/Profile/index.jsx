@@ -105,9 +105,19 @@ const Index = ({ setShow }) => {
   //  const rs = await postUpdate(formData)
 
   const handleUpadte = async () => {
-
-    //  const rs = await postUpdate(formData)
-
+    console.log("🚀 ~ handleUpadte ~ formData:", formData)
+    try {
+      const response = await postUpdate(formData);
+      if (!response.error) {
+        // handle successful update, e.g., show a success message or close the modal
+        handleClose();
+      } else {
+        // handle error
+        console.error("Update failed: ", response.error);
+      }
+    } catch (error) {
+      console.error("An error occurred while updating: ", error);
+    }
   };
   const handleFileChange = (name, file) => {
     setFormData(prevData => ({ ...prevData, [name]: file }));

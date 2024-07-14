@@ -26,5 +26,5 @@ const ProfilesApi = createApi({
   }),
 });
 
-export const {useGetProfileQuery ,usePostUpdateMutation} = ProfilesApi;
+export const { useGetProfileQuery, usePostUpdateMutation } = ProfilesApi;
 export default ProfilesApi;
