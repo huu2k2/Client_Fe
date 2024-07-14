@@ -12,14 +12,14 @@ const muiltyRow = [
   { id: 7, title: 'Địa chỉ thường trú', type: 'text', placeholder: '' ,name:'permanentAddress'}
 ];
 
-const InfoClient = ({register}) => {
+const InfoClient = ({register,isSidebarOpen}) => {
   return (
     <div className="w-[556px] h-fit px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
         Thông tin khách hàng
       </div>
       {muiltyRow.map((row) => (
-     <RowComponent register={register}    name={row.name} key={row.id} title={row.title} type={row.type} placeholder={row.placeholder} unit={row.unit} />
+     <RowComponent register={register}  isSidebarOpen={isSidebarOpen}  name={row.name} key={row.id} title={row.title} type={row.type} placeholder={row.placeholder} unit={row.unit} />
       ))}
     </div>
   );

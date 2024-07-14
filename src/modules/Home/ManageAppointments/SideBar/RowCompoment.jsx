@@ -9,14 +9,16 @@ const RowComponent = ({
   register,
   name,
   getInfo,
-  setValue
+  setValue,
+  isSidebarOpen
 }) => {
   const isDisabled = [
     "roomId",
-    "tip",
+    "commissionPolicyId",
     "datcoc",
     "houseAddress",
     "rentalPrice",
+    "chuongTrinhUuDai"
   ].includes(name);
 
   const dynamicPlaceholder = () => {
@@ -40,32 +42,45 @@ const RowComponent = ({
     "additionalDepositAmount",
   ].includes(name);
 
-  const plaValue = ["roomId", "houseAddress", "datcoc","rentalPrice"].includes(name);
+  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(
+    name
+  );
 
   const [value, setValues] = useState("");
-
+  useEffect(()=>{
+    setValues("")
+  },[isSidebarOpen])
   useEffect(() => {
     if (priceValue && getInfo[name] !== undefined) {
       setValues(getInfo[name].toLocaleString("vi-VN"));
-    }  
-  }, [getInfo, name ]);
-useEffect(()=>{
-  if (plaValue) {
-    setValues(dynamicPlaceholder());
-    setValue(name,getInfo[name])
-  }
-},[name, plaValue, dynamicPlaceholder, getInfo, setValue])
+    }
+  }, [  name]);
+  useEffect(() => {
+    if (plaValue) {
+      setValues(dynamicPlaceholder());
+      setValue(name, getInfo[name]);
+    }
+  }, [name, plaValue, dynamicPlaceholder, setValue]);
+
+  const NameValue = ["fullName"].includes(
+    name
+  );
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
     setValues(e.target.value);
     if (priceValue) {
       const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       setValues(Number(numericValue).toLocaleString("vi-VN"));
-    } else {
+    }  else if (NameValue) {
+      const strValue = inputValue.split(' ');
+      let capitalizedStr = strValue.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      setValues(capitalizedStr);
+    }
+      else {
       setValues(e.target.value);
     }
   };
- 
+
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
       <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight font-['Inter']">
@@ -81,7 +96,7 @@ useEffect(()=>{
         }`}
       >
         <input
-          {... (name === 'datcoc' || name ==='tip' ?{}:register(name))}
+          {...(name === "datcoc" || name === "tip" ? {} : register(name))}
           type={type}
           className={`w-full outline-none text-sm font-normal leading-tight  `}
           placeholder={placeholder}
@@ -95,7 +110,6 @@ useEffect(()=>{
           </div>
         )}
       </div>
-      
     </div>
   );
 };

@@ -17,7 +17,7 @@ function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
-const SideBar = ({ getInfo }) => {
+const SideBar = ({ getInfo}) => {
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id);
 
@@ -80,13 +80,18 @@ const SideBar = ({ getInfo }) => {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => toast.error(error.message));
+      console.log(errors)
     }
   }, [errors]);
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleDrawerChange = (event) => {
+    setIsSidebarOpen(event.target.checked);
+  };
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end" >
       <ToastContainer />
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle"  onChange={handleDrawerChange} 
+        checked={isSidebarOpen}/>
       <div className="drawer-content">{/* Page content here */}</div>
       <div className="drawer-side">
         <label
@@ -121,8 +126,8 @@ const SideBar = ({ getInfo }) => {
           {/* Header End */}
 
           {/* Form Sections */}
-          <InfoClient register={register} />
-          <InfoRoom register={register} getInfo={getInfo} setValue={setValue} />
+          <InfoClient register={register} isSidebarOpen={isSidebarOpen}/>
+          <InfoRoom register={register} getInfo={getInfo} setValue={setValue} isSidebarOpen={isSidebarOpen}/>
           <Surcharges
             register={register}
             serviceInserts={serviceInserts}

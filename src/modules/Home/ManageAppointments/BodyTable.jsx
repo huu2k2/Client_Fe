@@ -16,7 +16,7 @@ import { parse, formatISO } from "date-fns";
 import { useGetListOfAppointmentsMutation } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 
-const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
+const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
@@ -25,6 +25,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
     const handleClickOutside = (event) => {
       if (refOfModel.current && !refOfModel.current.contains(event.target)) {
         setIsShow(false);
+        
       }
     };
 
@@ -39,7 +40,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
   const [totalItems, setTotalItems] = useState(1);
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfAppointmentsMutation();
-    const pageSize =6
+  const pageSize = 6;
   const fetchAppointments = useCallback(async () => {
     try {
       const startDateISO = convertDateToISO(date[0]);
@@ -154,7 +155,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
-                      {index + 1 + (currentPage - 1) * pageSize}
+                        {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
                     <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
@@ -217,9 +218,26 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
                           tabIndex={index}
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
                         >
- 
-                          <li onClick={()=>setInfo((prev) => ({ ...prev, roomId: i.roomCode,houseAddress:i.houseAddress,rentalPrice:i.rentalPrice ,id:i.roomId}))}>
-                          <label htmlFor="my-drawer-4" className="drawer-button text-gray-700 text-sm font-normal  leading-tight">Đặt cọc</label>
+                          <li
+                            onClick={() =>{
+                              setInfo((prev) => ({
+                                ...prev,
+                                roomId: i.roomCode,
+                                houseAddress: i.houseAddress,
+                                rentalPrice: i.rentalPrice,
+                                id: i.roomId,
+                              }))
+                              
+                            }
+                             
+                            }
+                          >
+                            <label
+                              htmlFor="my-drawer-4"
+                              className="drawer-button text-gray-700 text-sm font-normal  leading-tight"
+                            >
+                              Đặt cọc
+                            </label>
                           </li>
                           <li>
                             <a className="text-gray-700 text-sm font-normal  leading-tight">
