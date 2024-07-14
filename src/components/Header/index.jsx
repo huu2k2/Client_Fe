@@ -110,7 +110,7 @@ const index = ({ isShow, setShow }) => {
               </ul>
             </div>
           ) : (
-            <GroudButton />
+            <></>
           )}
         </div>
       </div>
