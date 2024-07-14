@@ -33,5 +33,5 @@ const HousesApi = createApi({
   }),
 });
 
-export const { useGetFullInformationOFHomeQuery, useGetPolicyOfHomeQuery, useGetHouseNameQuery } = HousesApi;
+export const { useGetFullInformationOFHomeQuery, useGetPolicyOfHomeQuery, useGetHouseNameQuery, useGetCommisstionPoliciesQuery  } = HousesApi;
 export default HousesApi;
