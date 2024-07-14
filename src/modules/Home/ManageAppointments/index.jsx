@@ -6,15 +6,15 @@ import SideBar from './SideBar'
 
 const index = () => {
   const [isShow,setIsShow] = useState(false)
- const [getInfo, setInfo]= useState({roomId:0,houseAddress:'',rentalPrice:0,roomCode:'100'})
+ const [getInfo, setInfo]= useState({roomId:0,houseAddress:'',rentalPrice:0,roomCode:'100',houseId:0})
  
   return (
     <div className='gap-4 flex flex-col items-start'>
      
     <Header/>
     <Tiltle/>
-    <BodyTable setIsShow={setIsShow} isShow={isShow}  setInfo={setInfo}/>
-    <SideBar  getInfo={getInfo}/>
+    <BodyTable setIsShow={setIsShow} isShow={isShow}  setInfo={setInfo}  />
+    <SideBar  getInfo={getInfo} />
     </div>
   )
 }

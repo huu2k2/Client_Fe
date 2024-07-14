@@ -1,12 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "@components/Header";
 import Profile from "../Profile/index";
-import { useState } from "react";
+import { useEffect, useState } from "react";
  
 
 const Index = () => {
   const [isShow, setShow] = useState(false);
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [pathname]);
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">

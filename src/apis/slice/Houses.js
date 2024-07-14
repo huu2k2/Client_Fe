@@ -20,6 +20,11 @@ const HousesApi = createApi({
         url: `/v2/Houses/get-policies/${id}`,
       }),
     }),
+    getCommisstionPolicies: build.query({
+      query: (id) => ({
+        url: `/v2/Houses/get-commisstion-policies/${id}`,
+      }),
+    }),
     getHouseName: build.query({
       query: () => ({
         url: `/v2/Houses/get-house-names`,

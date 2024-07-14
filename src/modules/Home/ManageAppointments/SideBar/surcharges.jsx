@@ -10,7 +10,7 @@ const Surcharges = ({register,serviceInserts,setServiceInserts}) => {
   };
   return (
     <div className="w-[556px] h-[425px] px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
-      <div className="text-rose-800 text-lg font-medium font-['Inter'] leading-7">
+      <div className="text-rose-800 text-lg font-medium leading-7">
         Các khoản phụ thu
       </div>
       {serviceInserts && serviceInserts?.map((i,index)=>(
@@ -20,7 +20,7 @@ const Surcharges = ({register,serviceInserts,setServiceInserts}) => {
       ))}
      
       <div className="w-[508px] h-[105px] relative">
-        <div className="w-[180px] left-0 top-[9px] absolute text-gray-700 text-sm font-medium font-['Inter'] leading-tight">
+        <div className="w-[180px] left-0 top-[9px] absolute text-gray-700 text-sm font-medium leading-tight">
           Ghi chú nội bộ
         </div>
         <textarea

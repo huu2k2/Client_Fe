@@ -9,66 +9,101 @@ const RowComponent = ({
   register,
   name,
   getInfo,
-  setValue
+  setValue,
+  isSidebarOpen,
+  getNamecommissionPolicyId,
 }) => {
   const isDisabled = [
     "roomId",
-    "tip",
+    "commissionPolicyId",
     "datcoc",
     "houseAddress",
     "rentalPrice",
+    "chuongTrinhUuDai",
+    "tips",
   ].includes(name);
 
+
+  const priceValue = [
+  
+    "depositAmount",
+    "additionalDepositAmount",
+  ].includes(name);
+
+  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(name);
+
+  const showAutoPrice = ["depositAmount"].includes(name);
+
+  const [value, setValues] = useState("");
+
+  useEffect(() => {
+    setValues("");
+  }, [isSidebarOpen]);
+ 
+
+  
   const dynamicPlaceholder = () => {
     switch (name) {
       case "roomId":
         return `${getInfo.roomId}`;
       case "houseAddress":
         return getInfo.houseAddress;
-      case "rentalPrice":
-        return getInfo.rentalPrice.toLocaleString("vi-VN");
-      case "datcoc":
-        return 1;
+ 
+      case "chuongTrinhUuDai":
+        return " ";
       default:
         return placeholder;
     }
   };
-
-  const priceValue = [
-    "rentalPrice",
-    "depositAmount",
-    "additionalDepositAmount",
-  ].includes(name);
-
-  const plaValue = ["roomId", "houseAddress", "datcoc","rentalPrice"].includes(name);
-
-  const [value, setValues] = useState("");
-
   useEffect(() => {
-    if (priceValue && getInfo[name] !== undefined) {
-      setValues(getInfo[name].toLocaleString("vi-VN"));
-    }  
-  }, [getInfo, name ]);
-useEffect(()=>{
-  if (plaValue) {
-    setValues(dynamicPlaceholder());
-    setValue(name,getInfo[name])
-  }
-},[name, plaValue, dynamicPlaceholder, getInfo, setValue])
+    if (plaValue) {
+      setValue(name, getInfo[name].toLocaleString("vi-VN"));
+      setValues(dynamicPlaceholder());
+    }
+ 
+    if (showAutoPrice) {
+      setValue(
+        "additionalDepositAmount",
+        (
+          Number(getNamecommissionPolicyId) * getInfo.rentalPrice -
+          Number(value.replace(/[^0-9]/g, ""))
+        ).toLocaleString("vi-VN")
+      );
+    }
+  }, [
+    name,
+    plaValue,
+    dynamicPlaceholder,
+    setValue,
+    getInfo,
+    showAutoPrice,
+    getNamecommissionPolicyId,
+    value,
+    priceValue
+  ]);
+
+  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
+
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
     setValues(e.target.value);
     if (priceValue) {
       const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       setValues(Number(numericValue).toLocaleString("vi-VN"));
+    } else if (NameValue) {
+      const strValue = inputValue.split(" ");
+      let capitalizedStr = strValue
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+      setValues(capitalizedStr);
     } else {
       setValues(e.target.value);
     }
   };
- 
+
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
-      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight font-['Inter']">
+      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight">
         {title}
       </div>
       <div
@@ -81,21 +116,26 @@ useEffect(()=>{
         }`}
       >
         <input
-          {... (name === 'datcoc' || name ==='tip' ?{}:register(name))}
+          {...(name === "datcoc" || name === "tip" ? {} : register(name))}
           type={type}
-          className={`w-full outline-none text-sm font-normal leading-tight  `}
+          className="w-full outline-none text-sm font-normal leading-tight"
           placeholder={placeholder}
           disabled={isDisabled}
-          value={value}
+          value={
+            name === "tips"
+              ? (
+                  Number(getNamecommissionPolicyId) * getInfo.rentalPrice
+                ).toLocaleString("vi-VN")
+              : value
+          }
           onChange={handleChangeValue}
         />
         {unit && (
-          <div className="text-gray-500 text-sm font-normal leading-tight font-['Inter']">
+          <div className="text-gray-500 text-sm font-normal leading-tight">
             {unit}
           </div>
         )}
       </div>
-      
     </div>
   );
 };
