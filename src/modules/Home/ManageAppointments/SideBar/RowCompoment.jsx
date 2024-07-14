@@ -19,7 +19,8 @@ const RowComponent = ({
     "datcoc",
     "houseAddress",
     "rentalPrice",
-    "chuongTrinhUuDai"
+    "chuongTrinhUuDai",
+    "tips"
   ].includes(name);
 
   const dynamicPlaceholder = () => {
@@ -29,12 +30,11 @@ const RowComponent = ({
       case "houseAddress":
         return getInfo.houseAddress;
       case "rentalPrice":
-        return getInfo.rentalPrice.toLocaleString("vi-VN");
+        return Number(getInfo.rentalPrice).toLocaleString("vi-VN");
       case "datcoc":
         return 1;
-        case "chuongTrinhUuDai":
+      case "chuongTrinhUuDai":
         return " ";
- 
       default:
         return placeholder;
     }
@@ -43,45 +43,51 @@ const RowComponent = ({
   const priceValue = [
     "rentalPrice",
     "depositAmount",
-    "additionalDepositAmount",
+    "additionalDepositAmount"
   ].includes(name);
 
-  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice" ].includes(
-    name
-  );
+  const plaValue = ["roomId", "houseAddress", "datcoc",  ].includes(name);
+
+  const showAutoPrice = ["depositAmount"].includes(name);
 
   const [value, setValues] = useState("");
-  useEffect(()=>{
-    setValues("")
-  },[isSidebarOpen])
+
+  useEffect(() => {
+    setValues("");
+  }, [isSidebarOpen]);
 
   useEffect(() => {
     if (priceValue && getInfo[name] !== undefined) {
       setValues(getInfo[name].toLocaleString("vi-VN"));
     }
-  }, [  name]);
+  }, [getInfo, name, priceValue]);
+
   useEffect(() => {
     if (plaValue) {
       setValues(dynamicPlaceholder());
       setValue(name, getInfo[name]);
     }
-  }, [name, plaValue, dynamicPlaceholder, setValue]);
+    if (showAutoPrice) {
+      setValue(
+        "additionalDepositAmount",
+        (Number(getNamecommissionPolicyId) * getInfo.rentalPrice - Number(value.replace(/[^0-9]/g, ""))).toLocaleString("vi-VN")
+      );
+    }
+  }, [name, plaValue, dynamicPlaceholder, setValue, getInfo, showAutoPrice, getNamecommissionPolicyId, value]);
 
-  const NameValue = ["fullName","issuedBy","permanentAddress"].includes(
-    name
-  );
+  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
+
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
     setValues(e.target.value);
     if (priceValue) {
       const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       setValues(Number(numericValue).toLocaleString("vi-VN"));
-    }  else if (NameValue) {
+    } else if (NameValue) {
       const strValue = inputValue.split(' ');
       let capitalizedStr = strValue.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
       setValues(capitalizedStr);
-    }
-      else {
+    } else {
       setValues(e.target.value);
     }
   };
@@ -95,18 +101,16 @@ const RowComponent = ({
         className={`grow shrink basis-0 h-[38px] px-[13px] py-[9px] ${
           isDisabled ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
-          unit
-            ? "justify-start items-center gap-2 flex"
-            : "justify-between items-center flex"
+          unit ? "justify-start items-center gap-2 flex" : "justify-between items-center flex"
         }`}
       >
         <input
           {...(name === "datcoc" || name === "tip" ? {} : register(name))}
           type={type}
-          className={`w-full outline-none text-sm font-normal leading-tight  `}
+          className="w-full outline-none text-sm font-normal leading-tight"
           placeholder={placeholder}
           disabled={isDisabled}
-          value={name ==='tips' ?getNamecommissionPolicyId:value}
+          value={name === "tips" ? (Number(getNamecommissionPolicyId) * getInfo.rentalPrice).toLocaleString("vi-VN") : value}
           onChange={handleChangeValue}
         />
         {unit && (

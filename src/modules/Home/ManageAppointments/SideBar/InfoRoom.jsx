@@ -32,7 +32,7 @@ const muiltyRow = [
 const muiltyRow1 = [
   {
     id: 6,
-    title: "Hoa hồng",
+    title: "Số tiền cọc",
     type: "text",
     placeholder: "",
     unit: "%",

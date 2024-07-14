@@ -17,8 +17,8 @@ const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId}) => {
   const handleChangeValue = (selectedOption) => {
     setValues(selectedOption);
     setValue('commissionPolicyId',selectedOption.value)
-    const val =selectedOption.label?.split('-')[2].trim().split(' ')[2]
-   
+    const val =selectedOption.label?.split('-')[1].trim().split(' ')[1]
+
     setNamecommissionPolicyId(val)
   };
  
