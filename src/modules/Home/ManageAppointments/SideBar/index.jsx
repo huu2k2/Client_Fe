@@ -53,9 +53,13 @@ const SideBar = ({ getInfo }) => {
       dateRange: coverDate(data.dateRange),
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
       roomId: Number(getInfo.id),
-      rentalPrice: Number(data.rentalPrice),
+      rentalPrice:Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,
+      additionalDepositAmount:Number(data.additionalDepositAmount.replace(/\./g, "")),
+      depositAmount:Number(data.depositAmount.replace(/\./g, "")),
+      numberOfPeople:Number(data.numberOfPeople),
+      numberOfVehicle:Number(data.numberOfVehicle),
     };
 
     const kq = await addDeposit(convertData);

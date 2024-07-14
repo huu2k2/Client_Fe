@@ -11,7 +11,7 @@ const RowComponent = ({
   getInfo,
   setValue,
   isSidebarOpen,
-  getNamecommissionPolicyId
+  getNamecommissionPolicyId,
 }) => {
   const isDisabled = [
     "roomId",
@@ -20,33 +20,17 @@ const RowComponent = ({
     "houseAddress",
     "rentalPrice",
     "chuongTrinhUuDai",
-    "tips"
+    "tips",
   ].includes(name);
 
-  const dynamicPlaceholder = () => {
-    switch (name) {
-      case "roomId":
-        return `${getInfo.roomId}`;
-      case "houseAddress":
-        return getInfo.houseAddress;
-      case "rentalPrice":
-        return Number(getInfo.rentalPrice).toLocaleString("vi-VN");
-      case "datcoc":
-        return 1;
-      case "chuongTrinhUuDai":
-        return " ";
-      default:
-        return placeholder;
-    }
-  };
 
   const priceValue = [
-    "rentalPrice",
+  
     "depositAmount",
-    "additionalDepositAmount"
+    "additionalDepositAmount",
   ].includes(name);
 
-  const plaValue = ["roomId", "houseAddress", "datcoc",  ].includes(name);
+  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(name);
 
   const showAutoPrice = ["depositAmount"].includes(name);
 
@@ -55,25 +39,48 @@ const RowComponent = ({
   useEffect(() => {
     setValues("");
   }, [isSidebarOpen]);
+ 
 
-  useEffect(() => {
-    if (priceValue && getInfo[name] !== undefined) {
-      setValues(getInfo[name].toLocaleString("vi-VN"));
+  
+  const dynamicPlaceholder = () => {
+    switch (name) {
+      case "roomId":
+        return `${getInfo.roomId}`;
+      case "houseAddress":
+        return getInfo.houseAddress;
+ 
+      case "chuongTrinhUuDai":
+        return " ";
+      default:
+        return placeholder;
     }
-  }, [getInfo, name, priceValue]);
-
+  };
   useEffect(() => {
     if (plaValue) {
+      setValue(name, getInfo[name].toLocaleString("vi-VN"));
       setValues(dynamicPlaceholder());
-      setValue(name, getInfo[name]);
     }
+ 
     if (showAutoPrice) {
       setValue(
         "additionalDepositAmount",
-        (Number(getNamecommissionPolicyId) * getInfo.rentalPrice - Number(value.replace(/[^0-9]/g, ""))).toLocaleString("vi-VN")
+        (
+          Number(getNamecommissionPolicyId) * getInfo.rentalPrice -
+          Number(value.replace(/[^0-9]/g, ""))
+        ).toLocaleString("vi-VN")
       );
     }
-  }, [name, plaValue, dynamicPlaceholder, setValue, getInfo, showAutoPrice, getNamecommissionPolicyId, value]);
+  }, [
+    name,
+    plaValue,
+    dynamicPlaceholder,
+    setValue,
+    getInfo,
+    showAutoPrice,
+    getNamecommissionPolicyId,
+    value,
+    priceValue
+  ]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
 
@@ -84,8 +91,10 @@ const RowComponent = ({
       const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       setValues(Number(numericValue).toLocaleString("vi-VN"));
     } else if (NameValue) {
-      const strValue = inputValue.split(' ');
-      let capitalizedStr = strValue.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+      const strValue = inputValue.split(" ");
+      let capitalizedStr = strValue
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
       setValues(capitalizedStr);
     } else {
       setValues(e.target.value);
@@ -101,7 +110,9 @@ const RowComponent = ({
         className={`grow shrink basis-0 h-[38px] px-[13px] py-[9px] ${
           isDisabled ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
-          unit ? "justify-start items-center gap-2 flex" : "justify-between items-center flex"
+          unit
+            ? "justify-start items-center gap-2 flex"
+            : "justify-between items-center flex"
         }`}
       >
         <input
@@ -110,7 +121,13 @@ const RowComponent = ({
           className="w-full outline-none text-sm font-normal leading-tight"
           placeholder={placeholder}
           disabled={isDisabled}
-          value={name === "tips" ? (Number(getNamecommissionPolicyId) * getInfo.rentalPrice).toLocaleString("vi-VN") : value}
+          value={
+            name === "tips"
+              ? (
+                  Number(getNamecommissionPolicyId) * getInfo.rentalPrice
+                ).toLocaleString("vi-VN")
+              : value
+          }
           onChange={handleChangeValue}
         />
         {unit && (

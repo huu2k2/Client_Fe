@@ -27,7 +27,10 @@ const schema = yup
     // Thông tin căn hộ
     roomId: yup.string().required("ID phòng là bắt buộc"),
     houseAddress: yup.string().required("Địa chỉ căn hộ là bắt buộc"),
-    rentalPrice: yup.string().required("Giá cho thuê là bắt buộc").matches(/^\d+$/, "Giá cho thuê bổ sung phải là số"),
+    rentalPrice: yup.string().required("Giá cho thuê là bắt buộc").test('is-valid-number', 'Giá cho thuê phải là số hợp lệ', value => {
+      // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
+      return /^\d+$/.test(value.replace(/\./g, ''));
+    }),
     depositDate: yup.string().required("Ngày đặt cọc là bắt buộc"),
     depositAmount: yup.string().required("Số tiền cọc giữ phòng là bắt buộc") .test('is-valid-number', 'Số tiền cọc giữ phòng phải là số hợp lệ', value => {
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
