@@ -13,7 +13,7 @@ import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
 import { parse, formatISO } from "date-fns";
-import { useGetListOfAppointmentsMutation } from "../../../apis/slice/Agencies";
+import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
@@ -25,7 +25,6 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     const handleClickOutside = (event) => {
       if (refOfModel.current && !refOfModel.current.contains(event.target)) {
         setIsShow(false);
-        
       }
     };
 
@@ -38,27 +37,34 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const [getListOfAppointments, { data, error, isLoading }] =
-    useGetListOfAppointmentsMutation();
   const pageSize = 6;
-  const fetchAppointments = useCallback(async () => {
-    try {
-      const startDateISO = convertDateToISO(date[0]);
-      const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-
-      await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: pageSize },
-        body: { start: startDateISO, end: endDateISO },
-      }).unwrap();
-    } catch (err) {
-      console.error("Failed to fetch appointments:", err);
-      setTotalPages(1);
+  const { data, error, isLoading } = useGetListOfAppointmentsQuery({
+    queries: { pageIndex: currentPage, pageSize: pageSize },
+    body: {
+      start: date[0] ? convertDateToISO(date[0]) : null,
+      end: date[1] ? convertDateToISO(date[1]) : null,
     }
-  }, [date, currentPage, getListOfAppointments]);
+  });
+  
 
-  useEffect(() => {
-    fetchAppointments();
-  }, [fetchAppointments]);
+  // const fetchAppointments = useCallback(async () => {
+  //   try {
+  //     const startDateISO = convertDateToISO(date[0]);
+  //     const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
+
+  //     await getListOfAppointments({
+  //       queries: { pageIndex: currentPage, pageSize: pageSize },
+  //       body: { start: startDateISO, end: endDateISO },
+  //     }).unwrap();
+  //   } catch (err) {
+  //     console.error("Failed to fetch appointments:", err);
+  //     setTotalPages(1);
+  //   }
+  // }, [date, currentPage, getListOfAppointments]);
+
+  // useEffect(() => {
+  //   fetchAppointments();
+  // }, [fetchAppointments]);
 
   const totalPagesMemo = useMemo(
     () =>
@@ -96,8 +102,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${isShow ? "" : "hidden"
-            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${
+            isShow ? "" : "hidden"
+          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
@@ -218,19 +225,16 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
                         >
                           <li
-                            onClick={() =>{
+                            onClick={() => {
                               setInfo((prev) => ({
                                 ...prev,
                                 roomId: i.roomCode,
                                 houseAddress: i.houseAddress,
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
-                                houseId:i.houseId
-                              }))
-                              
-                            }
-                             
-                            }
+                                houseId: i.houseId,
+                              }));
+                            }}
                           >
                             <label
                               htmlFor="my-drawer-4"
@@ -244,10 +248,27 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Xuất hợp đồng cọc
                             </a>
                           </li>
+
                           <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
+                            <span
+                              className="text-gray-700 text-sm font-normal  leading-tight"
+                              onClick={() => {
+                                document
+                                  .getElementById("modalChanegroom")
+                                  .showModal();
+                                setInfo((prev) => ({
+                                  ...prev,
+                                  roomId: i.roomCode,
+                                  houseAddress: i.houseAddress,
+                                  rentalPrice: i.rentalPrice,
+                                  id: i.roomId,
+                                  houseId: i.houseId,
+                                  scheduleId:i.scheduleId
+                                }));
+                              }}
+                            >
                               Chuyển phòng
-                            </a>
+                            </span>
                           </li>
                         </ul>
                       </div>

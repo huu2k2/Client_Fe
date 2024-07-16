@@ -12,6 +12,7 @@ import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 
 function coverDate(dateString) {
   const date = new Date(dateString);
@@ -20,7 +21,8 @@ function coverDate(dateString) {
 const SideBar = ({ getInfo }) => {
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
-
+  // const {data:DeposiInfomationData} =useGetDepositInfomationQuery(1)
+  // console.log("data",DeposiInfomationData)
   // State for service and furniture inserts
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
@@ -91,7 +93,7 @@ const SideBar = ({ getInfo }) => {
   };
   return (
     <div className="drawer drawer-end">
-      <ToastContainer />
+      <ToastContainer className={'z-50'}/>
       <input
         id="my-drawer-4"
         type="checkbox"
