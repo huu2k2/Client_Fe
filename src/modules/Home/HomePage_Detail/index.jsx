@@ -39,7 +39,7 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const setData = useGetDataDetail();
-  const { data, error, isLoading } = useGetAllDetailQuery(roomId);
+  const { data } = useGetAllDetailQuery(roomId);
   useEffect(() => {
     setData(data);
   }, [data]);

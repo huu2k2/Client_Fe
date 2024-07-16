@@ -12,7 +12,6 @@ import Pagination from "./Pagination";
 import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
-import { parse, formatISO } from "date-fns";
 import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 
@@ -46,25 +45,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     }
   });
   
-
-  // const fetchAppointments = useCallback(async () => {
-  //   try {
-  //     const startDateISO = convertDateToISO(date[0]);
-  //     const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-
-  //     await getListOfAppointments({
-  //       queries: { pageIndex: currentPage, pageSize: pageSize },
-  //       body: { start: startDateISO, end: endDateISO },
-  //     }).unwrap();
-  //   } catch (err) {
-  //     console.error("Failed to fetch appointments:", err);
-  //     setTotalPages(1);
-  //   }
-  // }, [date, currentPage, getListOfAppointments]);
-
-  // useEffect(() => {
-  //   fetchAppointments();
-  // }, [fetchAppointments]);
+ 
 
   const totalPagesMemo = useMemo(
     () =>
@@ -243,12 +224,6 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Đặt cọc
                             </label>
                           </li>
-                          <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
-                              Xuất hợp đồng cọc
-                            </a>
-                          </li>
-
                           <li>
                             <span
                               className="text-gray-700 text-sm font-normal  leading-tight"

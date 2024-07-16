@@ -6,7 +6,7 @@ import {
   useAddFavoriteMutation,
   useRemoveFavoriteMutation,
   useGetFavoriteQuery,
-} from "../../apis/slice/Agencies";
+} from "@apis/slice/Agencies";
 import ImgHome from "../../assets/notfound(1).png";
 
 const Index = ({ item, faveritedata }) => {

@@ -21,9 +21,7 @@ function coverDate(dateString) {
 const SideBar = ({ getInfo }) => {
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
-  // const {data:DeposiInfomationData} =useGetDepositInfomationQuery(1)
-  // console.log("data",DeposiInfomationData)
-  // State for service and furniture inserts
+ 
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
 
@@ -63,7 +61,7 @@ const SideBar = ({ getInfo }) => {
       numberOfPeople:Number(data.numberOfPeople),
       numberOfVehicle:Number(data.numberOfVehicle),
     };
-
+//  change iupdate
     const kq = await addDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
@@ -91,11 +89,13 @@ const SideBar = ({ getInfo }) => {
       });
     }
   };
+
+
   return (
     <div className="drawer drawer-end">
       <ToastContainer className={'z-50'}/>
       <input
-        id="my-drawer-4"
+        id="my-drawer-5"
         type="checkbox"
         className="drawer-toggle"
         onChange={handleDrawerChange}
@@ -104,7 +104,7 @@ const SideBar = ({ getInfo }) => {
       <div className="drawer-content">{/* Page content here */}</div>
       <div className="drawer-side" ref={sidebarRef}>
         <label
-          htmlFor="my-drawer-4"
+          htmlFor="my-drawer-5"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
@@ -120,7 +120,7 @@ const SideBar = ({ getInfo }) => {
               </div>
               <div className="bg-zinc-600 rounded-md justify-center items-center flex">
                 <label
-                  htmlFor="my-drawer-4"
+                  htmlFor="my-drawer-5"
                   aria-label="close sidebar"
                   className="drawer-overlay"
                 >

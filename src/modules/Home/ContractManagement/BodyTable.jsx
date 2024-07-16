@@ -15,8 +15,11 @@ import { vi } from "date-fns/locale";
 import { parse, formatISO } from "date-fns";
 import { useGetListOfContractManagementMutation } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
-
-const BodyTable = ({ isShow, setIsShow }) => {
+import { usePostDepositMutation } from "../../../apis/slice/Deposit";
+import {   toast } from "react-toastify";
+ 
+ 
+const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
@@ -50,7 +53,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
         body: { start: startDateISO, end: endDateISO },
       }).unwrap();
     } catch (err) {
-      console.error("Failed to fetch appointments:", err);
+ 
       setTotalPages(1);
     }
   }, [date, currentPage, getListOfAppointments]);
@@ -73,9 +76,20 @@ const BodyTable = ({ isShow, setIsShow }) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
- console.log(data)
+
+const [PostDeposit] = usePostDepositMutation()
+const hanldeExportDeposit=async(depositId)=>{
+ 
+try {
+  await PostDeposit(depositId).unwrap()
+  toast.success("Xuất hợp đồng thành công!")
+} catch (error) {
+  toast.error("Xuất hợp đồng không thành công!")
+}
+}
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
+      
       <div className="flex justify-start items-start gap-4 relative">
         <SelectCompoment setIsShow={setIsShow} setDate={setDate} />
         <div className="flex">
@@ -216,16 +230,29 @@ const BodyTable = ({ isShow, setIsShow }) => {
                           tabIndex={0}
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white"
                         >
-                          <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
-                              Đặt cọc
-                            </a>
+                          <li onClick={() => {
+                              setInfo((prev) => ({
+                                ...prev,
+                                roomId: i.roomCode,
+                                houseAddress: i.houseAddress,
+                                rentalPrice: i.rentalPrice,
+                                id: i.roomId,
+                                houseId: i.houseId,
+                              }));
+                            }}>
+                            <label
+                              htmlFor="my-drawer-5"
+                              className="drawer-button text-gray-700 text-sm font-normal  leading-tight"
+                            >
+                              Xem thông tin đặt cọc
+                            </label>
                           </li>
-                          <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
+                          <li onClick={()=>hanldeExportDeposit(i.depositId)}>
+                            <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Xuất hợp đồng cọc
-                            </a>
+                            </span>
                           </li>
+                          
                         </ul>
                       </div>
                     </td>
