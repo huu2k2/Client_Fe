@@ -33,7 +33,7 @@ const InputSelect = ({ label, setFormData, variable }) => {
   useEffect(() => {
     if (data?.data) {
       const formattedOptions = data.data.map((i) => ({
-        value: i.id,
+        value: i.id.toString(),
         label: i.name,
       }));
       setOptions(formattedOptions);

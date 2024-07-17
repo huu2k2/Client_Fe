@@ -22,7 +22,7 @@ const Index = ({ setShow }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  // hanlde close
+  // handle close
   const handleClose = () => {
     setIsExiting(true);
     setTimeout(() => {
@@ -30,6 +30,7 @@ const Index = ({ setShow }) => {
       setIsExiting(false);
     }, 1000); // Duration of the slide-out animation
   };
+
   // handle change image
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
@@ -45,11 +46,11 @@ const Index = ({ setShow }) => {
   const handleUploadImg = () => {
     inputFileRef.current.click();
   };
-  const hanldeCancle = () => {
+  const handleCancel = () => {
     handleClose();
   };
 
-  //   handle ref for click close
+  // handle ref for click close
   const handleClickOutside = (event) => {
     if (refContainer.current && !refContainer.current.contains(event.target)) {
       handleClose();
@@ -87,7 +88,7 @@ const Index = ({ setShow }) => {
         SignatureUrl: data.response.signatureUrl || null,
         BeforeIdentification: data.response.beforeIdentification || null,
         AfterIdentification: data.response.afterIdentification || null,
-        BankCode: data.response.bankCode || null,
+        BankCode: data.response.bankCode ? data.response.bankCode.toString() : "",
         AccountNumber: data.response.accountNumber || null,
         AccountName: data.response.accountName || null,
         FullName: data.response.fullName || null,
@@ -101,11 +102,8 @@ const Index = ({ setShow }) => {
     }
   }, [data]);
 
-  // const handleUpadte = async () => {
-  //  const rs = await postUpdate(formData)
-
-  const handleUpadte = async () => {
-    console.log("🚀 ~ handleUpadte ~ formData:", formData)
+  const handleUpdate = async () => {
+    console.log("🚀 ~ handleUpdate ~ formData:", formData);
     try {
       const response = await postUpdate(formData);
       if (!response.error) {
@@ -119,14 +117,15 @@ const Index = ({ setShow }) => {
       console.error("An error occurred while updating: ", error);
     }
   };
+
   const handleFileChange = (name, file) => {
     setFormData(prevData => ({ ...prevData, [name]: file }));
   };
+
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end  profile 
-         ${isExiting ? "animate-slide-out" : "animate-slide-in"
-        }`}
+      className={`fixed inset-0 z-50 flex justify-end profile 
+         ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
       <div
         ref={refContainer}
@@ -150,7 +149,7 @@ const Index = ({ setShow }) => {
             <img
               src={imagePreview ? imagePreview : ImgAvatar}
               alt="Avatar"
-              className="w-[120px] h-[120px] rounded-[50%]   object-cover"
+              className="w-[120px] h-[120px] rounded-[50%] object-cover"
               onClick={handleUploadImg}
             />
             <input
@@ -252,17 +251,19 @@ const Index = ({ setShow }) => {
           <InputFileImg
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange('SignatureUrl', file)}
+            onChange={(file) => handleFileChange("SignatureUrl", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange('BeforeIdentification', file)}
+            onChange={(file) =>
+              handleFileChange("BeforeIdentification", file)
+            }
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange('AfterIdentification', file)}
+            onChange={(file) => handleFileChange("AfterIdentification", file)}
           />
         </div>
 
@@ -296,12 +297,12 @@ const Index = ({ setShow }) => {
         <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
           <button
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
-            onClick={hanldeCancle}
+            onClick={handleCancel}
           >
             Hủy
           </button>
           <button
-            onClick={handleUpadte}
+            onClick={handleUpdate}
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
           >
             Cập nhật
