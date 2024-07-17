@@ -9,63 +9,27 @@ import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+  FullName: yup.string().required("Tên khách hàng là bắt buộc"),
+  PhoneNumber: yup.string(),
+  Identification: yup
+    .string()
+    .matches(/^\d{12}$/, "Căn cước công dân phải là số và có 12 chữ số")
+    .required("Căn cước công dân là bắt buộc"),
+});
 
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
-  const { data, isLoading, isSuccess } = useGetProfileQuery();
-  const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
-    usePostUpdateMutation();
-
+  const { data, isLoading } = useGetProfileQuery();
+  const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
   const [isExiting, setIsExiting] = useState(false);
 
-  // handle get avatar
   const inputFileRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-
-  // handle close
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      setShow(false);
-      setIsExiting(false);
-    }, 1000); // Duration of the slide-out animation
-  };
-
-  // handle change image
-  const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
-    setSelectedImage(imageFile);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
-    reader.readAsDataURL(imageFile);
-  };
-
-  const handleUploadImg = () => {
-    inputFileRef.current.click();
-  };
-  const handleCancel = () => {
-    handleClose();
-  };
-
-  // handle ref for click close
-  const handleClickOutside = (event) => {
-    if (refContainer.current && !refContainer.current.contains(event.target)) {
-      handleClose();
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  // handle data for update
-  // select all data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
     SignatureUrl: null,
@@ -82,6 +46,7 @@ const Index = ({ setShow }) => {
     IssuedBy: "",
     PermanentAddress: ""
   });
+
   useEffect(() => {
     if (data) {
       setFormData({
@@ -103,16 +68,51 @@ const Index = ({ setShow }) => {
     }
   }, [data]);
 
+  const handleClose = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      setShow(false);
+      setIsExiting(false);
+    }, 1000);
+  };
+
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
+    setSelectedImage(imageFile);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(imageFile);
+  };
+
+  const handleUploadImg = () => {
+    inputFileRef.current.click();
+  };
+  const handleCancel = () => {
+    handleClose();
+  };
+
+  const handleClickOutside = (event) => {
+    if (refContainer.current && !refContainer.current.contains(event.target)) {
+      handleClose();
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleUpdate = async () => {
     console.log("🚀 ~ handleUpdate ~ formData:", formData);
     try {
       const response = await postUpdate(formData);
       if (!response.error) {
-        // handle successful update, e.g., show a success message or close the modal
-        toast.success("Đặt lịch thành công!");
+        toast.success("Cập nhật thông tin thành công!");
         handleClose();
       } else {
-        // handle error
         console.error("Update failed: ", response.error);
       }
     } catch (error) {
@@ -126,26 +126,18 @@ const Index = ({ setShow }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end profile 
-         ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
       <div
         ref={refContainer}
         className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden"
       >
-        {/* Header */}
         {isLoading && <LoadingSpinner isLoading={isLoading} />}
         <div className="p-6 bg-black flex justify-between items-center">
-          <span className="text-lg font-medium text-white">
-            Thông tin cá nhân
-          </span>
-          <AiTwotoneCloseSquare
-            className="w-6 h-6 rounded-sm text-white cursor-pointer"
-            onClick={handleClose}
-          />
+          <span className="text-lg font-medium text-white">Thông tin cá nhân</span>
+          <AiTwotoneCloseSquare className="w-6 h-6 rounded-sm text-white cursor-pointer" onClick={handleClose} />
         </div>
 
-        {/* Info */}
         <div className="gap-4 w-full py-6 flex flex-col justify-center items-center bg-white">
           <div className="w-full h-fit flex justify-center items-center flex-col gap-2">
             <img
@@ -164,13 +156,10 @@ const Index = ({ setShow }) => {
             />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {data?.response?.fullName}
-            </h1>
+            <h1 className="text-2xl font-bold text-gray-900">{data?.response?.fullName}</h1>
           </div>
         </div>
 
-        {/* User Info */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người dùng"} />
           <InputFiel
@@ -191,7 +180,6 @@ const Index = ({ setShow }) => {
           />
         </div>
 
-        {/* Contract Representative Info */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel
@@ -258,9 +246,7 @@ const Index = ({ setShow }) => {
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) =>
-              handleFileChange("BeforeIdentification", file)
-            }
+            onChange={(file) => handleFileChange("BeforeIdentification", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
@@ -269,7 +255,6 @@ const Index = ({ setShow }) => {
           />
         </div>
 
-        {/* Tài khoản ngân hàng */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Tài khoản ngân hàng"} />
           <InputSelect
@@ -295,7 +280,6 @@ const Index = ({ setShow }) => {
           />
         </div>
 
-        {/* Fixed button */}
         <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
           <button
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"

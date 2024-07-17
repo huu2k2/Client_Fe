@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
 import { BsBell, BsChatDots } from "react-icons/bs";
+import { ToastContainer } from "react-toastify";
 
 const GroudButton = () => {
   return (
@@ -40,6 +41,8 @@ const index = ({ isShow, setShow }) => {
   };
   return (
     <div className="w-screen h-[64px] bg-black flex justify-center items-center ">
+      <ToastContainer />
+
       <div
         className="w-[1360px] 
        h-full flex justify-between items-center"
