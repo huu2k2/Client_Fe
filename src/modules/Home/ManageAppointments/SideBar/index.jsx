@@ -92,7 +92,7 @@ const SideBar = ({ getInfo }) => {
     }
   };
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end bg-white">
       <ToastContainer className={'z-50'}/>
       <input
         id="my-drawer-4"

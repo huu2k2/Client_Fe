@@ -17,7 +17,7 @@ const Index = ({ setShow }) => {
   const { data, isLoading, isSuccess } = useGetProfileQuery();
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
     usePostUpdateMutation();
- 
+
   const [isExiting, setIsExiting] = useState(false);
 
   // handle get avatar
@@ -68,7 +68,6 @@ const Index = ({ setShow }) => {
   // handle data for update
   // select all data for update
   const [formData, setFormData] = useState({
-
     signatureBase64: null,
     beforeIdentificationBase64: null,
     afterIdentificationBase64: null,
@@ -103,19 +102,21 @@ const Index = ({ setShow }) => {
     }
   }, [data]);
 
-  // const handleUpadte = async () => {
-  //  const rs = await postUpdate(formData)
+ 
 
   const handleUpadte = async () => {
- console.log(formData)
+ 
     try {
-      const rs = await postUpdate(formData)
-  console.log(rs)
-      toast.success("Cập nhập thành công!")
+      const rs = await postUpdate({
+        ...formData,
+        signatureBase64: formData.signatureBase64?.split(",")[1],
+      });
+      if (rs.data.isSuccess) {
+        toast.success("Cập nhập thành công!");
+      }
     } catch (error) {
-      toast.error("Lỗi cập nhập!")
+      toast.error("Lỗi cập nhập!");
     }
-   
   };
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
@@ -125,7 +126,7 @@ const Index = ({ setShow }) => {
       className={`fixed inset-0 z-50 flex justify-end  profile 
          ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
-      <ToastContainer/>
+      <ToastContainer />
       <div
         ref={refContainer}
         className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden"
@@ -248,7 +249,7 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"permanentAddress"}
           />
- 
+
           <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
@@ -257,12 +258,16 @@ const Index = ({ setShow }) => {
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
+            onChange={(file) =>
+              handleFileChange("beforeIdentificationBase64", file)
+            }
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
+            onChange={(file) =>
+              handleFileChange("afterIdentificationBase64", file)
+            }
           />
         </div>
 
@@ -290,24 +295,22 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"accountName"}
           />
-           {/* Fixed button */}
-        <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
-          <button
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
-            onClick={hanldeCancle}
-          >
-            Hủy
-          </button>
-          <button
-            onClick={handleUpadte}
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
-          >
-            Cập nhật
-          </button>
+          {/* Fixed button */}
+          <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
+            <button
+              className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
+              onClick={hanldeCancle}
+            >
+              Hủy
+            </button>
+            <button
+              onClick={handleUpadte}
+              className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
+            >
+              Cập nhật
+            </button>
+          </div>
         </div>
-        </div>
-
-       
       </div>
     </div>
   );

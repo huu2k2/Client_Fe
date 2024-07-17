@@ -161,7 +161,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                       Trạng thái
                     </span>
                   </th>
-                  <th className="w-16 h-10 px-6 py-3 bg-gray-50 "></th>
+                  <th className="w-20 h-10 px-6 py-3 bg-gray-50 "></th>
                 </tr>
               </thead>
               <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">

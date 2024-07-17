@@ -12,9 +12,10 @@ const Signature = ({ name, img, onChange }) => {
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     setSelectedImage(imageFile);
-    onChange(imageFile);
+    
     const reader = new FileReader();
     reader.onloadend = () => {
+      onChange(reader.result?.split(',')[1]);
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(imageFile);

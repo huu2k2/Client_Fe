@@ -14,7 +14,7 @@ const InputFileImg = ({ name, img ,onChange }) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
-      onChange(reader.result)
+      onChange(reader.result?.split(',')[1])
     };
     reader.readAsDataURL(imageFile);
 
