@@ -8,13 +8,14 @@ const Surcharges = ({register,serviceInserts,setServiceInserts}) => {
     );
     setServiceInserts(updatedServiceInserts);
   };
+ 
   return (
     <div className="w-[556px] h-[425px] px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
         Các khoản phụ thu
       </div>
       {serviceInserts && serviceInserts?.map((i,index)=>(
-        <RowSurcharges label={i.serviceName} unit={i.dvt} price={i.servicePrice} key={index} onChange={(newPrice) => handleServicePriceChange(index, newPrice)}
+        <RowSurcharges label={i.name} unit={i.dvt} price={i.servicePrice} key={index} onChange={(newPrice) => handleServicePriceChange(index, newPrice)}
 
 />
       ))}

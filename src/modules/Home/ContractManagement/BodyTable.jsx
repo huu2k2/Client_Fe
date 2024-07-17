@@ -16,10 +16,9 @@ import { parse, formatISO } from "date-fns";
 import { useGetListOfContractManagementMutation } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 import { usePostDepositMutation } from "../../../apis/slice/Deposit";
-import {   toast } from "react-toastify";
- 
- 
-const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
+import { toast } from "react-toastify";
+
+const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
@@ -40,7 +39,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const pageSize =4
+  const pageSize = 4;
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfContractManagementMutation();
   const fetchAppointments = useCallback(async () => {
@@ -53,7 +52,6 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
         body: { start: startDateISO, end: endDateISO },
       }).unwrap();
     } catch (err) {
- 
       setTotalPages(1);
     }
   }, [date, currentPage, getListOfAppointments]);
@@ -77,19 +75,22 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
     setTotalItems(totalItemsMemo);
   }, [data, date]);
 
-const [PostDeposit] = usePostDepositMutation()
-const hanldeExportDeposit=async(depositId)=>{
- 
-try {
-  await PostDeposit(depositId).unwrap()
-  toast.success("Xuất hợp đồng thành công!")
-} catch (error) {
-  toast.error("Xuất hợp đồng không thành công!")
-}
-}
+  const [PostDeposit] = usePostDepositMutation();
+  const handleExportDeposit = async (depositId) => {
+    try {
+      const rs = await PostDeposit(depositId).unwrap();
+      if (rs?.isSucess) {
+        toast.success("Xuất hợp đồng thành công!");
+      } else {
+        toast.error(rs?.message || "Xuất hợp đồng thất bại!");
+      }
+    } catch (error) {
+      toast.error(error.message || "Có lỗi xảy ra!");
+    }
+  };
+  
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
-      
       <div className="flex justify-start items-start gap-4 relative">
         <SelectCompoment setIsShow={setIsShow} setDate={setDate} />
         <div className="flex">
@@ -109,8 +110,9 @@ try {
         </div>
         {/* date picker */}
         <div
-          className={`${isShow ? "" : "hidden"
-            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${
+            isShow ? "" : "hidden"
+          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
@@ -167,7 +169,7 @@ try {
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
-                      {index + 1 + (currentPage - 1) * pageSize}
+                        {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
                     <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
@@ -198,23 +200,23 @@ try {
 
                     <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
-                        {i.rentalPrice.toLocaleString('vi-VN')}
+                        {i.rentalPrice.toLocaleString("vi-VN")}
                       </span>
                     </td>
 
                     <td className="w-40 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
-                    <span className=" text-black text-sm font-normal  leading-tight">
-                    {i.commission}
-                    </span>
-                  </td>
+                      <span className=" text-black text-sm font-normal  leading-tight">
+                        {i.commission}
+                      </span>
+                    </td>
 
-                  <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
-                    <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
-                      <div className="text-center text-emerald-800 text-xs font-medium leading-none">
-                        {i.status === '1'?'Đặt cọc':''}
+                    <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
+                      <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
+                        <div className="text-center text-emerald-800 text-xs font-medium leading-none">
+                          {i.status === "1" ? "Đặt cọc" : ""}
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
                     <td className="w-16 h-[72px] justify-center items-center flex  ">
                       <div className="w-full dropdown dropdown-end">
@@ -230,7 +232,8 @@ try {
                           tabIndex={0}
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white"
                         >
-                          <li onClick={() => {
+                          <li
+                            onClick={() => {
                               setInfo((prev) => ({
                                 ...prev,
                                 roomId: i.roomCode,
@@ -238,8 +241,10 @@ try {
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
                                 houseId: i.houseId,
+                                depositId: i.depositId,
                               }));
-                            }}>
+                            }}
+                          >
                             <label
                               htmlFor="my-drawer-5"
                               className="drawer-button text-gray-700 text-sm font-normal  leading-tight"
@@ -247,19 +252,16 @@ try {
                               Xem thông tin đặt cọc
                             </label>
                           </li>
-                          <li onClick={()=>hanldeExportDeposit(i.depositId)}>
+                          <li onClick={() => handleExportDeposit(i.depositId)}>
                             <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Xuất hợp đồng cọc
                             </span>
                           </li>
-                          
                         </ul>
                       </div>
                     </td>
-
                   </tr>
                 ))}
-
               </tbody>
             </table>
           </div>

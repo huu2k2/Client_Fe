@@ -12,74 +12,61 @@ const RowComponent = ({
   setValue,
   isSidebarOpen,
   getNamecommissionPolicyId,
+  getValues,
 }) => {
   const isDisabled = [
-    "roomId",
     "commissionPolicyId",
     "datcoc",
     "houseAddress",
     "rentalPrice",
     "chuongTrinhUuDai",
     "tips",
+    "roomCode"
   ].includes(name);
 
+  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
+    name
+  );
 
-  const priceValue = [
-  
-    "depositAmount",
-    "additionalDepositAmount",
-  ].includes(name);
-
-  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(name);
+  const plaValue = ["houseAddress", "datcoc", "rentalPrice"].includes(
+    name
+  );
 
   const showAutoPrice = ["depositAmount"].includes(name);
 
-  const [value, setValues] = useState("");
+  const [value, setValues] = useState(getValues(name));
 
+
+   
   useEffect(() => {
-    setValues("");
-  }, [isSidebarOpen]);
- 
-
   
-  const dynamicPlaceholder = () => {
-    switch (name) {
-      case "roomId":
-        return `${getInfo.roomId}`;
-      case "houseAddress":
-        return getInfo.houseAddress;
- 
-      case "chuongTrinhUuDai":
-        return " ";
-      default:
-        return placeholder;
-    }
-  };
-  useEffect(() => {
     if (plaValue) {
       setValue(name, getInfo[name].toLocaleString("vi-VN"));
-      setValues(dynamicPlaceholder());
-    }
  
+    }
+    // if(name==='roomCode'){
+    //   setValues(getInfo.roomId);
+    // }
     if (showAutoPrice) {
-      setValue(
-        "additionalDepositAmount",
-        (
-          Number(getNamecommissionPolicyId) * getInfo.rentalPrice -
-          Number(value.replace(/[^0-9]/g, ""))
-        ).toLocaleString("vi-VN")
-      );
+      const commissionPolicyId = Number(getNamecommissionPolicyId);
+      const rentalPrice = Number(getInfo.rentalPrice);
+      const valueNumber = Number(value);
+
+      const additionalDepositAmount = (
+        commissionPolicyId * rentalPrice -
+        valueNumber
+      ).toLocaleString("vi-VN");
+
+      setValue("additionalDepositAmount", additionalDepositAmount);
     }
   }, [
     name,
     plaValue,
-    dynamicPlaceholder,
     setValue,
     getInfo,
     showAutoPrice,
     getNamecommissionPolicyId,
     value,
-    priceValue
   ]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);

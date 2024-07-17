@@ -10,10 +10,11 @@ const InputFileImg = ({ name, img ,onChange }) => {
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     setSelectedImage(imageFile);
-    onChange(imageFile);
+    // onChange(imageFile);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
+      onChange(reader.result)
     };
     reader.readAsDataURL(imageFile);
 
