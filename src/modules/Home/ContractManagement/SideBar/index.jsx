@@ -8,8 +8,7 @@ import ButtonDeposit from "./ButtonDeposit";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./schema";
-import { useAddDepositMutation } from "@apis/slice/Deposit";
-import { useGetServicesOfRoomQuery } from "@apis/slice/services";
+ 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
@@ -21,8 +20,7 @@ function coverDate(dateString) {
   return date.toISOString();
 }
 const SideBar = ({ getInfo }) => {
-  const [addDeposit] = useAddDepositMutation();
-  const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
+ 
  
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
@@ -123,7 +121,7 @@ if(DataDepositInfomation?.isSuccess){
   setServiceInserts(DataDepositInfomation?.response?.services)
   setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
 }
- },[DataDepositInfomation])
+ },[DataDepositInfomation,isSidebarOpen])
   return (
     <div className="drawer drawer-end">
       <ToastContainer className={'z-50'}/>

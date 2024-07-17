@@ -36,8 +36,6 @@ const RowComponent = ({
 
   const [value, setValues] = useState(getValues(name));
 
-
-   
   useEffect(() => {
   
     if (plaValue) {
