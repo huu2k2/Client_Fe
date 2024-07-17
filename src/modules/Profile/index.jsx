@@ -8,6 +8,7 @@ import InputFileImg from "./InputFileImg";
 import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
+import { toast } from "react-toastify";
 
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
@@ -108,6 +109,7 @@ const Index = ({ setShow }) => {
       const response = await postUpdate(formData);
       if (!response.error) {
         // handle successful update, e.g., show a success message or close the modal
+        toast.success("Đặt lịch thành công!");
         handleClose();
       } else {
         // handle error
