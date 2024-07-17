@@ -28,15 +28,15 @@ const RoomsApi = createApi({
         data: body
       }),
     }),
-    filterRoomsofhouse: build.query({
+    getRoomsNotDepositOfHouse: build.query({
       query: (id) => ({
-        url: `/v2/Rooms/filter-room-of-house/${id}`,
-        method: 'POST',
+        url: `/v2/Rooms/get-rooms-not-deposit-of-house/${id}`,
+        method: 'GET',
       }),
     }),
   }),
 });
 
 
-export const { useGetRoomsFilterMutation, useGetRoomsofhouseMutation, useFilterRoomsofhouseQuery } = RoomsApi;
+export const { useGetRoomsFilterMutation, useGetRoomsofhouseMutation, useGetRoomsNotDepositOfHouseQuery } = RoomsApi;
 export default RoomsApi;

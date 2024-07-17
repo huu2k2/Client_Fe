@@ -9,11 +9,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
 import Select from "react-select";
-import { useFilterRoomsofhouseQuery } from "../../apis/slice/rooms";
+import { useGetRoomsNotDepositOfHouseQuery } from "../../apis/slice/rooms";
+import { ListItem } from "@mui/material";
 
 // Validation schema
 const validationSchema = yup.object().shape({
   customerName: yup.string().required("Tên khách hàng là bắt buộc"),
+  roomId: yup.string().required("Mã phòng là bắt buộc"), // Ensure roomId is required 
   customerPhone: yup
     .string()
     .required("SĐT khách hàng là bắt buộc")
@@ -41,14 +43,14 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
     notes: "",
     roomId: ""
   });
-  const { data: housedata } = useFilterRoomsofhouseQuery(id);
+  const { data: housedata } = useGetRoomsNotDepositOfHouseQuery(id);
 
   // Validate options format
-  const options = housedata?.response?.response[0]?.sampleRoomCodes?.map((code) => ({
-    label: "P." + code,
-    value: code,
-  })) || [];
-  console.log("🚀 ~ ModalPutRoom ~ sampleRoomCodes:", options);
+  const options = housedata?.response.map((i) => ({
+    value: i.roomId,
+    label: "P." + i.roomCode
+  }));
+
 
   const [postschedule, { error }] = usePostscheduleMutation();
 
@@ -93,8 +95,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         SalerPhone,
         roomId: selectedOption?.value, // Include roomId in the form submission
       }).unwrap();
-      setResponse(response);
-      console.log(response);
+
       if (response.statusCode === 200) {
         toast.success("Đặt lịch thành công!");
         reset({
@@ -165,25 +166,31 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
 
 
               <div
-                className="flex  mr-[135px] w-full"
+
               >
-                <p className="flex justify-start">chọn phòng</p>
-                <div className="flex justify-center">
-                  <Select
-                    className="w-[370px]  "
-                    placeholder="chọn phòng"
-                    value={selectedOption}
-                    options={options}
-                    onChange={(option) => {
-                      setSelectedOption(option);
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        roomId: option.value,
-                      }));
-                    }}
-                  />
+                <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
+                <div className="flex  mr-[135px] w-full mt-5 ">
+                  <p className="flex justify-start">chọn phòng</p>
+                  <div className="flex justify-center ml-[300px]">
+                    <Select
+                      className="w-[370px]  "
+                      placeholder="chọn phòng"
+                      value={selectedOption}
+                      options={options}
+                      onChange={(option) => {
+                        setSelectedOption(option);
+                        setFormData((prevFormData) => ({
+                          ...prevFormData,
+                          roomId: option.value,
+                        }));
+                      }}
+                    />
+                  </div>
+
                 </div>
               </div>
+              <p className="text-rose-500">{errors.roomId?.message}</p>
+
               <Input
                 label="Ngày xem phòng"
                 type="date"
