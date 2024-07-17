@@ -15,6 +15,7 @@ import {
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
 import { ToastContainer } from "react-toastify";
+import { useGetRoomsofhouseMutation } from "../../../apis/slice/rooms";
 
 const initialFilterData = {
   houseId: null,
@@ -39,6 +40,9 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const setData = useGetDataDetail();
+  const { data: housedata, } = useGetRoomsofhouseMutation(id,
+    { skip: !id, }
+  )
   const { data, error, isLoading } = useGetAllDetailQuery(roomId);
   useEffect(() => {
     setData(data);
@@ -61,6 +65,7 @@ const index = () => {
           dropdownRef={dropdownRef}
           setIsShowModal={setIsShowModal}
           roomId={roomId}
+          id={id}
         />
       )}
       <div className="mt-[18px] w-[1360px] h-fit bg-white nthd_flex_col_between mb-10 custom-scrollbar">

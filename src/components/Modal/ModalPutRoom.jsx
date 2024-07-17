@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
+import Select from "react-select";
+import { useFilterRoomsofhouseQuery } from "../../apis/slice/rooms";
 
 // Validation schema
 const validationSchema = yup.object().shape({
@@ -27,8 +29,9 @@ const validationSchema = yup.object().shape({
   notes: yup.string(),
 });
 
-export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode }) => {
-  console.log("🚀 ~ ModalPutRoom ~ roomId:", roomId);
+export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode, id }) => {
+  console.log("🚀 ~ ModalPutRoom ~ roomId:", roomId)
+  console.log("🚀 ~ ModalPutRoom ~ id:", id);
 
   const [formData, setFormData] = useState({
     customerName: "",
@@ -36,7 +39,17 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
     viewTime: "",
     customerPhone: "",
     notes: "",
+    roomId: ""
   });
+  const { data: housedata } = useFilterRoomsofhouseQuery(id);
+
+  // Validate options format
+  const options = housedata?.response?.response[0]?.sampleRoomCodes?.map((code) => ({
+    label: "P." + code,
+    value: code,
+  })) || [];
+  console.log("🚀 ~ ModalPutRoom ~ sampleRoomCodes:", options);
+
   const [postschedule, { error }] = usePostscheduleMutation();
 
   const { data } = useGetAllDetailQuery(roomId, {
@@ -44,7 +57,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
   });
 
   const [response, setResponse] = useState(null);
-  const [message, setMessage] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const SalerName = data?.response?.managers?.[0]?.managerName || "";
   const SalerPhone = data?.response?.managers?.[0]?.phoneNumber || "";
@@ -75,10 +88,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
       const response = await postschedule({
         ...formData,
         dateView: viewTime.toISOString(),
-        roomId,
         company,
         SalerName,
         SalerPhone,
+        roomId: selectedOption?.value, // Include roomId in the form submission
       }).unwrap();
       setResponse(response);
       console.log(response);
@@ -93,10 +106,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         });
         setIsShowModal(false);
       } else {
-        setStatusCode(400)
+        setStatusCode(400);
       }
     } catch (error) {
-      setStatusCode(400)
+      setStatusCode(400);
     }
   };
 
@@ -105,7 +118,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
       className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
       ref={dropdownRef}
     >
-
       <div className="relative w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
         <div
           className="absolute top-2 right-2 cursor-pointer"
@@ -125,7 +137,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
 
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
           <div className="gap-5 flex">
-
             <div className=" w-full h-fit gap-5 flex flex-col justify-start">
               <Input
                 label="Tên khách hàng"
@@ -151,6 +162,28 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
                 ref={register}
               />
               <p className="text-rose-500">{errors.customerPhone?.message}</p>
+
+
+              <div
+                className="flex  mr-[135px] w-full"
+              >
+                <p className="flex justify-start">chọn phòng</p>
+                <div className="flex justify-center">
+                  <Select
+                    className="w-[370px]  "
+                    placeholder="chọn phòng"
+                    value={selectedOption}
+                    options={options}
+                    onChange={(option) => {
+                      setSelectedOption(option);
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        roomId: option.value,
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
               <Input
                 label="Ngày xem phòng"
                 type="date"
@@ -173,7 +206,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
                   setFormData({ ...formData, viewTime: e.target.value });
                   setValue("viewTime", e.target.value);
                 }}
-                defaultValue={'00:00'}
+                defaultValue="00:00"
                 width={"w-[400px]"}
                 ref={register}
               />
@@ -190,16 +223,13 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
                 ref={register}
               />
             </div>
-
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-
               {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee}</p>}
               {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee}</p>}
-
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"
@@ -209,7 +239,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
             </div>
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
