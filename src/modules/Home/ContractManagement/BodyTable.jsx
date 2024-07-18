@@ -211,9 +211,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                     </td>
 
                     <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
-                      <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
-                        <div className="text-center text-emerald-800 text-xs font-medium leading-none">
-                          {i.status === "1" ? "Đặt cọc" : ""}
+                      <div className={`w-fit h-5 px-2.5 py-0.5 ${i.status === "1" ?"bg-emerald-100":"bg-rose-600"} rounded-[10px] justify-center items-center inline-flex`}>
+                        <div className={`text-center ${i.status === "1" ? "text-emerald-800":"text-white"} text-xs font-medium leading-none`}>
+                          {i.status === "1" ? "Đặt cọc" : "Đã hủy cọc"}
                         </div>
                       </div>
                     </td>
