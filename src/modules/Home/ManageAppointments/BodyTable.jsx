@@ -167,7 +167,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
                     <td className="w-[120px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
-                        A.{i.roomCode}
+                        P.{i.roomCode}
                       </span>
                     </td>
 
@@ -214,6 +214,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
                                 houseId: i.houseId,
+                                fullName:i.customerName,phoneNumber:i.customerPhoneNumber
                               }));
                             }}
                           >

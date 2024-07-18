@@ -23,49 +23,40 @@ const RowComponent = ({
     "tips",
   ].includes(name);
 
+  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
+    name
+  );
 
-  const priceValue = [
-  
-    "depositAmount",
-    "additionalDepositAmount",
+  const plaValue = [
+    "roomId",
+    "houseAddress",
+    "datcoc",
+    "rentalPrice",
+    "fullName",
+    "phoneNumber",
   ].includes(name);
-
-  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(name);
 
   const showAutoPrice = ["depositAmount"].includes(name);
 
   const [value, setValues] = useState("");
-
+ 
   useEffect(() => {
     setValues("");
   }, [isSidebarOpen]);
- 
 
-  
-  const dynamicPlaceholder = () => {
-    switch (name) {
-      case "roomId":
-        return `${getInfo.roomId}`;
-      case "houseAddress":
-        return getInfo.houseAddress;
- 
-      case "chuongTrinhUuDai":
-        return " ";
-      default:
-        return placeholder;
-    }
-  };
+ console.log(name,getInfo)
   useEffect(() => {
     if (plaValue) {
-      setValue(name, getInfo[name].toLocaleString("vi-VN"));
-      setValues(dynamicPlaceholder());
+     
+      setValue(name, getInfo[name]?.toLocaleString("vi-VN") || "");
+      setValues(getInfo[name]?.toLocaleString("vi-VN") || "");
     }
- 
+
     if (showAutoPrice) {
       setValue(
         "additionalDepositAmount",
         (
-          Number(getNamecommissionPolicyId) * getInfo.rentalPrice -
+          Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0) -
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
@@ -73,13 +64,12 @@ const RowComponent = ({
   }, [
     name,
     plaValue,
-    dynamicPlaceholder,
     setValue,
     getInfo,
     showAutoPrice,
     getNamecommissionPolicyId,
     value,
-    priceValue
+    priceValue,
   ]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
@@ -124,7 +114,7 @@ const RowComponent = ({
           value={
             name === "tips"
               ? (
-                  Number(getNamecommissionPolicyId) * getInfo.rentalPrice
+                  Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0)
                 ).toLocaleString("vi-VN")
               : value
           }

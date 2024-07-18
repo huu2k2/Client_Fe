@@ -61,12 +61,12 @@ const ModalChangeRoom = ({ houseId, roomCode, scheduleId }) => {
             onChange={handleChangeSelect}
           >
             <option disabled selected value="">
-              {roomCode}
+              P.{roomCode}
             </option>
             {ListRooms &&
               ListRooms.map((i, index) => (
-                <option key={index} value={i.roomId} label={i.roomCode}>
-                  {i.roomCode}
+                <option key={index} value={i.roomId} label={`P.${i.roomCode}`}>
+                   
                 </option>
               ))}
           </select>

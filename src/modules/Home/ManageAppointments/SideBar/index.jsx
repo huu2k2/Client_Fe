@@ -12,7 +12,6 @@ import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
- 
 
 function coverDate(dateString) {
   const date = new Date(dateString);
@@ -55,13 +54,17 @@ const SideBar = ({ getInfo }) => {
       dateRange: coverDate(data.dateRange),
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
       roomId: Number(getInfo.id),
-      rentalPrice:Number(data.rentalPrice.replace(/\./g, "")),
+      rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,
-      additionalDepositAmount:Number(data.additionalDepositAmount.replace(/\./g, "")),
-      depositAmount:Number(data.depositAmount.replace(/\./g, "")),
-      numberOfPeople:Number(data.numberOfPeople),
-      numberOfVehicle:Number(data.numberOfVehicle),
+      additionalDepositAmount: Number(
+        data.additionalDepositAmount.replace(/\./g, "")
+      ),
+      depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+      numberOfPeople: Number(data.numberOfPeople),
+      numberOfVehicle: Number(data.numberOfVehicle),
+      fullName: data.fullName,
+      phoneNumber: data.phoneNumber,
     };
 
     const kq = await addDeposit(convertData);
@@ -91,9 +94,10 @@ const SideBar = ({ getInfo }) => {
       });
     }
   };
+
   return (
     <div className="drawer drawer-end bg-white">
-      <ToastContainer className={'z-50'}/>
+      <ToastContainer className={"z-50"} />
       <input
         id="my-drawer-4"
         type="checkbox"
@@ -110,7 +114,7 @@ const SideBar = ({ getInfo }) => {
         ></label>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="menu bg-base-200 text-base-content min-h-full w-fit overflow-y-auto custom-scrollbar"
+          className="menu bg-white text-base-content min-h-full w-fit overflow-y-auto custom-scrollbar"
         >
           {/* Header */}
           <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
@@ -135,7 +139,12 @@ const SideBar = ({ getInfo }) => {
           {/* Header End */}
 
           {/* Form Sections */}
-          <InfoClient register={register} isSidebarOpen={isSidebarOpen} />
+          <InfoClient
+           register={register}
+           getInfo={getInfo}
+           setValue={setValue}
+           isSidebarOpen={isSidebarOpen}
+          />
           <InfoRoom
             register={register}
             getInfo={getInfo}

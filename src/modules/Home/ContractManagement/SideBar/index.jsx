@@ -141,7 +141,7 @@ if(DataDepositInfomation?.isSuccess){
         ></label>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="menu bg-base-200 text-base-content min-h-full w-fit overflow-y-auto custom-scrollbar"
+          className="menu bg-white text-base-content min-h-full w-fit overflow-y-auto custom-scrollbar"
         >
           {/* Header */}
           <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
