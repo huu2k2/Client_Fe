@@ -39,17 +39,13 @@ const RowComponent = ({
   const showAutoPrice = ["depositAmount"].includes(name);
 
   const [value, setValues] = useState("");
- 
-  useEffect(() => {
-    setValues("");
-  }, [isSidebarOpen]);
 
- console.log(name,getInfo)
+
+
   useEffect(() => {
     if (plaValue) {
-     
-      setValue(name, getInfo[name]?.toLocaleString("vi-VN") || "");
-      setValues(getInfo[name]?.toLocaleString("vi-VN") || "");
+      setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+      setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
     }
 
     if (showAutoPrice) {
@@ -61,16 +57,7 @@ const RowComponent = ({
         ).toLocaleString("vi-VN")
       );
     }
-  }, [
-    name,
-    plaValue,
-    setValue,
-    getInfo,
-    showAutoPrice,
-    getNamecommissionPolicyId,
-    value,
-    priceValue,
-  ]);
+  }, [name, getInfo, showAutoPrice]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
 
@@ -114,7 +101,8 @@ const RowComponent = ({
           value={
             name === "tips"
               ? (
-                  Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0)
+                  Number(getNamecommissionPolicyId) *
+                  (getInfo?.rentalPrice || 0)
                 ).toLocaleString("vi-VN")
               : value
           }

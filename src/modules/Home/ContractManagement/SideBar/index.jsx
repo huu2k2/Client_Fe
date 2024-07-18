@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
+import { usePutDepositInfomationMutation } from "../../../../apis/slice/Agencies";
  
 
 function coverDate(dateString) {
@@ -37,6 +38,7 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
+  const [putDeposit] = usePutDepositInfomationMutation()
   // Form submission handler
   const onSubmit = async (data) => {
     const convertData = {
@@ -56,16 +58,16 @@ const SideBar = ({ getInfo }) => {
       depositAmount:Number(data.depositAmount.replace(/\./g, "")),
       numberOfPeople:Number(data.numberOfPeople),
       numberOfVehicle:Number(data.numberOfVehicle),
-
+      id:getInfo.depositId
     };
 //  change iupdate
 console.log(convertData)
-    // const kq = await addDeposit(convertData);
-    // if (kq?.error) {
-    //   toast.error(kq?.error?.data.message);
-    // } else {
-    //   toast.success(kq.data.message);
-    // }
+    const kq = await putDeposit(convertData);
+    if (kq?.error) {
+      toast.error(kq?.error?.data.message);
+    } else {
+      toast.success(kq.data.message);
+    }
   };
 
   // Display toast notifications for form errors

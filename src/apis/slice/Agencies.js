@@ -50,15 +50,6 @@ const Agencies = createApi({
       }),
     }),
 
-    getListOfContractManagement: build.mutation({
-      query: ({ queries, body }) => ({
-        url: `/v2/Agencies/get-agency-deposits?${Object.keys(queries)
-          .map((key) => `${key}=${queries[key]}`)
-          .join("&")}`,
-        method: "POST",
-        data: body,
-      }),
-    }),
     getDepositInfomation: build.query({
       query: (id) => ({
         url: `/v2/Agencies/get-deposit-by-id/${id}`,
@@ -119,6 +110,22 @@ const Agencies = createApi({
         }
       },
     }),
+    getListOfContractManagement: build.mutation({
+      query: ({ queries, body }) => ({
+        url: `/v2/Agencies/get-agency-deposits?${Object.keys(queries)
+          .map((key) => `${key}=${queries[key]}`)
+          .join("&")}`,
+        method: "POST",
+        data: body,
+      }),
+    }),
+    putDepositInfomation: build.mutation({
+      query: (body) => ({
+        url: `/v2/Agencies/update-deposit`,
+        method: "PUT",
+        data: body,
+      }),
+    }),
   }),
 });
 
@@ -131,6 +138,7 @@ export const {
   useGetListOfContractManagementMutation,
   useGetDepositInfomationQuery,
   usePostChangeRoomMutation,
+  usePutDepositInfomationMutation,
 } = Agencies;
 
 export default Agencies;
