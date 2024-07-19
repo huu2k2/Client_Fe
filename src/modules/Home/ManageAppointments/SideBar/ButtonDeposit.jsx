@@ -1,6 +1,11 @@
 import React from "react";
 
-const ButtonDeposit = ({setIsSidebarOpen}) => {
+const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
+  const handeClick = ()=>{
+    if(isCheckSuccess){
+      setIsSidebarOpen(false)
+    }
+  }
   return (
     <div className="w-[556px] h-[78px] px-6 py-5 justify-end items-center gap-4 inline-flex">
       <div className="h-[38px] px-[17px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-center items-center flex">
@@ -16,7 +21,7 @@ const ButtonDeposit = ({setIsSidebarOpen}) => {
         <button
           className="text-white text-sm font-medium  leading-tight"
           type="submit"
-          onClick={()=>setIsSidebarOpen(false)}
+          onClick={handeClick}
         >
           Lên hợp đồng
         </button>

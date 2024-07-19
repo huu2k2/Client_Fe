@@ -42,6 +42,7 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
+  const [isCheckSuccess,setIsCheckSuccess]  = useState(false)
   // Form submission handler
   const onSubmit = async (data) => {
     const convertData = {
@@ -70,9 +71,10 @@ const SideBar = ({ getInfo }) => {
     const kq = await addDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
+      setIsCheckSuccess(false)
     } else {
       toast.success(kq.data.message);
-     
+      setIsCheckSuccess(true)
     }
   };
 
@@ -162,7 +164,7 @@ const SideBar = ({ getInfo }) => {
             setFurnitureInserts={setFurnitureInserts}
           />
           <hr className="bg-gray-700 w-full h-[1px]" />
-          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen}/>
+          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} isCheckSuccess={isCheckSuccess} />
           {/* Form Sections End */}
         </form>
       </div>
