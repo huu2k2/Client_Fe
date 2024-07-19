@@ -60,13 +60,13 @@ const SideBar = ({ getInfo }) => {
       numberOfVehicle:Number(data.numberOfVehicle),
       id:getInfo.depositId
     };
-//  change iupdate
-console.log(convertData)
+ 
     const kq = await putDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
     } else {
       toast.success(kq.data.message);
+       
     }
   };
 
@@ -186,7 +186,7 @@ if(DataDepositInfomation?.isSuccess){
             setFurnitureInserts={setFurnitureInserts}
           />
           <hr className="bg-gray-700 w-full h-[1px]" />
-          <ButtonDeposit />
+          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen}/>
           {/* Form Sections End */}
         </form>
       </div>

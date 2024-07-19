@@ -1,6 +1,6 @@
 import React from "react";
 
-const ButtonDeposit = () => {
+const ButtonDeposit = ({setIsSidebarOpen}) => {
   return (
     <div className="w-[556px] h-[78px] px-6 py-5 justify-end items-center gap-4 inline-flex">
       <div className="h-[38px] px-[17px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-center items-center flex">
@@ -13,7 +13,7 @@ const ButtonDeposit = () => {
         </label>
       </div>
       <div className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
-        <button className="text-white text-sm font-medium  leading-tight" type="submit">
+        <button className="text-white text-sm font-medium  leading-tight" type="submit" onClick={()=>setIsSidebarOpen(false)}>
           Cập nhập
         </button>
       </div>

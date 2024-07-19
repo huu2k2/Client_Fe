@@ -72,7 +72,7 @@ const SideBar = ({ getInfo }) => {
       toast.error(kq?.error?.data.message);
     } else {
       toast.success(kq.data.message);
-      document.getElementById("my-drawer-4").checked = false;
+     
     }
   };
 
@@ -162,7 +162,7 @@ const SideBar = ({ getInfo }) => {
             setFurnitureInserts={setFurnitureInserts}
           />
           <hr className="bg-gray-700 w-full h-[1px]" />
-          <ButtonDeposit />
+          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen}/>
           {/* Form Sections End */}
         </form>
       </div>
