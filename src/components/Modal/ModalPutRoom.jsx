@@ -25,22 +25,13 @@ const validationSchema = yup.object().shape({
       return new Date(value) >= new Date().setHours(0, 0, 0, 0);
     }),
   viewTime: yup.string()
-    .required("Giờ xem phòng là bắt buộc")
-    .test("is-valid-time", "Giờ xem phòng phải nằm trong khoảng từ 06:00 đến 18:00", (value) => {
-      if (!value) return false;
-      const [hours, minutes] = value.split(':').map(Number);
-      const time = new Date().setHours(hours, minutes, 0, 0);
-      const startTime = new Date().setHours(6, 0, 0, 0); // 06:00
-      const endTime = new Date().setHours(18, 0, 0, 0);  // 18:00
-      return time >= startTime && time <= endTime;
-    }),
+    .required("Giờ xem phòng là bắt buộc"),
+
   notes: yup.string(),
 });
 
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode, id }) => {
-  console.log("🚀 ~ ModalPutRoom ~ roomId:", roomId);
   const { data: housedata } = useGetRoomsNotDepositOfHouseQuery(id);
-  console.log("🚀 ~ ModalPutRoom ~ housedata:", housedata)
 
   const options = housedata?.response.map((i) => ({
     value: i.roomId,
@@ -85,14 +76,21 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
       setValue("viewDate", viewDate);
       setValue("viewTime", viewTime);
     }
+
   }, [data, setValue]);
 
   const onSubmit = async (formData) => {
+
+    // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
+
+    // console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
+    // console.log("🚀 ~ ModalPutRoom ~ formData:", formData)
+
     try {
       const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
       const response = await postschedule({
         ...formData,
-        dateView: viewTime.toISOString(),
+        dateView: viewTime,
         roomId: selectedRoom, // Use the selected room ID
         company,
         SalerName,
