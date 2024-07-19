@@ -7,10 +7,6 @@ const ItemHome = ({ item }) => {
         navigate(`/overview/${item.houseId}`)
     }
   return (
-    // <Link
-    //   to={`/overview/${item.houseId}`}
-    //    onClick={()=>console.log("test")}
-    // >
     <label
     htmlFor="my-drawer-Overview"
     aria-label="close sidebar"

@@ -72,6 +72,7 @@ const SideBar = ({ getInfo }) => {
       toast.error(kq?.error?.data.message);
     } else {
       toast.success(kq.data.message);
+      document.getElementById("my-drawer-4").checked = false;
     }
   };
 
