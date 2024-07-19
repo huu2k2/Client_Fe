@@ -36,7 +36,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const pageSize = 6;
+  const pageSize = 5;
   const { data, error, isLoading } = useGetListOfAppointmentsQuery({
     queries: { pageIndex: currentPage, pageSize: pageSize },
     body: {
@@ -205,7 +205,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
                         <ul
                           tabIndex={index}
-                          className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
+                          className="dropdown-content menu rounded-md z-[100] w-52 p-2 shadow bg-white border"
                         >
                           <li
                             onClick={() => {
