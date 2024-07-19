@@ -12,14 +12,17 @@ const ButtonDeposit = () => {
           Hủy
         </label>
       </div>
-      <div className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
+      <label 
+        htmlFor="my-drawer-4"
+        aria-label="close sidebar"
+      className="drawer-overlay px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
         <button
           className="text-white text-sm font-medium  leading-tight"
           type="submit"
         >
           Lên hợp đồng
         </button>
-      </div>
+      </label >
     </div>
   );
 };

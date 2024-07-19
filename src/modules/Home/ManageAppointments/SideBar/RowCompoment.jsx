@@ -39,8 +39,11 @@ const RowComponent = ({
   const showAutoPrice = ["depositAmount"].includes(name);
 
   const [value, setValues] = useState("");
-
-
+  useEffect(() => {
+    if (!isSidebarOpen) {
+      setValues("");
+    }
+  }, [isSidebarOpen]);
 
   useEffect(() => {
     if (plaValue) {
@@ -57,7 +60,7 @@ const RowComponent = ({
         ).toLocaleString("vi-VN")
       );
     }
-  }, [name, getInfo, showAutoPrice]);
+  }, [name, getInfo, showAutoPrice, getNamecommissionPolicyId, value]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
 
