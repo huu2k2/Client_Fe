@@ -11,11 +11,11 @@ import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
 import Signature from "./Signature";
 import { toast } from "react-toastify";
+
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
-  const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
-    usePostUpdateMutation();
+  const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
 
   const [isExiting, setIsExiting] = useState(false);
 
@@ -24,7 +24,7 @@ const Index = ({ setShow }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  // hanlde close
+  // handle close
   const handleClose = () => {
     setIsExiting(true);
     setTimeout(() => {
@@ -32,6 +32,7 @@ const Index = ({ setShow }) => {
       setIsExiting(false);
     }, 1000); // Duration of the slide-out animation
   };
+
   // handle change image
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
@@ -47,16 +48,18 @@ const Index = ({ setShow }) => {
   const handleUploadImg = () => {
     inputFileRef.current.click();
   };
+
   const hanldeCancle = () => {
     handleClose();
   };
 
-  //   handle ref for click close
+  // handle ref for click close
   const handleClickOutside = (event) => {
     if (refContainer.current && !refContainer.current.contains(event.target)) {
       handleClose();
     }
   };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -65,7 +68,6 @@ const Index = ({ setShow }) => {
   }, []);
 
   // handle data for update
-  // select all data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
     signatureBase64: null,
@@ -82,6 +84,7 @@ const Index = ({ setShow }) => {
     IssuedBy: "",
     PermanentAddress: "",
   });
+
   useEffect(() => {
     if (data) {
       setFormData({
@@ -94,28 +97,27 @@ const Index = ({ setShow }) => {
         AccountName: data.response.accountName || null,
         FullName: data.response.fullName || null,
         PhoneNumber: data.response.phoneNumber || null,
-        // BOD: data.response.bod || null,
         Identification: data.response.identification || null,
         DateRange: data.response.dateRange || null,
         IssuedBy: data.response.issuedBy || null,
         PermanentAddress: data.response.permanentAddress || null,
       });
     }
+
+
   }, [data]);
-  // const handleUpadte = async () => {
-  //  const rs = await postUpdate(formData)
 
   const handleUpdate = async () => {
     try {
       const updatedFormData = {
         ...formData,
         signatureBase64: formData.signatureBase64?.split(",")[1],
+        BankCode: formData.BankCode.toString()
       };
-      console.log("🚀 ~ handleUpdate ~ updatedFormData:", updatedFormData)
 
       const rs = await postUpdate(updatedFormData);
 
-      if (rs.data.isSuccess) {
+      if (rs.data.statusCode === 200) {
         toast.success("Cập nhập thành công!");
         setShow(false);
 
@@ -130,10 +132,10 @@ const Index = ({ setShow }) => {
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
+
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end  profile 
-         ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
       <div
         ref={refContainer}
@@ -166,7 +168,7 @@ const Index = ({ setShow }) => {
               <img
                 src={imagePreview ? imagePreview : ImgAvatar}
                 alt="Avatar"
-                className="w-[120px] h-[120px] rounded-[50%]   object-cover"
+                className="w-[120px] h-[120px] rounded-[50%] object-cover"
               />
               <input
                 type="file"
@@ -225,7 +227,6 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"PhoneNumber"}
           />
-
           <InputFiel
             name={"Căn cước công dân"}
             label={data?.response?.identification}
@@ -261,21 +262,22 @@ const Index = ({ setShow }) => {
 
           <Signature
             name={"Chữ ký"}
-            img={data?.response.signatureUrl}
+            img={data?.response?.signatureUrl}
             onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
-            img={data?.response?.afterIdentification}
+            img={data?.response?.beforeIdentification}
             onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
-            img={data?.response.beforeIdentification}
+            img={data?.response?.afterIdentification}
             onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
           />
         </div>
 
+        {/* Tài khoản ngân hàng */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Tài khoản ngân hàng"} />
           <InputSelect
