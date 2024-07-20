@@ -68,9 +68,9 @@ const Index = ({ setShow }) => {
   // select all data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
-    SignatureUrl: null,
-    BeforeIdentification: null,
-    AfterIdentification: null,
+    signatureBase64: null,
+    beforeIdentificationBase64: null,
+    afterIdentificationBase64: null,
     BankCode: "",
     AccountNumber: "",
     AccountName: "",
@@ -86,9 +86,9 @@ const Index = ({ setShow }) => {
     if (data) {
       setFormData({
         AgencyAccountId: data.response.telegramId || null,
-        SignatureUrl: data.response.signatureUrl || null,
-        BeforeIdentification: data.response.beforeIdentification || null,
-        AfterIdentification: data.response.afterIdentification || null,
+        signatureBase64: data.response.signatureBase64 || null,
+        beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
+        afterIdentificationBase64: data.response.afterIdentificationBase64 || null,
         BankCode: data.response.bankCode || null,
         AccountNumber: data.response.accountNumber || null,
         AccountName: data.response.accountName || null,
@@ -266,18 +266,18 @@ const Index = ({ setShow }) => {
 
           <Signature
             name={"Chữ ký"}
-            img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange("SignatureUrl", file)}
+            img={data?.response?.signatureBase64}
+            onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
-            img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("BeforeIdentification", file)}
+            img={data?.response?.beforeIdentificationBase64}
+            onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
-            img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("AfterIdentification", file)}
+            img={data?.response?.afterIdentificationBase64}
+            onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
           />
         </div>
 
