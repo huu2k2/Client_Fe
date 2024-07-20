@@ -45,7 +45,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
     customerPhone: "",
     notes: "",
   });
-  const [selectedRoom, setSelectedRoom] = useState(null); // State for selected room
+  const [selectedRoom, setSelectedRoom] = useState(roomId); // State for selected room
   const [postschedule, { error }] = usePostscheduleMutation();
 
   const { data } = useGetAllDetailQuery(roomId, {
@@ -83,8 +83,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
 
     // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
 
-    // console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
-    // console.log("🚀 ~ ModalPutRoom ~ formData:", formData)
 
     try {
       const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);

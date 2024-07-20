@@ -52,8 +52,7 @@ const FilterNavbar = ({ setOption }) => {
   };
 
   const debounceHandleRemoveFilter = debounce(() => {
-    handleRemoveFilter();
-    setClear(true);
+    location.reload()
   }, 500);
 
   return (
