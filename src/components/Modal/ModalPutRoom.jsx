@@ -63,29 +63,32 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
     resolver: yupResolver(validationSchema),
   });
 
-  useEffect(() => {
-    if (data?.response?.dateView) {
-      const date = new Date(data.response.dateView);
-      const viewDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
-      const viewTime = date.toTimeString().split(" ")[0].substring(0, 5); // HH:MM format
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        viewDate,
-        viewTime,
-      }));
-      setValue("viewDate", viewDate);
-      setValue("viewTime", viewTime);
-    }
+  // useEffect(() => {
+  //   if (data?.response?.dateView) {
+  //     const date = new Date(data.response.dateView);
+  //     const viewDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
+  //     const viewTime = date.toTimeString().split(" ")[0].substring(0, 5); // HH:MM format
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       viewDate,
+  //       viewTime,
+  //     }));
+  //     setValue("viewDate", viewDate);
+  //     setValue("viewTime", viewTime);
+  //   }
 
-  }, [data, setValue]);
+  // }, [data, setValue]);
 
   const onSubmit = async (formData) => {
+    console.log("🚀 ~ onSubmit ~ formData:", formData)
 
     // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
 
+    const viewTime = (`${formData.viewDate}T${formData.viewTime}.10.297Z`);
 
+    console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
     try {
-      const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
+      // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}10.297Z`);
       const response = await postschedule({
         ...formData,
         dateView: viewTime,
@@ -94,6 +97,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         SalerName,
         SalerPhone,
       }).unwrap();
+      console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
       setResponse(response);
       console.log(response);
       if (response.statusCode === 200) {
