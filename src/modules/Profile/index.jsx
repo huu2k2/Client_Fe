@@ -24,7 +24,6 @@ const validationSchema = yup.object().shape({
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading } = useGetProfileQuery();
-  console.log("🚀 ~ Index ~ data:", data)
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
   const [isExiting, setIsExiting] = useState(false);
 
@@ -49,6 +48,7 @@ const Index = ({ setShow }) => {
   });
 
   useEffect(() => {
+    console.log("🚀 ~ Index ~ formData:", formData)
     if (data) {
       setFormData({
         AgencyAccountId: data.response.telegramId || null,

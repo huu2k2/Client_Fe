@@ -2,13 +2,14 @@ import React, { useState, useRef } from 'react';
 import AddImg from '@assets/addImg.png';
 import { AiFillCloseCircle } from "react-icons/ai";
 
-const InputFileImg = ({ name, img ,onChange }) => {
+const InputFileImg = ({ name, img, onChange }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
+    console.log("🚀 ~ handleImageChange ~ imageFile:", imageFile)
     setSelectedImage(imageFile);
     onChange(imageFile);
     const reader = new FileReader();
@@ -16,8 +17,6 @@ const InputFileImg = ({ name, img ,onChange }) => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(imageFile);
-
-     
   };
 
   const handleUploadImg = () => {
@@ -27,11 +26,7 @@ const InputFileImg = ({ name, img ,onChange }) => {
   const handleRemoveImage = () => {
     setSelectedImage(null);
     setImagePreview(null);
-    onChange(null); 
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [variable]: null,
-    }));
+    onChange(null);
   };
 
   return (
@@ -40,7 +35,7 @@ const InputFileImg = ({ name, img ,onChange }) => {
       <div className="w-[312px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
         {imagePreview ? (
           <div className='relative'>
-            <img src={imagePreview} alt="Preview" className="w-[260px] h-[180px] object-cover" />
+            <img src={imagePreview} alt="Preview" className="w-[364px] h-[364px] object-cover" />
             <AiFillCloseCircle className='absolute top-2 right-2 w-6 h-6 rounded-full bg-white text-gray-600 cursor-pointer' onClick={handleRemoveImage} />
           </div>
         ) : (
