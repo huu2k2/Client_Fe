@@ -1,7 +1,7 @@
 import React from "react";
 
 const Input = ({ label, name, value, onChange, type = "text", defaultValue, width }) => {
- 
+
   return (
     <>
       <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />

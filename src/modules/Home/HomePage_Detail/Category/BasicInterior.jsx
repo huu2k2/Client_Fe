@@ -15,7 +15,7 @@ const BasicInterior = () => {
           <span>Nội thất cơ bản</span>
         </div>
 
-        <div className="grid grid-cols-3 w-full h-fit gap-x-10 gap-y-4">
+        <div className="grid grid-cols-3 w-full h-fit gap-x-44 gap-y-4">
           {furnitureInserts ? (
             furnitureInserts.map((i, index) => (
               <div className="nthd_basicInterioritem  gap-[7px] flex  w-full" key={index}>

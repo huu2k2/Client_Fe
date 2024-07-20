@@ -8,19 +8,10 @@ import InputFileImg from "./InputFileImg";
 import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
-import { toast } from "react-toastify";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-const validationSchema = yup.object().shape({
-  FullName: yup.string().required("Tên khách hàng là bắt buộc"),
-  PhoneNumber: yup.string(),
-  Identification: yup
-    .string()
-    .matches(/^\d{12}$/, "Căn cước công dân phải là số và có 12 chữ số")
-    .required("Căn cước công dân là bắt buộc"),
-});
-
+import { BsCameraFill } from "react-icons/bs";
+import Signature from "./Signature";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading } = useGetProfileQuery();
@@ -31,104 +22,68 @@ const Index = ({ setShow }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
-    AgencyAccountId: "",
-    SignatureUrl: null,
-    BeforeIdentification: null,
-    AfterIdentification: null,
-    BankCode: "",
-    AccountNumber: "",
-    AccountName: "",
-    FullName: "",
-    PhoneNumber: "",
-    BOD: "",
-    Identification: "",
-    DateRange: "",
-    IssuedBy: "",
-    PermanentAddress: ""
+    signatureBase64: null,
+    beforeIdentificationBase64: null,
+    afterIdentificationBase64: null,
+    bankCode: "",
+    accountNumber: "",
+    accountName: "",
+    fullName: "",
+    phoneNumber: "",
+    bod: "",
+    identification: "",
+    dateRange: "",
+    issuedBy: "",
+    permanentAddress: "",
   });
 
   useEffect(() => {
     console.log("🚀 ~ Index ~ formData:", formData)
     if (data) {
       setFormData({
-        AgencyAccountId: data.response.telegramId || null,
-        SignatureUrl: data.response.signatureUrl || null,
-        BeforeIdentification: data.response.beforeIdentification || null,
-        AfterIdentification: data.response.afterIdentification || null,
-        BankCode: data.response.bankCode ? data.response.bankCode.toString() : "",
-        AccountNumber: data.response.accountNumber || null,
-        AccountName: data.response.accountName || null,
-        FullName: data.response.fullName || null,
-        PhoneNumber: data.response.phoneNumber || null,
-        BOD: data.response.bod || null,
-        Identification: data.response.identification || null,
-        DateRange: data.response.dateRange || null,
-        IssuedBy: data.response.issuedBy || null,
-        PermanentAddress: data.response.permanentAddress || null,
+        signatureBase64: data.response.signatureUrl || null,
+        beforeIdentificationBase64: data.response.beforeIdentification || null,
+        afterIdentificationBase64: data.response.afterIdentification || null,
+        bankCode: data.response.bankCode || null,
+        accountNumber: data.response.accountNumber || null,
+        accountName: data.response.accountName || null,
+        fullName: data.response.fullName || null,
+        phoneNumber: data.response.phoneNumber || null,
+        // bod: data.response.bod || null,
+        identification: data.response.identification || null,
+        dateRange: data.response.dateRange || null,
+        issuedBy: data.response.issuedBy || null,
+        permanentAddress: data.response.permanentAddress || null,
       });
     }
   }, [data]);
 
-  const handleClose = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      setShow(false);
-      setIsExiting(false);
-    }, 1000);
-  };
 
-  const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
-    setSelectedImage(imageFile);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result);
-    };
-    reader.readAsDataURL(imageFile);
-  };
 
-  const handleUploadImg = () => {
-    inputFileRef.current.click();
-  };
-  const handleCancel = () => {
-    handleClose();
-  };
+  const handleUpadte = async () => {
 
-  const handleClickOutside = (event) => {
-    if (refContainer.current && !refContainer.current.contains(event.target)) {
-      handleClose();
-    }
-  };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleUpdate = async () => {
-    console.log("🚀 ~ handleUpdate ~ formData:", formData);
     try {
-      const response = await postUpdate(formData);
-      if (!response.error) {
-        toast.success("Cập nhật thông tin thành công!");
-        handleClose();
-      } else {
-        console.error("Update failed: ", response.error);
+      const rs = await postUpdate({
+        ...formData,
+        signatureBase64: formData.signatureBase64?.split(",")[1],
+      });
+      if (rs.data.isSuccess) {
+        toast.success("Cập nhập thành công!");
       }
     } catch (error) {
-      console.error("An error occurred while updating: ", error);
+      toast.error("Lỗi cập nhập!");
     }
   };
-
   const handleFileChange = (name, file) => {
-    setFormData(prevData => ({ ...prevData, [name]: file }));
+    setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
+      className={`fixed inset-0 z-50 flex justify-end  profile 
+         ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
+      <ToastContainer />
       <div
         ref={refContainer}
         className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden"
@@ -140,21 +95,30 @@ const Index = ({ setShow }) => {
         </div>
 
         <div className="gap-4 w-full py-6 flex flex-col justify-center items-center bg-white">
-          <div className="w-full h-fit flex justify-center items-center flex-col gap-2">
-            <img
-              src={imagePreview ? imagePreview : ImgAvatar}
-              alt="Avatar"
-              className="w-[120px] h-[120px] rounded-[50%] object-cover"
-              onClick={handleUploadImg}
-            />
-            <input
-              type="file"
-              name="imgProfile"
-              ref={inputFileRef}
-              className="hidden"
-              onChange={handleImageChange}
-              accept=".png, .jpg, .jpeg, .gif"
-            />
+          <div className="indicator">
+            <div className="indicator-item indicator-bottom top-10 right-4">
+              <div
+                className="rounded-full w-10 h-10 bg-gray-200 flex justify-center items-center"
+                onClick={handleUploadImg}
+              >
+                <BsCameraFill />
+              </div>
+            </div>
+            <div className="w-full h-fit flex justify-center items-center flex-col gap-2">
+              <img
+                src={imagePreview ? imagePreview : ImgAvatar}
+                alt="Avatar"
+                className="w-[120px] h-[120px] rounded-[50%]   object-cover"
+              />
+              <input
+                type="file"
+                name="imgProfile"
+                ref={inputFileRef}
+                className="hidden"
+                onChange={handleImageChange}
+                accept=".png, .jpg, .jpeg, .gif"
+              />
+            </div>
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{data?.response?.fullName}</h1>
@@ -169,7 +133,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={true}
             setFormData={setFormData}
-            variable={"FullName"}
+            variable={"fullName"}
           />
           <InputFiel
             name={"Tên đăng nhập"}
@@ -189,7 +153,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"FullName"}
+            variable={"fullName"}
           />
           <InputFiel
             name={"Số điện thoại"}
@@ -197,15 +161,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"PhoneNumber"}
-          />
-          <InputFiel
-            name={"Ngày sinh"}
-            label={formatDate(data?.response?.bod)}
-            type={"date"}
-            isEnable={false}
-            setFormData={setFormData}
-            variable={"BOD"}
+            variable={"phoneNumber"}
           />
           <InputFiel
             name={"Căn cước công dân"}
@@ -213,7 +169,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"Identification"}
+            variable={"identification"}
           />
           <InputFiel
             name={"Ngày cấp"}
@@ -221,7 +177,7 @@ const Index = ({ setShow }) => {
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"DateRange"}
+            variable={"dateRange"}
           />
           <InputFiel
             name={"Nơi cấp"}
@@ -229,7 +185,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"IssuedBy"}
+            variable={"issuedBy"}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
@@ -239,20 +195,25 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"permanentAddress"}
           />
-          <InputFileImg
+
+          <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange("SignatureUrl", file)}
+            onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("BeforeIdentification", file)}
+            onChange={(file) =>
+              handleFileChange("beforeIdentificationBase64", file)
+            }
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("AfterIdentification", file)}
+            onChange={(file) =>
+              handleFileChange("afterIdentificationBase64", file)
+            }
           />
         </div>
 
@@ -261,7 +222,7 @@ const Index = ({ setShow }) => {
           <InputSelect
             label={data?.response?.bankCode}
             setFormData={setFormData}
-            variable={"BankCode"}
+            variable={"bankCode"}
           />
           <InputFiel
             name={"Số tài khoản"}
@@ -269,7 +230,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"AccountNumber"}
+            variable={"accountNumber"}
           />
           <InputFiel
             name={"Chủ tài khoản"}
@@ -277,23 +238,23 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"AccountName"}
+            variable={"accountName"}
           />
-        </div>
-
-        <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
-          <button
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
-            onClick={handleCancel}
-          >
-            Hủy
-          </button>
-          <button
-            onClick={handleUpdate}
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
-          >
-            Cập nhật
-          </button>
+          {/* Fixed button */}
+          <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
+            <button
+              className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
+              onClick={hanldeCancle}
+            >
+              Hủy
+            </button>
+            <button
+              onClick={handleUpadte}
+              className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
+            >
+              Cập nhật
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -12,55 +12,60 @@ const RowComponent = ({
   setValue,
   isSidebarOpen,
   getNamecommissionPolicyId,
+  getValues,
 }) => {
   const isDisabled = [
-    "roomId",
     "commissionPolicyId",
     "datcoc",
     "houseAddress",
     "rentalPrice",
     "chuongTrinhUuDai",
     "tips",
+    "roomCode"
   ].includes(name);
 
   const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
     name
   );
 
-  const plaValue = [
-    "roomId",
-    "houseAddress",
-    "datcoc",
-    "rentalPrice",
-    "fullName",
-    "phoneNumber",
-  ].includes(name);
+  const plaValue = ["houseAddress", "datcoc", "rentalPrice"].includes(
+    name
+  );
 
   const showAutoPrice = ["depositAmount"].includes(name);
 
-  const [value, setValues] = useState("");
-  useEffect(() => {
-    if (!isSidebarOpen) {
-      setValues("");
-    }
-  }, [isSidebarOpen]);
+  const [value, setValues] = useState(getValues(name));
 
   useEffect(() => {
+  
     if (plaValue) {
-      setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
-      setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+      setValue(name, getInfo[name].toLocaleString("vi-VN"));
+ 
     }
-
+    // if(name==='roomCode'){
+    //   setValues(getInfo.roomId);
+    // }
     if (showAutoPrice) {
-      setValue(
-        "additionalDepositAmount",
-        (
-          Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0) -
-          Number(value.replace(/[^0-9]/g, ""))
-        ).toLocaleString("vi-VN")
-      );
+      const commissionPolicyId = Number(getNamecommissionPolicyId);
+      const rentalPrice = Number(getInfo.rentalPrice);
+      const valueNumber = Number(value);
+
+      const additionalDepositAmount = (
+        commissionPolicyId * rentalPrice -
+        valueNumber
+      ).toLocaleString("vi-VN");
+
+      setValue("additionalDepositAmount", additionalDepositAmount);
     }
-  }, [name, getInfo, showAutoPrice, getNamecommissionPolicyId, value]);
+  }, [
+    name,
+    plaValue,
+    setValue,
+    getInfo,
+    showAutoPrice,
+    getNamecommissionPolicyId,
+    value,
+  ]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
 
@@ -104,8 +109,7 @@ const RowComponent = ({
           value={
             name === "tips"
               ? (
-                  Number(getNamecommissionPolicyId) *
-                  (getInfo?.rentalPrice || 0)
+                  Number(getNamecommissionPolicyId) * getInfo.rentalPrice
                 ).toLocaleString("vi-VN")
               : value
           }

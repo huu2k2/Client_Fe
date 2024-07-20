@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AiOutlineEnvironment } from "react-icons/ai";
+import { TbCoin } from "react-icons/tb";
 import "animate.css";
 import { useQueryFilterData } from "@customhooks";
 import { useLocation } from "react-router-dom";
 import { Badge } from "@mui/material";
 
-const Index = () => {
+const Index = ({ clear, setClear }) => {
   const [filterData, setFilterData] = useQueryFilterData();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -38,9 +38,18 @@ const Index = () => {
     }
   }, [filterData]);
 
+  useEffect(() => {
+    if (clear) {
+      setValueRange(0);
+      setFilterData((prev) => ({ ...prev, price: null }));
+    }
+  }, [clear]);
+
   const handleApply = () => {
     setFilterData((prev) => ({ ...prev, price: valueRange ? valueRange * 1000000 : null }));
     setIsOpen(false);
+    setClear(false)
+
   };
 
   const handleReset = () => {
@@ -68,7 +77,7 @@ const Index = () => {
           className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
+          <TbCoin className="w-5 h-5 text-[#888888]" />
           <div>
             <span className="w-full h-full text-gray-500 text-base font-normal leading-5">
               Giá Thuê
@@ -102,7 +111,7 @@ const Index = () => {
               <input
                 type="text"
                 value={0}
-                onChange={() => {}}
+                onChange={() => { }}
                 className="w-full outline-none text-sm border-none"
                 readOnly
               />
@@ -112,7 +121,7 @@ const Index = () => {
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={valueRange ? valueRange * 1000000 : 0}
+                value={valueRange ? (valueRange * 1000000).toLocaleString('vi-VN') : 0}
                 onChange={(e) => setValueRange(parseInt(e.target.value) / 1000000)}
                 className="w-full outline-none text-sm border-none"
               />

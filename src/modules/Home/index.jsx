@@ -1,12 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "@components/Header";
 import Profile from "../Profile/index";
-import { useState } from "react";
+import { useEffect, useState } from "react";
  
 
 const Index = () => {
+  if (!localStorage.getItem('token') || localStorage.getItem('token')?.split('.').length !== 3) {
+    window.location.href = '/login';
+  }
   const [isShow, setShow] = useState(false);
-
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [pathname]);
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">

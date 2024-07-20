@@ -7,7 +7,7 @@ import { usePostscheduleMutation } from "../../apis/slice/Agencies";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import index from './../../modules/Home/HomePage_Detail/MainBody/index';
+import { toast, ToastContainer } from "react-toastify";
 
 // Validation schema
 const validationSchema = yup.object().shape({
@@ -17,12 +17,17 @@ const validationSchema = yup.object().shape({
     .required("SĐT khách hàng là bắt buộc")
     .matches(/^[0-9]+$/, "SĐT khách hàng chỉ chứa số")
     .min(10, "SĐT khách hàng phải có ít nhất 10 chữ số"),
-  viewDate: yup.string().required("Ngày xem phòng là bắt buộc"),
+  viewDate: yup
+    .string()
+    .required("Ngày xem phòng là bắt buộc")
+    .test("is-future-date", "Ngày xem phòng phải lớn hơn hoặc bằng ngày hiện tại", (value) => {
+      return new Date(value) >= new Date().setHours(0, 0, 0, 0);
+    }),
   viewTime: yup.string().required("Giờ xem phòng là bắt buộc"),
   notes: yup.string(),
 });
 
-export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
+export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode }) => {
   console.log("🚀 ~ ModalPutRoom ~ roomId:", roomId);
 
   const [formData, setFormData] = useState({
@@ -33,20 +38,17 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
     notes: "",
   });
   const [postschedule, { error }] = usePostscheduleMutation();
- 
+
   const { data } = useGetAllDetailQuery(roomId, {
     skip: !roomId, // Skip query if roomId is undefined
   });
- 
+
   const [response, setResponse] = useState(null);
   const [message, setMessage] = useState("");
 
   const SalerName = data?.response?.managers?.[0]?.managerName || "";
   const SalerPhone = data?.response?.managers?.[0]?.phoneNumber || "";
   const company = data?.response?.holder?.fullName || "";
-
-
-
 
   const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
     resolver: yupResolver(validationSchema),
@@ -81,15 +83,20 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
       setResponse(response);
       console.log(response);
       if (response.statusCode === 200) {
-        setMessage("Đặt lịch thành công !");
-        reset();
+        toast.success("Đặt lịch thành công!");
+        reset({
+          customerName: "",
+          customerPhone: "",
+          viewDate: "",
+          viewTime: "",
+          notes: "",
+        });
         setIsShowModal(false);
       } else {
-        setMessage("Đặt lịch thất bại !");
+        setStatusCode(400)
       }
     } catch (error) {
-      console.error("Failed to schedule:", error);
-      setResponse(error);
+      setStatusCode(400)
     }
   };
 
@@ -98,6 +105,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
       className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
       ref={dropdownRef}
     >
+
       <div className="relative w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
         <div
           className="absolute top-2 right-2 cursor-pointer"
@@ -114,7 +122,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
             123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
           </span>
         </div>
- 
+
         <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
           <div className="gap-5 flex">
 
@@ -183,55 +191,14 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId }) => {
               />
             </div>
 
-            {/* <div className="w-full">
-              <h2>danh sách lịch hẹn { }</h2>
-              <nav className="border border-gray-400 p-3 rounded">
-                <ul className="overflow-y-auto h-[500px]">
-
-                  {
-                    Schedulesdata?.response?.map((item, index) => {
-                      const date = new Date(item.dateView);
-                      const formattedDateTime = date.toLocaleString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                      });
-
-                      return (
-                        <li key={index} className="flex border-b py-3 mr-1">
-                          <div className="flex-grow">
-                            <p className="  text-gray-900 text-base font-normal leading-5 truncate flex text-[18px] pb-3 ">Tên: {item.customerName}</p>
-                            <span className="">SĐT: {item.customerPhoneNumber}</span>
-                          </div>
-                          <div className="flex-grow justify-end ">
-                            <div className="  text-gray-900 text-base font-normal leading-5  flex justify-end text-[18px] pb-3  ">
-                              <p className="  w-[300px] truncate  ">Địa chỉ: {item.houseAddress}</p>
-                            </div>
-                            <span className="flex justify-end mr-6 ">ngày Xem {formattedDateTime}</span>
-                          </div>
-                        </li>
-                      );
-                    })
-                  }
-
-                </ul>
-              </nav>
-            </div> */}
-
-
- 
           </div>
 
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
- 
+
               {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.mesagee}</p>}
               {response && <p className="text-green-600 mr-10 flex items-center">{response?.mesagee}</p>}
- 
 
               <button
                 type="submit"

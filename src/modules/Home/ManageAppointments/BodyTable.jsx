@@ -12,11 +12,10 @@ import Pagination from "./Pagination";
 import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
-import { parse, formatISO } from "date-fns";
-import { useGetListOfAppointmentsMutation } from "../../../apis/slice/Agencies";
+import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 
-const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
+const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
@@ -37,27 +36,16 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const [getListOfAppointments, { data, error, isLoading }] =
-    useGetListOfAppointmentsMutation();
-    const pageSize =4
-  const fetchAppointments = useCallback(async () => {
-    try {
-      const startDateISO = convertDateToISO(date[0]);
-      const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-
-      await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: pageSize },
-        body: { start: startDateISO, end: endDateISO },
-      }).unwrap();
-    } catch (err) {
-      console.error("Failed to fetch appointments:", err);
-      setTotalPages(1);
+  const pageSize = 5;
+  const { data, error, isLoading } = useGetListOfAppointmentsQuery({
+    queries: { pageIndex: currentPage, pageSize: pageSize },
+    body: {
+      start: date[0] ? convertDateToISO(date[0]) : null,
+      end: date[1] ? convertDateToISO(date[1]) : null,
     }
-  }, [date, currentPage, getListOfAppointments]);
-
-  useEffect(() => {
-    fetchAppointments();
-  }, [fetchAppointments]);
+  });
+  
+ 
 
   const totalPagesMemo = useMemo(
     () =>
@@ -73,7 +61,9 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
- console.log(data)
+ if(isLoading){
+  return <span className="loading loading-ball loading-lg"></span>
+ }
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -154,7 +144,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
-                      {index + 1 + (currentPage - 1) * pageSize}
+                        {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
                     <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
@@ -179,7 +169,7 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
 
                     <td className="w-[120px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
-                        A.{i.roomCode}
+                        P.{i.roomCode}
                       </span>
                     </td>
 
@@ -215,16 +205,48 @@ const BodyTable = ({ isShow, setIsShow ,setInfo}) => {
 
                         <ul
                           tabIndex={index}
-                          className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
+                          className="dropdown-content menu rounded-md z-[100] w-52 p-2 shadow bg-white border"
                         >
- 
-                          <li onClick={()=>setInfo((prev) => ({ ...prev, roomId: i.roomCode,houseAddress:i.houseAddress,rentalPrice:i.rentalPrice ,id:i.roomId}))}>
-                          <label htmlFor="my-drawer-4" className="drawer-button text-gray-700 text-sm font-normal  leading-tight">Đặt cọc</label>
+                          <li
+                            onClick={() => {
+                              setInfo((prev) => ({
+                                ...prev,
+                                roomId: i.roomCode,
+                                houseAddress: i.houseAddress,
+                                rentalPrice: i.rentalPrice,
+                                id: i.roomId,
+                                houseId: i.houseId,
+                                fullName:i.customerName,phoneNumber:i.customerPhoneNumber
+                              }));
+                            }}
+                          >
+                            <label
+                              htmlFor="my-drawer-4"
+                              className="drawer-button text-gray-700 text-sm font-normal  leading-tight"
+                            >
+                              Đặt cọc
+                            </label>
                           </li>
                           <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
-                              Xuất hợp đồng cọc
-                            </a>
+                            <span
+                              className="text-gray-700 text-sm font-normal  leading-tight"
+                              onClick={() => {
+                                document
+                                  .getElementById("modalChanegroom")
+                                  .showModal();
+                                setInfo((prev) => ({
+                                  ...prev,
+                                  roomId: i.roomCode,
+                                  houseAddress: i.houseAddress,
+                                  rentalPrice: i.rentalPrice,
+                                  id: i.roomId,
+                                  houseId: i.houseId,
+                                  scheduleId:i.scheduleId
+                                }));
+                              }}
+                            >
+                              Chuyển phòng
+                            </span>
                           </li>
                         </ul>
                       </div>

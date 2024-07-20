@@ -8,14 +8,12 @@ import React, {
 } from "react";
 import { useGetRoomsFilterMutation } from "@apis/slice/rooms";
 
-// Tạo context
+// Create context
 export const FilterHookContext = createContext();
 
 export const FilterCustomHook = ({ children }) => {
-  // Khởi tạo mutation hook từ RTK Query
   const [getRoomsFilter, { data, isLoading, isError, error }] = useGetRoomsFilterMutation();
 
-  // Dữ liệu lọc mặc định
   const initialFilterData = {
     houseId: null,
     districtId: null,
@@ -36,25 +34,37 @@ export const FilterCustomHook = ({ children }) => {
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
+
   useEffect(() => {
-    const rs = async () => {
-      await getRoomsFilter(filterData).unwrap();
-    }
-    rs()
-  }, [])
-  // Hàm xử lý tìm kiếm
+    const fetchData = async () => {
+      try {
+        await getRoomsFilter(filterData).unwrap();
+      } catch (err) {
+        console.error('Error fetching rooms:', err);
+      }
+    };
+
+    fetchData();
+  }, [filterData, getRoomsFilter]);
+
   const handleClickSearch = useCallback(async () => {
     try {
-      // Thực hiện yêu cầu lọc
       await getRoomsFilter(filterData).unwrap();
     } catch (err) {
-      // Xử lý lỗi và thông báo cho người dùng
       console.error('Error fetching rooms:', err);
-      alert('Error fetching rooms. Please try again later.'); // Hoặc xử lý lỗi khác tùy thuộc vào ứng dụng
+      alert('Error fetching rooms. Please try again later.');
     }
   }, [filterData, getRoomsFilter]);
 
-  // Sử dụng useMemo để tối ưu hóa giá trị context
+  const handleClickRemoveFilter = useCallback(async () => {
+    try {
+      await getRoomsFilter(initialFilterData).unwrap();
+    } catch (err) {
+      console.error('Error fetching rooms:', err);
+      alert('Error fetching rooms. Please try again later.');
+    }
+  }, [getRoomsFilter]);
+
   const contextValue = useMemo(
     () => ({
       filterData,
@@ -64,10 +74,11 @@ export const FilterCustomHook = ({ children }) => {
       isError,
       error,
       handleClickSearch,
+      handleClickRemoveFilter,
     }),
-    [filterData, setFilterData, data, isLoading, isError, error, handleClickSearch]
+    [filterData, data, isLoading, isError, error, handleClickSearch, handleClickRemoveFilter]
   );
- 
+
   return (
     <FilterHookContext.Provider value={contextValue}>
       {children}
@@ -75,7 +86,7 @@ export const FilterCustomHook = ({ children }) => {
   );
 };
 
-// Custom hooks để truy cập dữ liệu context
+// Custom hooks to access context data
 export const useQueryFilterData = () => {
   const { filterData, setFilterData } = useContext(FilterHookContext);
   return [filterData, setFilterData];
@@ -90,7 +101,13 @@ export const useClickSearchFilter = () => {
   const { handleClickSearch } = useContext(FilterHookContext);
   return handleClickSearch;
 };
-export const useQueryparamOfFilter = () => {
+
+export const useClickRemoveFilter = () => {
+  const { handleClickRemoveFilter } = useContext(FilterHookContext);
+  return handleClickRemoveFilter;
+};
+
+export const useQueryParamOfFilter = () => {
   const { setQueryParams } = useContext(FilterHookContext);
   return setQueryParams;
-}
+};

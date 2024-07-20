@@ -28,9 +28,16 @@ const RoomsApi = createApi({
        data:body
       }),
     }),
+    getListRoomCodeNotDeposit: build.query({
+      query: (id) => ({
+        url: `/v2/Rooms/get-rooms-not-deposit-of-house/${id}`,
+        method: 'GET',
+
+      }),
+    }),
   }),
 });
 
 
-export const { useGetRoomsFilterMutation ,useGetRoomsofhouseMutation} = RoomsApi;
+export const { useGetRoomsFilterMutation ,useGetRoomsofhouseMutation ,useGetListRoomCodeNotDepositQuery} = RoomsApi;
 export default RoomsApi;

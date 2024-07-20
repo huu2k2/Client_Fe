@@ -5,13 +5,20 @@ import ProvinceInput from "./ProvinceInput";
 
 import DistancesInput from "./DistancesInput";
 
-const Location = () => {
+const Location = ({ clear, setClear }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
-  // Lifted state
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOptionWard, setSelectedOptionWard] = useState(null);
+  useEffect(() => {
+    if (clear) {
+      setSelectedOption(null);
+      setSelectedOptionWard(null);
+
+    }
+  }, [clear]);
+  // Lifted state
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -50,6 +57,8 @@ const Location = () => {
           }`}
       >
         <ProvinceInput
+          clear={clear}
+          setClear={setClear}
           setShow={setShow}
           isShow={isShow}
           setIsOpen={setIsOpen}

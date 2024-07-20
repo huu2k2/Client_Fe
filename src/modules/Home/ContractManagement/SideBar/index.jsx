@@ -8,41 +8,37 @@ import ButtonDeposit from "./ButtonDeposit";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./schema";
-import { useAddDepositMutation } from "@apis/slice/Deposit";
-import { useGetServicesOfRoomQuery } from "@apis/slice/services";
+ 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
+import { format } from "date-fns";
+import { usePutDepositInfomationMutation } from "../../../../apis/slice/Agencies";
+ 
 
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
 const SideBar = ({ getInfo }) => {
-  const [addDeposit] = useAddDepositMutation();
-  const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
-  // const {data:DeposiInfomationData} =useGetDepositInfomationQuery(1)
-  // console.log("data",DeposiInfomationData)
-  // State for service and furniture inserts
+ 
+ 
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
 
-  // Update service and furniture inserts when getInfo or Data changes
-  useEffect(() => {
-    setServiceInserts(Data?.response?.serviceInserts);
-    setFurnitureInserts(Data?.response?.furnitureInserts);
-  }, [getInfo, Data]);
-
+ 
   // React Hook Form setup with Yup validation schema
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const [isCheckSuccess,setIsCheckSuccess]  = useState(false)
+  const [putDeposit] = usePutDepositInfomationMutation()
   // Form submission handler
   const onSubmit = async (data) => {
     const convertData = {
@@ -55,26 +51,22 @@ const SideBar = ({ getInfo }) => {
       dateRange: coverDate(data.dateRange),
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
       roomId: Number(getInfo.id),
-      rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
+      rentalPrice:Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,
-      additionalDepositAmount: Number(
-        data.additionalDepositAmount.replace(/\./g, "")
-      ),
-      depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-      numberOfPeople: Number(data.numberOfPeople),
-      numberOfVehicle: Number(data.numberOfVehicle),
-      fullName: data.fullName,
-      phoneNumber: data.phoneNumber,
+      additionalDepositAmount:Number(data.additionalDepositAmount.replace(/\./g, "")),
+      depositAmount:Number(data.depositAmount.replace(/\./g, "")),
+      numberOfPeople:Number(data.numberOfPeople),
+      numberOfVehicle:Number(data.numberOfVehicle),
+      id:getInfo.depositId
     };
-
-    const kq = await addDeposit(convertData);
+ 
+    const kq = await putDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
-      setIsCheckSuccess(false)
     } else {
       toast.success(kq.data.message);
-      setIsCheckSuccess(true)
+       
     }
   };
 
@@ -98,11 +90,45 @@ const SideBar = ({ getInfo }) => {
     }
   };
 
+// get infomation of room
+const {data:DataDepositInfomation} = useGetDepositInfomationQuery(getInfo.depositId)
+ 
+ useEffect(()=>{
+if(DataDepositInfomation?.isSuccess){
+  setValue("fullName",DataDepositInfomation?.response.fullName)
+  setValue("phoneNumber",DataDepositInfomation?.response.phoneNumber)
+  setValue("birthOfDay", format(new Date(DataDepositInfomation?.response.birthOfDay), 'yyyy-MM-dd'))
+  setValue("identification",DataDepositInfomation?.response.identification)
+  setValue("dateRange", format(new Date(DataDepositInfomation?.response.dateRange), 'yyyy-MM-dd'))
+  setValue("issuedBy",DataDepositInfomation?.response.issuedBy)
+  setValue("permanentAddress",DataDepositInfomation?.response.permanentAddress)
+  setValue("roomId",DataDepositInfomation?.response.roomId)
+  setValue("roomCode",getInfo.roomId)
+  setValue("houseAddress",DataDepositInfomation?.response.houseAddress)
+  setValue("rentalPrice",DataDepositInfomation?.response.rentalPrice)
+  setValue("depositDate", format(new Date(DataDepositInfomation?.response.depositDate), 'yyyy-MM-dd'))
+  setValue("depositAmount",DataDepositInfomation?.response.depositAmount || 0)
+  setValue("additionalDepositAmount",DataDepositInfomation?.response.additionalDepositAmount || 0)
+  setValue("depositPaymentDeadline",format(new Date(DataDepositInfomation?.response.depositPaymentDeadline), 'yyyy-MM-dd'))
+  setValue("rentalStartDate", format(new Date(DataDepositInfomation?.response.rentalStartDate), 'yyyy-MM-dd'))
+   
+  setValue("numberOfPeople",DataDepositInfomation?.response.numberOfPeople)
+  setValue("numberOfVehicle",DataDepositInfomation?.response.numberOfVehicle)
+  // setValue("chuongTrinhUuDai",DataDepositInfomation?.response.chuongTrinhUuDai)
+  setValue("note",DataDepositInfomation?.response.note)
+  setValue("rentalTerm",DataDepositInfomation?.response.rentalTerm)
+  setValue("commissionPolicyId",DataDepositInfomation?.response.commissionPolicy.id)
+  setValue("commissionPolicyLable",`${DataDepositInfomation?.response.commissionPolicy.month} tháng - Cọc ${DataDepositInfomation?.response.commissionPolicy.deposit} - Hoa hồng ${DataDepositInfomation?.response.commissionPolicy.commission}`)
+
+  setServiceInserts(DataDepositInfomation?.response?.services)
+  setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
+}
+ },[DataDepositInfomation,isSidebarOpen])
   return (
-    <div className="drawer drawer-end bg-white">
-      <ToastContainer className={"z-50"} />
+    <div className="drawer drawer-end">
+      <ToastContainer className={'z-50'}/>
       <input
-        id="my-drawer-4"
+        id="my-drawer-5"
         type="checkbox"
         className="drawer-toggle"
         onChange={handleDrawerChange}
@@ -111,7 +137,7 @@ const SideBar = ({ getInfo }) => {
       <div className="drawer-content">{/* Page content here */}</div>
       <div className="drawer-side" ref={sidebarRef}>
         <label
-          htmlFor="my-drawer-4"
+          htmlFor="my-drawer-5"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
@@ -127,7 +153,7 @@ const SideBar = ({ getInfo }) => {
               </div>
               <div className="bg-zinc-600 rounded-md justify-center items-center flex">
                 <label
-                  htmlFor="my-drawer-4"
+                  htmlFor="my-drawer-5"
                   aria-label="close sidebar"
                   className="drawer-overlay"
                 >
@@ -142,17 +168,13 @@ const SideBar = ({ getInfo }) => {
           {/* Header End */}
 
           {/* Form Sections */}
-          <InfoClient
-           register={register}
-           getInfo={getInfo}
-           setValue={setValue}
-           isSidebarOpen={isSidebarOpen}
-          />
+          <InfoClient register={register} getInfo={getInfo} isSidebarOpen={isSidebarOpen} getValues={getValues} setValue={setValue}/>
           <InfoRoom
             register={register}
             getInfo={getInfo}
             setValue={setValue}
             isSidebarOpen={isSidebarOpen}
+            getValues={getValues}
           />
           <Surcharges
             register={register}
@@ -164,7 +186,7 @@ const SideBar = ({ getInfo }) => {
             setFurnitureInserts={setFurnitureInserts}
           />
           <hr className="bg-gray-700 w-full h-[1px]" />
-          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} isCheckSuccess={isCheckSuccess} />
+          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen}/>
           {/* Form Sections End */}
         </form>
       </div>
