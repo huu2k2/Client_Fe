@@ -12,6 +12,7 @@ const RowComponent = ({
   setValue,
   isSidebarOpen,
   getNamecommissionPolicyId,
+  getRentalMonth,
 }) => {
   const isDisabled = [
     "roomId",
@@ -37,7 +38,7 @@ const RowComponent = ({
   ].includes(name);
 
   const showAutoPrice = ["depositAmount"].includes(name);
-
+  const rentalTermMonth = ["rentalTerm"].includes(name);
   const [value, setValues] = useState("");
   useEffect(() => {
     if (!isSidebarOpen) {
@@ -60,7 +61,18 @@ const RowComponent = ({
         ).toLocaleString("vi-VN")
       );
     }
-  }, [name, getInfo, showAutoPrice, getNamecommissionPolicyId, value]);
+
+    if (rentalTermMonth) {
+      setValue("rentalTerm", getRentalMonth);
+    }
+  }, [
+    name,
+    getInfo,
+    showAutoPrice,
+    getNamecommissionPolicyId,
+    value,
+    rentalTermMonth,
+  ]);
 
   const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
 

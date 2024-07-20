@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
-import IconPickHome from '../../../assets/pickHome.png'
+import IconPickHome from "../../../assets/pickHome.png";
 import { useParams } from "react-router-dom";
 import { useGetRoomsofhouseMutation } from "@apis/slice/rooms";
 import Sidebar from "./Sidebar";
@@ -76,7 +76,7 @@ const Index = () => {
     }
   }, [query, idHome]);
   const { data: dataNameHome } = useGetInfoHomeQuery(idHome);
-
+ 
   return (
     <>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
@@ -93,7 +93,11 @@ const Index = () => {
                   htmlFor="my-drawer-Overview"
                   className="mx-5 text-rose-600 text-lg drawer-button cursor-pointer"
                 >
-                  <img src={IconPickHome} alt="icon chọn nhà" className="w-9 h-9 bg-white rounded-md shadow border border-gray-300 flex justify-center items-center" />  
+                  <img
+                    src={IconPickHome}
+                    alt="icon chọn nhà"
+                    className="w-9 h-9 bg-white rounded-md shadow border border-gray-300 flex justify-center items-center"
+                  />
                 </label>
               </div>
               <GroupCheckbox
@@ -127,7 +131,7 @@ const Index = () => {
                     Phòng sắp trống
                   </div>
                   <div className="text-black text-base font-medium leading-normal">
-                    {statusTotals?.toBeEmpty}
+                    {DataOF?.beEmptyRoomTotal}
                   </div>
                 </div>
                 <div className="px-2 flex-col justify-start items-start inline-flex">
@@ -135,7 +139,7 @@ const Index = () => {
                     Phòng trống
                   </div>
                   <div className="text-black text-base font-medium leading-normal">
-                    {statusTotals?.empty}
+                    {DataOF?.emptyRoomTotal}
                   </div>
                 </div>
               </div>

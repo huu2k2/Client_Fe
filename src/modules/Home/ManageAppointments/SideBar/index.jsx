@@ -20,9 +20,6 @@ function coverDate(dateString) {
 const SideBar = ({ getInfo }) => {
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
-  // const {data:DeposiInfomationData} =useGetDepositInfomationQuery(1)
-  // console.log("data",DeposiInfomationData)
-  // State for service and furniture inserts
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
 

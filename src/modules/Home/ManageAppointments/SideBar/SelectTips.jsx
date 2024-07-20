@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useGetCommisstionPoliciesQuery } from "@apis/slice/Houses";
 
-const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId}) => {
+const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId ,setRentalMonth}) => {
   const [value, setValues] = useState(null);
   const { data } = useGetCommisstionPoliciesQuery(getInfo.houseId||0);
 
@@ -20,6 +20,7 @@ const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId}) => {
     const val =selectedOption.label?.split('-')[1].trim().split(' ')[1]
 
     setNamecommissionPolicyId(val)
+    setRentalMonth(selectedOption.label?.split('-')[0].trim().split(' ')[0])
   };
  
   return (

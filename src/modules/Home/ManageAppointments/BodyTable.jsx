@@ -36,7 +36,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const pageSize = 5;
+  const pageSize = 10;
   const { data, error, isLoading } = useGetListOfAppointmentsQuery({
     queries: { pageIndex: currentPage, pageSize: pageSize },
     body: {
