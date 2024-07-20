@@ -10,6 +10,7 @@ import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
 import Signature from "./Signature";
+import { toast } from "react-toastify";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
@@ -101,13 +102,29 @@ const Index = ({ setShow }) => {
       });
     }
   }, [data]);
-
   // const handleUpadte = async () => {
   //  const rs = await postUpdate(formData)
 
-  const handleUpadte = async () => {
-    //  const rs = await postUpdate(formData)
+  const handleUpdate = async () => {
+    try {
+      const updatedFormData = {
+        ...formData,
+        signatureBase64: formData.signatureBase64?.split(",")[1],
+      };
+      console.log("🚀 ~ handleUpdate ~ updatedFormData:", updatedFormData)
+
+      const rs = await postUpdate(updatedFormData);
+
+      if (rs.data.isSuccess) {
+        toast.success("Cập nhập thành công!");
+      } else {
+        toast.error("Cập nhập thất bại!");
+      }
+    } catch (error) {
+      toast.error("Lỗi cập nhập!");
+    }
   };
+
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
@@ -246,7 +263,7 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"permanentAddress"}
           />
- 
+
           <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
@@ -299,7 +316,7 @@ const Index = ({ setShow }) => {
             Hủy
           </button>
           <button
-            onClick={handleUpadte}
+            onClick={handleUpdate}
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
           >
             Cập nhật
