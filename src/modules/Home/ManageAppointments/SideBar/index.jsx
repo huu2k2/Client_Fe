@@ -126,13 +126,7 @@ const SideBar = ({ getInfo }) => {
                 Lên hợp đồng cọc giữ chỗ
               </div>
               <div className="bg-zinc-600 rounded-md justify-center items-center flex">
-                <label
-                  htmlFor="my-drawer-4"
-                  aria-label="close sidebar"
-                  className="drawer-overlay"
-                >
-                  <AiFillCloseSquare className="w-6 h-6 text-white" />
-                </label>
+                
               </div>
             </div>
             <div className="self-stretch text-zinc-400 text-sm font-normal leading-tight">

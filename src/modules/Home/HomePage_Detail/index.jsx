@@ -86,7 +86,7 @@ const index = () => {
             category={data?.response?.category ? data?.response?.category : null}
           />
           <RoomOrder
-            title={`Phòng tương tự của `}
+            title={`Phòng tương tự  `}
             data={null}
             money={data?.response?.rentPrice}
             address={data?.response?.houseAddress

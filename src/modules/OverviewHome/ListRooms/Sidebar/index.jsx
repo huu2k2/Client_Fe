@@ -35,10 +35,7 @@ const Sidebar = ({idHolder}) => {
                 ></label>
               </div>
             </div>
-            <div className="text-white flex gap-10">
-                <p>Phòng trống {dataListHome?.response?.emptyRoomTotal}</p>
-                <p>Phòng sắp trống {dataListHome?.response?.beEmptyRoomTotal}</p>
-              </div>
+             
           </div>
 
           <div className="divider mt-1"></div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Body from "./Body";
 import GroupCheckbox from "./GroupCheckbox";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import IconPickHome from '../../../assets/pickHome.png'
 import { useParams } from "react-router-dom";
 import { useGetRoomsofhouseMutation } from "@apis/slice/rooms";
 import Sidebar from "./Sidebar";
@@ -87,13 +87,13 @@ const Index = () => {
         <div className="self-stretch w-full h-40 py-10 shadow flex-col justify-center items-start gap-6 flex">
           <div className="self-stretch w-full px-[280px] justify-between items-center flex">
             <div className="flex flex-col gap-6 w-full">
-              <div className="text-white text-3xl font-bold leading-9">
+              <div className="text-white text-3xl font-bold leading-9 flex justify-start items-center">
                 {dataNameHome && dataNameHome?.response?.houseName}
                 <label
                   htmlFor="my-drawer-Overview"
-                  className="mx-5 text-rose-600 text-lg drawer-button"
+                  className="mx-5 text-rose-600 text-lg drawer-button cursor-pointer"
                 >
-                  Xem thêm{" "}
+                  <img src={IconPickHome} alt="icon chọn nhà" className="w-9 h-9 bg-white rounded-md shadow border border-gray-300 flex justify-center items-center" />  
                 </label>
               </div>
               <GroupCheckbox

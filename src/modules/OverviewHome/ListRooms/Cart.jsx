@@ -38,7 +38,7 @@ const Cart = ({ data }) => {
         className={`w-[200px] px-5 py-2 ${getStatusBgColor(data?.status)} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >
         <div className="text-center text-white text-lg font-medium leading-normal">
-          A.{data?.roomCode || '000'}
+          P.{data?.roomCode || '000'}
         </div>
       </div>
       <img
