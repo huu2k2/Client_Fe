@@ -117,6 +117,8 @@ const Index = ({ setShow }) => {
 
       if (rs.data.isSuccess) {
         toast.success("Cập nhập thành công!");
+        setShow(false);
+
       } else {
         toast.error("Cập nhập thất bại!");
       }
@@ -223,14 +225,7 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"PhoneNumber"}
           />
-          {/* <InputFiel
-            name={"Ngày sinh"}
-            label={formatDate(data?.response?.bod)}
-            type={"date"}
-            isEnable={false}
-            setFormData={setFormData}
-            variable={"BOD"}
-          /> */}
+
           <InputFiel
             name={"Căn cước công dân"}
             label={data?.response?.identification}
@@ -266,22 +261,21 @@ const Index = ({ setShow }) => {
 
           <Signature
             name={"Chữ ký"}
-            img={data?.response?.signatureBase64}
+            img={data?.response.signatureUrl}
             onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
-            img={data?.response?.beforeIdentificationBase64}
+            img={data?.response?.afterIdentification}
             onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
-            img={data?.response?.afterIdentificationBase64}
+            img={data?.response.beforeIdentification}
             onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
           />
         </div>
 
-        {/* Tài khoản ngân hàng */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Tài khoản ngân hàng"} />
           <InputSelect
