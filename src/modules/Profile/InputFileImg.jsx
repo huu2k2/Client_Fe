@@ -9,14 +9,16 @@ const InputFileImg = ({ name, img, onChange }) => {
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
-    console.log("🚀 ~ handleImageChange ~ imageFile:", imageFile)
     setSelectedImage(imageFile);
-    onChange(imageFile);
+    // onChange(imageFile);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
+      onChange(reader.result?.split(',')[1])
     };
     reader.readAsDataURL(imageFile);
+
+
   };
 
   const handleUploadImg = () => {
