@@ -1,11 +1,11 @@
 import React from "react";
 import ItemHome from "./ItemHome";
 import { useGetAllHousesQuery } from "@apis/slice/Houses";
- 
 
-const Sidebar = ({idHolder}) => {
-  const {data:dataListHome} = useGetAllHousesQuery(idHolder)
- 
+
+const Sidebar = ({ idHolder }) => {
+  const { data: dataListHome } = useGetAllHousesQuery(idHolder)
+
   return (
     <div className="drawer drawer-end">
       <input
@@ -24,9 +24,9 @@ const Sidebar = ({idHolder}) => {
           <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
             <div className="self-stretch justify-between items-center inline-flex">
               <div className="text-white text-xl font-medium leading-7">
-                Danh Sách Tòa Nhà Của {dataListHome?.response?.fullName} 
+                Danh Sách Tòa Nhà Của {dataListHome?.response?.fullName}
               </div>
-             
+
               <div className="bg-zinc-600 rounded-md justify-center items-center flex">
                 <label
                   htmlFor="my-drawer-5"
@@ -36,19 +36,19 @@ const Sidebar = ({idHolder}) => {
               </div>
             </div>
             <div className="text-white flex gap-10">
-                <p>Phòng trống {dataListHome?.response?.emptyRoomTotal}</p>
-                <p>Phòng sắp trống {dataListHome?.response?.beEmptyRoomTotal}</p>
-              </div>
+              <p>Phòng trống {dataListHome?.response?.emptyRoomTotal}</p>
+              <p>Phòng sắp trống {dataListHome?.response?.beEmptyRoomTotal}</p>
+            </div>
           </div>
 
           <div className="divider mt-1"></div>
-          {dataListHome?.response?.listHouses?.map((i,index)=>(
+          {dataListHome?.response?.listHouses?.map((i, index) => (
 
-          <ItemHome key={index} item={i}/>
+            <ItemHome key={index} item={i} />
           ))}
-           
+
           <div className="w-[556px] h-[78px] px-6 py-5 flex flex-col justify-start items-start">
- 
+
             <label
               htmlFor="my-drawer-Overview"
               aria-label="close sidebar"
