@@ -22,6 +22,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
+  console.log('date:', date)
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,19 +43,21 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const pageSize = 10;
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfContractManagementMutation();
-  const fetchAppointments = useCallback(async () => {
-    try {
-      const startDateISO = convertDateToISO(date[0]);
-      const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-
-      await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: pageSize },
-        body: { start: startDateISO, end: endDateISO },
-      }).unwrap();
-    } catch (err) {
-      setTotalPages(1);
-    }
-  }, [date, currentPage, getListOfAppointments]);
+    const fetchAppointments = useCallback(async () => {
+      try {
+        const startDateISO = convertDateToISO(date[0]);
+        const endDateISO = date[1] ? convertDateToISO(date[1]) : startDateISO;
+        const endDate = endDateISO || startDateISO;
+    
+        await getListOfAppointments({
+          queries: { pageIndex: currentPage, pageSize: pageSize },
+          body: { start: startDateISO, end: endDate },
+        }).unwrap();
+      } catch (err) {
+        setTotalPages(1);
+      }
+    }, [currentPage, pageSize, date, setTotalPages]); // Don't forget to add dependencies
+    
 
   useEffect(() => {
     fetchAppointments();
