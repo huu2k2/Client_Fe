@@ -72,7 +72,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
 
     console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
     try {
-      // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}10.297Z`);
       const response = await postschedule({
         ...formData,
         dateView: viewTime,
