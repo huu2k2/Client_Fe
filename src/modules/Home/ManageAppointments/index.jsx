@@ -16,6 +16,7 @@ const index = () => {
     scheduleId: 0,
     fullName: "",
     phoneNumber: "",
+    id:0
   });
 
   return (

@@ -237,7 +237,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               setInfo((prev) => ({
                                 ...prev,
                                 roomId: i.roomCode,
-                                houseAddress: i.houseAddress,
+                                houseAddress: i.houseName,
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
                                 houseId: i.houseId,
@@ -255,6 +255,11 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                           <li onClick={() => handleExportDeposit(i.depositId)}>
                             <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Xuất hợp đồng cọc
+                            </span>
+                          </li>
+                          <li>
+                            <span className="text-gray-700 text-sm font-normal  leading-tight">
+                              Hủy cọc
                             </span>
                           </li>
                         </ul>

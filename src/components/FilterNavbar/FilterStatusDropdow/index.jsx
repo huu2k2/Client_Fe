@@ -15,14 +15,13 @@ const Index = ({ clear, setClear }) => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
-
   const [selectedStatusRooms, setSelectedStatusRooms] = useState([]);
+
 
   const handleCheckboxChange = (value) => {
     setSelectedStatusRooms((prevSelectedRooms) =>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useGetCommisstionPoliciesQuery } from "@apis/slice/Houses";
 
-const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId ,setRentalMonth}) => {
+const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId ,setRentalMonth,isSidebarOpen}) => {
   const [value, setValues] = useState(null);
   const { data } = useGetCommisstionPoliciesQuery(getInfo.houseId||0);
 
@@ -22,7 +22,11 @@ const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId ,setRentalMonth}
     setNamecommissionPolicyId(val)
     setRentalMonth(selectedOption.label?.split('-')[0].trim().split(' ')[0])
   };
- 
+ useEffect(()=>{
+if(!isSidebarOpen){
+  setValues(null)
+}
+ },[isSidebarOpen])
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
       <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight ">
@@ -39,7 +43,7 @@ const SelectTips = ({getInfo,setValue,setNamecommissionPolicyId ,setRentalMonth}
           value={value}
           onChange={handleChangeValue}
           options={options}
-         
+          
         />
         
       </div>
