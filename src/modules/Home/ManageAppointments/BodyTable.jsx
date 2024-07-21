@@ -25,7 +25,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     const handleClickOutside = (event) => {
       if (refOfModel.current && !refOfModel.current.contains(event.target)) {
         setIsShow(false);
-        
+
       }
     };
 
@@ -218,18 +218,18 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
                         >
                           <li
-                            onClick={() =>{
+                            onClick={() => {
                               setInfo((prev) => ({
                                 ...prev,
                                 roomId: i.roomCode,
                                 houseAddress: i.houseAddress,
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
-                                houseId:i.houseId
+                                houseId: i.houseId
                               }))
-                              
+
                             }
-                             
+
                             }
                           >
                             <label
