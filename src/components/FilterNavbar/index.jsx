@@ -51,21 +51,20 @@ const FilterNavbar = ({ setOption }) => {
   };
 
   const debounceHandleRemoveFilter = debounce(() => {
-    handleRemoveFilter();
-    setClear(true);
+    location.reload()
   }, 500);
 
   return (
     <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
-      <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 shadow-sm bg-white">
-        <AiOutlineSearch className="w-5 h-5" />
+      <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border relative border-gray-300 shadow-sm bg-white">
+        <AiOutlineSearch className="w-5 h-5 text-[#888]" />
         <div className="relative mt-4 h-full">
           <input
             type="text"
-            placeholder="Search.."
+            placeholder="Từ khoá, Đường, Quận, Dự án hoặc địa..."
             value={searchInput}
             onChange={handleChangeInput}
-            className="w-full border-none outline-none mt-[-8px] block"
+            className="w-[266px] border-none outline-none mt-[-8px] block placeholder:text-sm"
           />
           {searchInput && close && (
             <div
@@ -94,7 +93,7 @@ const FilterNavbar = ({ setOption }) => {
         </div>
         {searchInput && (
           <button
-            className="text-gray-500 text-xl rounded-[50%] ml-4"
+            className="text-gray-500 text-xl rounded-[50%] ml-4 absolute right-2"
             onClick={() => (
               setOption(null),
               setColse(false),
