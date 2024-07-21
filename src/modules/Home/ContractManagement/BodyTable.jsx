@@ -13,7 +13,7 @@ import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
 import { parse, formatISO } from "date-fns";
-import { useGetListOfContractManagementMutation } from "../../../apis/slice/Agencies";
+import { useGetListsOfContractManagementQuery, usePostCancelDepositeMutation } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 import { usePostDepositMutation } from "../../../apis/slice/Deposit";
 import { toast } from "react-toastify";
@@ -84,6 +84,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
       const rs = await PostDeposit(depositId).unwrap();
       if (rs?.isSucess) {
         toast.success("Xuất hợp đồng thành công!");
+        refetch() 
       } else {
         toast.error(rs?.message || "Xuất hợp đồng thất bại!");
       }
@@ -91,7 +92,19 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
       toast.error(error.message || "Có lỗi xảy ra!");
     }
   };
-  
+  // ============== cancle deposite
+  const [postCancelDeposite] = usePostCancelDepositeMutation();
+
+  const handleCancledeposite = async(i)=>{
+    try {
+    const kq =  await postCancelDeposite({roomId :i.roomId,depositId:i.depositId}).unwrap();
+      toast.success("Hủy hợp đồng thành công!")
+    } catch (err) {
+      // Xử lý lỗi
+      toast.error(err)
+      console.error('Failed to cancel deposit:', err);
+    }
+  }
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -260,7 +273,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Xuất hợp đồng cọc
                             </span>
                           </li>
-                          <li>
+                          <li onClick={()=>handleCancledeposite(i)}>
                             <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Hủy cọc
                             </span>

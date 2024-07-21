@@ -8,6 +8,7 @@ const InputFiel = ({
   isEnable = false,
   setFormData,
   variable,
+  disabled
 }) => {
   const [value, setValue] = useState(label); // Sử dụng label như giá trị ban đầu cho input
 
@@ -40,6 +41,7 @@ const InputFiel = ({
     <div className="w-full gap-4 flex justify-start items-center">
       <span className="w-[180px] h-5 not-italic text-gray-700">{name}</span>
       <input
+        isEnable
         type={type}
         value={value || ""} // Đảm bảo value không bị undefined
         className="w-[312px] h-[38px] px-[13px] py-[9px] border-2 rounded-md"

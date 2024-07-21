@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RowComponent from "./RowCompoment";
 import SelectTips from "./SelectTips";
-
+import Signature from "@components/BaseInput/Signature";
 const muiltyRow = [
   {
     id: 1,
@@ -136,6 +136,12 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
           getValues={getValues}
         />
       ))}
+     <Signature
+        name={"Chữ ký"}
+        img={null}
+        onChange={(file) => handleFileChange("signature", file)}
+        type="hide"
+      />
     </div>
   );
 };
