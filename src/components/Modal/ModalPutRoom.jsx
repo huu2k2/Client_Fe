@@ -27,7 +27,7 @@ const validationSchema = yup.object().shape({
   viewTime: yup.string()
     .required("Giờ xem phòng là bắt buộc"),
 
-  notes: yup.string(),
+  note: yup.string(),
 });
 
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode, id }) => {
@@ -43,7 +43,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
     viewDate: "",
     viewTime: "",
     customerPhone: "",
-    notes: "",
+    note: "",
   });
   const [selectedRoom, setSelectedRoom] = useState(roomId); // State for selected room
   const [postschedule, { error }] = usePostscheduleMutation();
@@ -63,28 +63,13 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
     resolver: yupResolver(validationSchema),
   });
 
-  // useEffect(() => {
-  //   if (data?.response?.dateView) {
-  //     const date = new Date(data.response.dateView);
-  //     const viewDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
-  //     const viewTime = date.toTimeString().split(" ")[0].substring(0, 5); // HH:MM format
-  //     setFormData((prevFormData) => ({
-  //       ...prevFormData,
-  //       viewDate,
-  //       viewTime,
-  //     }));
-  //     setValue("viewDate", viewDate);
-  //     setValue("viewTime", viewTime);
-  //   }
-
-  // }, [data, setValue]);
-
+  ;
   const onSubmit = async (formData) => {
     console.log("🚀 ~ onSubmit ~ formData:", formData)
 
     // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
 
-    const viewTime = (`${formData.viewDate}T${formData.viewTime}.10.297Z`);
+    const viewTime = (`${formData.viewDate}T${formData.viewTime}:11.805Z`);
 
     console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
     try {
@@ -99,7 +84,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
       }).unwrap();
       console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
       setResponse(response);
-      console.log(response);
       if (response.statusCode === 200) {
         toast.success("Đặt lịch thành công!");
         reset({
@@ -107,7 +91,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
           customerPhone: "",
           viewDate: "",
           viewTime: "",
-          notes: "",
+          note: "",
         });
         setIsShowModal(false);
       } else {
@@ -215,11 +199,11 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
               <p className="text-rose-500">{errors.viewTime?.message}</p>
               <TextArea
                 label="Ghi chú"
-                name="notes"
-                value={formData.notes}
+                name="note"
+                value={formData.note}
                 onChange={(e) => {
-                  setFormData({ ...formData, notes: e.target.value });
-                  setValue("notes", e.target.value);
+                  setFormData({ ...formData, note: e.target.value });
+                  setValue("note", e.target.value);
                 }}
                 width={"w-[400px]"}
                 ref={register}
