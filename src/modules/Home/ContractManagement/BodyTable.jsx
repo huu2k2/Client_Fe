@@ -257,6 +257,11 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Xuất hợp đồng cọc
                             </span>
                           </li>
+                          <li>
+                            <span className="text-gray-700 text-sm font-normal  leading-tight">
+                              Hủy cọc
+                            </span>
+                          </li>
                         </ul>
                       </div>
                     </td>
