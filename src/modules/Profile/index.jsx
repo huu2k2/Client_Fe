@@ -102,7 +102,7 @@ const Index = ({ setShow }) => {
       setFormData({
         AgencyAccountId: data.response.telegramId || null,
         signatureBase64: data.response.signatureBase64 || null,
-        beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
+beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
         afterIdentificationBase64: data.response.afterIdentificationBase64 || null,
         BankCode: data.response.bankCode || null,
         AccountNumber: data.response.accountNumber || null,
@@ -169,7 +169,6 @@ const Index = ({ setShow }) => {
     <div
       className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
-      <ToastContainer />
       <div
         ref={refContainer}
         className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden"
@@ -181,7 +180,7 @@ const Index = ({ setShow }) => {
             Thông tin cá nhân
           </span>
           <AiTwotoneCloseSquare
-            className="w-6 h-6 rounded-sm text-white cursor-pointer"
+className="w-6 h-6 rounded-sm text-white cursor-pointer"
             onClick={handleClose}
           />
         </div>
@@ -267,7 +266,7 @@ const Index = ({ setShow }) => {
             name={"CMND/CCCD"}
             label={data?.response?.identification}
             type={"text"}
-            isEnable={false}
+isEnable={false}
             setFormData={setFormData}
             variable={"Identification"}
             error={errors.Identification}
@@ -351,7 +350,7 @@ const Index = ({ setShow }) => {
           <button
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
             onClick={hanldeCancle}
-          >
+>
             Hủy
           </button>
           <button
