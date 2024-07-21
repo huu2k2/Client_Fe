@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 
 const Agencies = createApi({
   reducerPath: "Agencies",
-  tagTypes: ["Appointments"],
+  tagTypes: ["Appointments","ContractManagement"],
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
     headers: () => {
@@ -110,7 +110,15 @@ const Agencies = createApi({
         }
       },
     }),
-    getListOfContractManagement: build.mutation({
+
+    putDepositInfomation: build.mutation({
+      query: (body) => ({
+        url: `/v2/Agencies/update-deposit`,
+        method: "PUT",
+        data: body,
+      }),
+    }),
+    getListsOfContractManagement: build.query({
       query: ({ queries, body }) => ({
         url: `/v2/Agencies/get-agency-deposits?${Object.keys(queries)
           .map((key) => `${key}=${queries[key]}`)
@@ -118,13 +126,14 @@ const Agencies = createApi({
         method: "POST",
         data: body,
       }),
+      providesTags: ['ContractManagement'],
     }),
-    putDepositInfomation: build.mutation({
-      query: (body) => ({
-        url: `/v2/Agencies/update-deposit`,
+    postCancelDeposite: build.mutation({
+      query: ({ roomId, depositId }) => ({
+        url: `/v2/Agencies/end-of-deposit-by-room-id/${roomId}?depositId=${depositId}`,
         method: "PUT",
-        data: body,
       }),
+      invalidatesTags: ['ContractManagement'],
     }),
   }),
 });
@@ -135,10 +144,12 @@ export const {
   useRemoveFavoriteMutation,
   useGetFavoriteQuery,
   useGetListOfAppointmentsQuery,
-  useGetListOfContractManagementMutation,
   useGetDepositInfomationQuery,
   usePostChangeRoomMutation,
   usePutDepositInfomationMutation,
+
+  useGetListsOfContractManagementQuery,
+  usePostCancelDepositeMutation,
 } = Agencies;
 
 export default Agencies;
