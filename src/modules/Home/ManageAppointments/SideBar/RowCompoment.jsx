@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import Select from 'react-select';
+import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
+import { usePostChangeRoomMutation, useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 
 const RowComponent = ({
   title,
@@ -22,12 +24,10 @@ const RowComponent = ({
     "rentalPrice",
     "chuongTrinhUuDai",
     "tips",
+    "rentalTerm"
   ].includes(name);
 
-  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
-    name
-  );
-
+  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(name);
   const plaValue = [
     "roomId",
     "houseAddress",
@@ -36,20 +36,35 @@ const RowComponent = ({
     "fullName",
     "phoneNumber",
   ].includes(name);
-
   const showAutoPrice = ["depositAmount"].includes(name);
   const rentalTermMonth = ["rentalTerm"].includes(name);
+  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
+
   const [value, setValues] = useState("");
+  const [options, setOptions] = useState([]);
+  const [valueOptions, setValuesOptions] = useState(null);
+
+  const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
+
+  
+
   useEffect(() => {
     if (!isSidebarOpen) {
       setValues("");
+      setOptions([])
+      setValuesOptions(null)
     }
   }, [isSidebarOpen]);
 
+
+
   useEffect(() => {
     if (plaValue) {
-      setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
-      setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+  
+        setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+        setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+      
+      
     }
 
     if (showAutoPrice) {
@@ -62,8 +77,22 @@ const RowComponent = ({
       );
     }
 
-    if (rentalTermMonth) {
-      setValue("rentalTerm", getRentalMonth);
+   
+    setValue('chuongTrinhUuDai','')
+    if (data && data?.response) {
+      const Data = data?.response?.map((i) => ({
+        value: i.roomId,
+        label: "P."+i.roomCode
+      }));
+
+      setOptions(Data || []);
+
+      // Thiết lập giá trị mặc định cho react-select nếu có sẵn thông tin từ getInfo
+      if ( name ==="roomId" && getInfo.roomId) {
+         
+        // setValuesOptions();
+        setValue('roomId', getInfo.id); // Cập nhật giá trị của react-hook-form
+      }
     }
   }, [
     name,
@@ -72,9 +101,14 @@ const RowComponent = ({
     getNamecommissionPolicyId,
     value,
     rentalTermMonth,
+    data
   ]);
-
-  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
+ useEffect(()=>{
+  if (rentalTermMonth) {
+    setValue("rentalTerm", getRentalMonth);
+    setValues(getRentalMonth)
+  }
+ },[rentalTermMonth,setValue,getRentalMonth])
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
@@ -92,6 +126,10 @@ const RowComponent = ({
       setValues(e.target.value);
     }
   };
+  const handleChangeValueOptions = (selectedOption) => {
+    setValuesOptions(selectedOption);
+    setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
+  };
 
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
@@ -99,34 +137,42 @@ const RowComponent = ({
         {title}
       </div>
       <div
-        className={`grow shrink basis-0 h-[38px] px-[13px] py-[9px] ${
+        className={`grow shrink basis-0 h-[38px] py-[9px] ${
           isDisabled ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
-          unit
-            ? "justify-start items-center gap-2 flex"
-            : "justify-between items-center flex"
+          unit ? "justify-start items-center gap-2 flex" : "justify-between items-center flex"
         }`}
       >
-        <input
-          {...(name === "datcoc" || name === "tip" ? {} : register(name))}
-          type={type}
-          className="w-full outline-none text-sm font-normal leading-tight"
-          placeholder={placeholder}
-          disabled={isDisabled}
-          value={
-            name === "tips"
-              ? (
-                  Number(getNamecommissionPolicyId) *
-                  (getInfo?.rentalPrice || 0)
-                ).toLocaleString("vi-VN")
-              : value
-          }
-          onChange={handleChangeValue}
-        />
-        {unit && (
-          <div className="text-gray-500 text-sm font-normal leading-tight">
-            {unit}
-          </div>
+        {name !== 'roomId' ? (
+          <>
+            <input
+              {...(name === "datcoc" || name === "tip" ? {} : register(name))}
+              type={type}
+              className="w-full outline-none text-sm font-normal leading-tight px-[13px]"
+              placeholder={placeholder}
+              disabled={isDisabled}
+              value={
+                name === "tips"
+                  ? (Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0)).toLocaleString("vi-VN")
+                  : value
+              }
+              onChange={handleChangeValue}
+            />
+            {unit && (
+              <div className="text-gray-500 text-sm font-normal leading-tight pr-[13px]">
+                {unit}
+              </div>
+            )}
+          </>
+        ) : (
+          <Select
+            className="w-full outline-none text-sm font-normal leading-tight"
+            value={valueOptions}
+            defaultValue={valueOptions}
+            onChange={handleChangeValueOptions}
+            options={options}
+            placeholder={"P."+getInfo.roomId}
+          />
         )}
       </div>
     </div>

@@ -51,7 +51,7 @@ const SideBar = ({ getInfo }) => {
       rentalStartDate: coverDate(data.rentalStartDate),
       dateRange: coverDate(data.dateRange),
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-      roomId: Number(getInfo.id),
+      roomId: data.roomId,
       rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,

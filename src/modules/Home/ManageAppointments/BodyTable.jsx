@@ -242,27 +242,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Đặt cọc
                             </label>
                           </li>
-                          <li>
-                            <span
-                              className="text-gray-700 text-sm font-normal  leading-tight"
-                              onClick={() => {
-                                document
-                                  .getElementById("modalChanegroom")
-                                  .showModal();
-                                setInfo((prev) => ({
-                                  ...prev,
-                                  roomId: i.roomCode,
-                                  houseAddress: i.houseName,
-                                  rentalPrice: i.rentalPrice,
-                                  id: i.roomId,
-                                  houseId: i.houseId,
-                                  scheduleId: i.scheduleId,
-                                }));
-                              }}
-                            >
-                              Chuyển phòng
-                            </span>
-                          </li>
+                           
                         </ul>
                       </div>
                     </td>

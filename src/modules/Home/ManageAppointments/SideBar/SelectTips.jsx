@@ -43,7 +43,7 @@ if(!isSidebarOpen){
           value={value}
           onChange={handleChangeValue}
           options={options}
-         
+          
         />
         
       </div>
