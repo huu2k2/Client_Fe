@@ -45,5 +45,5 @@ const RoomsApi = createApi({
 });
 
 
-export const { useGetRoomsFilterMutation ,useGetRoomsofhouseMutation ,useGetListRoomCodeNotDepositQuery} = RoomsApi;
+export const { useGetRoomsFilterMutation ,useGetRoomsofhouseMutation ,useGetListRoomCodeNotDepositQuery, useGetRoomsNotDepositOfHouseQuery} = RoomsApi;
 export default RoomsApi;
