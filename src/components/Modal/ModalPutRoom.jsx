@@ -49,7 +49,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
   const [postschedule, { error }] = usePostscheduleMutation();
 
   const { data } = useGetAllDetailQuery(roomId, {
-    skip: !roomId, // Skip query if roomId is undefined
+    skip: !roomId,
   });
 
   const [response, setResponse] = useState(null);
