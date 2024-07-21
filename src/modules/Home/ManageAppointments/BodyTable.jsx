@@ -232,6 +232,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                                 houseId: i.houseId,
                                 fullName: i.customerName,
                                 phoneNumber: i.customerPhoneNumber,
+                                scheduleId: i.scheduleId,
                               }));
                             }}
                           >
@@ -242,7 +243,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Đặt cọc
                             </label>
                           </li>
-                           
+                          
                         </ul>
                       </div>
                     </td>

@@ -63,8 +63,6 @@ const RowComponent = ({
   
         setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
         setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
-      
-      
     }
 
     if (showAutoPrice) {
@@ -88,10 +86,11 @@ const RowComponent = ({
       setOptions(Data || []);
 
       // Thiết lập giá trị mặc định cho react-select nếu có sẵn thông tin từ getInfo
-      if ( name ==="roomId" && getInfo.roomId) {
-         
+      if ( name ==="roomId" && !valueOptions) {
+          
         // setValuesOptions();
         setValue('roomId', getInfo.id); // Cập nhật giá trị của react-hook-form
+       
       }
     }
   }, [
@@ -127,8 +126,10 @@ const RowComponent = ({
     }
   };
   const handleChangeValueOptions = (selectedOption) => {
+     
     setValuesOptions(selectedOption);
     setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
+   
   };
 
   return (

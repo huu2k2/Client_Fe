@@ -1,10 +1,9 @@
 import React from "react";
-import {useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
+
 const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
-  const { refetch } = useGetListOfAppointmentsQuery();
+  
   const handeClick = ()=>{
     if(isCheckSuccess){
-      refetch()
       setIsSidebarOpen(false)
     }
   }
