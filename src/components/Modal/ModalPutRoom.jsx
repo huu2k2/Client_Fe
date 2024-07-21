@@ -67,7 +67,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
   const onSubmit = async (formData) => {
     console.log("🚀 ~ onSubmit ~ formData:", formData)
 
-    // const viewTime = new Date(`${formData.viewDate}T${formData.viewTime}:00`);
 
     const viewTime = (`${formData.viewDate}T${formData.viewTime}:11.805Z`);
 
