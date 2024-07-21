@@ -85,6 +85,18 @@ const Index = ({ setShow }) => {
     PermanentAddress: "",
   });
 
+  const [errors, setErrors] = useState({
+    FullName: "",
+    PhoneNumber: "",
+    Identification: "",
+    DateRange: "",
+    IssuedBy: "",
+    PermanentAddress: "",
+    BankCode: "",
+    AccountNumber: "",
+    AccountName: "",
+  });
+
   useEffect(() => {
     if (data) {
       setFormData({
@@ -103,11 +115,32 @@ const Index = ({ setShow }) => {
         PermanentAddress: data.response.permanentAddress || null,
       });
     }
-
-
   }, [data]);
 
+  const validate = () => {
+    let tempErrors = {};
+
+    if (!formData.FullName) tempErrors.FullName = "Họ và tên là bắt buộc";
+    if (!formData.PhoneNumber) tempErrors.PhoneNumber = "Số điện thoại là bắt buộc";
+    if (!formData.Identification) tempErrors.Identification = "CMND/CCCD là bắt buộc";
+    if (!formData.DateRange) tempErrors.DateRange = "Ngày cấp là bắt buộc";
+    if (!formData.IssuedBy) tempErrors.IssuedBy = "Nơi cấp là bắt buộc";
+    if (!formData.PermanentAddress) tempErrors.PermanentAddress = "Địa chỉ thường trú là bắt buộc";
+    if (!formData.BankCode) tempErrors.BankCode = "Mã ngân hàng là bắt buộc";
+    if (!formData.AccountNumber) tempErrors.AccountNumber = "Số tài khoản là bắt buộc";
+    if (!formData.AccountName) tempErrors.AccountName = "Chủ tài khoản là bắt buộc";
+
+    setErrors(tempErrors);
+
+    return Object.keys(tempErrors).length === 0;
+  };
+
   const handleUpdate = async () => {
+    if (!validate()) {
+      toast.error("Vui lòng kiểm tra các trường bắt buộc");
+      return;
+    }
+
     try {
       const updatedFormData = {
         ...formData,
@@ -120,7 +153,6 @@ const Index = ({ setShow }) => {
       if (rs.data.statusCode === 200) {
         toast.success("Cập nhập thành công!");
         setShow(false);
-
       } else {
         toast.error("Cập nhập thất bại!");
       }
@@ -197,18 +229,19 @@ const Index = ({ setShow }) => {
             isEnable={true}
             setFormData={setFormData}
             variable={"FullName"}
+            error={errors.FullName}
           />
           <InputFiel
+            disabled={'disabled'}
             name={"Tên đăng nhập"}
             label={data?.response?.userName}
             type={"text"}
-            isEnable={false}
+            isEnable={true}
             setFormData={setFormData}
             variable={"userName"}
           />
         </div>
 
-        {/* Contract Representative Info */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel
@@ -218,6 +251,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"FullName"}
+            error={errors.FullName}
           />
           <InputFiel
             name={"Số điện thoại"}
@@ -226,14 +260,16 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"PhoneNumber"}
+            error={errors.PhoneNumber}
           />
           <InputFiel
-            name={"Căn cước công dân"}
+            name={"CMND/CCCD"}
             label={data?.response?.identification}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
             variable={"Identification"}
+            error={errors.Identification}
           />
           <InputFiel
             name={"Ngày cấp"}
@@ -242,6 +278,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"DateRange"}
+            error={errors.DateRange}
           />
           <InputFiel
             name={"Nơi cấp"}
@@ -250,6 +287,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"IssuedBy"}
+            error={errors.IssuedBy}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
@@ -257,7 +295,8 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"permanentAddress"}
+            variable={"PermanentAddress"}
+            error={errors.PermanentAddress}
           />
 
           <Signature
@@ -284,6 +323,7 @@ const Index = ({ setShow }) => {
             label={data?.response?.bankCode}
             setFormData={setFormData}
             variable={"BankCode"}
+            error={errors.BankCode}
           />
           <InputFiel
             name={"Số tài khoản"}
@@ -292,6 +332,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"AccountNumber"}
+            error={errors.AccountNumber}
           />
           <InputFiel
             name={"Chủ tài khoản"}
@@ -300,6 +341,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"AccountName"}
+            error={errors.AccountName}
           />
         </div>
 

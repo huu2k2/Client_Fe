@@ -40,7 +40,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
   const [postschedule, { error }] = usePostscheduleMutation();
 
   const { data } = useGetAllDetailQuery(roomId, {
-    skip: !roomId, // Skip query if roomId is undefined
+    skip: !roomId,
   });
 
   const [response, setResponse] = useState(null);
@@ -57,8 +57,8 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
   useEffect(() => {
     if (data?.response?.dateView) {
       const date = new Date(data.response.dateView);
-      const viewDate = date.toISOString().split("T")[0]; // YYYY-MM-DD format
-      const viewTime = date.toTimeString().split(" ")[0].substring(0, 5); // HH:MM format
+      const viewDate = date.toISOString().split("T")[0];
+      const viewTime = date.toTimeString().split(" ")[0].substring(0, 5);
       setFormData((prevFormData) => ({
         ...prevFormData,
         viewDate,
