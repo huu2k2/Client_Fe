@@ -42,9 +42,7 @@ const RowComponent = ({
       setValue(name, getInfo[name].toLocaleString("vi-VN"));
  
     }
-    // if(name==='roomCode'){
-    //   setValues(getInfo.roomId);
-    // }
+   
     if (showAutoPrice) {
       const commissionPolicyId = Number(getNamecommissionPolicyId);
       const rentalPrice = Number(getInfo.rentalPrice);

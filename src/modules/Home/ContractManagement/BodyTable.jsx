@@ -237,7 +237,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               setInfo((prev) => ({
                                 ...prev,
                                 roomId: i.roomCode,
-                                houseAddress: i.houseAddress,
+                                houseAddress: i.houseName,
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
                                 houseId: i.houseId,
