@@ -15,8 +15,10 @@ import { vi } from "date-fns/locale";
 import { parse, formatISO } from "date-fns";
 import { useGetListOfContractManagementMutation } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
+import { usePostDepositMutation } from "../../../apis/slice/Deposit";
+import { toast } from "react-toastify";
 
-const BodyTable = ({ isShow, setIsShow }) => {
+const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
@@ -37,6 +39,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
+  const pageSize = 10;
   const [getListOfAppointments, { data, error, isLoading }] =
     useGetListOfContractManagementMutation();
   const fetchAppointments = useCallback(async () => {
@@ -45,11 +48,10 @@ const BodyTable = ({ isShow, setIsShow }) => {
       const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
 
       await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: 4 },
+        queries: { pageIndex: currentPage, pageSize: pageSize },
         body: { start: startDateISO, end: endDateISO },
       }).unwrap();
     } catch (err) {
-      console.error("Failed to fetch appointments:", err);
       setTotalPages(1);
     }
   }, [date, currentPage, getListOfAppointments]);
@@ -73,6 +75,20 @@ const BodyTable = ({ isShow, setIsShow }) => {
     setTotalItems(totalItemsMemo);
   }, [data, date]);
 
+  const [PostDeposit] = usePostDepositMutation();
+  const handleExportDeposit = async (depositId) => {
+    try {
+      const rs = await PostDeposit(depositId).unwrap();
+      if (rs?.isSucess) {
+        toast.success("Xuất hợp đồng thành công!");
+      } else {
+        toast.error(rs?.message || "Xuất hợp đồng thất bại!");
+      }
+    } catch (error) {
+      toast.error(error.message || "Có lỗi xảy ra!");
+    }
+  };
+  
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -145,7 +161,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
                       Trạng thái
                     </span>
                   </th>
-                  <th className="w-16 h-10 px-6 py-3 bg-gray-50 "></th>
+                  <th className="w-20 h-10 px-6 py-3 bg-gray-50 "></th>
                 </tr>
               </thead>
               <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">
@@ -153,7 +169,7 @@ const BodyTable = ({ isShow, setIsShow }) => {
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
-                        10
+                        {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
                     <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
@@ -184,23 +200,23 @@ const BodyTable = ({ isShow, setIsShow }) => {
 
                     <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
-                      {i.rentalPrice.toLocaleString('vi-VN')}
+                        {i.rentalPrice.toLocaleString("vi-VN")}
                       </span>
                     </td>
 
                     <td className="w-40 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
-                    <span className=" text-black text-sm font-normal  leading-tight">
-                      (2000).toLocaleString('vi-VN')
-                    </span>
-                  </td>
+                      <span className=" text-black text-sm font-normal  leading-tight">
+                        {i.commission}
+                      </span>
+                    </td>
 
-                  <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
-                    <div className="w-16 h-5 px-2.5 py-0.5 bg-emerald-100 rounded-[10px] justify-center items-center inline-flex">
-                      <div className="text-center text-emerald-800 text-xs font-medium leading-none">
-                        Đặt cọc
+                    <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
+                      <div className={`w-fit h-5 px-2.5 py-0.5 ${i.status === "1" ?"bg-emerald-100":"bg-rose-600"} rounded-[10px] justify-center items-center inline-flex`}>
+                        <div className={`text-center ${i.status === "1" ? "text-emerald-800":"text-white"} text-xs font-medium leading-none`}>
+                          {i.status === "1" ? "Đặt cọc" : "Đã hủy cọc"}
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
                     <td className="w-16 h-[72px] justify-center items-center flex  ">
                       <div className="w-full dropdown dropdown-end">
@@ -216,23 +232,36 @@ const BodyTable = ({ isShow, setIsShow }) => {
                           tabIndex={0}
                           className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white"
                         >
-                          <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
-                              Đặt cọc
-                            </a>
+                          <li
+                            onClick={() => {
+                              setInfo((prev) => ({
+                                ...prev,
+                                roomId: i.roomCode,
+                                houseAddress: i.houseAddress,
+                                rentalPrice: i.rentalPrice,
+                                id: i.roomId,
+                                houseId: i.houseId,
+                                depositId: i.depositId,
+                              }));
+                            }}
+                          >
+                            <label
+                              htmlFor="my-drawer-5"
+                              className="drawer-button text-gray-700 text-sm font-normal  leading-tight"
+                            >
+                              Xem thông tin đặt cọc
+                            </label>
                           </li>
-                          <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
+                          <li onClick={() => handleExportDeposit(i.depositId)}>
+                            <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Xuất hợp đồng cọc
-                            </a>
+                            </span>
                           </li>
                         </ul>
                       </div>
                     </td>
-
                   </tr>
                 ))}
-                 
               </tbody>
             </table>
           </div>

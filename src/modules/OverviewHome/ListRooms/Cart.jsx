@@ -1,6 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
+ 
 const Cart = ({ data }) => {
   // Define the background color based on status
   const getStatusBgColor = (status) => {
@@ -25,20 +24,14 @@ const Cart = ({ data }) => {
         return 'Đã đặt cọc';
     }
   };
-  const navigate = useNavigate()
- const handleChangePage=()=>{
-  if(data?.status !=='2'){
-
-    navigate(`deposit/${data?.roomId}`)
-  }
- }
+ 
   return (
-    <div className="flex-col justify-start items-start inline-flex">
+    <div className="flex-col justify-start items-start inline-flex"  >
       <div
         className={`w-[200px] px-5 py-2 ${getStatusBgColor(data?.status)} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >
         <div className="text-center text-white text-lg font-medium leading-normal">
-          A.{data?.roomCode || '000'}
+          P.{data?.roomCode || '000'}
         </div>
       </div>
       <img

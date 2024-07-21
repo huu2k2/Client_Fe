@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import CartRoom from "../Cart_item";
 import {
   useQueryData,
@@ -16,26 +16,25 @@ const findDistrictId = (address, districts) => {
   return district ? district.district_id : null;
 };
 
-const Index = ({ id, money, address,category, faveritedata }) => {
-  const [items, setItems] = useState([]);
+const Index = ({ id, money, address, category, faveritedata, option }) => {
   const [filterData, setFilterData] = useQueryFilterData();
-  const [error, setError] = useState("");
+ 
 
   const { data: datadistrict } = useGetDistrictsQuery();
-
-  const query = {
+  
+  const query = useMemo(() => ({
     houseId: id || null,
-    districtId: findDistrictId(address, datadistrict)||null,
+    districtId: findDistrictId(address, datadistrict) || null,
     price: Number(money) || null,
-    categories:category ? [category]:null
-  };
+    categories: category ? [category] : null,
+  }), [id, address, money, category, datadistrict]);
 
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
 
   useEffect(() => {
     setFilterData((prevData) => ({ ...prevData, ...query }));
-  }, [id, address, money, datadistrict, setFilterData]);
+  }, [query, setFilterData]);
 
   useEffect(() => {
     if (
@@ -48,39 +47,35 @@ const Index = ({ id, money, address,category, faveritedata }) => {
     }
   }, [filterData, location.pathname, handleClickSearch, money, address]);
 
-  const [data, isFetching, isError] = useQueryData();
+  const [data] = useQueryData();
+  const [items, setItems] = useState([]);
+ 
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (option && option.selectedOption && data?.response) {
+      const filteredRooms = data.response.filter(
+        (room) => room.houseId === option.selectedOption
+      );
+      setItems(filteredRooms);
+    } else if (option && option.selectedOption === "") {
       setItems(data?.response || []);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [data]);
-
-  useEffect(() => {
-    if (!data?.response?.length) {
-      setError("không tìm thấy phòng tương tự!");
-    } else {
-      setError("");
     }
-  }, [data]);
+  }, [option, data]);
+
+  if (data?.response.length === 0) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <p className="text-rose-500">Không tìm thấy phòng tương tự!</p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {items.length===0 && (
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-rose-500">{error}</p>
-        </div>
-      )}
-      {items.length > 0 && (
-        <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit ">
-          {items.map((item, index) => (
-            <CartRoom key={index} item={item} faveritedata={faveritedata} />
-          ))}
-        </div>
-      )}
-    </>
+    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
+      {items.length > 0 && items.map((item, index) => (
+        <CartRoom key={index} item={item} faveritedata={faveritedata} />
+      ))}
+    </div>
   );
 };
 

@@ -10,18 +10,20 @@ const ProvinceInput = ({
   selectedOption,
   setSelectedOption,
   selectedOptionWard,
-  setSelectedOptionWard
+  setSelectedOptionWard,
+  clear,
+  setClear
 }) => {
   const { data: dataProvices } = useGetDistrictsQuery();
   const { data: dataWard } = useGetWardsQuery(selectedOption?.value);
 
   const [filterData, setFilterData] = useQueryFilterData();
-useEffect(()=>{
-  if(filterData.districtId ){
-    const filteredData = dataProvices?.results?.filter((item) => item.district_id === filterData.districtId);
-    setSelectedOption({label: filteredData[0]?.district_name,value:filterData.districtId})
-  }
-},[filterData])
+  useEffect(() => {
+    if (filterData.districtId) {
+      const filteredData = dataProvices?.results?.filter((item) => item.district_id === filterData.districtId);
+      setSelectedOption({ label: filteredData[0]?.district_name, value: filterData.districtId })
+    }
+  }, [filterData])
   const handlePrint = () => {
     setFilterData((prev) => ({
       ...prev,
@@ -29,14 +31,20 @@ useEffect(()=>{
       wardId: selectedOptionWard?.value
     }));
     setIsOpen(false);
+    setClear(false)
   };
-
+  useEffect(() => {
+    if (clear) {
+      setSelectedOption(null);
+      setFilterData((prev) => ({ ...prev, districtId: null, wardId: null }))
+    }
+  }, [clear]);
   const handleDelete = () => {
     setSelectedOption(null);
     setSelectedOptionWard(null);
-    setFilterData((prev) => ({ ...prev,  districtId:null,wardId:null}))
+    setFilterData((prev) => ({ ...prev, districtId: null, wardId: null }))
   };
- 
+
   return (
     <>
       <div className="h-[78px] w-full gap-4 flex flex-col items-start self-stretch">
@@ -49,7 +57,7 @@ useEffect(()=>{
 
         <div className="w-full h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
           <span className="w-[236px] outline-none text-sm">
-            {selectedOption ? `${selectedOption?.label}, ${selectedOptionWard?.label ?selectedOptionWard?.label:''}` : "Tp.Hồ Chí Minh"}
+            {selectedOption ? `${selectedOption?.label}, ${selectedOptionWard?.label ? selectedOptionWard?.label : ''}` : "Tp.Hồ Chí Minh"}
           </span>
         </div>
       </div>

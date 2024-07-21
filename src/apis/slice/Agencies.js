@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 
 const Agencies = createApi({
   reducerPath: "Agencies",
+  tagTypes: ["Appointments"],
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
     headers: () => {
@@ -35,39 +36,12 @@ const Agencies = createApi({
         url: `/v2/Agencies/add-favorite-room/${roomId}`,
         method: "POST",
       }),
-      // Add the onQueryStarted lifecycle method
-      async onQueryStarted(roomId, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(
-            Agencies.util.updateQueryData("getFavorite", undefined, (draft) => {
-              draft.push(data); // assuming the API returns the added favorite room details
-            })
-          );
-        } catch (error) {
-          console.error("Failed to update the favorite list:", error);
-        }
-      },
     }),
     removeFavorite: build.mutation({
       query: (roomId) => ({
-        url: `/v2/Agencies/remove-favorite-room`,
+        url: `/v2/Agencies/remove-favorite-room/${roomId}`,
         method: "DELETE",
       }),
-      // Add the onQueryStarted lifecycle method
-      async onQueryStarted(roomId, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          Agencies.util.updateQueryData("getFavorite", undefined, (draft) => {
-            return draft.filter((room) => room.id !== roomId);
-          })
-        );
-        try {
-          await queryFulfilled;
-        } catch (error) {
-          patchResult.undo();
-          console.error("Failed to remove from the favorite list:", error);
-        }
-      },
     }),
     getFavorite: build.query({
       query: () => ({
@@ -75,7 +49,14 @@ const Agencies = createApi({
         method: "GET",
       }),
     }),
-    getListOfAppointments: build.mutation({
+
+    getDepositInfomation: build.query({
+      query: (id) => ({
+        url: `/v2/Agencies/get-deposit-by-id/${id}`,
+        method: "GET",
+      }),
+    }),
+    getListOfAppointments: build.query({
       query: ({ queries, body }) => ({
         url: `/v2/Agencies/get-schedules?${Object.keys(queries)
           .map((key) => `${key}=${queries[key]}`)
@@ -83,6 +64,51 @@ const Agencies = createApi({
         method: "POST",
         data: body,
       }),
+      providesTags: (result) =>
+        result?.response?.items
+          ? [
+              ...result.response.items.map(({ scheduleId }) => ({
+                type: "Appointments",
+                id: scheduleId,
+              })),
+            ]
+          : ["Appointments"],
+    }),
+    postChangeRoom: build.mutation({
+      query: (body) => ({
+        url: `/v2/Agencies/change-room-schedule`,
+        method: "PUT",
+        data: body,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Appointments", id: arg.scheduleId },
+      ],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        // Update cache with optimistic update
+        const patchResult = dispatch(
+          api.util.updateQueryData(
+            "getListOfAppointments",
+            { queries: {}, body: {} },
+            (draft) => {
+              // Find and update the changed appointment
+              const appointmentIndex = draft.response.items.findIndex(
+                (appointment) => appointment.scheduleId === body.scheduleId
+              );
+              if (appointmentIndex !== -1) {
+                draft.response.items[appointmentIndex].roomCode = body.roomCode;
+              }
+            }
+          )
+        );
+
+        try {
+          // Await the result of the mutation
+          await queryFulfilled;
+        } catch {
+          // Rollback the optimistic update if mutation fails
+          patchResult.undo();
+        }
+      },
     }),
     getListOfContractManagement: build.mutation({
       query: ({ queries, body }) => ({
@@ -90,6 +116,13 @@ const Agencies = createApi({
           .map((key) => `${key}=${queries[key]}`)
           .join("&")}`,
         method: "POST",
+        data: body,
+      }),
+    }),
+    putDepositInfomation: build.mutation({
+      query: (body) => ({
+        url: `/v2/Agencies/update-deposit`,
+        method: "PUT",
         data: body,
       }),
     }),
@@ -101,8 +134,11 @@ export const {
   useAddFavoriteMutation,
   useRemoveFavoriteMutation,
   useGetFavoriteQuery,
-  useGetListOfAppointmentsMutation,
-  useGetListOfContractManagementMutation
+  useGetListOfAppointmentsQuery,
+  useGetListOfContractManagementMutation,
+  useGetDepositInfomationQuery,
+  usePostChangeRoomMutation,
+  usePutDepositInfomationMutation,
 } = Agencies;
 
 export default Agencies;
