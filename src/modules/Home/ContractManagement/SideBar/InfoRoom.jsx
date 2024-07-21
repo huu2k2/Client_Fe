@@ -10,7 +10,7 @@ const muiltyRow = [
     placeholder: "",
     name: "houseAddress",
   },
-  { id: 2, title: "Mã phòng", type: "text", placeholder: "", name: "roomId" },
+  { id: 2, title: "Mã phòng", type: "text", placeholder: "", name: "roomCode" },
   {
     id: 3,
     title: "Giá cho thuê",
@@ -97,10 +97,8 @@ const muiltyRow1 = [
     name: "chuongTrinhUuDai",
   },
 ];
-const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
+const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
   const [getNamecommissionPolicyId,setNamecommissionPolicyId] = useState('')
-  const [getRentalMonth,setRentalMonth] = useState('')
- 
   return (
     <div className="w-[556px] h-fit px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
@@ -118,14 +116,10 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
           type={row.type}
           placeholder={row.placeholder}
           unit={row.unit}
-          getNamecommissionPolicyId={getNamecommissionPolicyId}
-          getRentalMonth={getRentalMonth}
+          getValues={getValues}
         />
       ))}
-      <SelectTips getInfo={getInfo} setValue={setValue}
-       setNamecommissionPolicyId={setNamecommissionPolicyId}
-       setRentalMonth={setRentalMonth}
-       />
+      <SelectTips getInfo={getInfo} setValue={setValue} getValues={getValues} setNamecommissionPolicyId={setNamecommissionPolicyId}/>
       {muiltyRow1.map((row) => (
         <RowComponent
           getInfo={getInfo}
@@ -139,7 +133,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
           placeholder={row.placeholder}
           unit={row.unit}
           getNamecommissionPolicyId={getNamecommissionPolicyId}
-          getRentalMonth={getRentalMonth}
+          getValues={getValues}
         />
       ))}
     </div>

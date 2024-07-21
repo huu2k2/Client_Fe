@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import CartRoom from "../Cart_item";
 import {
   useQueryData,
@@ -18,23 +18,23 @@ const findDistrictId = (address, districts) => {
 
 const Index = ({ id, money, address, category, faveritedata, option }) => {
   const [filterData, setFilterData] = useQueryFilterData();
-  const [error, setError] = useState("");
+ 
 
   const { data: datadistrict } = useGetDistrictsQuery();
-
-  const query = {
+  
+  const query = useMemo(() => ({
     houseId: id || null,
     districtId: findDistrictId(address, datadistrict) || null,
     price: Number(money) || null,
     categories: category ? [category] : null,
-  };
+  }), [id, address, money, category, datadistrict]);
 
   const handleClickSearch = useClickSearchFilter();
   const location = useLocation();
 
   useEffect(() => {
     setFilterData((prevData) => ({ ...prevData, ...query }));
-  }, [id, address, money, datadistrict, setFilterData]);
+  }, [query, setFilterData]);
 
   useEffect(() => {
     if (
@@ -47,24 +47,9 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     }
   }, [filterData, location.pathname, handleClickSearch, money, address]);
 
-  const [data, isFetching, isError] = useQueryData();
+  const [data] = useQueryData();
   const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setItems(data?.response || []);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [data]);
-
-  useEffect(() => {
-    if (data && (!data.response || !data.response.length)) {
-      setError("không tìm thấy phòng tương tự!");
-    } else {
-      setError("");
-    }
-  }, [data]);
+ 
 
   useEffect(() => {
     if (option && option.selectedOption && data?.response) {
@@ -77,22 +62,20 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     }
   }, [option, data]);
 
+  if (data?.response.length === 0) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <p className="text-rose-500">Không tìm thấy phòng tương tự!</p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {isFetching ? (
-        <CustomLoading />
-      ) : items.length === 0 ? (
-        <div className="w-full h-full flex justify-center items-center">
-          <p className="text-rose-500">{error}</p>
-        </div>
-      ) : (
-        <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
-          {items.map((item, index) => (
-            <CartRoom key={index} item={item} faveritedata={faveritedata} />
-          ))}
-        </div>
-      )}
-    </>
+    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
+      {items.length > 0 && items.map((item, index) => (
+        <CartRoom key={index} item={item} faveritedata={faveritedata} />
+      ))}
+    </div>
   );
 };
 

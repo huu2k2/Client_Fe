@@ -169,6 +169,7 @@ const Index = ({ setShow }) => {
     <div
       className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
+      <ToastContainer />
       <div
         ref={refContainer}
         className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden"

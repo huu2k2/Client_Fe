@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import CartRoom from "../Cart_item";
 
 import CustomLoading from "../CustomLoading";
-import { useGetRoomsFilterMutation } from "../../apis/slice/rooms";
-import { useGetDistrictsQuery } from "../../apis/slice/provices";
+import { useGetRoomsFilterMutation } from "@apis/slice/rooms";
+import { useGetDistrictsQuery } from "@apis/slice/provices";
 const findDistrictId = (address, districts) => {
   const district = districts?.results.find(
     (district) => address === district.district_name
@@ -19,7 +19,7 @@ const SimilarRoom = ({ id, money, address,category }) => {
     categories:category&&[category]
   };
   
-  const [getRoomsFilter, { data, isLoading, isError, error }] =
+  const [getRoomsFilter, { data }] =
     useGetRoomsFilterMutation();
   useEffect(() => {
     const rs = async () => {
@@ -27,13 +27,10 @@ const SimilarRoom = ({ id, money, address,category }) => {
     };
     rs();
   }, [money, address]);
-  if (isLoading) {
-    return <CustomLoading />;
-  }
+ 
  
   return (
     <div className="grid grid-cols-4 gap-4  gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
-      {isError && <CustomLoading />}
       {data?.response?.length > 0 ? (
         data?.response
           ?.slice(0, 4)

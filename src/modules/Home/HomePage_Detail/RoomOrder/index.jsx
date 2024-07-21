@@ -11,7 +11,8 @@ const Index = ({ title, data, money, address,category }) => {
     const path = data
       ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}&category=${category}`
       : `/similarRooms?Price=${money}&Address=${address}`;
-    navigate(path);
+    // navigate(path);
+    window.location.assign(path)
   };
 
   return (
@@ -20,7 +21,7 @@ const Index = ({ title, data, money, address,category }) => {
         <h1 className="font-semibold text-2xl">{title}</h1>
         <button
           onClick={handleNavigate}
-          className="text-sm font-medium text-red-500"
+          className="text-sm font-bold text-rose-600"
         >
           Xem thêm
         </button>
