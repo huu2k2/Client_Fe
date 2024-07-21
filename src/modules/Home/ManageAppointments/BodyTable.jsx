@@ -12,8 +12,7 @@ import Pagination from "./Pagination";
 import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
-import { parse, formatISO } from "date-fns";
-import { useGetListOfAppointmentsMutation } from "../../../apis/slice/Agencies";
+import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
@@ -25,7 +24,6 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     const handleClickOutside = (event) => {
       if (refOfModel.current && !refOfModel.current.contains(event.target)) {
         setIsShow(false);
-        
       }
     };
 
@@ -38,27 +36,14 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const [getListOfAppointments, { data, error, isLoading }] =
-    useGetListOfAppointmentsMutation();
-  const pageSize = 6;
-  const fetchAppointments = useCallback(async () => {
-    try {
-      const startDateISO = convertDateToISO(date[0]);
-      const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-
-      await getListOfAppointments({
-        queries: { pageIndex: currentPage, pageSize: pageSize },
-        body: { start: startDateISO, end: endDateISO },
-      }).unwrap();
-    } catch (err) {
-      console.error("Failed to fetch appointments:", err);
-      setTotalPages(1);
-    }
-  }, [date, currentPage, getListOfAppointments]);
-
-  useEffect(() => {
-    fetchAppointments();
-  }, [fetchAppointments]);
+  const pageSize = 10;
+  const { data, error, isLoading } = useGetListOfAppointmentsQuery({
+    queries: { pageIndex: currentPage, pageSize: pageSize },
+    body: {
+      start: date[0] ? convertDateToISO(date[0]) : null,
+      end: date[1] ? convertDateToISO(date[1]) : null,
+    },
+  });
 
   const totalPagesMemo = useMemo(
     () =>
@@ -74,7 +59,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
-
+  if (isLoading) {
+    return <span className="loading loading-ball loading-lg"></span>;
+  }
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -96,12 +83,29 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${isShow ? "" : "hidden"
-            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${
+            isShow ? "" : "hidden"
+          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
         </div>
+        {/* search */}
+        <label className="input flex items-center gap-2 h-[38px]">
+          <input type="text" className="grow" placeholder="Search" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="h-4 w-4 opacity-70"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </label>
       </div>
 
       {/* table */}
@@ -179,7 +183,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
                     <td className="w-[120px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
-                        A.{i.roomCode}
+                        P.{i.roomCode}
                       </span>
                     </td>
 
@@ -215,22 +219,21 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
                         <ul
                           tabIndex={index}
-                          className="dropdown-content menu rounded-md z-50 w-52 p-2 shadow bg-white border"
+                          className="dropdown-content menu rounded-md z-[100] w-52 p-2 shadow bg-white border"
                         >
                           <li
-                            onClick={() =>{
+                            onClick={() => {
                               setInfo((prev) => ({
                                 ...prev,
                                 roomId: i.roomCode,
-                                houseAddress: i.houseAddress,
+                                houseAddress: i.houseName,
                                 rentalPrice: i.rentalPrice,
                                 id: i.roomId,
-                                houseId:i.houseId
-                              }))
-                              
-                            }
-                             
-                            }
+                                houseId: i.houseId,
+                                fullName: i.customerName,
+                                phoneNumber: i.customerPhoneNumber,
+                              }));
+                            }}
                           >
                             <label
                               htmlFor="my-drawer-4"
@@ -240,14 +243,25 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                             </label>
                           </li>
                           <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
-                              Xuất hợp đồng cọc
-                            </a>
-                          </li>
-                          <li>
-                            <a className="text-gray-700 text-sm font-normal  leading-tight">
+                            <span
+                              className="text-gray-700 text-sm font-normal  leading-tight"
+                              onClick={() => {
+                                document
+                                  .getElementById("modalChanegroom")
+                                  .showModal();
+                                setInfo((prev) => ({
+                                  ...prev,
+                                  roomId: i.roomCode,
+                                  houseAddress: i.houseName,
+                                  rentalPrice: i.rentalPrice,
+                                  id: i.roomId,
+                                  houseId: i.houseId,
+                                  scheduleId: i.scheduleId,
+                                }));
+                              }}
+                            >
                               Chuyển phòng
-                            </a>
+                            </span>
                           </li>
                         </ul>
                       </div>

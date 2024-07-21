@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
-import { BsBell, BsChatDots } from "react-icons/bs";
-import { AiOutlinePicRight ,AiOutlineRead } from "react-icons/ai";
+import { BsBell } from "react-icons/bs";
+import { AiOutlinePicRight, AiOutlineRead } from "react-icons/ai";
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -21,22 +21,18 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
-
   const SetShow = () => {
     setShow(!isShow);
     console.log(isShow); // This will log the updated state
   };
 
-
-  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    window.location.assign("/login");
   };
   const handleLinkClick = (event) => {
     event.preventDefault();
-    navigate("/");
-    window.location.reload();
+    window.location.assign("/");
   };
   return (
     <div className="w-screen h-[64px] bg-black flex justify-center items-center ">
@@ -58,11 +54,11 @@ const index = ({ isShow, setShow }) => {
             <div className="p-[7px] cursor-pointer">
               <BsBell color="white" size={24} />
             </div>
-             
-            <Link to={"/quan_ly_lich_hen"} className="p-[7px]  cursor-pointer" >
+
+            <Link to={"/quan_ly_lich_hen"} className="p-[7px]  cursor-pointer">
               <AiOutlinePicRight color="white" size={24} />
             </Link>
-            <Link to={"/quan_ly_hop_dong"} className="p-[7px]  cursor-pointer" >
+            <Link to={"/quan_ly_hop_dong"} className="p-[7px]  cursor-pointer">
               <AiOutlineRead color="white" size={24} />
             </Link>
           </div>
@@ -87,8 +83,8 @@ const index = ({ isShow, setShow }) => {
               >
                 <li
                   onClick={() => setShow(!isShow)}
-
-                  className="cursor-pointer text-base">
+                  className="cursor-pointer text-base"
+                >
                   <span>Thông tin tài khoản</span>
                 </li>
                 <li className="cursor-pointer text-base">

@@ -14,7 +14,8 @@ const schema = yup
       return isBefore(birthDate, new Date());
     }),
     identification: yup.string()
-    .required("Số chứng minh thư là bắt buộc"),
+    .required("Số chứng minh thư là bắt buộc")
+    .matches(/^\d{12}$/, "Số chứng minh thư phải có 12 số"),
     dateRange: yup.string().required("Ngày hợp lệ là bắt buộc").test('is-before-today', 'Ngày cấp phải trước ngày hiện tại', value => {
       if (!value) return false;
       const birthDate = parse(value, 'yyyy-MM-dd', new Date());  
@@ -25,6 +26,7 @@ const schema = yup
   
     // Thông tin căn hộ
     roomId: yup.string().required("ID phòng là bắt buộc"),
+    roomCode: yup.string().required("ID phòng là bắt buộc"),
     houseAddress: yup.string().required("Địa chỉ căn hộ là bắt buộc"),
     rentalPrice: yup.string().required("Giá cho thuê là bắt buộc").test('is-valid-number', 'Giá cho thuê phải là số hợp lệ', value => {
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
@@ -46,7 +48,8 @@ const schema = yup
     chuongTrinhUuDai: yup.string(),
     note: yup.string() ,
     rentalTerm: yup.string().required("Thời hạn hợp đồng là bắt buộc"),
-    commissionPolicyId:yup.string() 
+    commissionPolicyId:yup.string(),
+    commissionPolicyLable:yup.string() 
   })
   .required();
 

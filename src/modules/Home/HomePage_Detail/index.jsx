@@ -40,10 +40,7 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const setData = useGetDataDetail();
-  const { data: housedata, } = useGetRoomsofhouseMutation(id,
-    { skip: !id, }
-  )
-  const { data, error, isLoading } = useGetAllDetailQuery(roomId);
+  const { data } = useGetAllDetailQuery(roomId);
   useEffect(() => {
     setData(data);
   }, [data]);
@@ -91,7 +88,7 @@ const index = () => {
             category={data?.response?.category ? data?.response?.category : null}
           />
           <RoomOrder
-            title={`Phòng tương tự của `}
+            title={`Phòng tương tự  `}
             data={null}
             money={data?.response?.rentPrice}
             address={data?.response?.houseAddress

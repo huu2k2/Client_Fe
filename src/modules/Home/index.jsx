@@ -5,9 +5,12 @@ import { useEffect, useState } from "react";
  
 
 const Index = () => {
+  if (!localStorage.getItem('token') || localStorage.getItem('token')?.split('.').length !== 3) {
+    window.location.href = '/login';
+  }
   const [isShow, setShow] = useState(false);
   const { pathname } = useLocation();
-
+  
   useEffect(() => {
     window.scrollTo({
       top: 0,

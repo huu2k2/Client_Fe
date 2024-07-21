@@ -24,8 +24,15 @@ const DepositsApi = createApi({
 
       }),
     }),
+    postDeposit:build.mutation({
+      query: (id) => ({
+        url: `/Deposits/export-pdf/${id}`,
+        method: "POST",
+ 
+      }),
+    }),
   }),
 });
 
-export const {useAddDepositMutation,useGetDepositQuery } = DepositsApi;
+export const {useAddDepositMutation,useGetDepositQuery,usePostDepositMutation } = DepositsApi;
 export default DepositsApi;

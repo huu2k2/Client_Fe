@@ -54,7 +54,7 @@ const InputSelect = ({ label, setFormData, variable }) => {
     if (selectedOption) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [variable]: selectedOption.value,
+        [variable]: selectedOption.value.toString(),
       }));
     } else {
       setFormData((prevFormData) => ({

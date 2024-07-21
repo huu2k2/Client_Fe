@@ -30,8 +30,25 @@ const HousesApi = createApi({
         url: `/v2/Houses/get-house-names`,
       }),
     }),
+    getInfoHome: build.query({
+      query: (id) => ({
+        url: `/v2/Houses/get-house-infor/${id}`,
+      }),
+    }),
+    getAllHouses: build.query({
+      query: (id) => ({
+        url: `/v2/Houses/get-house-names/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetFullInformationOFHomeQuery, useGetPolicyOfHomeQuery, useGetHouseNameQuery, useGetCommisstionPoliciesQuery  } = HousesApi;
+export const {
+  useGetFullInformationOFHomeQuery,
+  useGetPolicyOfHomeQuery,
+  useGetHouseNameQuery,
+  useGetCommisstionPoliciesQuery,
+  useGetInfoHomeQuery,
+  useGetAllHousesQuery
+} = HousesApi;
 export default HousesApi;

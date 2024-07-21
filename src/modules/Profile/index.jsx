@@ -10,6 +10,8 @@ import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
 import Signature from "./Signature";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
@@ -66,47 +68,55 @@ const Index = ({ setShow }) => {
   // handle data for update
   // select all data for update
   const [formData, setFormData] = useState({
-    AgencyAccountId: "",
-    SignatureUrl: null,
-    BeforeIdentification: null,
-    AfterIdentification: null,
-    BankCode: "",
-    AccountNumber: "",
-    AccountName: "",
-    FullName: "",
-    PhoneNumber: "",
-    BOD: "",
-    Identification: "",
-    DateRange: "",
-    IssuedBy: "",
-    PermanentAddress: "",
+    signatureBase64: null,
+    beforeIdentificationBase64: null,
+    afterIdentificationBase64: null,
+    bankCode: "",
+    accountNumber: "",
+    accountName: "",
+    fullName: "",
+    phoneNumber: "",
+    bod: "",
+    identification: "",
+    dateRange: "",
+    issuedBy: "",
+    permanentAddress: "",
   });
   useEffect(() => {
     if (data) {
       setFormData({
-        AgencyAccountId: data.response.telegramId || null,
-        SignatureUrl: data.response.signatureUrl || null,
-        BeforeIdentification: data.response.beforeIdentification || null,
-        AfterIdentification: data.response.afterIdentification || null,
-        BankCode: data.response.bankCode || null,
-        AccountNumber: data.response.accountNumber || null,
-        AccountName: data.response.accountName || null,
-        FullName: data.response.fullName || null,
-        PhoneNumber: data.response.phoneNumber || null,
-        // BOD: data.response.bod || null,
-        Identification: data.response.identification || null,
-        DateRange: data.response.dateRange || null,
-        IssuedBy: data.response.issuedBy || null,
-        PermanentAddress: data.response.permanentAddress || null,
+        signatureBase64: data.response.signatureUrl || null,
+        beforeIdentificationBase64: data.response.beforeIdentification || null,
+        afterIdentificationBase64: data.response.afterIdentification || null,
+        bankCode: data.response.bankCode || null,
+        accountNumber: data.response.accountNumber || null,
+        accountName: data.response.accountName || null,
+        fullName: data.response.fullName || null,
+        phoneNumber: data.response.phoneNumber || null,
+        // bod: data.response.bod || null,
+        identification: data.response.identification || null,
+        dateRange: data.response.dateRange || null,
+        issuedBy: data.response.issuedBy || null,
+        permanentAddress: data.response.permanentAddress || null,
       });
     }
   }, [data]);
 
-  // const handleUpadte = async () => {
-  //  const rs = await postUpdate(formData)
+ 
 
   const handleUpadte = async () => {
-    //  const rs = await postUpdate(formData)
+ 
+    try {
+      const rs = await postUpdate({
+        ...formData,
+        signatureBase64: formData.signatureBase64?.split(",")[1],
+      });
+      if (rs.data.isSuccess) {
+        toast.success("Cập nhập thành công!");
+      }
+    } catch (error) {
+      toast.error("Lỗi cập nhập!");
+    }
   };
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
@@ -116,6 +126,7 @@ const Index = ({ setShow }) => {
       className={`fixed inset-0 z-50 flex justify-end  profile 
          ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
+      <ToastContainer />
       <div
         ref={refContainer}
         className="w-[556px] h-screen flex flex-col justify-start overflow-y-auto bg-white shadow-xl scroll-hidden"
@@ -175,7 +186,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={true}
             setFormData={setFormData}
-            variable={"FullName"}
+            variable={"fullName"}
           />
           <InputFiel
             name={"Tên đăng nhập"}
@@ -196,7 +207,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"FullName"}
+            variable={"fullName"}
           />
           <InputFiel
             name={"Số điện thoại"}
@@ -204,23 +215,15 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"PhoneNumber"}
+            variable={"phoneNumber"}
           />
-          {/* <InputFiel
-            name={"Ngày sinh"}
-            label={formatDate(data?.response?.bod)}
-            type={"date"}
-            isEnable={false}
-            setFormData={setFormData}
-            variable={"BOD"}
-          /> */}
           <InputFiel
             name={"Căn cước công dân"}
             label={data?.response?.identification}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"Identification"}
+            variable={"identification"}
           />
           <InputFiel
             name={"Ngày cấp"}
@@ -228,7 +231,7 @@ const Index = ({ setShow }) => {
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"DateRange"}
+            variable={"dateRange"}
           />
           <InputFiel
             name={"Nơi cấp"}
@@ -236,7 +239,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"IssuedBy"}
+            variable={"issuedBy"}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
@@ -246,21 +249,25 @@ const Index = ({ setShow }) => {
             setFormData={setFormData}
             variable={"permanentAddress"}
           />
- 
+
           <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange("SignatureUrl", file)}
+            onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("BeforeIdentification", file)}
+            onChange={(file) =>
+              handleFileChange("beforeIdentificationBase64", file)
+            }
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("AfterIdentification", file)}
+            onChange={(file) =>
+              handleFileChange("afterIdentificationBase64", file)
+            }
           />
         </div>
 
@@ -270,7 +277,7 @@ const Index = ({ setShow }) => {
           <InputSelect
             label={data?.response?.bankCode}
             setFormData={setFormData}
-            variable={"BankCode"}
+            variable={"bankCode"}
           />
           <InputFiel
             name={"Số tài khoản"}
@@ -278,7 +285,7 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"AccountNumber"}
+            variable={"accountNumber"}
           />
           <InputFiel
             name={"Chủ tài khoản"}
@@ -286,24 +293,23 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"AccountName"}
+            variable={"accountName"}
           />
-        </div>
-
-        {/* Fixed button */}
-        <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
-          <button
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
-            onClick={hanldeCancle}
-          >
-            Hủy
-          </button>
-          <button
-            onClick={handleUpadte}
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
-          >
-            Cập nhật
-          </button>
+          {/* Fixed button */}
+          <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
+            <button
+              className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
+              onClick={hanldeCancle}
+            >
+              Hủy
+            </button>
+            <button
+              onClick={handleUpadte}
+              className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
+            >
+              Cập nhật
+            </button>
+          </div>
         </div>
       </div>
     </div>
