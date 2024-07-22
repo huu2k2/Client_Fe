@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
-import { usePutDepositInfomationMutation } from "../../../../apis/slice/Agencies";
+import { usePutDepositInfomationMutation } from "@apis/slice/Agencies";
  
 
 function coverDate(dateString) {
@@ -121,6 +121,7 @@ if(DataDepositInfomation?.isSuccess){
   setValue('signature',DataDepositInfomation?.response?.signature)
 }
  },[DataDepositInfomation,isSidebarOpen])
+ 
   return (
     <div className="drawer drawer-end">
       <ToastContainer className={'z-50'}/>

@@ -99,6 +99,7 @@ const muiltyRow1 = [
 ];
 const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
   const [getNamecommissionPolicyId,setNamecommissionPolicyId] = useState('')
+ 
   return (
     <div className="w-[556px] h-fit px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">

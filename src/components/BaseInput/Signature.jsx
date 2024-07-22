@@ -4,7 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import SignatureCanvas from "react-signature-canvas";
 
 const Signature = ({ name, img, onChange,type="show" }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(img);
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
   const sigCanvas = useRef(null);

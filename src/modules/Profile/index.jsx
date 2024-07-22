@@ -15,7 +15,8 @@ import Signature from "@components/BaseInput/Signature";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
-  const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
+  const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
+    usePostUpdateMutation();
 
   const [isExiting, setIsExiting] = useState(false);
 
@@ -70,7 +71,7 @@ const Index = ({ setShow }) => {
   // handle data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
-    signatureBase64: null,
+    signatureUrl: null,
     beforeIdentificationBase64: null,
     afterIdentificationBase64: null,
     BankCode: "",
@@ -98,21 +99,23 @@ const Index = ({ setShow }) => {
   });
 
   useEffect(() => {
-    if (data) {
+    if (data?.response) {
       setFormData({
-        AgencyAccountId: data.response.telegramId || null,
-        signatureBase64: data.response.signatureBase64 || null,
-beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
-        afterIdentificationBase64: data.response.afterIdentificationBase64 || null,
-        BankCode: data.response.bankCode || null,
-        AccountNumber: data.response.accountNumber || null,
-        AccountName: data.response.accountName || null,
-        FullName: data.response.fullName || null,
-        PhoneNumber: data.response.phoneNumber || null,
-        Identification: data.response.identification || null,
-        DateRange: data.response.dateRange || null,
-        IssuedBy: data.response.issuedBy || null,
-        PermanentAddress: data.response.permanentAddress || null,
+        AgencyAccountId: data.response.telegramId ,
+        signatureUrl: data.response.signatureUrl,
+        beforeIdentificationBase64:
+          data.response.beforeIdentificationBase64,
+        afterIdentificationBase64:
+          data.response.afterIdentificationBase64,
+        BankCode: data.response.bankCode,
+        AccountNumber: data.response.accountNumber,
+        AccountName: data.response.accountName,
+        FullName: data.response.fullName,
+        PhoneNumber: data.response.phoneNumber,
+        Identification: data.response.identification,
+        DateRange: data.response.dateRange,
+        IssuedBy: data.response.issuedBy,
+        PermanentAddress: data.response.permanentAddress,
       });
     }
   }, [data]);
@@ -121,14 +124,19 @@ beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
     let tempErrors = {};
 
     if (!formData.FullName) tempErrors.FullName = "Họ và tên là bắt buộc";
-    if (!formData.PhoneNumber) tempErrors.PhoneNumber = "Số điện thoại là bắt buộc";
-    if (!formData.Identification) tempErrors.Identification = "CMND/CCCD là bắt buộc";
+    if (!formData.PhoneNumber)
+      tempErrors.PhoneNumber = "Số điện thoại là bắt buộc";
+    if (!formData.Identification)
+      tempErrors.Identification = "CMND/CCCD là bắt buộc";
     if (!formData.DateRange) tempErrors.DateRange = "Ngày cấp là bắt buộc";
     if (!formData.IssuedBy) tempErrors.IssuedBy = "Nơi cấp là bắt buộc";
-    if (!formData.PermanentAddress) tempErrors.PermanentAddress = "Địa chỉ thường trú là bắt buộc";
+    if (!formData.PermanentAddress)
+      tempErrors.PermanentAddress = "Địa chỉ thường trú là bắt buộc";
     if (!formData.BankCode) tempErrors.BankCode = "Mã ngân hàng là bắt buộc";
-    if (!formData.AccountNumber) tempErrors.AccountNumber = "Số tài khoản là bắt buộc";
-    if (!formData.AccountName) tempErrors.AccountName = "Chủ tài khoản là bắt buộc";
+    if (!formData.AccountNumber)
+      tempErrors.AccountNumber = "Số tài khoản là bắt buộc";
+    if (!formData.AccountName)
+      tempErrors.AccountName = "Chủ tài khoản là bắt buộc";
 
     setErrors(tempErrors);
 
@@ -144,8 +152,8 @@ beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
     try {
       const updatedFormData = {
         ...formData,
-        signatureBase64: formData.signatureBase64?.split(",")[1],
-        BankCode: formData.BankCode.toString()
+        signatureUrl: formData.signatureUrl?.split(",")[1],
+        BankCode: formData.BankCode.toString(),
       };
 
       const rs = await postUpdate(updatedFormData);
@@ -164,10 +172,12 @@ beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
-
+ 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${
+        isExiting ? "animate-slide-out" : "animate-slide-in"
+      }`}
     >
       <div
         ref={refContainer}
@@ -180,7 +190,7 @@ beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
             Thông tin cá nhân
           </span>
           <AiTwotoneCloseSquare
-className="w-6 h-6 rounded-sm text-white cursor-pointer"
+            className="w-6 h-6 rounded-sm text-white cursor-pointer"
             onClick={handleClose}
           />
         </div>
@@ -214,7 +224,7 @@ className="w-6 h-6 rounded-sm text-white cursor-pointer"
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
-              {data?.response?.fullName}
+              {formData.FullName}
             </h1>
           </div>
         </div>
@@ -224,7 +234,7 @@ className="w-6 h-6 rounded-sm text-white cursor-pointer"
           <TitleContainer title={"Thông tin người dùng"} />
           <InputFiel
             name={"Họ và tên"}
-            label={data?.response?.fullName}
+            label={formData.FullName}
             type={"text"}
             isEnable={true}
             setFormData={setFormData}
@@ -232,7 +242,7 @@ className="w-6 h-6 rounded-sm text-white cursor-pointer"
             error={errors.FullName}
           />
           <InputFiel
-            disabled={'disabled'}
+            disabled={"disabled"}
             name={"Tên đăng nhập"}
             label={data?.response?.userName}
             type={"text"}
@@ -246,7 +256,7 @@ className="w-6 h-6 rounded-sm text-white cursor-pointer"
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel
             name={"Họ và tên"}
-            label={data?.response?.fullName}
+            label={formData.FullName}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -255,7 +265,7 @@ className="w-6 h-6 rounded-sm text-white cursor-pointer"
           />
           <InputFiel
             name={"Số điện thoại"}
-            label={data?.response?.phoneNumber}
+            label={formData.PhoneNumber}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -264,16 +274,16 @@ className="w-6 h-6 rounded-sm text-white cursor-pointer"
           />
           <InputFiel
             name={"CMND/CCCD"}
-            label={data?.response?.identification}
+            label={formData.Identification}
             type={"text"}
-isEnable={false}
+            isEnable={false}
             setFormData={setFormData}
             variable={"Identification"}
             error={errors.Identification}
           />
           <InputFiel
             name={"Ngày cấp"}
-            label={formatDate(data?.response?.dateRange)}
+            label={formatDate(formData.DateRange)}
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
@@ -282,7 +292,7 @@ isEnable={false}
           />
           <InputFiel
             name={"Nơi cấp"}
-            label={data?.response?.issuedBy}
+            label={formData.IssuedBy}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -291,7 +301,7 @@ isEnable={false}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
-            label={data?.response?.permanentAddress}
+            label={formData.PermanentAddress}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -302,17 +312,21 @@ isEnable={false}
           <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange("signatureBase64", file)}
+            onChange={(file) => handleFileChange("signatureUrl", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
+            onChange={(file) =>
+              handleFileChange("beforeIdentificationBase64", file)
+            }
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
+            onChange={(file) =>
+              handleFileChange("afterIdentificationBase64", file)
+            }
           />
         </div>
 
@@ -350,7 +364,7 @@ isEnable={false}
           <button
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
             onClick={hanldeCancle}
->
+          >
             Hủy
           </button>
           <button
