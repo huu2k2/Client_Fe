@@ -18,7 +18,7 @@ const ItemHome = ({ item }) => {
       >
         <div className="card-body flex justify-between">
           <div>
-            <h2 className="card-title">
+            <h2 className="card-title font-bold">
               {item.houseName} ({item.roomEmptyTotal})
             </h2>
             <p>{item.houseAddress}</p>

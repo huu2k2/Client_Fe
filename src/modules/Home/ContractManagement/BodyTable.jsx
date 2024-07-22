@@ -17,6 +17,7 @@ import { useGetListsOfContractManagementQuery, usePostCancelDepositeMutation } f
 import { convertDateToISO } from "../../../utils/ConverDate";
 import { usePostDepositMutation } from "../../../apis/slice/Deposit";
 import { toast } from "react-toastify";
+import SearchInput from "../../../components/BaseInput/SearchInput";
 
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
@@ -40,7 +41,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
   const pageSize = 10;
-  
+
+  const [ListData,setListData] = useState([]);
+
   const startDateISO = convertDateToISO(date[0]);
   const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
   const { data, error, isLoading ,refetch } = useGetListsOfContractManagementQuery({
@@ -124,6 +127,10 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         >
           <DatePicker setDate={setDate} />
         </div>
+        <SearchInput
+          data={data}
+          setListData={setListData}
+        />
       </div>
 
       {/* table */}
@@ -172,7 +179,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                 </tr>
               </thead>
               <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">
-                {data?.response?.items?.map((i, index) => (
+                {ListData?.map((i, index) => (
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">

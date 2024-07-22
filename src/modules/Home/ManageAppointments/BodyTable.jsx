@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { BsArrowRight, BsChevronDown } from "react-icons/bs";
 import { AiOutlineMore } from "react-icons/ai";
 import { format, parseISO } from "date-fns";
 import Pagination from "./Pagination";
@@ -14,6 +13,7 @@ import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
 import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
+import SearchInput from "../../../components/BaseInput/SearchInput";
 
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
@@ -36,9 +36,11 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
+  const [ListData,setListData] = useState([]);
   const pageSize = 10;
-  const { data, error, isLoading } = useGetListOfAppointmentsQuery({
-    queries: { pageIndex: currentPage, pageSize: pageSize },
+
+  const { data, isLoading } = useGetListOfAppointmentsQuery({
+    queries: { pageIndex: currentPage||1, pageSize: pageSize },
     body: {
       start: date[0] ? convertDateToISO(date[0]) : null,
       end: date[1] ? convertDateToISO(date[1]) : null,
@@ -59,9 +61,12 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
   }, [data, date]);
+
   if (isLoading) {
     return <span className="loading loading-ball loading-lg"></span>;
   }
+ 
+  
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -91,21 +96,12 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
           <DatePicker setDate={setDate} />
         </div>
         {/* search */}
-        <label className="input flex items-center gap-2 h-[38px]">
-          <input type="text" className="grow" placeholder="Search" />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            className="h-4 w-4 opacity-70"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </label>
+
+        <SearchInput
+          data={data}
+          setListData={setListData}
+        />
+        {/* end */}
       </div>
 
       {/* table */}
@@ -154,7 +150,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                 </tr>
               </thead>
               <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">
-                {data?.response?.items?.map((i, index) => (
+                {ListData?.map((i, index) => (
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
@@ -243,7 +239,6 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Đặt cọc
                             </label>
                           </li>
-                          
                         </ul>
                       </div>
                     </td>
