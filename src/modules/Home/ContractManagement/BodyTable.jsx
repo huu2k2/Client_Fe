@@ -48,7 +48,10 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
   const { data, error, isLoading ,refetch } = useGetListsOfContractManagementQuery({
     queries: { pageIndex: currentPage, pageSize: pageSize },
-    body: { start: startDateISO, end: endDateISO },
+    body: {
+       start: startDateISO,
+        end: endDateISO || startDateISO
+      },
   });
 
   useEffect(() => {

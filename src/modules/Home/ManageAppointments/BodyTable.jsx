@@ -19,6 +19,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
+  console.log('date:', date)
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,9 +44,10 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     queries: { pageIndex: currentPage||1, pageSize: pageSize },
     body: {
       start: date[0] ? convertDateToISO(date[0]) : null,
-      end: date[1] ? convertDateToISO(date[1]) : null,
+      end: date[1] ? convertDateToISO(date[1]) : (date[0] ? convertDateToISO(date[0]) : null),
     },
   });
+  
 
   const totalPagesMemo = useMemo(
     () =>
