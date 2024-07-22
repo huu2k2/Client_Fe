@@ -34,7 +34,7 @@ const index = () => {
 
             <Deposit data={data?.response}/>
 
-            <Tips />
+            {/* <Tips /> */}
 
             <ContactManagement data={data?.response}/>
           </div>
