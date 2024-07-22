@@ -1,6 +1,7 @@
 import React from "react";
 
 const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
+  
   const handeClick = ()=>{
     if(isCheckSuccess){
       setIsSidebarOpen(false)

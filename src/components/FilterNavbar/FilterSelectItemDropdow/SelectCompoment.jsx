@@ -5,6 +5,7 @@ import { useQueryFilterData } from "@customhooks";
 const SelectCompoment = ({ selectedOption, setSelectedOption, type, data }) => {
   const [filterData] = useQueryFilterData()
   const [options, setOptions] = useState([]);
+ 
 
   useEffect(() => {
     if (data && data.results) {

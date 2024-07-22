@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RowComponent from "./RowCompoment";
 import SelectTips from "./SelectTips";
-
+import Signature from "@components/BaseInput/Signature";
 const muiltyRow = [
   {
     id: 1,
@@ -99,6 +99,7 @@ const muiltyRow1 = [
 ];
 const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
   const [getNamecommissionPolicyId,setNamecommissionPolicyId] = useState('')
+ 
   return (
     <div className="w-[556px] h-fit px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
@@ -136,6 +137,12 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
           getValues={getValues}
         />
       ))}
+     <Signature
+        name={"Chữ ký"}
+        img={getValues('signature')}
+        onChange={(file) => handleFileChange("signature", file)}
+        type="hide"
+      />
     </div>
   );
 };

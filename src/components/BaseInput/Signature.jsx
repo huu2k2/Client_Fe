@@ -3,23 +3,19 @@ import AddImg from "@assets/addImg.png";
 import { AiFillCloseCircle } from "react-icons/ai";
 import SignatureCanvas from "react-signature-canvas";
 
-const Signature = ({ name, img, onChange }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(`${img}`);
+const Signature = ({ name, img, onChange,type="show" }) => {
+  const [selectedImage, setSelectedImage] = useState(img);
+  const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
   const sigCanvas = useRef(null);
-
-  useEffect(() => {
-    setImagePreview(img);
-  }, [img]);
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     setSelectedImage(imageFile);
-    
+
     const reader = new FileReader();
     reader.onloadend = () => {
-      onChange(reader.result?.split(',')[1]);
+      onChange(reader.result?.split(",")[1]);
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(imageFile);
@@ -46,7 +42,6 @@ const Signature = ({ name, img, onChange }) => {
     document.getElementById("my_modal_1").close();
   };
 
-
   return (
     <div className="w-full gap-4 flex justify-start items-center">
       <span className="w-[180px] h-5 not-italic text-gray-700">{name}</span>
@@ -56,7 +51,7 @@ const Signature = ({ name, img, onChange }) => {
             <div className="relative">
               <img
                 src={imagePreview}
-                alt="loading image"
+                alt="Preview"
                 className="w-[260px] h-[180px] object-cover"
               />
               <AiFillCloseCircle
@@ -95,13 +90,14 @@ const Signature = ({ name, img, onChange }) => {
             </>
           )}
         </div>
-        <button
+        {type==="show"?<button
           type="button"
           onClick={() => document.getElementById("my_modal_1").showModal()}
           className="text-white w-full bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2"
         >
           Tạo chữ ký
-        </button>
+        </button> :<></>}
+        
 
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
@@ -109,16 +105,29 @@ const Signature = ({ name, img, onChange }) => {
             <div className="py-4 border">
               <SignatureCanvas
                 penColor="black"
-                canvasProps={{ width: 300, height: 200, className: 'sigCanvas' }}
+                canvasProps={{
+                  width: 300,
+                  height: 200,
+                  className: "sigCanvas",
+                }}
                 ref={sigCanvas}
               />
             </div>
             <form method="dialog" className="modal-action">
-              <button onClick={handleClear} className="text-white bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2 ">Xóa</button>
-              <button onClick={handleSave} className="text-white bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2 ">Lưu</button>
+              <button
+                onClick={handleClear}
+                className="text-white bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2 "
+              >
+                Xóa
+              </button>
+              <button
+                onClick={handleSave}
+                className="text-white bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2 "
+              >
+                Lưu
+              </button>
             </form>
           </div>
-
         </dialog>
       </div>
     </div>

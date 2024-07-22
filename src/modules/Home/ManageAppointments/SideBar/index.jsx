@@ -12,7 +12,9 @@ import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
+import { usePostChangeRoomMutation,useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
+ 
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -40,6 +42,9 @@ const SideBar = ({ getInfo }) => {
   });
 
   const [isCheckSuccess,setIsCheckSuccess]  = useState(false)
+  const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
+  const { refetch } = useGetListOfAppointmentsQuery();
+  const [postChangeRoom] = usePostChangeRoomMutation();
   // Form submission handler
   const onSubmit = async (data) => {
     const convertData = {
@@ -51,7 +56,7 @@ const SideBar = ({ getInfo }) => {
       rentalStartDate: coverDate(data.rentalStartDate),
       dateRange: coverDate(data.dateRange),
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-      roomId: Number(getInfo.id),
+      roomId: data.roomId,
       rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,
@@ -64,7 +69,8 @@ const SideBar = ({ getInfo }) => {
       fullName: data.fullName,
       phoneNumber: data.phoneNumber,
     };
-
+    
+  
     const kq = await addDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
@@ -72,7 +78,16 @@ const SideBar = ({ getInfo }) => {
     } else {
       toast.success(kq.data.message);
       setIsCheckSuccess(true)
-    }
+      
+      const body = {
+        scheduleId: Number(getInfo.scheduleId),
+        roomId: Number(data.roomId),
+         
+      };
+
+        await postChangeRoom(body).unwrap();
+        refetch(); 
+      }
   };
 
   // Display toast notifications for form errors

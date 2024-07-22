@@ -49,7 +49,8 @@ const schema = yup
     note: yup.string() ,
     rentalTerm: yup.string().required("Thời hạn hợp đồng là bắt buộc"),
     commissionPolicyId:yup.string(),
-    commissionPolicyLable:yup.string() 
+    commissionPolicyLable:yup.string(),
+    signature:yup.string() 
   })
   .required();
 

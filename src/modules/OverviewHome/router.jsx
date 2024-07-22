@@ -21,6 +21,7 @@ const router = {
     {
       path: "",
       element: <ListRooms />,
+       
     },
     {
       path: "policies",

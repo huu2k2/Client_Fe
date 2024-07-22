@@ -20,11 +20,12 @@ const groupByFloor = (data) => {
 const Floor = ({ data }) => {
   const groupedData = groupByFloor(data || []);
   const [imgdata, setImgdata] = useState([]);
+  const [getIdRoom,setIdRoom] = useState('')
   const ClickCart = (item) => {
     document.getElementById("my_modal_showimg").showModal();
     setImgdata(item);
   };
-  console.log(imgdata)
+ 
   return (
     <div className="flex-col w-full justify-start items-start gap-8 flex">
       {Object.keys(groupedData).map((floorNumber) => (
@@ -47,7 +48,7 @@ const Floor = ({ data }) => {
                 </div>
               </>
             ))}
-            <ContainerImg item={imgdata} />
+            <ContainerImg item={imgdata} data={null}/>
             {/* End card */}
           </div>
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AiFillCloseSquare } from "react-icons/ai";
 import InfoClient from "./InfoClient";
 import InfoRoom from "./InfoRoom";
 import Surcharges from "./surcharges";
@@ -13,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
-import { usePutDepositInfomationMutation } from "../../../../apis/slice/Agencies";
+import { usePutDepositInfomationMutation } from "@apis/slice/Agencies";
  
 
 function coverDate(dateString) {
@@ -92,7 +91,6 @@ const SideBar = ({ getInfo }) => {
 
 // get infomation of room
 const {data:DataDepositInfomation} = useGetDepositInfomationQuery(getInfo.depositId)
- 
  useEffect(()=>{
 if(DataDepositInfomation?.isSuccess){
   setValue("fullName",DataDepositInfomation?.response.fullName)
@@ -111,7 +109,6 @@ if(DataDepositInfomation?.isSuccess){
   setValue("additionalDepositAmount",DataDepositInfomation?.response.additionalDepositAmount || 0)
   setValue("depositPaymentDeadline",format(new Date(DataDepositInfomation?.response.depositPaymentDeadline), 'yyyy-MM-dd'))
   setValue("rentalStartDate", format(new Date(DataDepositInfomation?.response.rentalStartDate), 'yyyy-MM-dd'))
-   
   setValue("numberOfPeople",DataDepositInfomation?.response.numberOfPeople)
   setValue("numberOfVehicle",DataDepositInfomation?.response.numberOfVehicle)
   // setValue("chuongTrinhUuDai",DataDepositInfomation?.response.chuongTrinhUuDai)
@@ -119,11 +116,12 @@ if(DataDepositInfomation?.isSuccess){
   setValue("rentalTerm",DataDepositInfomation?.response.rentalTerm)
   setValue("commissionPolicyId",DataDepositInfomation?.response.commissionPolicy.id)
   setValue("commissionPolicyLable",`${DataDepositInfomation?.response.commissionPolicy.month} tháng - Cọc ${DataDepositInfomation?.response.commissionPolicy.deposit} - Hoa hồng ${DataDepositInfomation?.response.commissionPolicy.commission}`)
-
   setServiceInserts(DataDepositInfomation?.response?.services)
   setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
+  setValue('signature',DataDepositInfomation?.response?.signature)
 }
  },[DataDepositInfomation,isSidebarOpen])
+ 
   return (
     <div className="drawer drawer-end">
       <ToastContainer className={'z-50'}/>

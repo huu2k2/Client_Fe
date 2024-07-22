@@ -9,7 +9,7 @@ const BuildingPolicy = ({ data }) => {
         </div>
       </div>
       <div className="self-stretch h-px bg-gray-200" />
-      <div className="self-stretch flex-col justify-center items-center flex">
+      <div className="self-stretch flex-col justify-center items-center flex my-5">
         <div className="self-stretch bg-white border justify-start items-start flex flex-col">
           <div className="self-stretch flex flex-row">
             <div className="w-1/3 bg-gray-50 px-6 py-3 justify-start items-center flex">
@@ -53,7 +53,7 @@ const BuildingPolicy = ({ data }) => {
           ))}
         </div>
         <div className="self-stretch h-px bg-gray-200" />
-        <div className="self-stretch h-[60px] px-6 py-5 flex-col justify-center items-start flex">
+        <div className="self-stretch h-[60px] px-6 py-5 flex-col justify-center items-start flex mt-5">
           <div className="w-full h-5 flex justify-between items-center gap-4">
             <div className="w-1/3 text-gray-500 text-sm font-medium leading-tight">
               Số lượng người ở

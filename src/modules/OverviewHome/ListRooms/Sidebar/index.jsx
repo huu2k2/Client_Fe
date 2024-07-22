@@ -29,7 +29,7 @@ console.log("first",dataListHome)
       <div className="drawer-side">
         <label htmlFor="my-drawer-Overview" aria-label="close sidebar" className="drawer-overlay"></label>
         <div className="min-h-screen h-fit bg-white px-[13px] py-[9px]">
-          <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
+          <div className="w-full h-fit p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
             <div className="self-stretch justify-between items-center inline-flex">
               <div className="text-white text-xl font-medium leading-7">
                 Danh Sách Tòa Nhà Của {dataListHome?.response?.fullName}

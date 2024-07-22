@@ -25,7 +25,13 @@ const RoomsApi = createApi({
       query: (body) => ({
         url: `/v2/Agencies/get-all-houses-for-agency`,
         method: 'post',
-       data:body
+        data: body
+      }),
+    }),
+    getRoomsNotDepositOfHouse: build.query({
+      query: (id) => ({
+        url: `/v2/Rooms/get-rooms-not-deposit-of-house/${id}`,
+        method: 'GET',
       }),
     }),
     getListRoomCodeNotDeposit: build.query({
@@ -39,5 +45,5 @@ const RoomsApi = createApi({
 });
 
 
-export const { useGetRoomsFilterMutation ,useGetRoomsofhouseMutation ,useGetListRoomCodeNotDepositQuery} = RoomsApi;
+export const { useGetRoomsFilterMutation ,useGetRoomsofhouseMutation ,useGetListRoomCodeNotDepositQuery, useGetRoomsNotDepositOfHouseQuery} = RoomsApi;
 export default RoomsApi;

@@ -39,12 +39,10 @@ const RowComponent = ({
   useEffect(() => {
   
     if (plaValue) {
-      setValue(name, getInfo[name].toLocaleString("vi-VN"));
+      setValue(name, getInfo[name]?.toLocaleString("vi-VN"));
  
     }
-    // if(name==='roomCode'){
-    //   setValues(getInfo.roomId);
-    // }
+   
     if (showAutoPrice) {
       const commissionPolicyId = Number(getNamecommissionPolicyId);
       const rentalPrice = Number(getInfo.rentalPrice);
@@ -73,8 +71,8 @@ const RowComponent = ({
     const inputValue = e.target.value;
     setValues(e.target.value);
     if (priceValue) {
-      const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-      setValues(Number(numericValue).toLocaleString("vi-VN"));
+      const numericValue = inputValue?.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      setValues(Number(numericValue)?.toLocaleString("vi-VN"));
     } else if (NameValue) {
       const strValue = inputValue.split(" ");
       let capitalizedStr = strValue
