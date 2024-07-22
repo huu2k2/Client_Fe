@@ -118,6 +118,7 @@ if(DataDepositInfomation?.isSuccess){
   setValue("commissionPolicyLable",`${DataDepositInfomation?.response.commissionPolicy.month} tháng - Cọc ${DataDepositInfomation?.response.commissionPolicy.deposit} - Hoa hồng ${DataDepositInfomation?.response.commissionPolicy.commission}`)
   setServiceInserts(DataDepositInfomation?.response?.services)
   setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
+  setValue('signature',DataDepositInfomation?.response?.signature)
 }
  },[DataDepositInfomation,isSidebarOpen])
   return (

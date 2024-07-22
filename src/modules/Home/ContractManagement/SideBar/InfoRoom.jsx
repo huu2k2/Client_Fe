@@ -138,7 +138,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
       ))}
      <Signature
         name={"Chữ ký"}
-        img={null}
+        img={getValues('signature')}
         onChange={(file) => handleFileChange("signature", file)}
         type="hide"
       />
