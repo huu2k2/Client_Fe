@@ -9,11 +9,18 @@ import {
 import { Skeleton } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDateType } from "@utils/ConverDate";
+import { useGetPolicyOfHomeQuery } from "../../../../apis/slice/Houses";
+import { useGetAllDetailQuery } from '@apis/slice/services';
 
 const InfoRoom = () => {
+  const { id, roomId } = useParams();
   const changeLink = useNavigate();
   const [a, serviceInserts] = useDataServices();
   const [address, price, address2] = useGetInfoItem();
+  const { data } = useGetAllDetailQuery(roomId);
+  console.log("🚀 ~ InfoRoom ~ data:", data)
+
+
   const [brokeragePolicy] = useGetBrokeragePolicy();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
 
@@ -30,7 +37,7 @@ const InfoRoom = () => {
     ?.split("\n")
     ?.map((line) => line?.trim());
 
-  const { id, roomId } = useParams();
+
 
   const handleClick = () => {
     if (localStorage.getItem("token")) {
@@ -48,9 +55,9 @@ const InfoRoom = () => {
       <div className="w-[723px] h-[578px] gap-4 flex flex-col justify-between">
         {/* name home in stress */}
         <div className="w-full h-fit">
-          {address ? (
+          {address && data ? (
             <>
-              <h1 className="nthd_semibold_2xl_text">{address}</h1>
+              <h1 className="nthd_semibold_2xl_text truncate w-[730px] ">{data?.response?.houseName},{address}</h1>
               <p>{address2}</p>
             </>
           ) : (
@@ -76,15 +83,14 @@ const InfoRoom = () => {
                 </li>
                 {Arr?.length > 0
                   ? Arr.map((item, index) => (
-                      <li
-                        className={`nthd_text_normal_sm_text2 ${
-                          item === "" && "hidden"
+                    <li
+                      className={`nthd_text_normal_sm_text2 ${item === "" && "hidden"
                         }`}
-                        key={index}
-                      >
-                        {item}
-                      </li>
-                    ))
+                      key={index}
+                    >
+                      {item}
+                    </li>
+                  ))
                   : null}
               </ul>
             </div>
