@@ -9,7 +9,7 @@ const TextArea = ({ label, name, value, onChange, width }) => {
           {label}
         </span>
         <textarea
-          className={`px-4 py-2 border rounded-md ${width}`}
+          className={`px-4 py-2 border rounded-md ${width}  outline-none`}
           name={name}
           value={value}
           onChange={onChange}

@@ -44,10 +44,11 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             className="custom-checkbox bg-white"
             checked={isEmptyRoomChecked}
             onChange={handleEmptyRoomChange}
+             id="empty"
           />
-          <div className="text-white text-sm font-medium leading-tight">
+          <label htmlFor="empty" className="text-white text-sm font-medium leading-tight cursor-pointer">
             Phòng trống ({statusTotals?.empty})
-          </div>
+          </label>
         </div>
         <div className="justify-start items-center gap-2 flex">
           <input
@@ -55,10 +56,11 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             className="custom-checkbox bg-white"
             checked={isRoomToBeEmptyChecked}
             onChange={handleRoomToBeEmptyChange}
+            id="toBeEmpty"
           />
-          <div className="text-white text-sm font-medium leading-tight">
+          <label htmlFor="toBeEmpty" className="text-white text-sm font-medium leading-tigh cursor-pointert">
             Sắp trống ({statusTotals?.toBeEmpty})
-          </div>
+          </label>
         </div>
 
         <div className="justify-start items-center gap-2 flex">
@@ -67,10 +69,11 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             className="custom-checkbox bg-white"
             checked={isBookedRoomChecked}
             onChange={handleBookedRoomChange}
+            id="booked"
           />
-          <div className="text-white text-sm font-medium leading-tight">
+          <label htmlFor="booked" className="text-white text-sm font-medium leading-tight cursor-pointer">
             Đã đặt cọc ({statusTotals?.booked})
-          </div>
+          </label>
         </div>
       </div>
     </div>

@@ -17,10 +17,10 @@ function ShowImages({ images }) {
 
   return (
     <dialog
-      className="bg-gray-500 bg-opacity-50  flex justify-center items-center modal modal-action "
+      className="bg-gray-500 bg-opacity-50   flex justify-center items-center modal modal-action "
       id="my_modal_4"
     >
-      <div className="flex bg-white shadow-lg rounded-lg modal-box w-11/12 max-w-3xl relative">
+      <div className="flex bg-white shadow-lg rounded-lg  w-9/12 h-[80vh]  relative">
         <form method="dialog" className="absolute top-2 right-1 rounded-full">
           {/* if there is a button, it will close the modal */}
           <button className="btn bg-transparent bg-opacity-50 rounded-full">
@@ -28,17 +28,17 @@ function ShowImages({ images }) {
           </button>
         </form>
         {/* Main Image Section */}
-        <div className="p-4 image flex flex-col items-center group relative">
+        <div className="p-4 image w-3/5 flex flex-col items-center group relative">
           <button
             onClick={handlePrev}
-            className="mb-2 px-4 py-4 bg-[#3f3f3f94] group-hover:opacity-100 opacity-0 transition duration-1000 text-white rounded absolute top-[50%] left-0 translate-y-[-50%]"
+            className="mb-2 px-6 py-6 bg-[#3f3f3faa] group-hover:opacity-100 opacity-0 transition duration-1000 text-white rounded absolute top-[50%] left-0 translate-y-[-50%]"
           >
             {"<"}
           </button>
           <img
             src={images?.response[mainImageIndex]?.url}
             alt="Main Image"
-            className="w-96 h-96 object-cover rounded-lg"
+            className="w-full h-[90%] object-cover rounded-lg"
             loading="lazy"
           />
           <button
@@ -50,13 +50,13 @@ function ShowImages({ images }) {
           </button>
         </div>
         {/* Sidebar */}
-        <div className="p-4 list-img grid grid-cols-3 grid-rows-5 gap-2">
+        <div className="p-4 list-img grid w-2/5 grid-cols-3 grid-rows-4 gap-2">
           {images?.response?.map((i, index) => (
             <img
               key={index}
               src={i?.url}
               alt={`Thumbnail ${index + 1}`}
-              className="w-20 h-20 object-cover rounded-lg cursor-pointer"
+              className="w-[200px] h-[200px] object-cover rounded-lg cursor-pointer"
               onClick={() => setMainImageIndex(index)}
             />
           ))}

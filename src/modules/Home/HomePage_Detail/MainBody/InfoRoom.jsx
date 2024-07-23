@@ -9,6 +9,7 @@ import {
 import { Skeleton } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDateType } from "@utils/ConverDate";
+import { useGetAllHousesQuery } from "../../../../apis/slice/Houses";
 
 const InfoRoom = () => {
   const changeLink = useNavigate();
@@ -31,17 +32,18 @@ const InfoRoom = () => {
     ?.map((line) => line?.trim());
 
   const { id, roomId } = useParams();
-
+  const { data: namehousedata } = useGetAllHousesQuery(id)
+  console.log("🚀 ~ InfoRoom ~ namehousedata:", namehousedata)
   const handleClick = () => {
     if (localStorage.getItem("token")) {
       localStorage.setItem("idroom", roomId);
-    // Chuyển hướng
-    changeLink(`/overview/${id}`);
+      // Chuyển hướng
+      changeLink(`/overview/${id}`);
     } else {
       localStorage.setItem("redirectAfterLogin", location.pathname);
       changeLink("/login");
     }
-    
+
   };
 
   return (

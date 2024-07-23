@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import Select from "react-select";
+import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
+import {
+  usePostChangeRoomMutation,
+  useGetListOfAppointmentsQuery,
+} from "@apis/slice/Agencies";
 
 const RowComponent = ({
   title,
@@ -12,6 +17,7 @@ const RowComponent = ({
   setValue,
   isSidebarOpen,
   getNamecommissionPolicyId,
+  getRentalMonth,
 }) => {
   const isDisabled = [
     "roomId",
@@ -21,68 +27,85 @@ const RowComponent = ({
     "rentalPrice",
     "chuongTrinhUuDai",
     "tips",
+    "rentalTerm",
   ].includes(name);
 
-
-  const priceValue = [
-  
-    "depositAmount",
-    "additionalDepositAmount",
+  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
+    name
+  );
+  const plaValue = [
+    "roomId",
+    "houseAddress",
+    "datcoc",
+    "rentalPrice",
+    "fullName",
+    "phoneNumber",
   ].includes(name);
-
-  const plaValue = ["roomId", "houseAddress", "datcoc", "rentalPrice"].includes(name);
-
   const showAutoPrice = ["depositAmount"].includes(name);
+  const rentalTermMonth = ["rentalTerm"].includes(name);
+  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
 
   const [value, setValues] = useState("");
+  const [options, setOptions] = useState([]);
+  const [valueOptions, setValuesOptions] = useState(null);
+
+  const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
 
   useEffect(() => {
-    setValues("");
-  }, [isSidebarOpen]);
- 
-
-  
-  const dynamicPlaceholder = () => {
-    switch (name) {
-      case "roomId":
-        return `${getInfo.roomId}`;
-      case "houseAddress":
-        return getInfo.houseAddress;
- 
-      case "chuongTrinhUuDai":
-        return " ";
-      default:
-        return placeholder;
+    if (!isSidebarOpen) {
+      setValues("");
+      setOptions([]);
+      setValuesOptions(null);
     }
-  };
+  }, [isSidebarOpen]);
+
   useEffect(() => {
     if (plaValue) {
-      setValue(name, getInfo[name].toLocaleString("vi-VN"));
-      setValues(dynamicPlaceholder());
+      setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+      setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
     }
- 
+
     if (showAutoPrice) {
       setValue(
         "additionalDepositAmount",
         (
-          Number(getNamecommissionPolicyId) * getInfo.rentalPrice -
+          Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0) -
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
     }
+
+    setValue("chuongTrinhUuDai", "");
   }, [
     name,
-    plaValue,
-    dynamicPlaceholder,
-    setValue,
     getInfo,
     showAutoPrice,
     getNamecommissionPolicyId,
     value,
-    priceValue
+    rentalTermMonth,
   ]);
+  useEffect(() => {
+    if (data && data?.response) {
+      const Data = data?.response?.map((i) => ({
+        value: i.roomId,
+        label: "P." + i.roomCode,
+      }));
 
-  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
+      setOptions(Data || []);
+
+      // Thiết lập giá trị mặc định cho react-select nếu có sẵn thông tin từ getInfo
+      if (name === "roomId" && !valueOptions) {
+        // setValuesOptions();
+        setValue("roomId", getInfo.id); // Cập nhật giá trị của react-hook-form
+      }
+    }
+  }, [data, getInfo]);
+  useEffect(() => {
+    if (rentalTermMonth) {
+      setValue("rentalTerm", getRentalMonth);
+      setValues(getRentalMonth);
+    }
+  }, [rentalTermMonth, setValue, getRentalMonth]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
@@ -100,6 +123,10 @@ const RowComponent = ({
       setValues(e.target.value);
     }
   };
+  const handleChangeValueOptions = (selectedOption) => {
+    setValuesOptions(selectedOption);
+    setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
+  };
 
   return (
     <div className="self-stretch justify-start items-center gap-4 inline-flex">
@@ -107,7 +134,7 @@ const RowComponent = ({
         {title}
       </div>
       <div
-        className={`grow shrink basis-0 h-[38px] px-[13px] py-[9px] ${
+        className={`grow shrink basis-0 h-[38px] py-[9px] ${
           isDisabled ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
           unit
@@ -115,25 +142,39 @@ const RowComponent = ({
             : "justify-between items-center flex"
         }`}
       >
-        <input
-          {...(name === "datcoc" || name === "tip" ? {} : register(name))}
-          type={type}
-          className="w-full outline-none text-sm font-normal leading-tight"
-          placeholder={placeholder}
-          disabled={isDisabled}
-          value={
-            name === "tips"
-              ? (
-                  Number(getNamecommissionPolicyId) * getInfo.rentalPrice
-                ).toLocaleString("vi-VN")
-              : value
-          }
-          onChange={handleChangeValue}
-        />
-        {unit && (
-          <div className="text-gray-500 text-sm font-normal leading-tight">
-            {unit}
-          </div>
+        {name !== "roomId" ? (
+          <>
+            <input
+              {...(name === "datcoc" || name === "tip" ? {} : register(name))}
+              type={type}
+              className="w-full outline-none text-sm font-normal leading-tight px-[13px]"
+              placeholder={placeholder}
+              disabled={isDisabled}
+              value={
+                name === "tips"
+                  ? (
+                      Number(getNamecommissionPolicyId) *
+                      (getInfo?.rentalPrice || 0)
+                    ).toLocaleString("vi-VN")
+                  : value
+              }
+              onChange={handleChangeValue}
+            />
+            {unit && (
+              <div className="text-gray-500 text-sm font-normal leading-tight pr-[13px]">
+                {unit}
+              </div>
+            )}
+          </>
+        ) : (
+          <Select
+            className="w-full outline-none text-sm font-normal leading-tight"
+            value={valueOptions}
+            defaultValue={valueOptions}
+            onChange={handleChangeValueOptions}
+            options={options}
+            placeholder={"P." + getInfo.roomId}
+          />
         )}
       </div>
     </div>

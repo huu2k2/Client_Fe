@@ -13,14 +13,10 @@ const Index = (option) => {
   const category = queryParams.get("category") || null;
 
 
-  const { data: faveritedata, isLoading, isSuccess } = useGetFavoriteQuery();
-  // // Kiểm tra pathname của location để quyết định khi nào hiển thị GridCart
-
+  const { data: faveritedata } = useGetFavoriteQuery();
 
   return (
     <div className="w-[1360px] flex flex-col gap-5 mb-20">
-
-
       <GridCart
         option={option}
         id={idroom}

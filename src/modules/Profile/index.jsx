@@ -9,12 +9,13 @@ import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
-import Signature from "./Signature";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Signature from "@components/BaseInput/Signature";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
-  const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
-    usePostUpdateMutation();
+  const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
 
   const [isExiting, setIsExiting] = useState(false);
 
@@ -23,7 +24,7 @@ const Index = ({ setShow }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  // hanlde close
+  // handle close
   const handleClose = () => {
     setIsExiting(true);
     setTimeout(() => {
@@ -31,6 +32,7 @@ const Index = ({ setShow }) => {
       setIsExiting(false);
     }, 1000); // Duration of the slide-out animation
   };
+
   // handle change image
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
@@ -46,16 +48,18 @@ const Index = ({ setShow }) => {
   const handleUploadImg = () => {
     inputFileRef.current.click();
   };
+
   const hanldeCancle = () => {
     handleClose();
   };
 
-  //   handle ref for click close
+  // handle ref for click close
   const handleClickOutside = (event) => {
     if (refContainer.current && !refContainer.current.contains(event.target)) {
       handleClose();
     }
   };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -64,12 +68,11 @@ const Index = ({ setShow }) => {
   }, []);
 
   // handle data for update
-  // select all data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
-    SignatureUrl: null,
-    BeforeIdentification: null,
-    AfterIdentification: null,
+    signatureBase64: null,
+    beforeIdentificationBase64: null,
+    afterIdentificationBase64: null,
     BankCode: "",
     AccountNumber: "",
     AccountName: "",
@@ -81,19 +84,31 @@ const Index = ({ setShow }) => {
     IssuedBy: "",
     PermanentAddress: "",
   });
+
+  const [errors, setErrors] = useState({
+    FullName: "",
+    PhoneNumber: "",
+    Identification: "",
+    DateRange: "",
+    IssuedBy: "",
+    PermanentAddress: "",
+    BankCode: "",
+    AccountNumber: "",
+    AccountName: "",
+  });
+
   useEffect(() => {
     if (data) {
       setFormData({
         AgencyAccountId: data.response.telegramId || null,
-        SignatureUrl: data.response.signatureUrl || null,
-        BeforeIdentification: data.response.beforeIdentification || null,
-        AfterIdentification: data.response.afterIdentification || null,
+        signatureBase64: data.response.signatureBase64 || null,
+beforeIdentificationBase64: data.response.beforeIdentificationBase64 || null,
+        afterIdentificationBase64: data.response.afterIdentificationBase64 || null,
         BankCode: data.response.bankCode || null,
         AccountNumber: data.response.accountNumber || null,
         AccountName: data.response.accountName || null,
         FullName: data.response.fullName || null,
         PhoneNumber: data.response.phoneNumber || null,
-        // BOD: data.response.bod || null,
         Identification: data.response.identification || null,
         DateRange: data.response.dateRange || null,
         IssuedBy: data.response.issuedBy || null,
@@ -102,19 +117,57 @@ const Index = ({ setShow }) => {
     }
   }, [data]);
 
-  // const handleUpadte = async () => {
-  //  const rs = await postUpdate(formData)
+  const validate = () => {
+    let tempErrors = {};
 
-  const handleUpadte = async () => {
-    //  const rs = await postUpdate(formData)
+    if (!formData.FullName) tempErrors.FullName = "Họ và tên là bắt buộc";
+    if (!formData.PhoneNumber) tempErrors.PhoneNumber = "Số điện thoại là bắt buộc";
+    if (!formData.Identification) tempErrors.Identification = "CMND/CCCD là bắt buộc";
+    if (!formData.DateRange) tempErrors.DateRange = "Ngày cấp là bắt buộc";
+    if (!formData.IssuedBy) tempErrors.IssuedBy = "Nơi cấp là bắt buộc";
+    if (!formData.PermanentAddress) tempErrors.PermanentAddress = "Địa chỉ thường trú là bắt buộc";
+    if (!formData.BankCode) tempErrors.BankCode = "Mã ngân hàng là bắt buộc";
+    if (!formData.AccountNumber) tempErrors.AccountNumber = "Số tài khoản là bắt buộc";
+    if (!formData.AccountName) tempErrors.AccountName = "Chủ tài khoản là bắt buộc";
+
+    setErrors(tempErrors);
+
+    return Object.keys(tempErrors).length === 0;
   };
+
+  const handleUpdate = async () => {
+    if (!validate()) {
+      toast.error("Vui lòng kiểm tra các trường bắt buộc");
+      return;
+    }
+
+    try {
+      const updatedFormData = {
+        ...formData,
+        signatureBase64: formData.signatureBase64?.split(",")[1],
+        BankCode: formData.BankCode.toString()
+      };
+
+      const rs = await postUpdate(updatedFormData);
+
+      if (rs.data.statusCode === 200) {
+        toast.success("Cập nhập thành công!");
+        setShow(false);
+      } else {
+        toast.error("Cập nhập thất bại!");
+      }
+    } catch (error) {
+      toast.error("Lỗi cập nhập!");
+    }
+  };
+
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
+
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end  profile 
-         ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
     >
       <div
         ref={refContainer}
@@ -127,7 +180,7 @@ const Index = ({ setShow }) => {
             Thông tin cá nhân
           </span>
           <AiTwotoneCloseSquare
-            className="w-6 h-6 rounded-sm text-white cursor-pointer"
+className="w-6 h-6 rounded-sm text-white cursor-pointer"
             onClick={handleClose}
           />
         </div>
@@ -147,7 +200,7 @@ const Index = ({ setShow }) => {
               <img
                 src={imagePreview ? imagePreview : ImgAvatar}
                 alt="Avatar"
-                className="w-[120px] h-[120px] rounded-[50%]   object-cover"
+                className="w-[120px] h-[120px] rounded-[50%] object-cover"
               />
               <input
                 type="file"
@@ -176,18 +229,19 @@ const Index = ({ setShow }) => {
             isEnable={true}
             setFormData={setFormData}
             variable={"FullName"}
+            error={errors.FullName}
           />
           <InputFiel
+            disabled={'disabled'}
             name={"Tên đăng nhập"}
             label={data?.response?.userName}
             type={"text"}
-            isEnable={false}
+            isEnable={true}
             setFormData={setFormData}
             variable={"userName"}
           />
         </div>
 
-        {/* Contract Representative Info */}
         <div className="w-full gap-5 flex flex-col justify-start items-center bg-white p-5">
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel
@@ -197,6 +251,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"FullName"}
+            error={errors.FullName}
           />
           <InputFiel
             name={"Số điện thoại"}
@@ -205,22 +260,16 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"PhoneNumber"}
+            error={errors.PhoneNumber}
           />
-          {/* <InputFiel
-            name={"Ngày sinh"}
-            label={formatDate(data?.response?.bod)}
-            type={"date"}
-            isEnable={false}
-            setFormData={setFormData}
-            variable={"BOD"}
-          /> */}
           <InputFiel
-            name={"Căn cước công dân"}
+            name={"CMND/CCCD"}
             label={data?.response?.identification}
             type={"text"}
-            isEnable={false}
+isEnable={false}
             setFormData={setFormData}
             variable={"Identification"}
+            error={errors.Identification}
           />
           <InputFiel
             name={"Ngày cấp"}
@@ -229,6 +278,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"DateRange"}
+            error={errors.DateRange}
           />
           <InputFiel
             name={"Nơi cấp"}
@@ -237,6 +287,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"IssuedBy"}
+            error={errors.IssuedBy}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
@@ -244,23 +295,24 @@ const Index = ({ setShow }) => {
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
-            variable={"permanentAddress"}
+            variable={"PermanentAddress"}
+            error={errors.PermanentAddress}
           />
- 
+
           <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
-            onChange={(file) => handleFileChange("SignatureUrl", file)}
+            onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("BeforeIdentification", file)}
+            onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("AfterIdentification", file)}
+            onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
           />
         </div>
 
@@ -271,6 +323,7 @@ const Index = ({ setShow }) => {
             label={data?.response?.bankCode}
             setFormData={setFormData}
             variable={"BankCode"}
+            error={errors.BankCode}
           />
           <InputFiel
             name={"Số tài khoản"}
@@ -279,6 +332,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"AccountNumber"}
+            error={errors.AccountNumber}
           />
           <InputFiel
             name={"Chủ tài khoản"}
@@ -287,6 +341,7 @@ const Index = ({ setShow }) => {
             isEnable={false}
             setFormData={setFormData}
             variable={"AccountName"}
+            error={errors.AccountName}
           />
         </div>
 
@@ -295,11 +350,11 @@ const Index = ({ setShow }) => {
           <button
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
             onClick={hanldeCancle}
-          >
+>
             Hủy
           </button>
           <button
-            onClick={handleUpadte}
+            onClick={handleUpdate}
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
           >
             Cập nhật
