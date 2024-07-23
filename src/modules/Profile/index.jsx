@@ -172,7 +172,7 @@ const Index = ({ setShow }) => {
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
- 
+
   return (
     <div
       className={`fixed inset-0 z-50 flex justify-end profile ${
@@ -311,7 +311,7 @@ const Index = ({ setShow }) => {
 
           <Signature
             name={"Chữ ký"}
-            img={data?.response?.signatureUrl}
+            img={data?.response.signatureUrl}
             onChange={(file) => handleFileChange("signatureUrl", file)}
           />
           <InputFileImg

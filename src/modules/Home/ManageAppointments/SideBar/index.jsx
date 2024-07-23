@@ -12,7 +12,6 @@ import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
 import { usePostChangeRoomMutation,useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
  
 function coverDate(dateString) {
@@ -42,7 +41,7 @@ const SideBar = ({ getInfo }) => {
   });
 
   const [isCheckSuccess,setIsCheckSuccess]  = useState(false)
-  const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
+  // const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
   const { refetch } = useGetListOfAppointmentsQuery();
   const [postChangeRoom] = usePostChangeRoomMutation();
   // Form submission handler

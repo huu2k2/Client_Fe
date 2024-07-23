@@ -13,7 +13,7 @@ import { formatDateType } from "@utils/ConverDate";
 const InfoRoom = () => {
   const changeLink = useNavigate();
   const [a, serviceInserts] = useDataServices();
-  const [address, price] = useGetInfoItem();
+  const [address, price, address2] = useGetInfoItem();
   const [brokeragePolicy] = useGetBrokeragePolicy();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
 
@@ -35,13 +35,12 @@ const InfoRoom = () => {
   const handleClick = () => {
     if (localStorage.getItem("token")) {
       localStorage.setItem("idroom", roomId);
-    // Chuyển hướng
-    changeLink(`/overview/${id}`);
+      // Chuyển hướng
+      changeLink(`/overview/${id}`);
     } else {
       localStorage.setItem("redirectAfterLogin", location.pathname);
       changeLink("/login");
     }
-    
   };
 
   return (
@@ -50,7 +49,10 @@ const InfoRoom = () => {
         {/* name home in stress */}
         <div className="w-full h-fit">
           {address ? (
-            <h1 className="nthd_semibold_2xl_text">{address}</h1>
+            <>
+              <h1 className="nthd_semibold_2xl_text">{address}</h1>
+              <p>{address2}</p>
+            </>
           ) : (
             <Skeleton height={32} variant="rounded" />
           )}
@@ -65,19 +67,25 @@ const InfoRoom = () => {
               <span className="font-medium text-base">Ưu đãi</span>
             </div>
             {/* gift content */}
-            <div className="w-full h-[60px] gap-2 px-8 mt-2 overflow-y-auto custom-scrollbar scroll-smooth">
+            <div className="w-full h-fit gap-2 px-8 pb-5 mt-2 overflow-y-auto custom-scrollbar scroll-smooth">
               <ul className="list-disc">
                 <li className="nthd_text_normal_sm_text2">
                   Chương trình sale áp dụng từ ngày{" "}
                   {formatDateType(brokeragePolicy?.startDate)} -{" "}
                   {formatDateType(brokeragePolicy?.endDate)}
                 </li>
-                {Arr?.length > 0 ?
-                  Arr.map((item, index) => (
-                    <li className={`nthd_text_normal_sm_text2 ${item ==="" && "hidden"}`} key={index}>
-                      {item}
-                    </li>
-                  )) :null}
+                {Arr?.length > 0
+                  ? Arr.map((item, index) => (
+                      <li
+                        className={`nthd_text_normal_sm_text2 ${
+                          item === "" && "hidden"
+                        }`}
+                        key={index}
+                      >
+                        {item}
+                      </li>
+                    ))
+                  : null}
               </ul>
             </div>
           </div>

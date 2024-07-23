@@ -102,7 +102,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
   const [getNamecommissionPolicyId, setNamecommissionPolicyId] = useState("");
   const [getRentalMonth, setRentalMonth] = useState("");
   const handleFileChange = (name, file) => {
-     setValue(name, file.split(",")[1]);
+     setValue(name, file );
   };
   useEffect(() => {
     if (!isSidebarOpen) {

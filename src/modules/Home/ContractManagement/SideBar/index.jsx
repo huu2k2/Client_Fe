@@ -91,6 +91,7 @@ const SideBar = ({ getInfo }) => {
 
 // get infomation of room
 const {data:DataDepositInfomation} = useGetDepositInfomationQuery(getInfo.depositId)
+console.log(DataDepositInfomation)
  useEffect(()=>{
 if(DataDepositInfomation?.isSuccess){
   setValue("fullName",DataDepositInfomation?.response.fullName)
@@ -111,14 +112,14 @@ if(DataDepositInfomation?.isSuccess){
   setValue("rentalStartDate", format(new Date(DataDepositInfomation?.response.rentalStartDate), 'yyyy-MM-dd'))
   setValue("numberOfPeople",DataDepositInfomation?.response.numberOfPeople)
   setValue("numberOfVehicle",DataDepositInfomation?.response.numberOfVehicle)
-  // setValue("chuongTrinhUuDai",DataDepositInfomation?.response.chuongTrinhUuDai)
+  setValue("chuongTrinhUuDai",DataDepositInfomation?.response.chuongTrinhUuDai || " ")
   setValue("note",DataDepositInfomation?.response.note)
   setValue("rentalTerm",DataDepositInfomation?.response.rentalTerm)
-  setValue("commissionPolicyId",DataDepositInfomation?.response.commissionPolicy.id)
-  setValue("commissionPolicyLable",`${DataDepositInfomation?.response.commissionPolicy.month} tháng - Cọc ${DataDepositInfomation?.response.commissionPolicy.deposit} - Hoa hồng ${DataDepositInfomation?.response.commissionPolicy.commission}`)
+  setValue("commissionPolicyId",DataDepositInfomation?.response?.commissionPolicy?.id)
+  setValue("commissionPolicyLable",`${DataDepositInfomation?.response?.commissionPolicy?.month} tháng - Cọc ${DataDepositInfomation?.response?.commissionPolicy?.deposit} - Hoa hồng ${DataDepositInfomation?.response?.commissionPolicy?.commission}`)
   setServiceInserts(DataDepositInfomation?.response?.services)
   setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
-  setValue('signature',DataDepositInfomation?.response?.signature)
+  setValue('signature',DataDepositInfomation?.response?.signatureUrl)
 }
  },[DataDepositInfomation,isSidebarOpen])
  

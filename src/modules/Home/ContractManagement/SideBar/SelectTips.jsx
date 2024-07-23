@@ -10,8 +10,11 @@ const SelectTips = ({ getInfo, setValue, setNamecommissionPolicyId, getValues })
 
   const [value, setValues] = useState(defaultOption);
   const { data } = useGetCommisstionPoliciesQuery(getInfo.houseId || 0);
-
   const [options, setOptions] = useState([defaultOption]);
+  useEffect(()=>{
+    setValues(defaultOption)
+    setOptions([defaultOption])
+  },[getValues,defaultOption])
   
   useEffect(() => {
     const CovertData = data?.response?.map((i) => ({

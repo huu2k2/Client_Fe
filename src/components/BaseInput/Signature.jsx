@@ -8,14 +8,19 @@ const Signature = ({ name, img, onChange,type="show" }) => {
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
   const sigCanvas = useRef(null);
-
+useEffect(()=>{
+if(img){
+  setImagePreview(img)
+  setSelectedImage(img)
+}
+},[img])
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     setSelectedImage(imageFile);
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      onChange(reader.result?.split(",")[1]);
+      onChange(reader.result);
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(imageFile);

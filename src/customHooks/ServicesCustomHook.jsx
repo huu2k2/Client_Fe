@@ -11,6 +11,7 @@ const ServicesContextHook = ({ children }) => {
   const [holder, setHolder] = useState({});
   const [rooms, setRooms] = useState({});
   const [address, setAddress] = useState("");
+  const [address2, setAddress2] = useState("");
   const [price, setPrice] = useState(null);
   const [brokeragePolicy, setBrokeragePolicy] = useState([]);
 
@@ -39,7 +40,8 @@ const ServicesContextHook = ({ children }) => {
         roomToBeEmpty: data?.response?.roomToBeEmpty,
         emptyRoom: data?.response?.emptyRoom,
       });
-      setAddress(data?.response?.houseAddress);
+      setAddress(data?.response?.houseName);
+      setAddress2(  data?.response?.houseAddress?.split(',')[0]+","+data?.response?.houseAddress?.split(',')[1]);
       setPrice(data?.response?.rentPrice);
       setBrokeragePolicy(data?.response?.brokeragePolicy);
     }
@@ -57,6 +59,7 @@ const ServicesContextHook = ({ children }) => {
         holder,
         rooms,
         address,
+        address2,
         price,
         brokeragePolicy,
       }}
@@ -77,8 +80,8 @@ export const useGetHolder = () => {
   return [holder, rooms];
 };
 export const useGetInfoItem = () => {
-  const { address, price } = useContext(ServicesContext);
-  return [address, price];
+  const { address, price,address2 } = useContext(ServicesContext);
+  return [address, price,address2];
 };
 export const useGetBrokeragePolicy = () => {
   const { brokeragePolicy } = useContext(ServicesContext);

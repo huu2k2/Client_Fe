@@ -19,7 +19,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
-  console.log('date:', date)
+ 
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -118,12 +118,12 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                       STT
                     </span>
                   </th>
-                  <th className="w-[336px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
+                  <th className="w-[260px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                       Khách hàng
                     </span>
                   </th>
-                  <th className="w-[284px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
+                  <th className="w-[360px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                       Địa chỉ toà nhà
                     </span>
@@ -159,7 +159,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                         {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
-                    <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
+                    <td className="w-[260px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
                       <img
                         className="w-10 h-10 rounded-full"
                         src="https://via.placeholder.com/40x40"
@@ -173,9 +173,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                         </div>
                       </div>
                     </td>
-                    <td className="w-[284px] h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-[360px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal w-full  leading-tight">
-                        {i.houseAddress}
+                        {i.houseName +' '+i.houseAddress?.split(',')[0]+' '+i.houseAddress?.split(',')[1]}
                       </span>
                     </td>
 
