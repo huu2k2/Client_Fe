@@ -4,12 +4,14 @@ import "animate.css";
 import { useQueryFilterData } from "@customhooks";
 import { useLocation } from "react-router-dom";
 import { Badge } from "@mui/material";
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
 
 const Index = ({ clear, setClear }) => {
   const [filterData, setFilterData] = useQueryFilterData();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [valueRange, setValueRange] = useState(null);
+  const [valueRange, setValueRange] = useState([0, 30]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -24,37 +26,41 @@ const Index = ({ clear, setClear }) => {
     };
   }, [dropdownRef]);
 
-  const handleChangeOfRange = (e) => {
-    setValueRange(parseInt(e.target.value));
-  };
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const idRoom = queryParams.get("idRoom") || null;
 
   useEffect(() => {
     if (filterData.price && filterData.price > 0) {
-      setValueRange(filterData.price / 1000000);
+      setValueRange([
+        Math.floor(filterData.price.min / 1000000),
+        Math.ceil(filterData.price.max / 1000000)
+      ]);
     }
   }, [filterData]);
 
   useEffect(() => {
     if (clear) {
-      setValueRange(0);
+      setValueRange([0, 30]);
       setFilterData((prev) => ({ ...prev, price: null }));
     }
   }, [clear]);
 
   const handleApply = () => {
-    setFilterData((prev) => ({ ...prev, price: valueRange ? valueRange * 1000000 : null }));
+    setFilterData((prev) => ({
+      ...prev,
+      price: {
+        min: valueRange[0] * 1000000,
+        max: valueRange[1] * 1000000
+      },
+    }));
     setIsOpen(false);
-    setClear(false)
-
+    setClear(false);
   };
 
   const handleReset = () => {
     setFilterData((prev) => ({ ...prev, price: null }));
-    setValueRange(0);
+    setValueRange([0, 30]);
   };
 
   return (
@@ -63,7 +69,7 @@ const Index = ({ clear, setClear }) => {
         vertical: "top",
         horizontal: "right",
       }}
-      badgeContent={valueRange > 0 ? 1 : 0}
+      badgeContent={valueRange[0] > 0 || valueRange[1] < 30 ? 1 : 0}
       sx={{
         "& .MuiBadge-badge": {
           backgroundColor: "#dc2626",
@@ -91,27 +97,27 @@ const Index = ({ clear, setClear }) => {
           <div className="flex flex-col gap-2">
             <div className="w-full flex justify-between items-center">
               <span>0</span>
-              <span>15 tr</span>
+              <span>30 tr</span>
             </div>
-            <div className="w-full">
-              <input
-                type="range"
-                id="vol"
-                name="vol"
-                min="0"
-                max="15"
-                className="w-full"
-                onChange={handleChangeOfRange}
-                value={valueRange || 0}
+            <Box sx={{ width: 300 }}>
+              <Slider
+                value={valueRange}
+                onChange={(e, newValue) => setValueRange(newValue)}
+                valueLabelDisplay="auto"
+                min={0}
+                max={30}
+                step={0.1} // Smaller steps to fine-tune the slider
+                marks
+                valueLabelFormat={(value) => `${value} tr`}
               />
-            </div>
+            </Box>
           </div>
           <div className="flex gap-2 w-full">
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={0}
-                onChange={() => { }}
+                value={valueRange[0] ? (valueRange[0] * 1000000).toLocaleString('vi-VN') : 0}
+                onChange={(e) => setValueRange([valueRange[0], parseInt(e.target.value) / 1000000])}
                 className="w-full outline-none text-sm border-none"
                 readOnly
               />
@@ -121,8 +127,8 @@ const Index = ({ clear, setClear }) => {
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={valueRange ? (valueRange * 1000000).toLocaleString('vi-VN') : 0}
-                onChange={(e) => setValueRange(parseInt(e.target.value) / 1000000)}
+                value={valueRange[1] ? (valueRange[1] * 1000000).toLocaleString('vi-VN') : 0}
+                onChange={(e) => setValueRange([valueRange[0], parseInt(e.target.value) / 1000000])}
                 className="w-full outline-none text-sm border-none"
               />
               <span>VND</span>

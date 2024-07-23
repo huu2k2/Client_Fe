@@ -20,7 +20,7 @@ const Sidebar = ({ idHolder }) => {
     );
     setData(filteredData);
   };
- 
+
   const handleDebounce = debounce(handleChangeSearch, 500);
   return (
     <div className="drawer drawer-end">
@@ -52,16 +52,7 @@ const Sidebar = ({ idHolder }) => {
           {data.map((i, index) => (
             <ItemHome key={index} item={i} />
           ))}
-          <div className="w-[556px] h-[78px] px-6 py-5 flex flex-col justify-start items-start">
-            <label
-              htmlFor="my-drawer-Overview"
-              aria-label="close sidebar"
-              className="drawer-overlay text-gray-700 text-sm font-medium leading-tight cursor-pointer
-              h-[38px] px-[17px] py-[9px] bg-white rounded-md shadow border border-gray-300"
-            >
-              Hủy
-            </label>
-          </div>
+
         </div>
       </div>
     </div>

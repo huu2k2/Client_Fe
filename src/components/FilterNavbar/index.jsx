@@ -23,7 +23,7 @@ const FilterNavbar = ({ setOption }) => {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [close, setColse] = useState(true);
 
-  const { data: dataHousesName} = useGetHouseNameQuery();
+  const { data: dataHousesName } = useGetHouseNameQuery();
 
   const filterFunction = () => {
     const filter = removeDiacritics(searchInput).toUpperCase();
