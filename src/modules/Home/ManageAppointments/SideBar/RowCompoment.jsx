@@ -124,6 +124,7 @@ const RowComponent = ({
     }
   };
   const handleChangeValueOptions = (selectedOption) => {
+    console.log("options",selectedOption)
     setValuesOptions(selectedOption);
     setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
   };
