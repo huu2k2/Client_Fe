@@ -94,7 +94,8 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
   const handleCancledeposite = async(i)=>{
     try {
-    const kq =  await postCancelDeposite({roomId :i.roomId,depositId:i.depositId}).unwrap();
+    const kq =  await postCancelDeposite({depositId:i.depositId}).unwrap();
+    console.log("kết quả ",kq)
       toast.success("Hủy hợp đồng thành công!")
     } catch (err) {
       // Xử lý lỗi

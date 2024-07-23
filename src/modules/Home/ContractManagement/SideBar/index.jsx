@@ -91,7 +91,6 @@ const SideBar = ({ getInfo }) => {
 
 // get infomation of room
 const {data:DataDepositInfomation} = useGetDepositInfomationQuery(getInfo.depositId)
-console.log(DataDepositInfomation)
  useEffect(()=>{
 if(DataDepositInfomation?.isSuccess){
   setValue("fullName",DataDepositInfomation?.response.fullName)

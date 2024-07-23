@@ -129,8 +129,9 @@ const Agencies = createApi({
       providesTags: ['ContractManagement'],
     }),
     postCancelDeposite: build.mutation({
-      query: ({ roomId, depositId }) => ({
-        url: `/v2/Agencies/end-of-deposit-by-room-id/${roomId}?depositId=${depositId}`,
+      query: (body) => ({
+        url: `/v2/Agencies/end-of-deposit`,
+        data:body,
         method: "PUT",
       }),
       invalidatesTags: ['ContractManagement'],
