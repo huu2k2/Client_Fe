@@ -17,6 +17,7 @@ import { useGetListsOfContractManagementQuery, usePostCancelDepositeMutation } f
 import { convertDateToISO } from "../../../utils/ConverDate";
 import { usePostDepositMutation } from "../../../apis/slice/Deposit";
 import { toast } from "react-toastify";
+import SearchInput from "../../../components/BaseInput/SearchInput";
 
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
@@ -40,15 +41,17 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
   const pageSize = 10;
-  
+
+  const [ListData, setListData] = useState([]);
+
   const startDateISO = convertDateToISO(date[0]);
   const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-  const { data, error, isLoading ,refetch } = useGetListsOfContractManagementQuery({
+  const { data, error, isLoading, refetch } = useGetListsOfContractManagementQuery({
     queries: { pageIndex: currentPage, pageSize: pageSize },
     body: {
-       start: startDateISO,
-        end: endDateISO || startDateISO
-      },
+      start: startDateISO,
+      end: endDateISO || startDateISO
+    },
   });
 
   useEffect(() => {
@@ -78,7 +81,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
       const rs = await PostDeposit(depositId).unwrap();
       if (rs?.isSucess) {
         toast.success("Xuất hợp đồng thành công!");
-        refetch() 
+        refetch()
       } else {
         toast.error(rs?.message || "Xuất hợp đồng thất bại!");
       }
@@ -89,9 +92,10 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   // ============== cancle deposite
   const [postCancelDeposite] = usePostCancelDepositeMutation();
 
-  const handleCancledeposite = async(i)=>{
+  const handleCancledeposite = async (i) => {
     try {
-    const kq =  await postCancelDeposite({roomId :i.roomId,depositId:i.depositId}).unwrap();
+      const kq = await postCancelDeposite({ depositId: i.depositId }).unwrap();
+      console.log("kết quả ", kq)
       toast.success("Hủy hợp đồng thành công!")
     } catch (err) {
       // Xử lý lỗi
@@ -120,13 +124,16 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         </div>
         {/* date picker */}
         <div
-          className={`${
-            isShow ? "" : "hidden"
-          } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
+          className={`${isShow ? "" : "hidden"
+            } absolute top-10 left-0 z-100 bg-white shadow-sm border-[1px] rounded-xl w-fit h-fit`}
           ref={refOfModel}
         >
           <DatePicker setDate={setDate} />
         </div>
+        <SearchInput
+          data={data}
+          setListData={setListData}
+        />
       </div>
 
       {/* table */}
@@ -141,12 +148,12 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                       STT
                     </span>
                   </th>
-                  <th className="w-[336px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
+                  <th className="w-[260px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                       Khách hàng
                     </span>
                   </th>
-                  <th className="w-[284px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
+                  <th className="w-[360px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                       Địa chỉ toà nhà
                     </span>
@@ -166,7 +173,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                       Hoa hồng
                     </span>
                   </th>
-                  <th className="w-[148px] h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
+                  <th className="flex-1 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                       Trạng thái
                     </span>
@@ -175,14 +182,14 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                 </tr>
               </thead>
               <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">
-                {data?.response?.items?.map((i, index) => (
+                {ListData?.map((i, index) => (
                   <tr className="flex w-full" key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                         {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
-                    <td className="w-[336px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
+                    <td className="w-[260px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
                       <img
                         className="w-10 h-10 rounded-full"
                         src="https://via.placeholder.com/40x40"
@@ -196,9 +203,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                         </div>
                       </div>
                     </td>
-                    <td className="w-[284px] h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-[360px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal w-full  leading-tight">
-                        {i.houseAddress}
+                        {i.houseName + ' ' + i.houseAddress?.split(',')[0] + ' ' + i.houseAddress?.split(',')[1]}
                       </span>
                     </td>
 
@@ -221,9 +228,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                     </td>
 
                     <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
-                      <div className={`w-fit h-5 px-2.5 py-0.5 ${i.status === "1" ?"bg-emerald-100":"bg-rose-600"} rounded-[10px] justify-center items-center inline-flex`}>
-                        <div className={`text-center ${i.status === "1" ? "text-emerald-800":"text-white"} text-xs font-medium leading-none`}>
-                          {i.status === "1" ? "Đặt cọc" : "Đã hủy cọc"}
+                      <div className={`w-fit h-5 px-2.5 py-0.5 ${i.status === "1" ? "bg-emerald-100" : "bg-rose-600"} rounded-[10px] justify-center items-center inline-flex`}>
+                        <div className={`text-center ${i.status === "1" ? "text-emerald-800" : "text-white"} text-xs font-medium leading-none`}>
+                          {i.status === "1" ? "Đặt cọc" : (i.status === "2" ? "Đã ...." : "Đã hủy cọc")}
                         </div>
                       </div>
                     </td>
@@ -267,7 +274,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Xuất hợp đồng cọc
                             </span>
                           </li>
-                          <li onClick={()=>handleCancledeposite(i)}>
+                          <li onClick={() => handleCancledeposite(i)}>
                             <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Hủy cọc
                             </span>

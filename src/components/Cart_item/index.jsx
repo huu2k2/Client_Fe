@@ -89,7 +89,7 @@ const Index = ({ item, faveritedata }) => {
         <div className="w-full h-5 text-neutral-500 text-sm font-normal leading-tight flex gap-2 items-center py-1">
           <BsGeoAlt />{" "}
           <span className="truncate max-w-full">
-            {item.address.split(",")[1]},{item.address.split(",")[2]}
+            {item.address.split(",")[0]},{item.address.split(",")[1]}
           </span>
         </div>
 

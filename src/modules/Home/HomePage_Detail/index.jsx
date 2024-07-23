@@ -53,7 +53,7 @@ const index = () => {
       handleClickSearch();
     }
   }, [filterData]);
-
+console.log("adndovn",data)
   return (
     <>
       <ToastContainer />

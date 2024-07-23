@@ -124,6 +124,7 @@ const RowComponent = ({
     }
   };
   const handleChangeValueOptions = (selectedOption) => {
+    console.log("options", selectedOption)
     setValuesOptions(selectedOption);
     setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
   };
@@ -134,13 +135,11 @@ const RowComponent = ({
         {title}
       </div>
       <div
-        className={`grow shrink basis-0 h-[38px] py-[9px] ${
-          isDisabled ? "bg-gray-50" : "bg-white"
-        } rounded-md shadow border border-gray-300 ${
-          unit
+        className={`grow shrink basis-0 h-[38px] py-[9px] ${isDisabled ? "bg-gray-50" : "bg-white"
+          } rounded-md shadow border border-gray-300 ${unit
             ? "justify-start items-center gap-2 flex"
             : "justify-between items-center flex"
-        }`}
+          }`}
       >
         {name !== "roomId" ? (
           <>
@@ -153,9 +152,9 @@ const RowComponent = ({
               value={
                 name === "tips"
                   ? (
-                      Number(getNamecommissionPolicyId) *
-                      (getInfo?.rentalPrice || 0)
-                    ).toLocaleString("vi-VN")
+                    Number(getNamecommissionPolicyId) *
+                    (getInfo?.rentalPrice || 0)
+                  ).toLocaleString("vi-VN")
                   : value
               }
               onChange={handleChangeValue}

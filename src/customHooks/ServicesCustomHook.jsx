@@ -11,6 +11,7 @@ const ServicesContextHook = ({ children }) => {
   const [holder, setHolder] = useState({});
   const [rooms, setRooms] = useState({});
   const [address, setAddress] = useState("");
+  const [address2, setAddress2] = useState("");
   const [price, setPrice] = useState(null);
   const [brokeragePolicy, setBrokeragePolicy] = useState([]);
 
@@ -20,18 +21,18 @@ const ServicesContextHook = ({ children }) => {
       setFurnitureInserts(data?.response?.houseFurnitureViewModels);
       setServiceInserts(data?.response?.houseServiceViewModels);
       setUtility([
-        { name: "Bãi đậu xe", value: data?.response?.parking },
-        { name: "Cầu thang", value: data?.response?.stair },
-        { name: "Giặt giũ", value: data?.response?.washing },
-        { name: "An ninh", value: data?.response?.sercuri },
+        { name: "Chỗ để xe", value: data?.response?.parking },
+        { name: "Thang bộ", value: data?.response?.stair },
+        { name: "Máy giặt chung", value: data?.response?.washing },
+        { name: "Bảo vệ", value: data?.response?.sercuri },
         { name: "Wifi", value: data?.response?.wifi },
         { name: "Thang máy", value: data?.response?.elevator },
         { name: "Vệ sinh hành lang", value: data?.response?.hallwayCleaning },
         { name: "Khóa vân tay", value: data?.response?.fingerprintLock },
-        { name: "Giờ miễn phí", value: data?.response?.freeHours },
-        { name: "Dọn phòng", value: data?.response?.cleanRoom },
-        { name: "Thú cưng", value: data?.response?.pet },
-        { name: "Camera", value: data?.response?.cammera },
+        { name: "Giờ giấc tự do", value: data?.response?.freeHours },
+        { name: "Dọn vệ sinh phòng", value: data?.response?.cleanRoom },
+        { name: "Nuôi thú cưng", value: data?.response?.pet },
+        { name: "Cammera an ninh", value: data?.response?.cammera },
       ]);
       setCommissions(data?.response?.commissions);
       setHolder(data?.response?.holder);
@@ -39,7 +40,8 @@ const ServicesContextHook = ({ children }) => {
         roomToBeEmpty: data?.response?.roomToBeEmpty,
         emptyRoom: data?.response?.emptyRoom,
       });
-      setAddress(data?.response?.houseAddress);
+      setAddress(data?.response?.houseName);
+      setAddress2(data?.response?.houseAddress?.split(',')[0] + "," + data?.response?.houseAddress?.split(',')[1]);
       setPrice(data?.response?.rentPrice);
       setBrokeragePolicy(data?.response?.brokeragePolicy);
     }
@@ -57,6 +59,7 @@ const ServicesContextHook = ({ children }) => {
         holder,
         rooms,
         address,
+        address2,
         price,
         brokeragePolicy,
       }}
@@ -77,8 +80,8 @@ export const useGetHolder = () => {
   return [holder, rooms];
 };
 export const useGetInfoItem = () => {
-  const { address, price } = useContext(ServicesContext);
-  return [address, price];
+  const { address, price, address2 } = useContext(ServicesContext);
+  return [address, price, address2];
 };
 export const useGetBrokeragePolicy = () => {
   const { brokeragePolicy } = useContext(ServicesContext);

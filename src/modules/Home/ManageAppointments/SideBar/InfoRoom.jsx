@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RowComponent from "./RowCompoment";
 import SelectTips from "./SelectTips";
 import Signature from "@components/BaseInput/Signature";
- 
+
 const muiltyRow = [
   {
     id: 1,
@@ -102,7 +102,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
   const [getNamecommissionPolicyId, setNamecommissionPolicyId] = useState("");
   const [getRentalMonth, setRentalMonth] = useState("");
   const handleFileChange = (name, file) => {
-     setValue(name, file.split(",")[1]);
+    setValue(name, file.split(',')[1]);
   };
   useEffect(() => {
     if (!isSidebarOpen) {
@@ -114,8 +114,8 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
       <div className="text-rose-800 text-lg font-medium leading-7">
         Thông tin căn hộ
       </div>
-       
-   
+
+
       {muiltyRow.map((row) => (
         <RowComponent
           getInfo={getInfo}

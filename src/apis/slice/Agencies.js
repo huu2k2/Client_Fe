@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 
 const Agencies = createApi({
   reducerPath: "Agencies",
-  tagTypes: ["Appointments","ContractManagement"],
+  tagTypes: ["Appointments", "ContractManagement"],
   baseQuery: axiosBaseQuery({
     baseUrl: API_URL,
     headers: () => {
@@ -67,11 +67,11 @@ const Agencies = createApi({
       providesTags: (result) =>
         result?.response?.items
           ? [
-              ...result.response.items.map(({ scheduleId }) => ({
-                type: "Appointments",
-                id: scheduleId,
-              })),
-            ]
+            ...result.response.items.map(({ scheduleId }) => ({
+              type: "Appointments",
+              id: scheduleId,
+            })),
+          ]
           : ["Appointments"],
     }),
     postChangeRoom: build.mutation({
@@ -129,8 +129,9 @@ const Agencies = createApi({
       providesTags: ['ContractManagement'],
     }),
     postCancelDeposite: build.mutation({
-      query: ({ roomId, depositId }) => ({
-        url: `/v2/Agencies/end-of-deposit-by-room-id/${roomId}?depositId=${depositId}`,
+      query: (body) => ({
+        url: `/v2/Agencies/end-of-deposit`,
+        data: body,
         method: "PUT",
       }),
       invalidatesTags: ['ContractManagement'],

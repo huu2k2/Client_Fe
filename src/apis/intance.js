@@ -44,16 +44,25 @@ axiosInstance.interceptors.response.use(
         //       'accept': '*/*'
         //     }
         //   });
+        // localStorage.clear()
+        // window.location.href = '/login';
+        if (refreshToken) {
+          const response = await axios.post(`http://14.225.254.188:8080/api/Accounts/refresh-token`, {}, {
+            headers: {
+              'Authorization': `Bearer ${refreshToken}`,
+              'accept': '*/*'
+            }
+          });
 
-        //   const newToken = response.data.token;
-        //   localStorage.setItem("token", newToken);
-        //   axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-        //   originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-        //   return axiosInstance(originalRequest);
-        // } else {
-        //   // Xử lý trường hợp không có refreshToken
-        //   console.error('Không tìm thấy refresh token.');
-        // }
+          const newToken = response.data.token;
+          localStorage.setItem("token", newToken);
+          axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+          originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+          return axiosInstance(originalRequest);
+        } else {
+          // Xử lý trường hợp không có refreshToken
+          console.error('Không tìm thấy refresh token.');
+        }
       } catch (refreshError) {
         // Xử lý lỗi khi làm mới token
         console.error('Lỗi khi làm mới token:', refreshError);

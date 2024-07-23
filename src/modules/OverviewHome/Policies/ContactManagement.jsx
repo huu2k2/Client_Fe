@@ -2,7 +2,7 @@ const ContactManagement = ({ data }) => {
   return (
     <div className="self-stretch h-[186px] bg-white rounded-lg shadow flex-col justify-start items-start flex">
       <div className="self-stretch h-16 px-6 py-5 bg-neutral-100 flex-col justify-start items-start gap-1 flex">
-        <div className="self-stretch text-gray-900 text-lg font-medium  leading-normal">
+        <div className="self-stretch text-rose-800 text-lg font-medium  leading-normal">
           Liên hệ quản lý
         </div>
       </div>

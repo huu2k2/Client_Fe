@@ -76,7 +76,7 @@ const Index = () => {
     }
   }, [query, idHome]);
   const { data: dataNameHome } = useGetInfoHomeQuery(idHome);
- 
+
   return (
     <>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
@@ -93,11 +93,9 @@ const Index = () => {
                   htmlFor="my-drawer-Overview"
                   className="mx-5 text-rose-600 text-lg drawer-button cursor-pointer"
                 >
-                  <img
-                    src={IconPickHome}
-                    alt="icon chọn nhà"
-                    className="w-9 h-9 bg-white rounded-md shadow border border-gray-300 flex justify-center items-center"
-                  />
+                  <div className="w-9 h-9 bg-white rounded-md shadow border border-gray-300 flex justify-center items-center">
+                    <img src={IconPickHome} alt="icon chọn nhà" className="" />
+                  </div>
                 </label>
               </div>
               <GroupCheckbox

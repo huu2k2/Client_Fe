@@ -12,9 +12,8 @@ import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
-import { usePostChangeRoomMutation,useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
- 
+import { usePostChangeRoomMutation, useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
+
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -41,12 +40,13 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
-  const [isCheckSuccess,setIsCheckSuccess]  = useState(false)
-  const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
+  const [isCheckSuccess, setIsCheckSuccess] = useState(false)
+  // const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
   const { refetch } = useGetListOfAppointmentsQuery();
   const [postChangeRoom] = usePostChangeRoomMutation();
   // Form submission handler
   const onSubmit = async (data) => {
+
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -69,8 +69,8 @@ const SideBar = ({ getInfo }) => {
       fullName: data.fullName,
       phoneNumber: data.phoneNumber,
     };
-    
-  
+
+
     const kq = await addDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
@@ -78,16 +78,16 @@ const SideBar = ({ getInfo }) => {
     } else {
       toast.success(kq.data.message);
       setIsCheckSuccess(true)
-      
+
       const body = {
         scheduleId: Number(getInfo.scheduleId),
         roomId: Number(data.roomId),
-         
+
       };
 
-        await postChangeRoom(body).unwrap();
-        refetch(); 
-      }
+      await postChangeRoom(body).unwrap();
+      refetch();
+    }
   };
 
   // Display toast notifications for form errors
@@ -138,7 +138,7 @@ const SideBar = ({ getInfo }) => {
                 Lên hợp đồng cọc giữ chỗ
               </div>
               <div className="bg-zinc-600 rounded-md justify-center items-center flex">
-                
+
               </div>
             </div>
             <div className="self-stretch text-zinc-400 text-sm font-normal leading-tight">
@@ -149,10 +149,10 @@ const SideBar = ({ getInfo }) => {
 
           {/* Form Sections */}
           <InfoClient
-           register={register}
-           getInfo={getInfo}
-           setValue={setValue}
-           isSidebarOpen={isSidebarOpen}
+            register={register}
+            getInfo={getInfo}
+            setValue={setValue}
+            isSidebarOpen={isSidebarOpen}
           />
           <InfoRoom
             register={register}
