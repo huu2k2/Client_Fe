@@ -20,7 +20,7 @@ const Sidebar = ({ idHolder }) => {
     );
     setData(filteredData);
   };
-console.log("first",dataListHome)
+ 
   const handleDebounce = debounce(handleChangeSearch, 500);
   return (
     <div className="drawer drawer-end">

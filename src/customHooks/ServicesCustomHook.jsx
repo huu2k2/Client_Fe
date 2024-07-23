@@ -20,18 +20,18 @@ const ServicesContextHook = ({ children }) => {
       setFurnitureInserts(data?.response?.houseFurnitureViewModels);
       setServiceInserts(data?.response?.houseServiceViewModels);
       setUtility([
-        { name: "Bãi đậu xe", value: data?.response?.parking },
-        { name: "Cầu thang", value: data?.response?.stair },
-        { name: "Giặt giũ", value: data?.response?.washing },
-        { name: "An ninh", value: data?.response?.sercuri },
+        { name: "Chỗ để xe", value: data?.response?.parking },
+        { name: "Thang bộ", value: data?.response?.stair },
+        { name: "Máy giặt chung", value: data?.response?.washing },
+        { name: "Bảo vệ", value: data?.response?.sercuri },
         { name: "Wifi", value: data?.response?.wifi },
         { name: "Thang máy", value: data?.response?.elevator },
         { name: "Vệ sinh hành lang", value: data?.response?.hallwayCleaning },
         { name: "Khóa vân tay", value: data?.response?.fingerprintLock },
-        { name: "Giờ miễn phí", value: data?.response?.freeHours },
-        { name: "Dọn phòng", value: data?.response?.cleanRoom },
-        { name: "Thú cưng", value: data?.response?.pet },
-        { name: "Camera", value: data?.response?.cammera },
+        { name: "Giờ giấc tự do", value: data?.response?.freeHours },
+        { name: "Dọn vệ sinh phòng", value: data?.response?.cleanRoom },
+        { name: "Nuôi thú cưng", value: data?.response?.pet },
+        { name: "Cammera an ninh", value: data?.response?.cammera },
       ]);
       setCommissions(data?.response?.commissions);
       setHolder(data?.response?.holder);

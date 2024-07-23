@@ -6,18 +6,18 @@ const UtilityDirectory = ({ data }) => {
 
   useEffect(() => {
     setIsHave([
-      { name: 'Bãi đỗ xe', have: data?.parking },
-      { name: 'Cầu thang', have: data?.stair },
-      { name: 'Giặt giũ', have: data?.washing },
-      { name: 'An ninh', have: data?.security },
+      { name: 'Chỗ để xe', have: data?.parking },
+      { name: 'Thang bộ', have: data?.stair },
+      { name: 'Máy giặt chung', have: data?.washing },
+      { name: 'Bảo vệ', have: data?.security },
       { name: 'WiFi', have: data?.wifi },
       { name: 'Thang máy', have: data?.elevator },
-      { name: 'Dọn hành lang', have: data?.hallwayCleaning },
-      { name: 'Khóa vân tay', have: data?.fingerprintLock },
+      { name: 'Vệ sinh hành lang', have: data?.hallwayCleaning },
+      { name: 'Khoá vân tay', have: data?.fingerprintLock },
       { name: 'Giờ giấc tự do', have: data?.freeHours },
-      { name: 'Dọn phòng', have: data?.cleanRoom },
-      { name: 'Thú cưng', have: data?.pet },
-      { name: 'Camera', have: data?.camera },
+      { name: 'Dọn vệ sinh phòng', have: data?.cleanRoom },
+      { name: 'Nuôi thú cưng', have: data?.pet },
+      { name: 'Cammera an ninh', have: data?.camera },
     ]);
   }, [data]);
 
@@ -29,9 +29,9 @@ const UtilityDirectory = ({ data }) => {
         </div>
       </div>
       <div className="self-stretch h-px bg-gray-200" />
-      <div className="self-stretch h-fit flex-col justify-center items-center flex">
+      <div className="self-stretch h-fit w-full grid grid-cols-4  ">
         {HaveData.filter(i => i.have).map((i, index) => (
-          <div className="w-[1312px] h-[60px] px-6 py-5 justify-start items-center gap-2 inline-flex" key={index}>
+          <div className="w-fit h-[60px] px-6 py-5 justify-start items-center gap-2 inline-flex" key={index}>
             <img src={IMGICON} alt="" className="w-5 h-5 relative" />
             <div className="grow shrink basis-0 text-gray-500 text-sm font-medium leading-tight">
               {i.name}

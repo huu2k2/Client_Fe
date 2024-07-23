@@ -72,7 +72,7 @@ const InfoRoom = () => {
                   {formatDateType(brokeragePolicy?.startDate)} -{" "}
                   {formatDateType(brokeragePolicy?.endDate)}
                 </li>
-                {Arr.length > 0 ?
+                {Arr?.length > 0 ?
                   Arr.map((item, index) => (
                     <li className={`nthd_text_normal_sm_text2 ${item ==="" && "hidden"}`} key={index}>
                       {item}

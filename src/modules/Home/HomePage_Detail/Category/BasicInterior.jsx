@@ -20,7 +20,7 @@ const BasicInterior = () => {
             furnitureInserts.map((i, index) => (
               <div className="nthd_basicInterioritem  gap-[7px] flex  w-full" key={index}>
                 <img src={CheckCircle} alt="Check Circle" />
-                <div className="nthd_text_medium_sm_text  h-5 w-full flex justify-between">
+                <div className="nthd_text_medium_sm_text  h-5 w-full flex justify-start gap-[7px]">
                   {i?.furnitureName}
                   <span className="text-[#6B7280] flex justify-end ">
                     {i.price.toLocaleString("en-US")} đ/tháng
