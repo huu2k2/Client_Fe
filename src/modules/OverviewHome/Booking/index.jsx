@@ -6,9 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./schema";
 import { usePostScheduleRoomMutation } from "../../../apis/slice/ScheduleSeeRoom";
 import { convertToDateISOString } from "../../../utils/ConverDate";
-import { ToastContainer } from "react-toastify";
+
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 const index = () => {
   const [address] = useGetInfoItem();
 
@@ -106,7 +106,6 @@ const index = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

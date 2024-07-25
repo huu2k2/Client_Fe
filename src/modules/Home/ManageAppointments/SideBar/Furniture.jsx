@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import SelectComponent from "./SelectCompoment"; // Ensure this path is correct
-import { AiFillCaretDown } from "react-icons/ai"; // Imported but not used; you might want to add it where needed
+ 
 
 const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
   // Initialize the state for note value if needed
   const [valueNote, setValueNote] = useState("");
-
+console.log("furnitureInserts",furnitureInserts)
   // Handle note change event
   const handleChangeNote = (e, furnitureId) => {
     const updatedNote = e.target.value;
@@ -57,7 +56,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
                 <div className="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
                   <input
                     type="text"
-                    value={item.price}
+                    value={item.price===0 ?"Trang bị có sẵn":item.price}
                     className="w-full outline-none text-sm font-normal leading-tight"
                     readOnly // Make price input read-only if you don't want to edit it
                   />
@@ -66,22 +65,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
                   đ
                 </div>
               </div>
-              {item.isActived && (
-                <>
-                  <div className="self-stretch bg-white rounded-md shadow border border-gray-300 justify-between items-center inline-flex">
-                    <SelectComponent status={item.status} />
-                  </div>
-
-                  <div className="w-[312px] h-[105px] overflow-hidden bg-white rounded-md shadow border border-gray-300 justify-end items-center inline-flex">
-                    <textarea
-                      className="w-full h-full px-[13px] py-[9px] outline-none text-sm font-normal leading-tight"
-                      placeholder=""
-                      value={item.note}
-                      onChange={(e) => handleChangeNote(e, item.furnitureId)}
-                    />
-                  </div>
-                </>
-              )}
+       
             </div>
           </div>
         ))}

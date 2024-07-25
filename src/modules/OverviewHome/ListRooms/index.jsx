@@ -76,7 +76,7 @@ const Index = () => {
     }
   }, [query, idHome]);
   const { data: dataNameHome } = useGetInfoHomeQuery(idHome);
-
+ 
   return (
     <>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
@@ -148,6 +148,7 @@ const Index = () => {
         <Body
           data={filteredData && filteredData.length >= 0 ? filteredData : []}
           isLoading={isLoading}
+          dataNameHome={dataNameHome?.response}
         />
       </div>
       {dataNameHome?.response && (

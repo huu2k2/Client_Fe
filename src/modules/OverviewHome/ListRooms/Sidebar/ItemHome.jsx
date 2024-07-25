@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiFillLock } from "react-icons/ai";
+import { usePostVeriPWMutation } from "../../../../apis/slice/Houses";
+import { toast } from "react-toastify";
 
 const ItemHome = ({ item }) => {
   const navigate = useNavigate();
@@ -17,10 +19,35 @@ const ItemHome = ({ item }) => {
   const handleChange = (e) => {
     setText(e.target.value);
   };
-  const handleEnter = () => {
-    setIsLock(false);
-    navigate(`/overview/${item.houseId}`);
+
+  const [postVeriPW] = usePostVeriPWMutation();
+  const handleEnter = async () => {
+
+    try {
+      if(!getText){
+        toast.error('Bạn Chưa Nhập Mật khẩu!');
+        return
+      }
+      const kq = await postVeriPW({
+        houseId: item.houseId,
+        housePass: getText.trim(),
+      }).unwrap();
+      console.log(kq);
+      if (kq.statusCode === 200 && kq.response) {
+        setIsLock(false);
+      
+        toast.success('Nhập password thành công!');
+       
+      } else {
+        toast.error('Nhập password thất bại!');
+      }
+      setIsOpen(!isOpen);
+    } catch (error) {
+      toast.error(error.message);
+    }
+    
   };
+
   return (
     <div className={`h-fit bg-base-200`}>
       <label
@@ -42,7 +69,9 @@ const ItemHome = ({ item }) => {
         </div>
       </label>
       {isOpen && (
-        <div className={`px-[13px] w-full h-20 flex justify-start items-center gap-2 `}>
+        <div
+          className={`px-[13px] w-full h-20 flex justify-start items-center gap-2 `}
+        >
           <input
             type="text"
             placeholder="Nhập mật khẩu..."

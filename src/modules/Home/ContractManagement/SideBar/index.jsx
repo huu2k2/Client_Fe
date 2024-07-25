@@ -8,8 +8,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./schema";
  
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {   toast } from "react-toastify";
+
 import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
 import { usePutDepositInfomationMutation } from "@apis/slice/Agencies";
@@ -121,10 +121,10 @@ if(DataDepositInfomation?.isSuccess){
   setValue('signature',DataDepositInfomation?.response?.signatureUrl)
 }
  },[DataDepositInfomation,isSidebarOpen])
- 
+  
   return (
     <div className="drawer drawer-end">
-      <ToastContainer className={'z-50'}/>
+ 
       <input
         id="my-drawer-5"
         type="checkbox"
@@ -141,10 +141,10 @@ if(DataDepositInfomation?.isSuccess){
         ></label>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="menu bg-white text-base-content min-h-full w-fit overflow-y-auto custom-scrollbar"
+          className="menu bg-white  w-fit h-screen  relative  text-base-content min-h-full    "
         >
           {/* Header */}
-          <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
+          <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex fixed top-0 right-0">
             <div className="self-stretch justify-between items-center inline-flex">
               <div className="text-white text-lg font-medium leading-7">
                 Lên hợp đồng cọc giữ chỗ
@@ -158,8 +158,7 @@ if(DataDepositInfomation?.isSuccess){
             </div>
           </div>
           {/* Header End */}
-
-          {/* Form Sections */}
+          <div className="w-full h-fit flex flex-col overflow-y-auto custom-scrollbar mt-24">
           <InfoClient register={register} getInfo={getInfo} isSidebarOpen={isSidebarOpen} getValues={getValues} setValue={setValue}/>
           <InfoRoom
             register={register}
@@ -179,7 +178,8 @@ if(DataDepositInfomation?.isSuccess){
           />
           <hr className="bg-gray-700 w-full h-[1px]" />
           <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen}/>
-          {/* Form Sections End */}
+          </div>
+ 
         </form>
       </div>
     </div>
