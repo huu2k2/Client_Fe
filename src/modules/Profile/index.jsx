@@ -71,9 +71,9 @@ const Index = ({ setShow }) => {
   // handle data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
-    signatureBase64: "",
-    beforeIdentificationBase64: "",
-    afterIdentificationBase64: "",
+    signatureUrl: null,
+    beforeIdentificationBase64: null,
+    afterIdentificationBase64: null,
     BankCode: "",
     AccountNumber: "",
     AccountName: "",
@@ -102,9 +102,11 @@ const Index = ({ setShow }) => {
     if (data?.response) {
       setFormData({
         AgencyAccountId: data.response.telegramId,
-        signatureBase64: data.response.signatureUrl,
-        beforeIdentificationBase64: data.response.beforeIdentificationBase64,
-        afterIdentificationBase64: data.response.afterIdentificationBase64,
+        signatureUrl: data.response.signatureUrl,
+        beforeIdentificationBase64:
+          data.response.beforeIdentificationBase64,
+        afterIdentificationBase64:
+          data.response.afterIdentificationBase64,
         BankCode: data.response.bankCode,
         AccountNumber: data.response.accountNumber,
         AccountName: data.response.accountName,
@@ -150,7 +152,7 @@ const Index = ({ setShow }) => {
     try {
       const updatedFormData = {
         ...formData,
-        signatureBase64: formData.signatureBase64?.split(",")[1],
+        signatureUrl: formData.signatureUrl?.split(",")[1],
         BankCode: formData.BankCode.toString(),
       };
       console.log("🚀 ~ handleUpdate ~ formData:", formData)
@@ -310,7 +312,7 @@ const Index = ({ setShow }) => {
           <Signature
             name={"Chữ ký"}
             img={data?.response.signatureUrl}
-            onChange={(file) => handleFileChange("signatureBase64", file)}
+            onChange={(file) => handleFileChange("signatureUrl", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
