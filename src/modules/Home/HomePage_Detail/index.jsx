@@ -14,7 +14,7 @@ import {
   useClickSearchFilter,
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
- 
+
 
 const initialFilterData = {
   houseId: null,
@@ -55,7 +55,7 @@ const index = () => {
   }, [filterData]);
   return (
     <>
-      
+
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}
@@ -78,7 +78,7 @@ const index = () => {
           <RoomOrder
             title={`Phòng tương tự của ${data?.response?.holder?.fullName}`}
             data={id}
-            money={data?.response?.rentPrice || null}
+            money={null}
             address={data?.response?.houseAddress
               ?.split(",")[1]
               ?.toString()
@@ -89,7 +89,7 @@ const index = () => {
           <RoomOrder
             title={`Phòng tương tự  `}
             data={null}
-            money={data?.response?.rentPrice || null}
+            money={null}
             address={data?.response?.houseAddress
               ?.split(",")[1]
               ?.toString()

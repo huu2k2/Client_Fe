@@ -93,10 +93,11 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         });
         setIsShowModal(false);
       } else {
-        setStatusCode(400);
+        // setStatusCode(400);
       }
     } catch (error) {
-      setStatusCode(400);
+      toast.error("Đặt lịch thất bại, bạn hãy cập nhật tất cả thông tin trong profile !");
+      // setStatusCode(400);
     }
   };
 
@@ -212,8 +213,8 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>}
-              {response && <p className="text-green-600 mr-10 flex items-center">{response?.message}</p>}
+              {/* {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>} */}
+              {/* {response && <p className="text-green-600 mr-10 flex items-center">{response?.message}</p>} */}
 
               <button
                 type="submit"
