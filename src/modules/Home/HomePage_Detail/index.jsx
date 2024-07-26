@@ -43,7 +43,6 @@ const index = () => {
   useEffect(() => {
     setData(data);
   }, [data]);
-  console.log("🚀 ~ index ~ data:", data)
   const [filterData, setFilterData] = useQueryFilterData();
   const handleClickSearch = useClickSearchFilter();
   useEffect(() => {

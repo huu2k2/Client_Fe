@@ -15,7 +15,6 @@ import Signature from "@components/BaseInput/Signature";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
-  console.log("🚀 ~ Index ~ data:", data)
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
     usePostUpdateMutation();
 
@@ -151,7 +150,7 @@ const Index = ({ setShow }) => {
     try {
       const updatedFormData = {
         ...formData,
-        signatureBase64: formData.signatureBase64?.split(",")[1],
+        signatureUrl: formData.signatureUrl?.split(",")[1],
         BankCode: formData.BankCode.toString(),
       };
       console.log("🚀 ~ handleUpdate ~ formData:", formData)
@@ -311,7 +310,7 @@ const Index = ({ setShow }) => {
           <Signature
             name={"Chữ ký"}
             img={data?.response.signatureUrl}
-            onChange={(file) => handleFileChange("signatureBase64 ", file)}
+            onChange={(file) => handleFileChange("signatureUrl", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
