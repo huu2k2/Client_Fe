@@ -14,8 +14,7 @@ import {
   useClickSearchFilter,
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
-import { ToastContainer } from "react-toastify";
-import { useGetRoomsofhouseMutation } from "../../../apis/slice/rooms";
+ 
 
 const initialFilterData = {
   houseId: null,
@@ -56,7 +55,7 @@ const index = () => {
   }, [filterData]);
   return (
     <>
-      <ToastContainer />
+      
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}

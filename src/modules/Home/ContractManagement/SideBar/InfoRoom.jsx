@@ -32,7 +32,7 @@ const muiltyRow = [
 const muiltyRow1 = [
   {
     id: 6,
-    title: "Số tiền cọc",
+    title: "Số tiền cọc giữ phòng",
     type: "text",
     placeholder: "",
     unit: "%",
@@ -47,7 +47,7 @@ const muiltyRow1 = [
   },
   {
     id: 8,
-    title: "Số tiền cọc giữ phòng",
+    title: "Số tiền cọc trước",
     type: "text",
     placeholder: "",
     unit: "đ",

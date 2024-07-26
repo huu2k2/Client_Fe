@@ -24,7 +24,7 @@ const RowComponent = ({
     "commissionPolicyId",
     "datcoc",
     "houseAddress",
-    "rentalPrice",
+    "additionalDepositAmount",
     "chuongTrinhUuDai",
     "tips",
     "rentalTerm",

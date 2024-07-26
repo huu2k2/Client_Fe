@@ -40,6 +40,13 @@ const HousesApi = createApi({
         url: `/v2/Houses/get-house-names/${id}`,
       }),
     }),
+    postVeriPW: build.mutation({
+      query: (body) => ({
+        url: `/v2/Houses/verify-house-password`,
+        method: "POST",
+        data:body
+      }),
+    }),
   }),
 });
 
@@ -49,6 +56,7 @@ export const {
   useGetHouseNameQuery,
   useGetCommisstionPoliciesQuery,
   useGetInfoHomeQuery,
-  useGetAllHousesQuery
+  useGetAllHousesQuery,
+  usePostVeriPWMutation
 } = HousesApi;
 export default HousesApi;

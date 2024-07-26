@@ -10,10 +10,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./schema";
 import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { usePostChangeRoomMutation,useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
+import { toast } from "react-toastify";
  
+import {
+  usePostChangeRoomMutation,
+  useGetListOfAppointmentsQuery,
+} from "@apis/slice/Agencies";
+
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -40,13 +43,12 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
-  const [isCheckSuccess,setIsCheckSuccess]  = useState(false)
+  const [isCheckSuccess, setIsCheckSuccess] = useState(false);
   // const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
   const { refetch } = useGetListOfAppointmentsQuery();
   const [postChangeRoom] = usePostChangeRoomMutation();
   // Form submission handler
   const onSubmit = async (data) => {
- 
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -69,25 +71,23 @@ const SideBar = ({ getInfo }) => {
       fullName: data.fullName,
       phoneNumber: data.phoneNumber,
     };
-    
-  
+
     const kq = await addDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
-      setIsCheckSuccess(false)
+      setIsCheckSuccess(false);
     } else {
       toast.success(kq.data.message);
-      setIsCheckSuccess(true)
-      
+      setIsCheckSuccess(true);
+
       const body = {
         scheduleId: Number(getInfo.scheduleId),
         roomId: Number(data.roomId),
-         
       };
 
-        await postChangeRoom(body).unwrap();
-        refetch(); 
-      }
+      await postChangeRoom(body).unwrap();
+      refetch();
+    }
   };
 
   // Display toast notifications for form errors
@@ -112,7 +112,7 @@ const SideBar = ({ getInfo }) => {
 
   return (
     <div className="drawer drawer-end bg-white">
-      <ToastContainer className={"z-50"} />
+      
       <input
         id="my-drawer-4"
         type="checkbox"
@@ -121,46 +121,43 @@ const SideBar = ({ getInfo }) => {
         checked={isSidebarOpen}
       />
       <div className="drawer-content">{/* Page content here */}</div>
-      <div className="drawer-side" ref={sidebarRef}>
+      <div className="drawer-side h-screen w-screen" ref={sidebarRef}>
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="menu bg-white text-base-content min-h-full w-fit overflow-y-auto custom-scrollbar"
+          className="menu bg-white w-fit h-screen text-base-content min-h-full flex flex-col  relative"
         >
-          {/* Header */}
-          <div className="w-full h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
+          <div className="w-full h-fit p-6 bg-black flex-col justify-start items-start gap-1 inline-flex fixed top-0 right-0">
             <div className="self-stretch justify-between items-center inline-flex">
               <div className="text-white text-lg font-medium leading-7">
                 Lên hợp đồng cọc giữ chỗ
               </div>
-              <div className="bg-zinc-600 rounded-md justify-center items-center flex">
-                
-              </div>
+              <div className="bg-zinc-600 rounded-md justify-center items-center flex"></div>
             </div>
             <div className="self-stretch text-zinc-400 text-sm font-normal leading-tight">
               Vui lòng nhập các thông tin dưới đây để lên hợp đồng.
             </div>
           </div>
-          {/* Header End */}
-
-          {/* Form Sections */}
-          <InfoClient
-           register={register}
-           getInfo={getInfo}
-           setValue={setValue}
-           isSidebarOpen={isSidebarOpen}
-          />
-          <InfoRoom
-            register={register}
-            getInfo={getInfo}
-            setValue={setValue}
-            isSidebarOpen={isSidebarOpen}
-          />
-          <Surcharges
+          <div className="w-full h-fit flex flex-col overflow-y-auto custom-scrollbar mt-24">
+ 
+            <InfoClient
+              register={register}
+              getInfo={getInfo}
+              setValue={setValue}
+              isSidebarOpen={isSidebarOpen}
+            />
+            <InfoRoom
+              register={register}
+              getInfo={getInfo}
+              setValue={setValue}
+              isSidebarOpen={isSidebarOpen}
+            />
+             <Surcharges
             register={register}
             serviceInserts={serviceInserts}
             setServiceInserts={setServiceInserts}
@@ -170,8 +167,12 @@ const SideBar = ({ getInfo }) => {
             setFurnitureInserts={setFurnitureInserts}
           />
           <hr className="bg-gray-700 w-full h-[1px]" />
-          <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} isCheckSuccess={isCheckSuccess} />
-          {/* Form Sections End */}
+          <ButtonDeposit
+            setIsSidebarOpen={setIsSidebarOpen}
+            isCheckSuccess={isCheckSuccess}
+          /> 
+          </div>
+          
         </form>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { usePostscheduleMutation } from "../../apis/slice/Agencies";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useGetRoomsNotDepositOfHouseQuery } from "../../apis/slice/rooms";
 import Select from "react-select";
 

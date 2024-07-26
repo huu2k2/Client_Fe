@@ -9,8 +9,8 @@ import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 import Signature from "@components/BaseInput/Signature";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
@@ -103,7 +103,7 @@ const Index = ({ setShow }) => {
     if (data?.response) {
       setFormData({
         AgencyAccountId: data.response.telegramId,
-        signatureBase64: data.response.signatureBase64,
+        signatureUrl: data.response.signatureUrl,
         beforeIdentificationBase64:
           data.response.beforeIdentificationBase64,
         afterIdentificationBase64:
