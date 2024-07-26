@@ -173,9 +173,8 @@ const Index = ({ setShow }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end profile ${
-        isExiting ? "animate-slide-out" : "animate-slide-in"
-      }`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"
+        }`}
     >
       <div
         ref={refContainer}
