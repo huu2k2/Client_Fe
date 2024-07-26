@@ -72,9 +72,9 @@ const Index = ({ setShow }) => {
   // handle data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
-    signatureBase64: null,
-    beforeIdentificationBase64: null,
-    afterIdentificationBase64: null,
+    signatureBase64: "",
+    beforeIdentificationBase64: "",
+    afterIdentificationBase64: "",
     BankCode: "",
     AccountNumber: "",
     AccountName: "",
@@ -103,11 +103,9 @@ const Index = ({ setShow }) => {
     if (data?.response) {
       setFormData({
         AgencyAccountId: data.response.telegramId,
-        signatureUrl: data.response.signatureUrl,
-        beforeIdentificationBase64:
-          data.response.beforeIdentificationBase64,
-        afterIdentificationBase64:
-          data.response.afterIdentificationBase64,
+        signatureBase64: data.response.signatureUrl,
+        beforeIdentificationBase64: data.response.beforeIdentificationBase64,
+        afterIdentificationBase64: data.response.afterIdentificationBase64,
         BankCode: data.response.bankCode,
         AccountNumber: data.response.accountNumber,
         AccountName: data.response.accountName,
@@ -156,6 +154,7 @@ const Index = ({ setShow }) => {
         signatureBase64: formData.signatureBase64?.split(",")[1],
         BankCode: formData.BankCode.toString(),
       };
+      console.log("🚀 ~ handleUpdate ~ formData:", formData)
 
       const rs = await postUpdate(updatedFormData);
 
