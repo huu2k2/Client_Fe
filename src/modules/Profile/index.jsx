@@ -15,6 +15,7 @@ import Signature from "@components/BaseInput/Signature";
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
+  console.log("🚀 ~ Index ~ data:", data)
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] =
     usePostUpdateMutation();
 
@@ -71,7 +72,7 @@ const Index = ({ setShow }) => {
   // handle data for update
   const [formData, setFormData] = useState({
     AgencyAccountId: "",
-    signatureUrl: null,
+    signatureBase64: null,
     beforeIdentificationBase64: null,
     afterIdentificationBase64: null,
     BankCode: "",
@@ -101,8 +102,8 @@ const Index = ({ setShow }) => {
   useEffect(() => {
     if (data?.response) {
       setFormData({
-        AgencyAccountId: data.response.telegramId ,
-        signatureUrl: data.response.signatureUrl,
+        AgencyAccountId: data.response.telegramId,
+        signatureBase64: data.response.signatureBase64,
         beforeIdentificationBase64:
           data.response.beforeIdentificationBase64,
         afterIdentificationBase64:
@@ -152,7 +153,7 @@ const Index = ({ setShow }) => {
     try {
       const updatedFormData = {
         ...formData,
-        signatureUrl: formData.signatureUrl?.split(",")[1],
+        signatureBase64: formData.signatureBase64?.split(",")[1],
         BankCode: formData.BankCode.toString(),
       };
 
@@ -175,9 +176,8 @@ const Index = ({ setShow }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end profile ${
-        isExiting ? "animate-slide-out" : "animate-slide-in"
-      }`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"
+        }`}
     >
       <div
         ref={refContainer}
@@ -312,7 +312,7 @@ const Index = ({ setShow }) => {
           <Signature
             name={"Chữ ký"}
             img={data?.response.signatureUrl}
-            onChange={(file) => handleFileChange("signatureUrl", file)}
+            onChange={(file) => handleFileChange("signatureBase64 ", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}

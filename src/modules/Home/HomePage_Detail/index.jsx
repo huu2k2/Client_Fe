@@ -44,6 +44,7 @@ const index = () => {
   useEffect(() => {
     setData(data);
   }, [data]);
+  console.log("🚀 ~ index ~ data:", data)
   const [filterData, setFilterData] = useQueryFilterData();
   const handleClickSearch = useClickSearchFilter();
   useEffect(() => {
@@ -78,7 +79,7 @@ const index = () => {
           <RoomOrder
             title={`Phòng tương tự của ${data?.response?.holder?.fullName}`}
             data={id}
-            money={data?.response?.rentPrice}
+            money={data?.response?.rentPrice || null}
             address={data?.response?.houseAddress
               ?.split(",")[1]
               ?.toString()
@@ -89,7 +90,7 @@ const index = () => {
           <RoomOrder
             title={`Phòng tương tự  `}
             data={null}
-            money={data?.response?.rentPrice}
+            money={data?.response?.rentPrice || null}
             address={data?.response?.houseAddress
               ?.split(",")[1]
               ?.toString()

@@ -18,7 +18,6 @@ const InfoRoom = () => {
   const [a, serviceInserts] = useDataServices();
   const [address, price, address2] = useGetInfoItem();
   const { data } = useGetAllDetailQuery(roomId);
-  console.log("🚀 ~ InfoRoom ~ data:", data)
 
 
   const [brokeragePolicy] = useGetBrokeragePolicy();
