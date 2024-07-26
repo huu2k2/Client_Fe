@@ -12,7 +12,7 @@ const SearchInput = ({ data, setListData, getTextSearch, setTextSearch }) => {
   useEffect(() => {
     if (getTextSearch !== "" && data?.response?.items) {
       const searchData = data.response.items.filter((i) =>
-        i.customerName.toUpperCase().includes(getTextSearch.toUpperCase())
+        i.customerName?.toUpperCase().includes(getTextSearch?.toUpperCase())
       );
       setListData(searchData);
     } else {

@@ -43,14 +43,15 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const pageSize = 10;
 
   const [ListData, setListData] = useState([]);
-
+const [getTextSearch,setTextSearch] = useState("")
   const startDateISO = convertDateToISO(date[0]);
   const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
   const { data, error, isLoading, refetch } = useGetListsOfContractManagementQuery({
     queries: { pageIndex: currentPage, pageSize: pageSize },
     body: {
       start: startDateISO,
-      end: endDateISO || startDateISO
+      end: endDateISO || startDateISO,
+      customerName:getTextSearch
     },
   });
 
@@ -63,17 +64,17 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const totalPagesMemo = useMemo(
     () =>
       data?.response?.totalPages ? data?.response?.totalPages : totalPages,
-    [data]
+    [data,getTextSearch]
   );
   const totalItemsMemo = useMemo(
     () => (data?.response?.items ? data?.response?.items?.length : totalItems),
-    [data, date]
+    [data, date,getTextSearch]
   );
 
   useEffect(() => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
-  }, [data, date]);
+  }, [data, date,getTextSearch]);
 
   const [PostDeposit] = usePostDepositMutation();
   const handleExportDeposit = async (depositId) => {
@@ -133,6 +134,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         <SearchInput
           data={data}
           setListData={setListData}
+          getTextSearch={getTextSearch} setTextSearch={setTextSearch}
         />
       </div>
 
