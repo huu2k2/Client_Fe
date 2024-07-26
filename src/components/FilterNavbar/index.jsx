@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Location from "./FilterSelectItemDropdow";
@@ -9,9 +9,13 @@ import FilterAdd from "./FilterAdd";
 import { useQueryFilterData } from "@customhooks";
 import { debounce } from "@utils";
 import { useClickRemoveFilter } from "@customhooks/FilterCustomHook";
-import { useGetHouseNameQuery } from "../../apis/slice/Houses";
+import {
+  useGetHouseNameQuery,
+  usePostVeriPWMutation,
+} from "../../apis/slice/Houses";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-
+import { AiFillLock } from "react-icons/ai";
+import { toast } from "react-toastify";
 const removeDiacritics = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
@@ -51,8 +55,41 @@ const FilterNavbar = ({ setOption }) => {
   };
 
   const debounceHandleRemoveFilter = debounce(() => {
-    location.reload()
+    location.reload();
   }, 500);
+
+  //  check password
+  const [getTextS, setTextS] = useState("");
+  const [getHome, setHome] = useState(null);
+  const handlePickOption = (option) => {
+    if (option.isExclusive) {
+      setHome(option);
+      document.getElementById("modal_oclock_main").showModal();
+    } else {
+      setOption(option.houseId), setSearchInput(option.houseName);
+      setColse(false);
+    }
+  };
+  const modalRef = useRef(null); 
+  const [postCheckPW] = usePostVeriPWMutation();
+  const hanldeCheckPW = async () => {
+    try {
+      const kq = await postCheckPW({
+        houseId: getHome.houseId,
+        housePass: getTextS,
+      }).unwrap();
+      if (kq.response) {
+        setOption(getHome.houseId), setSearchInput(getHome.houseName);
+        setColse(false);
+        modalRef.current.close();
+      } else {
+        setTextS("");
+        toast.error("Hãy Nhập Lại Mật Khẩu!");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
@@ -73,17 +110,16 @@ const FilterNavbar = ({ setOption }) => {
             >
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
-                  <p
-                    key={index}
-                    onClick={() => (
-                      setOption(option.houseId),
-                      setSearchInput(option.houseName),
-                      setColse(false)
-                    )}
-                    className="px-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
-                  >
-                    {option.houseName}
-                  </p>
+                  <div className="flex justify-between items-center w-full px-2">
+                    <p
+                      key={index}
+                      onClick={() => handlePickOption(option)}
+                      className="px-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
+                    >
+                      {option.houseName}
+                    </p>
+                    {option.isExclusive && <AiFillLock />}
+                  </div>
                 ))
               ) : (
                 <p className="p-2 text-rose-500">không tìm thấy!</p>
@@ -116,6 +152,34 @@ const FilterNavbar = ({ setOption }) => {
       >
         <RiDeleteBin6Line className="w-5 h-5 text-white" />
       </div>
+      {/* my modal */}
+ 
+      <dialog id="modal_oclock_main" className="modal z-10" ref={modalRef}>
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h3 className="font-bold text-lg">
+            Bạn hãy nhập mật khẩu của nhà độc quyền!
+          </h3>
+          <input
+            type="text"
+            placeholder=""
+            value={getTextS}
+            onChange={(e) => setTextS(e.target.value)}
+            className="input input-bordered w-full max-w-xs mt-5"
+          />
+          <div className="modal-action">
+            <button className="btn btn-outline " onClick={hanldeCheckPW}>
+              {" "}
+              OK{" "}
+            </button>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

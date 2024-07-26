@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <FilterCustomHook>
-      <ToastContainer/>
+      <ToastContainer className={'z-[200]'}/>
       <App />
     </FilterCustomHook>
   </Provider>

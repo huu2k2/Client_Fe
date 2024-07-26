@@ -19,7 +19,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
- 
+
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -37,38 +37,42 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
-  const [ListData,setListData] = useState([]);
+  const [ListData, setListData] = useState([]);
+  const [getTextSearch, setTextSearch] = useState("");
   const pageSize = 10;
 
   const { data, isLoading } = useGetListOfAppointmentsQuery({
-    queries: { pageIndex: currentPage||1, pageSize: pageSize },
+    queries: { pageIndex: currentPage || 1, pageSize: pageSize },
     body: {
       start: date[0] ? convertDateToISO(date[0]) : null,
-      end: date[1] ? convertDateToISO(date[1]) : (date[0] ? convertDateToISO(date[0]) : null),
+      end: date[1]
+        ? convertDateToISO(date[1])
+        : date[0]
+        ? convertDateToISO(date[0])
+        : null,
+      customername: getTextSearch,
     },
   });
-  
 
   const totalPagesMemo = useMemo(
     () =>
       data?.response?.totalPages ? data?.response?.totalPages : totalPages,
-    [data]
+    [data,getTextSearch]
   );
   const totalItemsMemo = useMemo(
     () => (data?.response?.items ? data?.response?.items?.length : totalItems),
-    [data, date]
+    [data, date,getTextSearch]
   );
 
   useEffect(() => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
-  }, [data, date]);
+  }, [data, date,getTextSearch]);
 
   if (isLoading) {
     return <span className="loading loading-ball loading-lg"></span>;
   }
- 
-  
+
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative">
@@ -99,10 +103,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         </div>
         {/* search */}
 
-        <SearchInput
-          data={data}
-          setListData={setListData}
-        />
+        <SearchInput data={data} setListData={setListData} setTextSearch={setTextSearch} getTextSearch={getTextSearch}/>
         {/* end */}
       </div>
 
@@ -175,7 +176,11 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                     </td>
                     <td className="w-[360px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal w-full  leading-tight">
-                        {i.houseName +' '+i.houseAddress?.split(',')[0]+' '+i.houseAddress?.split(',')[1]}
+                        {i.houseName +
+                          " " +
+                          i.houseAddress?.split(",")[0] +
+                          " " +
+                          i.houseAddress?.split(",")[1]}
                       </span>
                     </td>
 

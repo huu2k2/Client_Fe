@@ -33,27 +33,28 @@ axiosInstance.interceptors.response.use(
     // Kiểm tra lỗi có phải là 401 Unauthorized và nếu đây không phải là lần thử lại
     if (error.response && (error.response.status === 401) && !originalRequest._retry) {
       originalRequest._retry = true;
-      const refreshToken = localStorage.getItem("token"); // Đảm bảo bạn có token làm mới riêng
+      // const refreshToken = localStorage.getItem("token"); // Đảm bảo bạn có token làm mới riêng
       try {
           // localStorage.clear()
           // window.location.href = '/login';
-        if (refreshToken) {
-          const response = await axios.post(`http://14.225.254.188:8080/api/Accounts/refresh-token`, {}, {
-            headers: {
-              'Authorization': `Bearer ${refreshToken}`,
-              'accept': '*/*'
-            }
-          });
+          console.log(error.response)
+        // if (refreshToken) {
+        //   const response = await axios.post(`http://14.225.254.188:8080/api/Accounts/refresh-token`, {refreshToken}, {
+        //     headers: {
+        //       'Authorization': `Bearer ${refreshToken}`,
+        //       'accept': '*/*'
+        //     }
+        //   });
 
-          const newToken = response.data.token;
-          localStorage.setItem("token", newToken);
-          axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-          originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-          return axiosInstance(originalRequest);
-        } else {
-          // Xử lý trường hợp không có refreshToken
-          console.error('Không tìm thấy refresh token.');
-        }
+        //   const newToken = response.data.token;
+        //   localStorage.setItem("token", newToken);
+        //   axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+        //   originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
+        //   return axiosInstance(originalRequest);
+        // } else {
+        //   // Xử lý trường hợp không có refreshToken
+        //   console.error('Không tìm thấy refresh token.');
+        // }
       } catch (refreshError) {
         // Xử lý lỗi khi làm mới token
         console.error('Lỗi khi làm mới token:', refreshError);

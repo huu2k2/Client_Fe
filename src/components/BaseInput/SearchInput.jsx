@@ -1,13 +1,10 @@
- 
 import React, { useCallback, useEffect, useState } from "react";
 import { debounce } from "../../utils/Debounce";
 
-const SearchInput = ({data,setListData}) => {
-    const [getTextSearch, setTextSearch] = useState("");
-    const handleSearch = (e) => {
-        setTextSearch(e.target.value);
-        console.log(e.target.value)
-      };
+const SearchInput = ({ data, setListData, getTextSearch, setTextSearch }) => {
+  const handleSearch = (e) => {
+    setTextSearch(e.target.value);
+  };
   const handleChangeSearch = useCallback(debounce(handleSearch, 300), [
     handleSearch,
   ]);
@@ -21,8 +18,8 @@ const SearchInput = ({data,setListData}) => {
     } else {
       setListData(data?.response?.items);
     }
-  }, [getTextSearch,data]);
- 
+  }, [getTextSearch, data]);
+
   return (
     <div className="  flex justify-start items-center gap-2 p-2  w-80 focus:outline-none focus-visible:border-none text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:border-none">
       <svg
