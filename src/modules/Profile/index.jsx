@@ -79,7 +79,7 @@ const Index = ({ setShow }) => {
     AccountName: "",
     FullName: "",
     PhoneNumber: "",
-    BOD: "",
+    BOD: "2024-07-26T14:09:33.313Z",
     Identification: "",
     DateRange: "",
     IssuedBy: "",
@@ -150,7 +150,7 @@ const Index = ({ setShow }) => {
     try {
       const updatedFormData = {
         ...formData,
-        signatureUrl: formData.signatureUrl?.split(",")[1],
+        signatureBase64: formData.signatureBase64?.split(",")[1],
         BankCode: formData.BankCode.toString(),
       };
       console.log("🚀 ~ handleUpdate ~ formData:", formData)
@@ -310,7 +310,7 @@ const Index = ({ setShow }) => {
           <Signature
             name={"Chữ ký"}
             img={data?.response.signatureUrl}
-            onChange={(file) => handleFileChange("signatureUrl", file)}
+            onChange={(file) => handleFileChange("signatureBase64", file)}
           />
           <InputFileImg
             name={"CCCD (Mặt trước)"}
