@@ -96,7 +96,7 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         // setStatusCode(400);
       }
     } catch (error) {
-      toast.error("Đặt lịch thất bại, bạn hãy cập nhật tất cả thông tin trong profile !");
+      toast.error("Đặt lịch thất bại, bạn hãy cập nhật tất cả thông tin cá nhân trong hồ sơ !");
       // setStatusCode(400);
     }
   };
