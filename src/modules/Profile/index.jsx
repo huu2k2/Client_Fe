@@ -348,7 +348,7 @@ const Index = ({ setShow }) => {
         </div>
 
         {/* Fixed button */}
-        <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5">
+        <div className="w-[556px] h-[79px] border-t-2 z-50 bg-white flex justify-end items-center gap-4 px-6 py-5 mb-10">
           <button
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-white shadow-sm"
             onClick={handleCancel}
@@ -357,7 +357,7 @@ const Index = ({ setShow }) => {
           </button>
           <button
             onClick={handleUpdate}
-            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-red-700 text-white shadow-sm"
+            className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-rose-600 text-white shadow-sm"
           >
             Cập nhật
           </button>

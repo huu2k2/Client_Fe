@@ -66,7 +66,7 @@ const InputSelect = ({ label, setFormData, variable }) => {
 
   return (
     <div className="w-full gap-4 flex justify-start items-center">
-      <span className="w-[180px] h-5 not-italic text-gray-700">Ngân hàng</span>
+      <span className="w-[180px] h-5 not-italic text-sm font-medium text-gray-900">Ngân hàng</span>
       <Select
         name="bank"
         styles={customStyles}

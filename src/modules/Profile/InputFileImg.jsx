@@ -43,7 +43,7 @@ const InputFileImg = ({ name, img, onChange }) => {
 
   return (
     <div className="w-full gap-4 flex justify-start items-center">
-      <span className="w-[180px] h-5 not-italic text-gray-700">{name}</span>
+      <span className="w-[180px] h-5 not-italic text-sm font-medium text-gray-900">{name}</span>
       <div className="w-[312px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
         {imagePreview ? (
           <div className='relative'>

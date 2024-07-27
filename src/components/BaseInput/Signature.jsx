@@ -48,10 +48,10 @@ if(img){
   };
 
   return (
-    <div className="w-full gap-4 flex justify-start items-center">
-      <span className="w-[180px] h-5 not-italic text-gray-700">{name}</span>
-      <div className="flex flex-col gap-4  w-[312px]">
-        <div className="w-[312px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
+    <div className="w-[501px] flex justify-between items-start">
+      <span className="w-fit h-5 not-italic text-gray-700">{name}</span>
+      <div className="flex flex-col gap-4  w-[318px]">
+        <div className="w-[318px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
           {imagePreview ? (
             <div className="relative">
               <img

@@ -21,11 +21,11 @@ const RowSurcharges = ({ label, unit, price, onChange }) => {
   };
 
   return (
-    <div className="self-stretch justify-start items-center gap-4 inline-flex">
-      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight">
+    <div className="w-[501px] justify-between items-start  flex">
+      <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
         {label}
       </div>
-      <div className="grow shrink basis-0 h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center flex">
+      <div className=" w-[318px] h-[38px] bg-white rounded-md shadow border border-gray-300 justify-start items-center flex">
         <div className="grow shrink basis-0 h-[38px] pl-[13px] pr-3 py-[9px] justify-start items-center gap-2 flex">
           <input
             type="text"

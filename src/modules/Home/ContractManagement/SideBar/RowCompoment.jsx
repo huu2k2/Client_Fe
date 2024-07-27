@@ -85,12 +85,12 @@ const RowComponent = ({
   };
 
   return (
-    <div className="self-stretch justify-start items-center gap-4 inline-flex">
-      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight">
+    <div className="w-[501px] self-stretch justify-between items-center gap-4 inline-flex">
+      <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
         {title}
       </div>
       <div
-        className={`grow shrink basis-0 h-[38px] px-[13px] py-[9px] ${
+        className={`w-[318px] h-[38px] px-[13px] py-[9px] ${
           isDisabled ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
           unit

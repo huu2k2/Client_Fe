@@ -39,7 +39,7 @@ const InputFiel = ({
 
   return (
     <div className="w-full gap-4 flex justify-start items-center">
-      <span className="w-[180px] h-5 not-italic text-gray-700">{name}</span>
+      <span className="w-[180px] h-5 not-italic text-sm font-medium text-gray-900">{name}</span>
       <input
         isEnable
         type={type}

@@ -130,7 +130,7 @@ const SideBar = ({ getInfo }) => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="menu bg-white w-fit h-screen text-base-content min-h-full flex flex-col  relative"
+          className="menu bg-white w-[556px] h-screen text-base-content min-h-full flex flex-col  relative"
         >
           <div className="w-full h-fit p-6 bg-black flex-col justify-start items-start gap-1 inline-flex fixed top-0 right-0">
             <div className="self-stretch justify-between items-center inline-flex">

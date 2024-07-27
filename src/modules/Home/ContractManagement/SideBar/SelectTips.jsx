@@ -41,12 +41,12 @@ const SelectTips = ({ getInfo, setValue, setNamecommissionPolicyId, getValues })
   };
 
   return (
-    <div className="self-stretch justify-start items-center gap-4 inline-flex">
-      <div className="w-[180px] text-gray-700 text-sm font-medium leading-tight">
+    <div className="w-[501px] flex justify-between items-center gap-4  ">
+      <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
         Đặt cọc
       </div>
       <div
-        className="grow shrink basis-0 h-[38px] bg-white rounded-md shadow border border-gray-300 justify-between items-center flex"
+        className="w-[318px] h-[38px] bg-white rounded-md shadow border border-gray-300 justify-between items-center flex"
       >
         <Select
           className="w-full outline-none text-sm font-normal leading-tight"

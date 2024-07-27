@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
   // Initialize the state for note value if needed
   const [valueNote, setValueNote] = useState("");
-console.log("furnitureInserts",furnitureInserts)
+ 
   // Handle note change event
   const handleChangeNote = (e, furnitureId) => {
     const updatedNote = e.target.value;
@@ -18,7 +18,7 @@ console.log("furnitureInserts",furnitureInserts)
   };
 
   return (
-    <div className="w-[556px] h-fit px-6 py-5 flex-col justify-start items-start gap-5 inline-flex">
+    <div className="w-[501px] h-fit pl-4 py-5 flex-col justify-between items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
         Nội thất bàn giao
       </div>
@@ -26,9 +26,9 @@ console.log("furnitureInserts",furnitureInserts)
       {/* Map through furnitureInserts */}
       {furnitureInserts &&
         furnitureInserts.map((item, index) => (
-          <div className="w-[508px] h-fit  flex justify-between items-start" key={index}>
+          <div className="w-[501px] h-fit  flex justify-between items-start" key={index}>
             {/* Checkbox and Furniture Name */}
-            <div className=" justify-start items-center gap-2 inline-flex">
+            <div className="w-fit justify-start items-center gap-2 inline-flex">
               <input
                 type="checkbox"
                 className="w-4 h-4 relative rounded border border-gray-300 custom-checkbox"
@@ -48,9 +48,9 @@ console.log("furnitureInserts",furnitureInserts)
               </div>
             </div>
 
-            {/* Furniture Details */}
+     
 
-            <div className=" w-[312px] h-fit  flex-col justify-start items-start gap-3 inline-flex">
+            <div className=" w-[318px] h-fit  flex-col justify-start items-start gap-3 inline-flex">
               {/* Price Input */}
               <div className="self-stretch px-[13px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-start items-center gap-2 inline-flex">
                 <div className="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
