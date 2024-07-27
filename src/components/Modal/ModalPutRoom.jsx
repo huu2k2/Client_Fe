@@ -32,7 +32,11 @@ const validationSchema = yup.object().shape({
 
 export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode, id }) => {
   const { data: housedata } = useGetRoomsNotDepositOfHouseQuery(id);
+  console.log("🚀 ~ ModalPutRoom ~ housedata:", housedata)
 
+
+  const { data: DetailHomeDataa } = useGetAllDetailQuery(id);
+  console.log("🚀 ~ ModalPutRoom ~ DetailHomeDataa:", DetailHomeDataa)
   const options = housedata?.response.map((i) => ({
     value: i.roomId,
     label: "P." + i.roomCode
@@ -93,10 +97,11 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         });
         setIsShowModal(false);
       } else {
-        setStatusCode(400);
+        // setStatusCode(400);
       }
     } catch (error) {
-      setStatusCode(400);
+      toast.error("Đặt lịch thất bại, bạn hãy cập nhật tất cả thông tin cá nhân trong hồ sơ !");
+      // setStatusCode(400);
     }
   };
 
@@ -115,10 +120,10 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         {/* title */}
         <div className="flex flex-col justify-start gap-1 self-stretch h-12">
           <span className="text-gray-900 text-lg leading-6 font-medium">
-            Nhà trọ 123 Lê Hoàng Phái
+            {DetailHomeDataa?.response?.houseName}
           </span>
           <span className="text-gray-500 font-normal text-sm leading-5">
-            123 Lê Hoàng Phái, Phường 12, Gò Vấp, Tp. Hồ Chí Minh
+            {DetailHomeDataa?.response?.houseAddress}
           </span>
         </div>
 
@@ -212,8 +217,8 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-              {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>}
-              {response && <p className="text-green-600 mr-10 flex items-center">{response?.message}</p>}
+              {/* {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>} */}
+              {/* {response && <p className="text-green-600 mr-10 flex items-center">{response?.message}</p>} */}
 
               <button
                 type="submit"
