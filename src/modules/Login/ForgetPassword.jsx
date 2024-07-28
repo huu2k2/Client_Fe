@@ -4,14 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useOTP } from "@customhooks";
-import { usePostCheckPasswordMutation } from "../../apis/slice/Acount";
-
+import { usePostSendOtpMutation } from "../../apis/slice/Acount";
 const schema = yup
   .object({
     email: yup
-    .string()
-    .email("Must be a valid email address")
-    .required("email is required"),
+      .string()
+      .email("Must be a valid email address")
+      .required("email is required"),
   })
   .required();
 const ForgetPassword = () => {
@@ -24,36 +23,23 @@ const ForgetPassword = () => {
     resolver: yupResolver(schema),
   });
 
-  const { sendOtp, isRecaptchaReady } = useOTP();
+ 
   const [isLoading, setLoading] = useState(false);
-  const [postCheckPassword, { error }] = usePostCheckPasswordMutation();
+  const [postSendOtp,{errors:Err}] = usePostSendOtpMutation()
   const onSubmit = async (data) => {
     setLoading(true);
+    console.log(data)
     try {
-      if (data.email.length === 10) {
-        const result = await postCheckPassword({
-          email: data.email,
-        }).unwrap();
-        localStorage.setItem("remainingTime", 60);
-
-        if (result.isSuccess && isRecaptchaReady) {
-          const rs = await sendOtp(data.email);
-          if (rs) {
-            setTimeout(() => {
-              localStorage.setItem("number", data.email);
-              setLoading(false);
-              change("/login/otp");
-            }, 2000);
-          }
-        } else {
-          alert("reCAPTCHA is not ready yet.");
-          setLoading(false);
-        }
-      } else {
+      const kq =postSendOtp({email:data.email}).unwrap()
+     
+      localStorage.setItem("remainingTime", 60);
+      setTimeout(() => {
+        localStorage.setItem("email", data.email);
         setLoading(false);
-      }
+        change("/login/otp");
+      }, 2000);
     } catch (error) {
-      console.error("Error:", error);
+
       setLoading(false);
     }
   };
@@ -71,10 +57,7 @@ const ForgetPassword = () => {
             <span className="loading loading-spinner loading-lg  bg-slate-500 "></span>
           </div>
         )}
-        <label
-          htmlFor="email"
-          className="text-gray-700 text-sm font-medium"
-        >
+        <label htmlFor="email" className="text-gray-700 text-sm font-medium">
           Email
         </label>
         <input
@@ -95,7 +78,7 @@ const ForgetPassword = () => {
       >
         Xác nhận
       </button>
-      <div id="recaptcha-container"></div>
+ 
     </form>
   );
 };

@@ -35,7 +35,7 @@ const ResetPassword = () => {
   const onSubmit = async(data) => {
     try {
       const query ={
-        phoneNumber: localStorage.getItem('number'),
+        email: localStorage.getItem('email'),
         newPassword: data.Password,
         confirmPassword: data.Confirm_password
       }
@@ -71,7 +71,7 @@ const ResetPassword = () => {
           <input
             id="Password"
             type={!isHide ? "password" : "text"}
-            placeholder="Phone Number"
+            placeholder="Mật khẩu"
             {...register("Password")}
             className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
           />
@@ -99,7 +99,7 @@ const ResetPassword = () => {
           <input
             id="Confirm_password"
             type={!isHideConfirm ? "password" : "text"}
-            placeholder="Password"
+            placeholder="Nhập lại mật khẩu"
             {...register("Confirm_password")}
             className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
           />

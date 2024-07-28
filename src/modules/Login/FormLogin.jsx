@@ -96,7 +96,7 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
           <input
             id="userName"
             type="text"
-            placeholder="Tên đăng nhập"
+            placeholder="Nhập số điện thoại"
             {...register("userName")}
             className={`px-4 py-2 items-center rounded-md border ${
               error ? "border-red-300 text-red-300" : "border-gray-300"

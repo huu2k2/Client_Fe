@@ -47,8 +47,22 @@ const AcountsApi = createApi({
         data: body,
       }),
     }),
+    postValidateOtp: build.mutation({
+      query: (body) => ({
+        url: `/v2/Otp/validate-otp`,
+        method: "POST",
+        data: body,
+      }),
+    }),
   }),
 });
 
-export const { usePostLoginMutation, usePostRegisterMutation, usePostResetPasswordMutation, usePostCheckPasswordMutation } = AcountsApi;
+export const {
+  usePostLoginMutation,
+  usePostRegisterMutation,
+  usePostResetPasswordMutation,
+  usePostCheckPasswordMutation,
+  usePostSendOtpMutation,
+  usePostValidateOtpMutation
+} = AcountsApi;
 export default AcountsApi;

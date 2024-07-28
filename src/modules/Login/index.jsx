@@ -28,74 +28,7 @@ const hanldeClick =()=>{
 }
   return (
     <div className="w-full h-full nthd_flex relative self-stretch flex-1">
-      {/* {isForget && (
-        <div
-          className="absolute top-5 right-96 flex justify-center items-center"
-          onClick={handleBack}
-        >
-          
-          <img
-            src={backImg}
-            alt="icon back"
-            className="cursor-pointer"
-            id="iconBack"
-          />
-           
-          
-          <label
-            htmlFor="iconBack"
-            className="text-gray-700 text-base font-normal font-main leading-6"
-          >
-            Quay lại
-          </label>
-        </div>
-      )}
-
-      {isOtp && (
-         <div
-         className="absolute top-5 right-96 flex justify-center items-center"
-         onClick={handleBackOtp}
-       >
-         
-         <img
-           src={backImg}
-           alt="icon back"
-           className="cursor-pointer"
-           id="iconBack"
-         />
-          
-         
-         <label
-           htmlFor="iconBack"
-           className="text-gray-700 text-base font-normal font-main leading-6"
-         >
-           Quay lại
-         </label>
-       </div>
-      )}
-
-      {isResetPassword && (
-          <div
-          className="absolute top-5 right-96 flex justify-center items-center"
-          onClick={handleBacktoOtp}
-        >
-          
-          <img
-            src={backImg}
-            alt="icon back"
-            className="cursor-pointer"
-            id="iconBack"
-          />
-           
-          
-          <label
-            htmlFor="iconBack"
-            className="text-gray-700 text-base font-normal font-main leading-6"
-          >
-            Quay lại
-          </label>
-        </div>
-      )} */}
+    
 
       {/* xac thuc opt */}
       <div id="recaptcha-container"></div>
