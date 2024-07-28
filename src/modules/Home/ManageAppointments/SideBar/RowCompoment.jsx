@@ -14,6 +14,8 @@ const RowComponent = ({
   isSidebarOpen,
   getNamecommissionPolicyId,
   getRentalMonth,
+  getRentalPrice,
+  setRentalPrice,
 }) => {
   const isDisabled = [
     "roomId",
@@ -33,7 +35,6 @@ const RowComponent = ({
     "roomId",
     "houseAddress",
     "datcoc",
-    "rentalPrice",
     "fullName",
     "phoneNumber",
   ].includes(name);
@@ -57,29 +58,47 @@ const RowComponent = ({
 
   useEffect(() => {
     if (plaValue) {
-      setValue(name, getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
-      setValues(getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"));
+      setValues(
+        value?.toLocaleString("vi-VN") ||
+          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
+      );
+      setValue(
+        name,
+        value?.toLocaleString("vi-VN") ||
+          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
+      );
     }
+    if (name === "rentalPrice" && value === "") {
+      setValues(
+        Number(value).toLocaleString("vi-VN") ||
+          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
+      );
+      setValue(
+        name,
+        Number(value).toLocaleString("vi-VN") ||
+          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
+      );
+      setRentalPrice(
+        Number(value).toLocaleString("vi-VN") ||
+          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
+      );
+    }
+  }, [getInfo]);
 
+  useEffect(() => {
     if (showAutoPrice) {
       setValue(
         "additionalDepositAmount",
         (
-          Number(getNamecommissionPolicyId) * (getInfo?.rentalPrice || 0) -
+          getNamecommissionPolicyId * getRentalPrice.replace(/\./g, "") -
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
     }
 
     setValue("chuongTrinhUuDai", "");
-  }, [
-    name,
-    getInfo,
-    showAutoPrice,
-    getNamecommissionPolicyId,
-    value,
-    rentalTermMonth,
-  ]);
+  }, [getInfo, getNamecommissionPolicyId, value, getRentalPrice]);
+
   useEffect(() => {
     if (data && data?.response) {
       const Data = data?.response?.map((i) => ({
@@ -94,21 +113,30 @@ const RowComponent = ({
         // setValuesOptions();
         setValue("roomId", getInfo.id); // Cập nhật giá trị của react-hook-form
       }
+      if (name === "rentalPrice" && getInfo["rentalPrice"]) {
+        setValues(getInfo["rentalPrice"].toLocaleString("vi-VN"));
+      }
     }
   }, [data, getInfo]);
+
   useEffect(() => {
     if (rentalTermMonth) {
       setValue("rentalTerm", getRentalMonth);
       setValues(getRentalMonth);
     }
-  }, [rentalTermMonth, setValue, getRentalMonth]);
+  }, [rentalTermMonth,   getRentalMonth]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
-    setValues(e.target.value);
+    setValues(inputValue);
+
     if (priceValue) {
       const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       setValues(Number(numericValue).toLocaleString("vi-VN"));
+    } else if (name === "rentalPrice") {
+      const numericValue = inputValue.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      setValues(Number(numericValue).toLocaleString("vi-VN"));
+      setRentalPrice(Number(numericValue).toLocaleString("vi-VN"));
     } else if (NameValue) {
       const strValue = inputValue.split(" ");
       let capitalizedStr = strValue
@@ -120,7 +148,6 @@ const RowComponent = ({
     }
   };
   const handleChangeValueOptions = (selectedOption) => {
-    console.log("options",selectedOption)
     setValuesOptions(selectedOption);
     setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
   };

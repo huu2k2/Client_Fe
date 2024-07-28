@@ -15,6 +15,10 @@ const schema = yup
       .min(10, "Phone number must be exactly 10 digits")
       .max(10, "Phone number must be exactly 10 digits")
       .required("Phone number is required"),
+    email: yup
+      .string()
+      .email("Must be a valid email address")
+      .required("Email is required"),
     password: yup
       .string()
       .min(8, "password must be at least 8 characters")
@@ -95,7 +99,22 @@ const FormRegister = () => {
             <span className="text-red-500">{errors.phone.message}</span>
           )}
         </div>
-
+        {/* Email */}
+        <div className="w-[384px] gap-1">
+          <label htmlFor="email" className="text-gray-700 text-sm font-medium">
+            Email
+          </label>
+          <input
+            id="email"
+            type="text"
+            placeholder="Client@gmail.com"
+            {...register("email")}
+            className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
+          />
+          {errors.email && (
+            <span className="text-red-500">{errors.email.message}</span>
+          )}
+        </div>
         {/* password */}
         <div>
           <div className="relative">
@@ -108,7 +127,7 @@ const FormRegister = () => {
             <input
               id="password"
               type={!isHide ? "password" : "text"}
-              placeholder="password"
+              placeholder=""
               {...register("password")}
               className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
             />

@@ -16,7 +16,7 @@ const SelectTips = ({
   useEffect(() => {
     const CovertData = data?.response?.map((i) => ({
       value: i.id,
-      label: `${i.month} Tháng - Cọc ${i.deposit} - Hoa hồng ${i.commission} %`,
+      label: `HĐ ${i.month} Tháng - Cọc ${i.deposit} - Hoa hồng ${i.commission} %`,
     }));
     setOptions(CovertData || []);
   }, [data]);
@@ -26,7 +26,7 @@ const SelectTips = ({
     const val = selectedOption.label?.split("-")[1].trim().split(" ")[1];
 
     setNamecommissionPolicyId(val);
-    setRentalMonth(selectedOption.label?.split("-")[0].trim().split(" ")[0]);
+    setRentalMonth(selectedOption.label?.split("-")[0].trim().split(" ")[1]);
   };
   useEffect(() => {
     if (!isSidebarOpen) {

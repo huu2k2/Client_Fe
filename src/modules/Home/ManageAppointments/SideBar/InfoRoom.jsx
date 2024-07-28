@@ -99,6 +99,7 @@ const muiltyRow1 = [
   },
 ];
 const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
+  const [getRentalPrice,setRentalPrice] = useState("")
   const [getNamecommissionPolicyId, setNamecommissionPolicyId] = useState("");
   const [getRentalMonth, setRentalMonth] = useState("");
   const handleFileChange = (name, file) => {
@@ -130,6 +131,8 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
           unit={row.unit}
           getNamecommissionPolicyId={getNamecommissionPolicyId}
           getRentalMonth={getRentalMonth}
+          getRentalPrice={getRentalPrice}
+          setRentalPrice={setRentalPrice}
         />
       ))}
       <SelectTips
@@ -153,6 +156,8 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
           unit={row.unit}
           getNamecommissionPolicyId={getNamecommissionPolicyId}
           getRentalMonth={getRentalMonth}
+          getRentalPrice={getRentalPrice}
+          setRentalPrice={setRentalPrice}
         />
       ))}
       <Signature

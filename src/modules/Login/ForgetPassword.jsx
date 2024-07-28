@@ -8,12 +8,10 @@ import { usePostCheckPasswordMutation } from "../../apis/slice/Acount";
 
 const schema = yup
   .object({
-    PhoneNumber: yup
-      .string()
-      .matches(/^[0-9]+$/, "Phone number must be only digits")
-      .min(10, "Phone number must be exactly 10 digits")
-      .max(10, "Phone number must be exactly 10 digits")
-      .required("Phone number is required"),
+    email: yup
+    .string()
+    .email("Must be a valid email address")
+    .required("email is required"),
   })
   .required();
 const ForgetPassword = () => {
@@ -32,17 +30,17 @@ const ForgetPassword = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      if (data.PhoneNumber.length === 10) {
+      if (data.email.length === 10) {
         const result = await postCheckPassword({
-          phoneNumber: data.PhoneNumber,
+          email: data.email,
         }).unwrap();
         localStorage.setItem("remainingTime", 60);
 
         if (result.isSuccess && isRecaptchaReady) {
-          const rs = await sendOtp(data.PhoneNumber);
+          const rs = await sendOtp(data.email);
           if (rs) {
             setTimeout(() => {
-              localStorage.setItem("number", data.PhoneNumber);
+              localStorage.setItem("number", data.email);
               setLoading(false);
               change("/login/otp");
             }, 2000);
@@ -74,20 +72,20 @@ const ForgetPassword = () => {
           </div>
         )}
         <label
-          htmlFor="PhoneNumber"
+          htmlFor="email"
           className="text-gray-700 text-sm font-medium"
         >
-          Số điện thoại
+          Email
         </label>
         <input
-          id="PhoneNumber"
+          id="email"
           type="text"
-          placeholder="Phone Number"
-          {...register("PhoneNumber")}
+          placeholder="Nhập email"
+          {...register("email")}
           className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full "
         />
-        {errors.PhoneNumber && (
-          <span className="text-red-500">{errors.PhoneNumber.message}</span>
+        {errors.email && (
+          <span className="text-red-500">{errors.email.message}</span>
         )}
       </div>
 

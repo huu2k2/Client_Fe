@@ -40,6 +40,13 @@ const AcountsApi = createApi({
         data: body,
       }),
     }),
+    postSendOtp: build.mutation({
+      query: (body) => ({
+        url: `/v2/Otp/send-otp`,
+        method: "POST",
+        data: body,
+      }),
+    }),
   }),
 });
 
