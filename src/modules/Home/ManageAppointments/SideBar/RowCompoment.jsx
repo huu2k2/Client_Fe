@@ -95,6 +95,19 @@ const RowComponent = ({
         ).toLocaleString("vi-VN")
       );
     }
+    if (name === "tips") {
+      setValue(
+        "tips",
+        (
+          getNamecommissionPolicyId * getRentalPrice.replace(/\./g, "")
+        ).toLocaleString("vi-VN")
+      );
+      setValue(
+        (
+          getNamecommissionPolicyId * getRentalPrice.replace(/\./g, "")
+        ).toLocaleString("vi-VN")
+      );
+    }
 
     setValue("chuongTrinhUuDai", "");
   }, [getInfo, getNamecommissionPolicyId, value, getRentalPrice]);
@@ -124,7 +137,7 @@ const RowComponent = ({
       setValue("rentalTerm", getRentalMonth);
       setValues(getRentalMonth);
     }
-  }, [rentalTermMonth,   getRentalMonth]);
+  }, [rentalTermMonth, getRentalMonth]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
