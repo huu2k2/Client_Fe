@@ -50,7 +50,7 @@ const getDataFromCMND =["fullName","birthOfDay","identification","dateRange","is
   const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
 useEffect(()=>{
   if(getDataFromCMND){
-    setValue(InfoCCCD[name])
+    setValue(name,InfoCCCD[name])
     setValues(InfoCCCD[name])
   }
 },[getDataFromCMND,InfoCCCD])

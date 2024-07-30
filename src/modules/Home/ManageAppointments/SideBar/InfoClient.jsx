@@ -70,10 +70,12 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
     issuedBy: "",
     permanentAddress: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     async function GetInfoFromCCCD() {
       try {
         if (getCCCD.mt !== "" && getCCCD.ms !== "") {
+          setIsLoading(true);
           const kq = await postCCCD({
             iD_Front: getCCCD.mt,
             iD_Back: getCCCD.ms,
@@ -88,14 +90,16 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
             permanentAddress: kq?.result?.address,
           });
         }
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
+       
     }
     GetInfoFromCCCD();
   }, [getCCCD]);
 
-  console.log("InfoCCCD", InfoCCCD);
   return (
     <div className="w-fit h-fit  flex-col justify-start items-start gap-5 inline-flex  pl-2 py-5">
       <div className="text-rose-800 text-lg font-medium leading-7">
@@ -116,6 +120,11 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
           InfoCCCD={InfoCCCD}
         />
       ))}
+      {isLoading && (
+        <div className="flex justify-center items-center w-full">
+          <span className="loading loading-bars loading-md"></span>
+        </div>
+      )}
       {muiltyRowCCCD.map((i, index) => (
         <CCCD
           title={i.title}
