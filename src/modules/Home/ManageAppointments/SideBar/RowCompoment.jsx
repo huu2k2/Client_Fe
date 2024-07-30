@@ -90,7 +90,7 @@ const RowComponent = ({
       setValue(
         "additionalDepositAmount",
         (
-          getNamecommissionPolicyId * getRentalPrice.replace(/\./g, "") -
+          (getNamecommissionPolicyId||1) * getRentalPrice.replace(/\./g, "") -
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
@@ -99,12 +99,12 @@ const RowComponent = ({
       setValue(
         "tips",
         (
-          getNamecommissionPolicyId * getRentalPrice.replace(/\./g, "")
+          (getNamecommissionPolicyId||1) * getRentalPrice.replace(/\./g, "")
         ).toLocaleString("vi-VN")
       );
       setValue(
         (
-          getNamecommissionPolicyId * getRentalPrice.replace(/\./g, "")
+          (getNamecommissionPolicyId||1) * getRentalPrice.replace(/\./g, "")
         ).toLocaleString("vi-VN")
       );
     }
@@ -166,7 +166,7 @@ const RowComponent = ({
   };
 
   return (
-    <div className="w-[501px] self-stretch justify-between items-center gap-4 inline-flex">
+    <div className="w-[501px] self-stretch justify-between items-start gap-4 inline-flex">
       <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
         {title}
       </div>

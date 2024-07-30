@@ -15,9 +15,15 @@ const ImagesApi = createApi({
         url: `/v2/Rooms/get-pictures-of-room/${id}`,
       }),
     }),
-    
+    postCCCD:build.mutation({
+      query: (body) => ({
+        url: `/v2/IDRecognitions/Get-id-infor`,
+        method: "POST",
+        data: body,
+      }),
+    }),
   }),
 });
 
-export const {useGetImagesQuery} = ImagesApi;
+export const {useGetImagesQuery,usePostCCCDMutation} = ImagesApi;
 export default ImagesApi;

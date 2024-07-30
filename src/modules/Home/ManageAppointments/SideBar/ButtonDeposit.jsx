@@ -8,7 +8,7 @@ const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
     }
   }
   return (
-    <div className="w-full h-[78px] pl-4  py-5 justify-end items-center gap-4 inline-flex">
+    <div className="w-full h-[78px] pl-2  py-5 justify-end items-center gap-4 inline-flex">
       <div className="h-[38px] px-[17px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-center items-center flex">
         <label
           htmlFor="my-drawer-4"

@@ -151,22 +151,25 @@ const SideBar = ({ getInfo }) => {
               setValue={setValue}
               isSidebarOpen={isSidebarOpen}
             />
+            <hr className="bg-gray-700 w-full h-px" />
             <InfoRoom
               register={register}
               getInfo={getInfo}
               setValue={setValue}
               isSidebarOpen={isSidebarOpen}
             />
+            <hr className="bg-gray-700 w-full h-px" />
              <Surcharges
             register={register}
             serviceInserts={serviceInserts}
             setServiceInserts={setServiceInserts}
           />
+          <hr className="bg-gray-700 w-full h-px" />
           <Furniture
             furnitureInserts={furnitureInserts}
             setFurnitureInserts={setFurnitureInserts}
           />
-          <hr className="bg-gray-700 w-full h-[1px]" />
+          <hr className="bg-gray-700 w-full h-px" />
           <ButtonDeposit
             setIsSidebarOpen={setIsSidebarOpen}
             isCheckSuccess={isCheckSuccess}

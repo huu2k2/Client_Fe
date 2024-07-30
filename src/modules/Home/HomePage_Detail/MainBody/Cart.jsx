@@ -1,15 +1,14 @@
 import UserImg from "@assets/user.png";
 import { BsFillPersonPlusFill } from "react-icons/bs";
-import cartImg from "@assets/cartImg.png";
+ 
 import { useEffect, useState } from "react";
-import SlideShow from "./SlideShow";
+ 
 import { useGetHolder } from "@customhooks";
 import { useParams } from "react-router-dom";
 import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
 import ShowImages from "../../../../components/ShowImages";
 const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
-import index from './../../../Register/index';
-import { Skeleton } from "@mui/material";
+ 
 
 const Cart = () => {
   const [holder, rooms] = useGetHolder();

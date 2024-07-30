@@ -9,7 +9,7 @@ const Surcharges = ({ register, serviceInserts, setServiceInserts }) => {
     setServiceInserts(updatedServiceInserts);
   };
   return (
-    <div className="w-[501px]  h-[425px] pl-4 py-5 flex-col justify-start items-start gap-5 inline-flex">
+    <div className="w-[501px]  h-[425px] pl-2 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
         Các khoản phụ thu
       </div>
