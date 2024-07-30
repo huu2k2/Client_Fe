@@ -21,7 +21,7 @@ function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
-const SideBar = ({ getInfo }) => {
+const SideBar = ({ getInfo ,setInfo}) => {
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
@@ -157,6 +157,7 @@ const SideBar = ({ getInfo }) => {
               getInfo={getInfo}
               setValue={setValue}
               isSidebarOpen={isSidebarOpen}
+              
             />
             <hr className="bg-gray-700 w-full h-px" />
              <Surcharges

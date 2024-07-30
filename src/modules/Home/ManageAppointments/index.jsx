@@ -24,7 +24,7 @@ const index = () => {
       <Header />
       <Tiltle />
       <BodyTable setIsShow={setIsShow} isShow={isShow} setInfo={setInfo} />
-      <SideBar getInfo={getInfo} />
+      <SideBar getInfo={getInfo} setInfo={setInfo}/>
       <ModalChangeRoom
         houseId={getInfo.houseId}
         roomCode={getInfo.roomId}

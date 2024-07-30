@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RowComponent from "./RowCompoment";
 import CCCD from "./CCCD";
 import { usePostCCCDMutation } from "../../../../apis/slice/ImageOfRoom";
- 
+import { parse, format } from "date-fns";
 
 const muiltyRow = [
   {
@@ -53,23 +53,49 @@ const muiltyRowCCCD = [
   { id: 1, title: "CCCD/CMND ", title2: "(Mặt trước)", name: "CCCDBefore" },
   { id: 2, title: "CCCD/CMND ", title2: "(Mặt sau)", name: "CCCDAfter" },
 ];
+const convertDate = (dateString) => {
+  // Chuyển đổi từ "dd/MM/yyyy" sang đối tượng Date
+  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+  // Định dạng lại từ đối tượng Date sang "yyyy-MM-dd"
+  return format(parsedDate, "yyyy-MM-dd");
+};
 const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
   const [getCCCD, setCCCD] = useState({ mt: "", ms: "" });
   const [postCCCD] = usePostCCCDMutation();
+  const [InfoCCCD, getInfoCCCD] = useState({
+    fullName: "",
+    birthOfDay: "",
+    identification: "",
+    dateRange: "",
+    issuedBy: "",
+    permanentAddress: "",
+  });
   useEffect(() => {
     async function GetInfoFromCCCD() {
       try {
         if (getCCCD.mt !== "" && getCCCD.ms !== "") {
-          const kq = await postCCCD({iD_Front:getCCCD.mt,iD_Back:getCCCD.ms}).unwrap()
-          console.log("kq.....",kq)
+          const kq = await postCCCD({
+            iD_Front: getCCCD.mt,
+            iD_Back: getCCCD.ms,
+          }).unwrap();
+
+          getInfoCCCD({
+            fullName: kq.result.name,
+            birthOfDay: convertDate(kq.result.dob),
+            identification: kq.result.id,
+            dateRange: convertDate(kq.result.issue_date),
+            issuedBy: kq.result.issue_loc,
+            permanentAddress: kq?.result?.address,
+          });
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-      
     }
-    GetInfoFromCCCD()
+    GetInfoFromCCCD();
   }, [getCCCD]);
+
+  console.log("InfoCCCD", InfoCCCD);
   return (
     <div className="w-fit h-fit  flex-col justify-start items-start gap-5 inline-flex  pl-2 py-5">
       <div className="text-rose-800 text-lg font-medium leading-7">
@@ -87,6 +113,7 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
           type={row.type}
           placeholder={row.placeholder}
           unit={row.unit}
+          InfoCCCD={InfoCCCD}
         />
       ))}
       {muiltyRowCCCD.map((i, index) => (
