@@ -82,8 +82,7 @@ const RowComponent = ({
       );
     }
     else if (name === "rentalPrice" && value === "") {
-      setRentalPrice( Number(value).toLocaleString("vi-VN") ||
-      (getRentalPrice && getRentalPrice?.toLocaleString("vi-VN")))
+      setRentalPrice( Number(value) )
       setValues(
         Number(value).toLocaleString("vi-VN") ||
           (getRentalPrice && getRentalPrice?.toLocaleString("vi-VN"))
@@ -98,11 +97,10 @@ const RowComponent = ({
 
   useEffect(() => {
     if (showAutoPrice ) {
-  
       setValue(
         "additionalDepositAmount",
         (
-          (getNamecommissionPolicyId||1) * (Number(getRentalPrice))-
+          (getNamecommissionPolicyId) * Number(getRentalPrice.toString().replace(/\./g, "")) -
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
@@ -111,7 +109,7 @@ const RowComponent = ({
       setValue(
         "tips",
         (
-          (getNamecommissionPolicyId||1) *(getRentalPrice)
+          (getNamecommissionPolicyId)*Number(getRentalPrice.toString().replace(/\./g, ""))
         ).toLocaleString("vi-VN")
       );
       setValues(
