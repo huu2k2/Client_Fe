@@ -12,6 +12,8 @@ import { BsCameraFill } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Signature from "@components/BaseInput/Signature";
+import { usePostCCCDMutation } from "../../apis/slice/ImageOfRoom";
+import { parse, format } from "date-fns";
 
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
@@ -166,6 +168,52 @@ const Index = ({ setShow }) => {
   const handleFileChange = (name, file) => {
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
+  const [postCCCD] = usePostCCCDMutation();
+const [CCCD,setCCCD] = useState({mt:'',ms:''})
+const [InfoCCCD, getInfoCCCD] = useState({
+  fullName: "",
+  birthOfDay: "",
+  identification: "",
+  dateRange: "",
+  issuedBy: "",
+  permanentAddress: "",
+});
+const [isLoadings, setIsLoading] = useState(false);
+const convertDate = (dateString) => {
+  // Chuyển đổi từ "dd/MM/yyyy" sang đối tượng Date
+  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+  // Định dạng lại từ đối tượng Date sang "yyyy-MM-dd"
+  return format(parsedDate, "yyyy-MM-dd");
+};
+useEffect(()=>{
+  async function GetInfoFromCCCD() {
+    try {
+      if (CCCD.mt !== "" && CCCD.ms !== "") {
+        setIsLoading(true);
+        const kq = await postCCCD({
+          iD_Front: CCCD.mt,
+          iD_Back: CCCD.ms,
+        }).unwrap();
+
+        getInfoCCCD({
+          fullName: kq.result.name,
+          birthOfDay: convertDate(kq.result.dob),
+          identification: kq.result.id,
+          dateRange: convertDate(kq.result.issue_date),
+          issuedBy: kq.result.issue_loc,
+          permanentAddress: kq?.result?.address,
+        });
+        
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+     
+  }
+  GetInfoFromCCCD();
+},[CCCD])
 
   return (
     <div
@@ -216,7 +264,7 @@ const Index = ({ setShow }) => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
-              {data?.response?.fullName}
+              {InfoCCCD.fullName || data?.response?.fullName}
             </h1>
           </div>
         </div>
@@ -226,7 +274,7 @@ const Index = ({ setShow }) => {
           <TitleContainer title={"Thông tin người dùng"} />
           <InputFiel
             name={"Họ và tên"}
-            label={data?.response?.fullName}
+            label={InfoCCCD.fullName||data?.response?.fullName}
             type={"text"}
             isEnable={true}
             setFormData={setFormData}
@@ -248,7 +296,7 @@ const Index = ({ setShow }) => {
           <TitleContainer title={"Thông tin người đại diện ký hợp đồng"} />
           <InputFiel
             name={"Họ và tên"}
-            label={data?.response?.fullName}
+            label={InfoCCCD.fullName || data?.response?.fullName}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -266,7 +314,7 @@ const Index = ({ setShow }) => {
           />
           <InputFiel
             name={"CMND/CCCD"}
-            label={data?.response?.identification}
+            label={InfoCCCD.identification||data?.response?.identification}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -275,7 +323,7 @@ const Index = ({ setShow }) => {
           />
           <InputFiel
             name={"Ngày cấp"}
-            label={formatDate(data?.response?.dateRange)}
+            label={InfoCCCD.dateRange||formatDate(data?.response?.dateRange)}
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
@@ -284,7 +332,7 @@ const Index = ({ setShow }) => {
           />
           <InputFiel
             name={"Nơi cấp"}
-            label={data?.response?.issuedBy}
+            label={InfoCCCD.issuedBy || data?.response?.issuedBy}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -293,7 +341,7 @@ const Index = ({ setShow }) => {
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
-            label={data?.response?.permanentAddress}
+            label={InfoCCCD.permanentAddress || data?.response?.permanentAddress}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -306,15 +354,18 @@ const Index = ({ setShow }) => {
             img={data?.response?.signatureUrl}
             onChange={(file) => handleFileChange("signatureBase64", file)}
           />
+          {isLoadings && <div className="w-full flex justify-center items-center"><span className="loading loading-bars loading-md"></span></div>}
           <InputFileImg
             name={"CCCD (Mặt trước)"}
             img={data?.response?.beforeIdentification}
             onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
+            setCCCD={setCCCD}
           />
           <InputFileImg
             name={"CCCD (Mặt sau)"}
             img={data?.response?.afterIdentification}
             onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
+            setCCCD={setCCCD}
           />
         </div>
 
