@@ -16,7 +16,7 @@ const RowComponent = ({
   getRentalMonth,
   getRentalPrice,
   setRentalPrice,
-  InfoCCCD
+  InfoCCCD,
 }) => {
   const isDisabled = [
     "roomId",
@@ -28,7 +28,14 @@ const RowComponent = ({
     "tips",
     "rentalTerm",
   ].includes(name);
-const getDataFromCMND =["fullName","birthOfDay","identification","dateRange","issuedBy","permanentAddress"].includes(name);
+  const getDataFromCMND = [
+    "fullName",
+    "birthOfDay",
+    "identification",
+    "dateRange",
+    "issuedBy",
+    "permanentAddress",
+  ].includes(name);
   const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
     name
   );
@@ -48,12 +55,12 @@ const getDataFromCMND =["fullName","birthOfDay","identification","dateRange","is
   const [valueOptions, setValuesOptions] = useState(null);
 
   const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
-useEffect(()=>{
-  if(getDataFromCMND){
-    setValue(name,InfoCCCD[name])
-    setValues(InfoCCCD[name])
-  }
-},[getDataFromCMND,InfoCCCD])
+  useEffect(() => {
+    if (getDataFromCMND) {
+      setValue(name, InfoCCCD[name]);
+      setValues(InfoCCCD[name]);
+    }
+  }, [getDataFromCMND, InfoCCCD]);
   useEffect(() => {
     if (!isSidebarOpen) {
       setValues("");
@@ -74,30 +81,28 @@ useEffect(()=>{
           (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
       );
     }
-    if (name === "rentalPrice" && value === "") {
+    else if (name === "rentalPrice" && value === "") {
+      setRentalPrice( Number(value).toLocaleString("vi-VN") ||
+      (getRentalPrice && getRentalPrice?.toLocaleString("vi-VN")))
       setValues(
         Number(value).toLocaleString("vi-VN") ||
-          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
+          (getRentalPrice && getRentalPrice?.toLocaleString("vi-VN"))
       );
       setValue(
         name,
         Number(value).toLocaleString("vi-VN") ||
-          (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
-      );
-      setRentalPrice(
-        Number(value).toLocaleString("vi-VN") ||
-          (getInfo["rentalPrice"] && getInfo["rentalPrice"]?.toLocaleString("vi-VN"))
+          (getRentalPrice && getRentalPrice?.toLocaleString("vi-VN"))
       );
     }
   }, [getInfo]);
 
   useEffect(() => {
-    if (showAutoPrice) {
-      
+    if (showAutoPrice ) {
+  
       setValue(
         "additionalDepositAmount",
         (
-          (getNamecommissionPolicyId||1) * (getRentalPrice.replace(/\./g, "")!==""?getRentalPrice.replace(/\./g, ""):getInfo.rentalPrice )-
+          (getNamecommissionPolicyId||1) * (Number(getRentalPrice))-
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
@@ -106,18 +111,16 @@ useEffect(()=>{
       setValue(
         "tips",
         (
-          (getNamecommissionPolicyId||1) *(getRentalPrice.replace(/\./g, "")!==""?getRentalPrice.replace(/\./g, ""):getInfo.rentalPrice )
+          (getNamecommissionPolicyId||1) *(getRentalPrice)
         ).toLocaleString("vi-VN")
       );
-      setValue(
-        (
-          (getNamecommissionPolicyId||1) *(getRentalPrice.replace(/\./g, "")!==""?getRentalPrice.replace(/\./g, ""):getInfo.rentalPrice )
-        ).toLocaleString("vi-VN")
-      );
+      setValues(
+          ((getNamecommissionPolicyId) *(getRentalPrice)
+        ).toLocaleString("vi-VN"));
     }
 
     setValue("chuongTrinhUuDai", "");
-  }, [ getNamecommissionPolicyId, value, getRentalPrice]);
+  }, [getNamecommissionPolicyId, getRentalPrice,setValue, showAutoPrice, value]);
 
   useEffect(() => {
     if (data && data?.response) {

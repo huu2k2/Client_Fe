@@ -16,7 +16,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
       )
     );
   };
-
+ 
   return (
     <div className="w-[501px] h-fit pl-2 py-5 flex-col justify-between items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
@@ -56,7 +56,7 @@ const Furniture = ({ furnitureInserts,setFurnitureInserts }) => {
                 <div className="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
                   <input
                     type="text"
-                    value={item.price===0 ?"Trang bị có sẵn":item.price}
+                    value={item.price===0 ?"Trang bị có sẵn": (item.price.toLocaleString('vi-VN'))}
                     className="w-full outline-none text-sm font-normal leading-tight"
                     readOnly // Make price input read-only if you don't want to edit it
                   />

@@ -50,7 +50,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             Phòng trống ({statusTotals?.empty})
           </label>
         </div>
-        <div className="justify-start items-center gap-2 flex">
+        {/* <div className="justify-start items-center gap-2 flex">
           <input
             type="checkbox"
             className="custom-checkbox bg-white"
@@ -61,7 +61,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
           <label htmlFor="toBeEmpty" className="text-white text-sm font-medium leading-tigh cursor-pointert">
             Sắp trống ({statusTotals?.toBeEmpty})
           </label>
-        </div>
+        </div> */}
 
         <div className="justify-start items-center gap-2 flex">
           <input

@@ -18,8 +18,7 @@ const InfoRoom = () => {
   const [a, serviceInserts] = useDataServices();
   const [address, price, address2] = useGetInfoItem();
   const { data } = useGetAllDetailQuery(roomId);
-  console.log("🚀 ~ InfoRoom ~ data:", data)
-
+ 
 
   const [brokeragePolicy] = useGetBrokeragePolicy();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
@@ -57,7 +56,7 @@ const InfoRoom = () => {
         <div className="w-full h-fit">
           {address && data ? (
             <>
-              <h1 className="nthd_semibold_2xl_text truncate w-[730px] ">{data?.response?.houseName},{address}</h1>
+              <h1 className="nthd_semibold_2xl_text truncate w-[730px] ">{data?.response?.houseName} </h1>
               <p>{address2}</p>
             </>
           ) : (

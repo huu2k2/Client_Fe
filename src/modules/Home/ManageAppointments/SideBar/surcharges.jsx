@@ -24,7 +24,7 @@ const Surcharges = ({ register, serviceInserts, setServiceInserts }) => {
           />
         ))}
 
-      <div className="w-[501px] h-[105px]  flex justify-between items-start">
+      {/* <div className="w-[501px] h-[105px]  flex justify-between items-start">
         <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
           Ghi chú nội bộ
         </div>
@@ -33,7 +33,7 @@ const Surcharges = ({ register, serviceInserts, setServiceInserts }) => {
           className="w-[318px] h-full py-[9px] bg-white rounded-md shadow border border-gray-300 overflow-y-auto"
           placeholder=""
         />
-      </div>
+      </div> */}
     </div>
   );
 };
