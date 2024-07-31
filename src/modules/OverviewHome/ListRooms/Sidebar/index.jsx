@@ -24,35 +24,48 @@ const Sidebar = ({ idHolder }) => {
   const handleDebounce = debounce(handleChangeSearch, 500);
   return (
     <div className="drawer drawer-end">
-      <input id="my-drawer-Overview" type="checkbox" className="drawer-toggle" />
+      <input
+        id="my-drawer-Overview"
+        type="checkbox"
+        className="drawer-toggle"
+      />
       <div className="drawer-content"></div>
       <div className="drawer-side">
-        <label htmlFor="my-drawer-Overview" aria-label="close sidebar" className="drawer-overlay"></label>
-        <div className="min-h-screen h-fit bg-white px-[13px] py-[9px]">
-          <div className="w-full h-fit p-6 bg-black flex-col justify-start items-start gap-1 inline-flex">
-            <div className="self-stretch justify-between items-center inline-flex">
+        <label
+          htmlFor="my-drawer-Overview"
+          aria-label="close sidebar"
+          className="drawer-overlay"
+        ></label>
+        <div className="min-h-screen h-fit w-[556px] bg-white ">
+          <div className="w-full p-6 bg-black flex-col justify-center items-start gap-1 inline-flex h-[90px]">
+            <div className="self-stretch justify-between items-center inline-flex ">
               <div className="text-white text-xl font-medium leading-7">
                 Danh Sách Tòa Nhà Của {dataListHome?.response?.fullName}
               </div>
               <div className="bg-zinc-600 rounded-md justify-center items-center flex">
-                <label htmlFor="my-drawer-5" aria-label="close sidebar" className="drawer-overlay"></label>
+                <label
+                  htmlFor="my-drawer-5"
+                  aria-label="close sidebar"
+                  className="drawer-overlay"
+                ></label>
               </div>
             </div>
           </div>
           {/* search */}
-          <div className="w-full h-10 mt-2">
-            <input
-              type="text"
-              placeholder="Tìm kiếm"
-              className="input input-bordered w-full max-w-full"
-              onChange={handleDebounce}
-            />
+          <div className="w-full  px-[13px] flex flex-col gap-2">
+            <div className="w-full h-10 mt-2 justify-start items-start gap-5">
+              <input
+                type="text"
+                placeholder="Tìm kiếm"
+                className="input input-bordered w-full max-w-full"
+                onChange={handleDebounce}
+              />
+            </div>
+            <div className="divider mt-1"></div>
+            {data.map((i, index) => (
+              <ItemHome key={index} item={i} />
+            ))}
           </div>
-          <div className="divider mt-1"></div>
-          {data.map((i, index) => (
-            <ItemHome key={index} item={i} />
-          ))}
-
         </div>
       </div>
     </div>

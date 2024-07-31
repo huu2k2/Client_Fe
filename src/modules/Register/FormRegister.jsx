@@ -91,7 +91,7 @@ const FormRegister = () => {
           <input
             id="phone"
             type="text"
-            placeholder="Phone Number"
+            placeholder="số điện thoại"
             {...register("phone")}
             className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
           />
@@ -107,7 +107,7 @@ const FormRegister = () => {
           <input
             id="email"
             type="text"
-            placeholder="Client@gmail.com"
+            placeholder="client@gmail.com"
             {...register("email")}
             className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
           />

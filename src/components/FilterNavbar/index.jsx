@@ -66,6 +66,7 @@ const FilterNavbar = ({ setOption }) => {
       setHome(option);
       document.getElementById("modal_oclock_main").showModal();
     } else {
+      console.log( option)
       setOption(option.houseId), setSearchInput(option.houseName);
       setColse(false);
     }
@@ -73,22 +74,23 @@ const FilterNavbar = ({ setOption }) => {
   const modalRef = useRef(null); 
   const [postCheckPW] = usePostVeriPWMutation();
   const hanldeCheckPW = async () => {
-    try {
-      const kq = await postCheckPW({
-        houseId: getHome.houseId,
-        housePass: getTextS,
-      }).unwrap();
-      if (kq.response) {
+    // try {
+    //   const kq = await postCheckPW({
+    //     houseId: getHome.houseId,
+    //     housePass: getTextS,
+    //   }).unwrap();
+    //   if (kq.response) {
+        console.log( getHome.houseId,getHome.houseName)
         setOption(getHome.houseId), setSearchInput(getHome.houseName);
         setColse(false);
         modalRef.current.close();
-      } else {
-        setTextS("");
-        toast.error("Hãy Nhập Lại Mật Khẩu!");
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
+    //   } else {
+    //     setTextS("");
+    //     toast.error("Hãy Nhập Lại Mật Khẩu!");
+    //   }
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
   };
 
   return (

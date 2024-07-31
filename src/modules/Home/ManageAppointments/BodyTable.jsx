@@ -50,7 +50,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         : date[0]
         ? convertDateToISO(date[0])
         : null,
-      customername: getTextSearch,
+      customername: getTextSearch || null,
     },
   });
 
