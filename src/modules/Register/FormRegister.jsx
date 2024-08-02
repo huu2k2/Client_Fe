@@ -91,7 +91,7 @@ const FormRegister = () => {
           <input
             id="phone"
             type="text"
-             placeholder="số điện thoại"
+             placeholder="Nhập số điện thoại"
             {...register("phone")}
             className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
           />

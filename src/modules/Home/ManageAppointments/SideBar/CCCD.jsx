@@ -3,10 +3,10 @@ import AddImg from "@assets/addImg.png";
 import { AiFillCloseCircle } from "react-icons/ai";
 import SignatureCanvas from "react-signature-canvas";
 
-const CCCD = ({ title, title2,id ,setCCCD}) => {
-  const [count,setCount] = useState(0)
+const CCCD = ({ title, title2, id, setCCCD, setValue }) => {
+  const [count, setCount] = useState(0);
   const [imagePreview, setImagePreview] = useState(null);
-  const [imgSelect,setImgSelect] = useState("")
+  const [imgSelect, setImgSelect] = useState("");
   const inputFileRef = useRef(null);
 
   const handleImageChange = (event) => {
@@ -15,11 +15,11 @@ const CCCD = ({ title, title2,id ,setCCCD}) => {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImgSelect(reader.result.split(',')[1])
-    
+      setImgSelect(reader.result.split(",")[1]);
+
       setImagePreview(reader.result);
     };
-    setCount(1)
+    setCount(1);
     reader.readAsDataURL(imageFile);
   };
 
@@ -35,11 +35,10 @@ const CCCD = ({ title, title2,id ,setCCCD}) => {
         return { ...prev, ms: "" };
       }
     });
-    setImgSelect("")
-    setCount(0)
-    inputFileRef.current=null
+    setImgSelect("");
+    setCount(0);
+    inputFileRef.current = null;
     setImagePreview(null);
-    
   };
 
   const handleClear = () => {
@@ -50,9 +49,9 @@ const CCCD = ({ title, title2,id ,setCCCD}) => {
         return { ...prev, ms: "" };
       }
     });
-    setImgSelect("")
-    setCount(0)
-    inputFileRef.current=null
+    setImgSelect("");
+    setCount(0);
+    inputFileRef.current = null;
     setImagePreview(null);
     document.getElementById(`modal_${title2}`).close();
   };
@@ -65,6 +64,11 @@ const CCCD = ({ title, title2,id ,setCCCD}) => {
         return { ...prev, ms: imgSelect };
       }
     });
+    if (id === 1) {
+      setValue("beforeIdentificationBase64", imgSelect);
+    } else {
+      setValue("afterIdentificationBase64", imgSelect);
+    }
     document.getElementById(`modal_${title2}`).close();
   };
 
@@ -78,9 +82,13 @@ const CCCD = ({ title, title2,id ,setCCCD}) => {
         <button
           type="button"
           onClick={() => document.getElementById(`modal_${title2}`).showModal()}
-          className={`text-white w-full border ${count ===1? " bg-rose-600  border-rose-600":"bg-black border-black"}  focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2`}
+          className={`text-white w-full border ${
+            count === 1
+              ? " bg-rose-600  border-rose-600"
+              : "bg-black border-black"
+          }  focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2`}
         >
-          {count===1 ?"Đã tải" :"Tải hình ảnh"}
+          {count === 1 ? "Đã tải" : "Tải hình ảnh"}
         </button>
 
         <dialog id={`modal_${title2}`} className="modal">

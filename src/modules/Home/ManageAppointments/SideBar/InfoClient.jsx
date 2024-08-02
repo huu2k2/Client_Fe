@@ -132,6 +132,7 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
           key={index}
           id={i.id}
           setCCCD={setCCCD}
+          setValue={setValue}
         />
       ))}
     </div>
