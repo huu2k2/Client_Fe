@@ -1,5 +1,4 @@
 export const debounce = (callback, delay) => {
- 
     let timeout;
     return function() {
         const context = this;

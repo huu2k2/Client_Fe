@@ -3,7 +3,7 @@ import RowComponent from "./RowCompoment";
 import CCCD from "./CCCD";
 import { usePostCCCDMutation } from "../../../../apis/slice/ImageOfRoom";
 import { parse, format } from "date-fns";
-
+import { useIsLoading } from "@customhooks";
 const muiltyRow = [
   {
     id: 1,
@@ -60,6 +60,7 @@ const convertDate = (dateString) => {
   return format(parsedDate, "yyyy-MM-dd");
 };
 const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
+  const [isLoading, setIsLoading] = useIsLoading()
   const [getCCCD, setCCCD] = useState({ mt: "", ms: "" });
   const [postCCCD] = usePostCCCDMutation();
   const [InfoCCCD, getInfoCCCD] = useState({
@@ -70,7 +71,6 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
     issuedBy: "",
     permanentAddress: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     async function GetInfoFromCCCD() {
       try {
@@ -120,11 +120,6 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
           InfoCCCD={InfoCCCD}
         />
       ))}
-      {isLoading && (
-        <div className="flex justify-center items-center w-full">
-          <span className="loading loading-bars loading-md"></span>
-        </div>
-      )}
       {muiltyRowCCCD.map((i, index) => (
         <CCCD
           title={i.title}

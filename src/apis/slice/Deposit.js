@@ -28,8 +28,9 @@ const DepositsApi = createApi({
       query: (id) => ({
         url: `/Deposits/export-pdf/${id}`,
         method: "POST",
- 
+        responseType: 'blob', 
       }),
+      transformResponse: (response) => response, 
     }),
   }),
 });

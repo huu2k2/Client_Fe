@@ -14,12 +14,12 @@ import { vi } from "date-fns/locale";
 import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 import SearchInput from "../../../components/BaseInput/SearchInput";
-
+import { useIsLoading } from "@customhooks";
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
-
+const [_,setLoading] = useIsLoading()
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,9 +69,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     setTotalItems(totalItemsMemo);
   }, [data, date,getTextSearch]);
 
-  if (isLoading) {
-    return <span className="loading loading-ball loading-lg"></span>;
-  }
+   useEffect(()=>{
+    setLoading(isLoading)
+   },[isLoading])
 
   return (
     <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">

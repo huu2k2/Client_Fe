@@ -81,14 +81,27 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   }, [data, date, getTextSearch]);
 
   const [PostDeposit] = usePostDepositMutation();
-  const handleExportDeposit = async (depositId) => {
+  const handleExportDeposit = async (i) => {
     try {
-      const rs = await PostDeposit(depositId).unwrap();
-      if (rs?.isSucess) {
+      // Gửi yêu cầu API và nhận file PDF
+      const response = await PostDeposit(i.depositId).unwrap();
+      
+      // Kiểm tra xem response có phải là Blob không
+      if (response) {
+        const blob = new Blob([response], {
+          type: 'application/pdf', // Đảm bảo loại MIME cho file PDF
+        });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `HDCOC-P.${i.roomCode}-${i.customerName}.pdf`;
+        link.click();
+
+        // Clean up the URL object
+        window.URL.revokeObjectURL(link.href);
         toast.success("Xuất hợp đồng thành công!");
-        refetch();
+       
       } else {
-        toast.error(rs?.message || "Xuất hợp đồng thất bại!");
+        toast.error("Dữ liệu không hợp lệ.");
       }
     } catch (error) {
       toast.error(error.message || "Có lỗi xảy ra!");
@@ -242,12 +255,20 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                     <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
                       <div
                         className={`w-fit h-5 px-2.5 py-0.5 ${
-                          i.status === "2" ? "bg-emerald-100" : (i.status==="6"?"bg-rose-600":"bg-blue-100 ")
+                          i.status === "2"
+                            ? "bg-emerald-100"
+                            : i.status === "6"
+                            ? "bg-rose-600"
+                            : "bg-blue-100 "
                         } rounded-[10px] justify-center items-center inline-flex`}
                       >
                         <div
                           className={`text-center ${
-                            i.status === "2" ? "text-emerald-800" : (i.status==="6"?"text-white":"text-blue-800")
+                            i.status === "2"
+                              ? "text-emerald-800"
+                              : i.status === "6"
+                              ? "text-white"
+                              : "text-blue-800"
                           } text-xs font-medium leading-none`}
                         >
                           {i.status === "2"
@@ -283,7 +304,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                                 id: i.roomId,
                                 houseId: i.houseId,
                                 depositId: i.depositId,
-                                status:i.status
+                                status: i.status,
                               }));
                             }}
                           >
@@ -294,7 +315,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Xem thông tin đặt cọc
                             </label>
                           </li>
-                          <li onClick={() => handleExportDeposit(i.depositId)}>
+                          <li onClick={() => handleExportDeposit(i)}>
                             <span className="text-gray-700 text-sm font-normal  leading-tight">
                               Xuất hợp đồng cọc
                             </span>

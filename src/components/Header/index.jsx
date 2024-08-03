@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
 import { BsBell } from "react-icons/bs";
-import { AiOutlinePicRight, AiOutlineRead } from "react-icons/ai";
+import ImgGroupIcon from "@assets/iconGroupUser.png";
+import ImgDocumentIcon from "@assets/iconDocument.png";
+import { BarLoader } from "react-spinners";
+import { useIsLoading } from "@customhooks";
 const GroudButton = () => {
+ 
   return (
     <div className="h-full flex gap-2">
       <Link to={"/login"}>
@@ -21,6 +25,7 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
+  const [isLoading,setIsLoading] =useIsLoading() 
   const SetShow = () => {
     setShow(!isShow);
     console.log(isShow); // This will log the updated state
@@ -35,6 +40,7 @@ const index = ({ isShow, setShow }) => {
     window.location.assign("/");
   };
   return (
+    <>
     <div className="w-screen h-[64px] bg-black flex justify-center items-center ">
       <div
         className="w-[1360px] 
@@ -56,10 +62,10 @@ const index = ({ isShow, setShow }) => {
             </div>
 
             <Link to={"/quan_ly_lich_hen"} className="p-[7px]  cursor-pointer">
-              <AiOutlinePicRight color="white" size={24} />
+              <img src={ImgGroupIcon}  className="bg-white rounded-full"/>
             </Link>
             <Link to={"/quan_ly_hop_dong"} className="p-[7px]  cursor-pointer">
-              <AiOutlineRead color="white" size={24} />
+              <img src={ImgDocumentIcon}  className="bg-white rounded-full"/>
             </Link>
           </div>
 
@@ -111,6 +117,8 @@ const index = ({ isShow, setShow }) => {
         </div>
       </div>
     </div>
+   { isLoading && <BarLoader height={4} width={"100%"} color="#c60000" loading={true} />}
+    </>
   );
 };
 
