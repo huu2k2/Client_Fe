@@ -46,7 +46,7 @@ const SideBar = ({ getInfo ,setInfo}) => {
   const [isCheckSuccess, setIsCheckSuccess] = useState(false);
   // const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
   const { refetch } = useGetListOfAppointmentsQuery();
-  const [postChangeRoom] = usePostChangeRoomMutation();
+  const [postChangeRoom,{isLoading}] = usePostChangeRoomMutation();
   // Form submission handler
   const onSubmit = async (data) => {
     const convertData = {
@@ -109,7 +109,9 @@ const SideBar = ({ getInfo ,setInfo}) => {
       });
     }
   };
-
+if(isLoading){
+  return <span className="loading loading-spinner text-neutral"></span>
+}
   return (
     <div className="drawer drawer-end bg-white">
       

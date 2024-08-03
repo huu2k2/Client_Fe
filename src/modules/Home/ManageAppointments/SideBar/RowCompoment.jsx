@@ -19,6 +19,12 @@ const RowComponent = ({
   InfoCCCD,
 }) => {
   const isDisabled = [
+    "fullName",
+    "birthOfDay",
+    "identification",
+    "dateRange",
+    "issuedBy",
+    "permanentAddress",
     "roomId",
     "commissionPolicyId",
     "datcoc",

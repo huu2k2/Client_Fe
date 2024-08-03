@@ -103,7 +103,7 @@ const RowComponent = ({
           type={type}
           className="w-full outline-none text-sm font-normal leading-tight"
           placeholder={placeholder}
-          disabled={isDisabled}
+          disabled={getInfo.status==="3"?true:isDisabled}
           value={
             name === "tips"
               ? (

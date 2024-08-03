@@ -35,9 +35,9 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       // const refreshToken = localStorage.getItem("token"); // Đảm bảo bạn có token làm mới riêng
       try {
-          // localStorage.clear()
-          // window.location.href = '/login';
-          console.log(error.response)
+          localStorage.clear()
+          window.location.href = '/login';
+         
         // if (refreshToken) {
         //   const response = await axios.post(`http://14.225.254.188:8080/api/Accounts/refresh-token`, {refreshToken}, {
         //     headers: {

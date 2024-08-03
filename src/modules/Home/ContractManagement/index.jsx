@@ -14,6 +14,7 @@ const index = () => {
     houseId: 0,
     scheduleId: 0,
     depositId: null,
+    status:"2"
   });
 
   return (

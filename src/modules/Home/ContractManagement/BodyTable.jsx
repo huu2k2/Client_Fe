@@ -254,7 +254,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                             ? "Đặt cọc"
                             : i.status === "6"
                             ? "Đã hủy cọc"
-                            : "Đặt ký hợp đồng"}
+                            : "Đã thuê"}
                         </div>
                       </div>
                     </td>
@@ -283,6 +283,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                                 id: i.roomId,
                                 houseId: i.houseId,
                                 depositId: i.depositId,
+                                status:i.status
                               }));
                             }}
                           >

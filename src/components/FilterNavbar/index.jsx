@@ -14,8 +14,7 @@ import {
   usePostVeriPWMutation,
 } from "../../apis/slice/Houses";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { AiFillLock } from "react-icons/ai";
-import { toast } from "react-toastify";
+import ImgLock from '../../assets/lock.png'
 const removeDiacritics = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
@@ -97,13 +96,13 @@ const FilterNavbar = ({ setOption }) => {
     <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
       <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border relative border-gray-300 shadow-sm bg-white">
         <AiOutlineSearch className="w-5 h-5 text-[#888]" />
-        <div className="relative mt-4 h-full">
+        <div className="relative mt-4 h-full w-full">
           <input
             type="text"
             placeholder="Từ khoá, Đường, Quận, Dự án hoặc địa..."
             value={searchInput}
             onChange={handleChangeInput}
-            className="w-[266px] border-none outline-none mt-[-8px] block placeholder:text-sm"
+            className="w-full border-none outline-none mt-[-8px] block placeholder:text-sm"
           />
           {searchInput && close && (
             <div
@@ -116,11 +115,11 @@ const FilterNavbar = ({ setOption }) => {
                     <p
                       key={index}
                       onClick={() => handlePickOption(option)}
-                      className="px-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
+                      className=" w-[90%] pl-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
                     >
                       {option.houseName}
                     </p>
-                    {option.isExclusive && <AiFillLock />}
+                    {option.isExclusive &&  <img src={ImgLock} className="w-5 h-5"/>}
                   </div>
                 ))
               ) : (

@@ -236,7 +236,7 @@ const SideBar = ({ getInfo }) => {
               setFurnitureInserts={setFurnitureInserts}
             />
             <hr className="bg-gray-700 w-full h-[1px]" />
-            <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} />
+            <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} getInfo={getInfo}/>
           </div>
         </form>
       </div>

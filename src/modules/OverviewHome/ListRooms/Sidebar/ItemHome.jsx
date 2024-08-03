@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AiFillLock } from "react-icons/ai";
 import { usePostVeriPWMutation } from "../../../../apis/slice/Houses";
 import { toast } from "react-toastify";
-
+import ImgLock from  '../../../../assets/lock.png'
 const ItemHome = ({ item }) => {
   const navigate = useNavigate();
   const [isLock, setIsLock] = useState(item.isExclusive);
@@ -61,7 +61,7 @@ const ItemHome = ({ item }) => {
             <div>
               <h2 className="card-title font-bold">
                 {item.houseName} ({item.roomEmptyTotal}){" "}
-                {isLock && <AiFillLock />}
+                {isLock && <img src={ImgLock} className="w-5 h-5"/>}
               </h2>
               <p>{item.houseAddress}</p>
             </div>
