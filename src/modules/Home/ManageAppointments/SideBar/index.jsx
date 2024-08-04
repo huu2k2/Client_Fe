@@ -23,7 +23,8 @@ function coverDate(dateString) {
   return date.toISOString();
 }
 
-const SideBar = ({ getInfo, setInfo }) => {
+const SideBar = ({ getInfo }) => {
+ 
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
@@ -50,11 +51,12 @@ const SideBar = ({ getInfo, setInfo }) => {
   });
 
   const { refetch } = useGetListOfAppointmentsQuery();
-  const [postChangeRoom] = usePostChangeRoomMutation();
+  const [postChangeRoom,{isLoading}] = usePostChangeRoomMutation();
 
   
   const onSubmit = async(data) => {
-    setIsLoading(true);
+
+ 
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -74,6 +76,7 @@ const SideBar = ({ getInfo, setInfo }) => {
       numberOfVehicle: Number(data.numberOfVehicle),
       fullName: data.fullName,
       phoneNumber: data.phoneNumber,
+      sheduleId:getInfo.scheduleId && getInfo.scheduleId
     };
 
     try {
@@ -96,9 +99,7 @@ const SideBar = ({ getInfo, setInfo }) => {
       }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
-    } finally {
-      setIsLoading(false);
-    }
+    }  
   };
   const debouncedOnSubmit = useCallback(debounce(onSubmit, 2000), []);
  
@@ -117,7 +118,9 @@ const SideBar = ({ getInfo, setInfo }) => {
     }
   };
 
- 
+ useEffect(()=>{
+  setIsLoading(isLoading)
+ },[isLoading])
   return (
     <div className="drawer drawer-end bg-white">
       <input

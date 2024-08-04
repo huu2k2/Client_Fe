@@ -23,7 +23,7 @@ const BasicInterior = () => {
                 <div className="nthd_text_medium_sm_text  h-5 w-full flex justify-start gap-[7px]">
                   {i?.furnitureName}
                   <span className="text-[#6B7280] flex justify-end ">
-                    {i.price.toLocaleString("en-US")} đ/tháng
+                    {i.price ===0 ? "Trang bị sẵn":i.price.toLocaleString("en-US")+ ' đ/tháng'}
                   </span>
                 </div>
               </div>

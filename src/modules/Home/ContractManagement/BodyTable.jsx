@@ -1,27 +1,24 @@
 import React, {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { BsArrowRight, BsChevronDown } from "react-icons/bs";
 import { AiOutlineMore } from "react-icons/ai";
 import { format, parseISO } from "date-fns";
 import Pagination from "./Pagination";
 import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
 import { vi } from "date-fns/locale";
-import { parse, formatISO } from "date-fns";
 import {
   useGetListsOfContractManagementQuery,
   usePostCancelDepositeMutation,
-} from "../../../apis/slice/Agencies";
-import { convertDateToISO } from "../../../utils/ConverDate";
-import { usePostDepositMutation } from "../../../apis/slice/Deposit";
+} from "@apis/slice/Agencies";
+import { convertDateToISO } from "@utils/ConverDate";
+import { usePostDepositMutation } from "@apis/slice/Deposit";
 import { toast } from "react-toastify";
-import SearchInput from "../../../components/BaseInput/SearchInput";
-
+import SearchInput from "@components/BaseInput/SearchInput";
+import { useIsLoading } from "@customhooks"
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
@@ -49,6 +46,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [getTextSearch, setTextSearch] = useState("");
   const startDateISO = convertDateToISO(date[0]);
   const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
+  const [_,setLoading] = useIsLoading()
   const { data, error, isLoading, refetch } =
     useGetListsOfContractManagementQuery({
       queries: { pageIndex: currentPage, pageSize: pageSize },
@@ -58,7 +56,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         customerName: getTextSearch,
       },
     });
-
+    useEffect(()=>{
+      setLoading(isLoading)
+     },[isLoading])
   useEffect(() => {
     if (error) {
       setTotalPages(1);

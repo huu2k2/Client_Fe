@@ -7,11 +7,13 @@ import React, {
   useEffect,
 } from "react";
 import { useGetRoomsFilterMutation } from "@apis/slice/rooms";
+import { useIsLoading } from "./ShowLoadingCustomHook";
 
 // Create context
 export const FilterHookContext = createContext();
 
 export const FilterCustomHook = ({ children }) => {
+  const [_,setIsLoading] =useIsLoading() 
   const [getRoomsFilter, { data, isLoading, isError, error }] = useGetRoomsFilterMutation();
 
   const initialFilterData = {
@@ -34,7 +36,9 @@ export const FilterCustomHook = ({ children }) => {
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
-
+useEffect(()=>{
+setIsLoading(isLoading)
+},[isLoading])
   useEffect(() => {
     const fetchData = async () => {
       try {

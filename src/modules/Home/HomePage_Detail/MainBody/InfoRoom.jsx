@@ -105,7 +105,7 @@ const InfoRoom = () => {
                   {service?.serviceName}
                 </div>
                 <div className="nthd_text_medium_sm_h20">
-                {new Intl.NumberFormat("vi-VN").format(service.servicePrice)}{service.dvt}
+                {new Intl.NumberFormat("vi-VN").format(service.servicePrice)}/{service.dvt}
                 </div>
               </div>
             ))

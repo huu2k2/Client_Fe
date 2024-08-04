@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
 import { usePutDepositInfomationMutation } from "@apis/slice/Agencies";
-
+import { useIsLoading } from "@customhooks";
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -21,7 +21,7 @@ function coverDate(dateString) {
 const SideBar = ({ getInfo }) => {
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
-
+  const [_, setLoading] = useIsLoading();
   // React Hook Form setup with Yup validation schema
   const {
     register,
@@ -68,9 +68,10 @@ const SideBar = ({ getInfo }) => {
 
   // Display toast notifications for form errors
   useEffect(() => {
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors).length > 5) {
+      toast.error("Bạn chưa  điền thêm 1 số trường!");
+    } else {
       Object.values(errors).forEach((error) => toast.error(error.message));
-      console.log(errors);
     }
   }, [errors]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -87,9 +88,11 @@ const SideBar = ({ getInfo }) => {
   };
 
   // get infomation of room
-  const { data: DataDepositInfomation } = useGetDepositInfomationQuery(
-    getInfo.depositId
-  );
+  const { data: DataDepositInfomation, isLoading } =
+    useGetDepositInfomationQuery(getInfo.depositId);
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
   useEffect(() => {
     if (DataDepositInfomation?.isSuccess) {
       setValue("fullName", DataDepositInfomation?.response.fullName);
@@ -120,7 +123,10 @@ const SideBar = ({ getInfo }) => {
       setValue("roomId", DataDepositInfomation?.response.roomId);
       setValue("roomCode", getInfo.roomId);
       setValue("houseAddress", DataDepositInfomation?.response.houseAddress);
-      setValue("rentalPrice", DataDepositInfomation?.response.rentalPrice);
+      setValue(
+        "rentalPrice",
+        DataDepositInfomation?.response.rentalPrice?.toLocaleString("vi-VN")
+      );
       setValue(
         "depositDate",
         format(
@@ -130,11 +136,15 @@ const SideBar = ({ getInfo }) => {
       );
       setValue(
         "depositAmount",
-        DataDepositInfomation?.response.depositAmount || 0
+        DataDepositInfomation?.response.depositAmount?.toLocaleString(
+          "vi-VN"
+        ) || 0
       );
       setValue(
         "additionalDepositAmount",
-        DataDepositInfomation?.response.additionalDepositAmount || 0
+        DataDepositInfomation?.response.additionalDepositAmount?.toLocaleString(
+          "vi-VN"
+        ) || 0
       );
       setValue(
         "depositPaymentDeadline",
@@ -177,7 +187,7 @@ const SideBar = ({ getInfo }) => {
       setValue("signature", DataDepositInfomation?.response?.signatureUrl);
     }
   }, [DataDepositInfomation, isSidebarOpen]);
-
+console.log("DataDepositInfomation",DataDepositInfomation)
   return (
     <div className="drawer drawer-end">
       <input
@@ -236,7 +246,10 @@ const SideBar = ({ getInfo }) => {
               setFurnitureInserts={setFurnitureInserts}
             />
             <hr className="bg-gray-700 w-full h-[1px]" />
-            <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} getInfo={getInfo}/>
+            <ButtonDeposit
+              setIsSidebarOpen={setIsSidebarOpen}
+              getInfo={getInfo}
+            />
           </div>
         </form>
       </div>

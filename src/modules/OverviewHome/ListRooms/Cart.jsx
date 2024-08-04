@@ -1,10 +1,7 @@
 import React from 'react';
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-
-const formatNumberWithDots = (num) => {
-  return num.toLocaleString('vi-VN').replace(/\./g, '.');
-};
+ 
 
 const formatDateToVietnamese = (dateString) => {
   const date = new Date(dateString);
@@ -26,6 +23,7 @@ const Cart = ({ data }) => {
 
   // Define the status text based on status
   const getStatusText = (status,i) => {
+    
     switch (status) {
       case '0':
         return 'Đang trống';
@@ -45,6 +43,7 @@ const Cart = ({ data }) => {
       return 'text-rose-800';
   }
  }
+ 
   return (
     <div className="flex-col justify-start items-start inline-flex"  >
       <div

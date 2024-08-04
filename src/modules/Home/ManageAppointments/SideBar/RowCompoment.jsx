@@ -31,7 +31,7 @@ const RowComponent = ({
     "houseAddress",
     "additionalDepositAmount",
     "chuongTrinhUuDai",
-    "tips",
+    "totalDepositAmount",
     "rentalTerm",
   ].includes(name);
   const getDataFromCMND = [
@@ -86,9 +86,8 @@ const RowComponent = ({
         value?.toLocaleString("vi-VN") ||
           (getInfo[name] && getInfo[name]?.toLocaleString("vi-VN"))
       );
-    }
-    else if (name === "rentalPrice" && value === "") {
-      setRentalPrice( Number(value) )
+    } else if (name === "rentalPrice" && value === "") {
+      setRentalPrice(Number(value));
       setValues(
         Number(value).toLocaleString("vi-VN") ||
           (getRentalPrice && getRentalPrice?.toLocaleString("vi-VN"))
@@ -102,29 +101,36 @@ const RowComponent = ({
   }, [getInfo]);
 
   useEffect(() => {
-    if (showAutoPrice ) {
+    if (showAutoPrice) {
       setValue(
         "additionalDepositAmount",
         (
-          (getNamecommissionPolicyId) * Number(getRentalPrice.toString().replace(/\./g, "")) -
+          getNamecommissionPolicyId *
+            Number(getRentalPrice.toString().replace(/\./g, "")) -
           Number(value.replace(/[^0-9]/g, ""))
         ).toLocaleString("vi-VN")
       );
     }
-    if (name === "tips") {
+    if (name === "totalDepositAmount") {
       setValue(
-        "tips",
-        (
-          (getNamecommissionPolicyId)*Number(getRentalPrice.toString().replace(/\./g, ""))
-        ).toLocaleString("vi-VN")
+        "totalDepositAmount",
+
+        getNamecommissionPolicyId *
+          Number(getRentalPrice.toString().replace(/\./g, ""))
       );
       setValues(
-          ((getNamecommissionPolicyId) *(getRentalPrice)
-        ).toLocaleString("vi-VN"));
+        (getNamecommissionPolicyId * getRentalPrice).toLocaleString("vi-VN")
+      );
     }
 
     setValue("chuongTrinhUuDai", "");
-  }, [getNamecommissionPolicyId, getRentalPrice,setValue, showAutoPrice, value]);
+  }, [
+    getNamecommissionPolicyId,
+    getRentalPrice,
+    setValue,
+    showAutoPrice,
+    value,
+  ]);
 
   useEffect(() => {
     if (data && data?.response) {
@@ -196,13 +202,15 @@ const RowComponent = ({
         {name !== "roomId" ? (
           <>
             <input
-              {...(name === "datcoc" || name === "tip" ? {} : register(name))}
+              {...(name === "datcoc" || name === "totalDepositAmount"
+                ? {}
+                : register(name))}
               type={type}
               className="w-full outline-none text-sm font-normal leading-tight px-[13px]"
               placeholder={placeholder}
               disabled={isDisabled}
               value={
-                name === "tips"
+                name === "totalDepositAmount"
                   ? (
                       Number(getNamecommissionPolicyId) *
                       (getInfo?.rentalPrice || 0)

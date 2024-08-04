@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 import GridCart from "../GridCart";
-import SimilarRoom from "../GridCart/SimilarRoom";
 import { useGetFavoriteQuery } from "../../apis/slice/Agencies";
 
 const Index = (option) => {
@@ -11,10 +10,7 @@ const Index = (option) => {
   const money = queryParams.get("Price") || null;
   const address = queryParams.get("Address")?.replace(/_/g, " ") || null;
   const category = queryParams.get("category") || null;
-
-
   const { data: faveritedata } = useGetFavoriteQuery();
-
   return (
     <div className="w-[1360px] flex flex-col gap-5 mb-20">
       <GridCart

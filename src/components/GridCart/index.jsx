@@ -5,10 +5,9 @@ import {
   useQueryFilterData,
   useClickSearchFilter,
 } from "@customhooks/FilterCustomHook";
-import CustomLoading from "../CustomLoading";
 import { useLocation } from "react-router-dom";
 import { useGetDistrictsQuery } from "../../apis/slice/provices";
-
+import { useIsLoading } from "@customhooks";
 const findDistrictId = (address, districts) => {
   const district = districts?.results.find(
     (district) => address === district.district_name
@@ -18,8 +17,7 @@ const findDistrictId = (address, districts) => {
 
 const Index = ({ id, money, address, category, faveritedata, option }) => {
   const [filterData, setFilterData] = useQueryFilterData();
- 
-
+  const [_,setIsLoading] =useIsLoading() 
   const { data: datadistrict } = useGetDistrictsQuery();
   
   const query = useMemo(() => ({
@@ -47,9 +45,11 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     }
   }, [filterData, location.pathname, handleClickSearch, money, address]);
 
-  const [data] = useQueryData();
+  const [data,{isLoading}] = useQueryData();
   const [items, setItems] = useState([]);
- 
+ useEffect(()=>{
+  setIsLoading(isLoading)
+ },[isLoading])
 
   useEffect(() => {
     if (option && option.selectedOption && data?.response) {
@@ -72,7 +72,7 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
 
   return (
     <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
-      {items.length > 0 && items.map((item, index) => (
+      {items?.map((item, index) => (
         <CartRoom key={index} item={item} faveritedata={faveritedata} />
       ))}
     </div>

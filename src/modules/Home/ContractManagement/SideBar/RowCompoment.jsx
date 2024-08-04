@@ -18,69 +18,39 @@ const RowComponent = ({
     "commissionPolicyId",
     "datcoc",
     "houseAddress",
-    "rentalPrice",
+    "rentalTerm",
     "chuongTrinhUuDai",
-    "tips",
+    "totalDepositAmount",
     "roomCode"
   ].includes(name);
 
-  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(
+  const priceValue = ["depositAmount", "additionalDepositAmount","rentalPrice"].includes(
     name
   );
-
-  const plaValue = ["houseAddress", "datcoc", "rentalPrice"].includes(
-    name
-  );
-
-  const showAutoPrice = ["depositAmount"].includes(name);
 
   const [value, setValues] = useState(getValues(name));
 
-  useEffect(() => {
-  
-    if (plaValue) {
-      setValue(name, getInfo[name]?.toLocaleString("vi-VN"));
+  const NameValue = ["fullName", "issuedBy", "permanentAddress","additionalDepositAmount"].includes(name);
+useEffect(()=>{
+
+},[])
  
-    }
-   
-    if (showAutoPrice) {
-      const commissionPolicyId = Number(getNamecommissionPolicyId);
-      const rentalPrice = Number(getInfo.rentalPrice);
-      const valueNumber = Number(value);
-
-      const additionalDepositAmount = (
-        commissionPolicyId * rentalPrice -
-        valueNumber
-      ).toLocaleString("vi-VN");
-
-      setValue("additionalDepositAmount", additionalDepositAmount);
-    }
-  }, [
-    name,
-    plaValue,
-    setValue,
-    getInfo,
-    showAutoPrice,
-    getNamecommissionPolicyId,
-    value,
-  ]);
-
-  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
-
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
-    setValues(e.target.value);
     if (priceValue) {
       const numericValue = inputValue?.replace(/[^0-9]/g, ""); // Remove non-numeric characters
       setValues(Number(numericValue)?.toLocaleString("vi-VN"));
+      setValue(inputValue)
     } else if (NameValue) {
       const strValue = inputValue.split(" ");
       let capitalizedStr = strValue
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
       setValues(capitalizedStr);
+      setValue(capitalizedStr)
     } else {
-      setValues(e.target.value);
+      setValues(inputValue);
+      setValue(inputValue)
     }
   };
 
@@ -105,7 +75,7 @@ const RowComponent = ({
           placeholder={placeholder}
           disabled={getInfo.status==="3"?true:isDisabled}
           value={
-            name === "tips"
+            name === "totalDepositAmount"
               ? (
                   Number(getNamecommissionPolicyId) * getInfo.rentalPrice
                 ).toLocaleString("vi-VN")

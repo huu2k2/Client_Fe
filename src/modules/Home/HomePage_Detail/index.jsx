@@ -15,7 +15,6 @@ import {
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
 
-
 const initialFilterData = {
   houseId: null,
   districtId: null,
@@ -39,7 +38,7 @@ const index = () => {
   const [isShowModal, setIsShowModal, dropdownRef] = useBooleanIsShowModal();
   const { id, roomId } = useParams();
   const setData = useGetDataDetail();
-  const { data } = useGetAllDetailQuery(roomId);
+  const { data,isLoading } = useGetAllDetailQuery(roomId);
   useEffect(() => {
     setData(data);
   }, [data]);
@@ -48,13 +47,11 @@ const index = () => {
   useEffect(() => {
     setFilterData(initialFilterData);
     if (filterData === initialFilterData) {
-
       handleClickSearch();
     }
   }, [filterData]);
   return (
     <>
-
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}
@@ -83,7 +80,9 @@ const index = () => {
               ?.toString()
               ?.trim()
               ?.replace(/\s+/g, "_")}
-            category={data?.response?.category ? data?.response?.category : null}
+            category={
+              data?.response?.category ? data?.response?.category : null
+            }
           />
           <RoomOrder
             title={`Phòng tương tự  `}

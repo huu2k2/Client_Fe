@@ -32,20 +32,21 @@ const muiltyRow = [
 ];
 const muiltyRow1 = [
   {
-    id: 6,
-    title: "Số tiền cọc giữ phòng",
-    type: "text",
-    placeholder: "",
-    unit: "%",
-    name: "tips",
-  },
-  {
     id: 7,
     title: "Ngày đặt cọc",
     type: "date",
     placeholder: "",
     name: "depositDate",
   },
+  {
+    id: 6,
+    title: "Số tiền cọc giữ phòng",
+    type: "text",
+    placeholder: "",
+    unit: "%",
+    name: "totalDepositAmount",
+  },
+
   {
     id: 8,
     title: "Số tiền cọc trước",

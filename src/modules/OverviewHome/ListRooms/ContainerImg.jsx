@@ -4,7 +4,6 @@ import { useGetImagesQuery } from "../../../apis/slice/ImageOfRoom";
 import ListImg from "./ListImg";
 const ContainerImg = ({ item ,data}) => {
   const { data: images } = useGetImagesQuery(item.roomId);
-console.log("data",data)
   return (
     <dialog id="my_modal_showimg" className="modal my-5 ">
       <div className="modal-box w-11/12 max-w-7xl h-fit">

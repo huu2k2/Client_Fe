@@ -4,8 +4,8 @@ import ImgAvatar from "@assets/Avatar.png";
 import { BsBell } from "react-icons/bs";
 import ImgGroupIcon from "@assets/iconGroupUser.png";
 import ImgDocumentIcon from "@assets/iconDocument.png";
-import { BarLoader } from "react-spinners";
-import { useIsLoading } from "@customhooks";
+
+
 const GroudButton = () => {
  
   return (
@@ -25,7 +25,7 @@ const GroudButton = () => {
 };
 
 const index = ({ isShow, setShow }) => {
-  const [isLoading,setIsLoading] =useIsLoading() 
+
   const SetShow = () => {
     setShow(!isShow);
     console.log(isShow); // This will log the updated state
@@ -117,7 +117,7 @@ const index = ({ isShow, setShow }) => {
         </div>
       </div>
     </div>
-   { isLoading && <BarLoader height={4} width={"100%"} color="#c60000" loading={true} />}
+  
     </>
   );
 };

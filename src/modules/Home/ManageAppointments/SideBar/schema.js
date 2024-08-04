@@ -35,7 +35,7 @@ const schema = yup
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
       return /^\d+$/.test(value.replace(/\./g, ''));
     }),
-    tips: yup.string().required("Số tiền cọc giữ phòng") .test('is-valid-number', 'Số tiền cọc giữ phòng phải là số hợp lệ', value => {
+    totalDepositAmount: yup.string().required("Số tiền cọc giữ phòng") .test('is-valid-number', 'Số tiền cọc giữ phòng phải là số hợp lệ', value => {
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
       return /^\d+$/.test(value.replace(/\./g, ''));
     }),
