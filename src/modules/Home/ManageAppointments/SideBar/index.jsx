@@ -53,10 +53,11 @@ const SideBar = ({ getInfo }) => {
   const { refetch } = useGetListOfAppointmentsQuery();
   const [postChangeRoom,{isLoading}] = usePostChangeRoomMutation();
 
-  
+  useEffect(()=>{
+setValue("sheduleId",getInfo.scheduleId)
+  },[getInfo])
   const onSubmit = async(data) => {
 
- 
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -76,7 +77,7 @@ const SideBar = ({ getInfo }) => {
       numberOfVehicle: Number(data.numberOfVehicle),
       fullName: data.fullName,
       phoneNumber: data.phoneNumber,
-      sheduleId:getInfo.scheduleId && getInfo.scheduleId
+      totalDepositAmount:Number(data.totalDepositAmount)
     };
 
     try {

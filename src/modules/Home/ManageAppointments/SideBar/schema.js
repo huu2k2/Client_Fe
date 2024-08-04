@@ -31,7 +31,7 @@ const schema = yup
       return /^\d+$/.test(value.replace(/\./g, ''));
     }),
     depositDate: yup.string().required("Ngày đặt cọc là bắt buộc"),
-    depositAmount: yup.string().required("Số tiền cọc giữ phòng là bắt buộc") .test('is-valid-number', 'Số tiền cọc giữ phòng phải là số hợp lệ', value => {
+    depositAmount: yup.string().required("Số tiền cọc trước là bắt buộc") .test('is-valid-number', 'Số tiền cọc trước phải là số hợp lệ', value => {
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
       return /^\d+$/.test(value.replace(/\./g, ''));
     }),
