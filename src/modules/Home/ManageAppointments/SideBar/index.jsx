@@ -101,7 +101,7 @@ const SideBar = ({ getInfo }) => {
           roomId: Number(data.roomId),
         };
 
-        await postChangeRoom(body).unwrap();
+        // await postChangeRoom(body).unwrap();
         // refetch();
         setIsLoading(false);
       }

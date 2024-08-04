@@ -33,6 +33,7 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
+const [getData,setData] = useState([])
   const [putDeposit] = usePutDepositInfomationMutation();
   // Form submission handler
   const onSubmit = async (data) => {
@@ -58,7 +59,6 @@ const SideBar = ({ getInfo }) => {
       id: getInfo.depositId,
       totalDepositAmount:Number(data.totalDepositAmount?.replace(/[^0-9]/g, "")),
     };
-
     const kq = await putDeposit(convertData);
     if (kq?.error) {
       toast.error(kq?.error?.data.message);
@@ -94,109 +94,55 @@ const SideBar = ({ getInfo }) => {
   useEffect(() => {
     setLoading(isLoading);
   }, [isLoading]);
+
   useEffect(() => {
-    if (DataDepositInfomation?.isSuccess) {
-      setValue("fullName", DataDepositInfomation?.response.fullName);
-      setValue("phoneNumber", DataDepositInfomation?.response.phoneNumber);
-      setValue(
-        "birthOfDay",
-        format(
-          new Date(DataDepositInfomation?.response.birthOfDay),
-          "yyyy-MM-dd"
-        )
-      );
-      setValue(
-        "identification",
-        DataDepositInfomation?.response.identification
-      );
-      setValue(
-        "dateRange",
-        format(
-          new Date(DataDepositInfomation?.response.dateRange),
-          "yyyy-MM-dd"
-        )
-      );
-      setValue("issuedBy", DataDepositInfomation?.response.issuedBy);
-      setValue(
-        "permanentAddress",
-        DataDepositInfomation?.response.permanentAddress
-      );
-      setValue("roomId", DataDepositInfomation?.response.roomId);
-      setValue("roomCode", getInfo.roomId);
-      setValue("houseAddress", DataDepositInfomation?.response.houseAddress);
-      setValue(
-        "rentalPrice",
-        DataDepositInfomation?.response.rentalPrice?.toLocaleString("vi-VN")
-      );
-      setValue(
-        "depositDate",
-        format(
-          new Date(DataDepositInfomation?.response.depositDate),
-          "yyyy-MM-dd"
-        )
-      );
-      setValue(
-        "totalDepositAmount",
-        DataDepositInfomation?.response.totalDepositAmount?.toLocaleString(
-          "vi-VN"
-        )
-      );
-      setValue(
-        "depositAmount",
-        DataDepositInfomation?.response.depositAmount?.toLocaleString(
-          "vi-VN"
-        ) || 0
-      );
-      setValue(
-        "additionalDepositAmount",
-        DataDepositInfomation?.response.additionalDepositAmount?.toLocaleString(
-          "vi-VN"
-        ) || 0
-      );
-      setValue(
-        "depositPaymentDeadline",
-        format(
-          new Date(DataDepositInfomation?.response.depositPaymentDeadline),
-          "yyyy-MM-dd"
-        )
-      );
-      setValue(
-        "rentalStartDate",
-        format(
-          new Date(DataDepositInfomation?.response.rentalStartDate),
-          "yyyy-MM-dd"
-        )
-      );
-      setValue(
-        "numberOfPeople",
-        DataDepositInfomation?.response.numberOfPeople
-      );
-      setValue(
-        "numberOfVehicle",
-        DataDepositInfomation?.response.numberOfVehicle
-      );
-      setValue(
-        "chuongTrinhUuDai",
-        DataDepositInfomation?.response.chuongTrinhUuDai || " "
-      );
-      setValue("note", DataDepositInfomation?.response.note);
-      setValue("rentalTerm", DataDepositInfomation?.response.rentalTerm);
-      setValue(
-        "commissionPolicyId",
-        DataDepositInfomation?.response?.commissionPolicy?.id
-      );
-      setValue(
-        "commissionPolicyLable",
-        `${DataDepositInfomation?.response?.commissionPolicy?.month} tháng - Cọc ${DataDepositInfomation?.response?.commissionPolicy?.deposit} - Hoa hồng ${DataDepositInfomation?.response?.commissionPolicy?.commission}`
-      );
-      setServiceInserts(DataDepositInfomation?.response?.services);
-      setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
-      setValue("signature", DataDepositInfomation?.response?.signature);
-      setValue("signatureUrl", DataDepositInfomation?.response?.signatureUrl);
-      setValue("commissionPolicyMonth",DataDepositInfomation?.response?.commissionPolicy?.deposit)
-    }
-  }, [DataDepositInfomation, isSidebarOpen]);
-console.log(DataDepositInfomation)
+  if (DataDepositInfomation?.isSuccess) {
+    const response = DataDepositInfomation?.response;
+
+    // Prepare the data object with all the required fields
+    const updatedData = {
+      fullName: response.fullName,
+      phoneNumber: response.phoneNumber,
+      birthOfDay: format(new Date(response.birthOfDay), "yyyy-MM-dd"),
+      identification: response.identification,
+      dateRange: format(new Date(response.dateRange), "yyyy-MM-dd"),
+      issuedBy: response.issuedBy,
+      permanentAddress: response.permanentAddress,
+      roomId: response.roomId,
+      roomCode: getInfo.roomId,
+      houseAddress: response.houseAddress,
+      rentalPrice: response.rentalPrice?.toLocaleString("vi-VN"),
+      depositDate: format(new Date(response.depositDate), "yyyy-MM-dd"),
+      totalDepositAmount: response.totalDepositAmount?.toLocaleString("vi-VN"),
+      depositAmount: response.depositAmount?.toLocaleString("vi-VN") || 0,
+      additionalDepositAmount: response.additionalDepositAmount?.toLocaleString("vi-VN") || 0,
+      depositPaymentDeadline: format(new Date(response.depositPaymentDeadline), "yyyy-MM-dd"),
+      rentalStartDate: format(new Date(response.rentalStartDate), "yyyy-MM-dd"),
+      numberOfPeople: response.numberOfPeople,
+      numberOfVehicle: response.numberOfVehicle,
+      chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
+      note: response.note,
+      rentalTerm: response.rentalTerm,
+      commissionPolicyId: response?.commissionPolicy?.id,
+      commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
+      signature: response?.signature,
+      signatureUrl: response?.signatureUrl,
+      commissionPolicyMonth: response?.commissionPolicy?.deposit,
+    };
+
+    // Update the state with the prepared data
+    setData(updatedData);
+    // 
+    setValue("roomId", response.roomId);
+    setValue("roomCode", getInfo.roomId);
+    setValue("signature", response?.signature);
+    setValue("signatureUrl", response?.signatureUrl);
+
+    // Optionally update other states
+    setServiceInserts(response?.services);
+    setFurnitureInserts(response?.furnitures);
+  }
+}, [isSidebarOpen]);
   return (
     <div className="drawer drawer-end">
       <input
@@ -237,6 +183,7 @@ console.log(DataDepositInfomation)
               isSidebarOpen={isSidebarOpen}
               getValues={getValues}
               setValue={setValue}
+              getData={getData}
             />
             <InfoRoom
               register={register}
@@ -244,6 +191,7 @@ console.log(DataDepositInfomation)
               setValue={setValue}
               isSidebarOpen={isSidebarOpen}
               getValues={getValues}
+              getData={getData}
             />
             <Surcharges
               register={register}

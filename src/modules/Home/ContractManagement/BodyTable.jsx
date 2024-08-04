@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AiOutlineMore } from "react-icons/ai";
 import { format, parseISO } from "date-fns";
 import Pagination from "./Pagination";
@@ -15,10 +10,11 @@ import {
   usePostCancelDepositeMutation,
 } from "@apis/slice/Agencies";
 import { convertDateToISO } from "@utils/ConverDate";
-import { usePostDepositMutation } from "@apis/slice/Deposit";
 import { toast } from "react-toastify";
 import SearchInput from "@components/BaseInput/SearchInput";
-import { useIsLoading } from "@customhooks"
+import { useIsLoading } from "@customhooks";
+import axios from "axios";
+const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
@@ -46,7 +42,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [getTextSearch, setTextSearch] = useState("");
   const startDateISO = convertDateToISO(date[0]);
   const endDateISO = date[1] ? convertDateToISO(date[1]) : null;
-  const [_,setLoading] = useIsLoading()
+  const [_, setLoading] = useIsLoading();
   const { data, error, isLoading, refetch } =
     useGetListsOfContractManagementQuery({
       queries: { pageIndex: currentPage, pageSize: pageSize },
@@ -56,9 +52,9 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
         customerName: getTextSearch,
       },
     });
-    useEffect(()=>{
-      setLoading(isLoading)
-     },[isLoading])
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
   useEffect(() => {
     if (error) {
       setTotalPages(1);
@@ -80,29 +76,32 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     setTotalItems(totalItemsMemo);
   }, [data, date, getTextSearch]);
 
-  const [PostDeposit] = usePostDepositMutation();
+  
   const handleExportDeposit = async (i) => {
-    try {
-      // Gửi yêu cầu API và nhận file PDF
-      const response = await PostDeposit(i.depositId).unwrap();
-      console.log(response.data)
-      // Kiểm tra xem response có phải là Blob không
-      // if (response) {
-      //   const blob = new Blob([response.data], {
-      //     type: 'application/pdf', // Đảm bảo loại MIME cho file PDF
-      //   });
-      //   const link = document.createElement('a');
-      //   link.href = window.URL.createObjectURL(blob);
-      //   link.download = `HDCOC-P.${i.roomCode}-${i.customerName}.pdf`;
-      //   link.click();
 
-      //   // Clean up the URL object
-      //   window.URL.revokeObjectURL(link.href);
-      //   toast.success("Xuất hợp đồng thành công!");
-       
-      // } else {
-      //   toast.error("Dữ liệu không hợp lệ.");
-      // }
+    try {
+      const response = await axios.post(
+        `${API_URL}/Deposits/export-pdf/${i.depositId}`,
+        {},
+        {
+          responseType: "blob",
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+
+          },
+        }
+      );
+      const blob = new Blob([response.data], {
+        type: "application/octet-stream",
+      });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `HDCOC-P.${i.roomCode}-${i.customerName}.pdf`;
+      link.click();
+      // Clean up the URL object
+      window.URL.revokeObjectURL(link.href);
     } catch (error) {
       toast.error(error.message || "Có lỗi xảy ra!");
     }

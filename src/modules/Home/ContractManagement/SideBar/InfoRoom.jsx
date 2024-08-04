@@ -98,7 +98,7 @@ const muiltyRow1 = [
     name: "chuongTrinhUuDai",
   },
 ];
-const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
+const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues,getData}) => {
   const [getNamecommissionPolicyId,setNamecommissionPolicyId] = useState('')
 
   return (
@@ -119,6 +119,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
           placeholder={row.placeholder}
           unit={row.unit}
           getValues={getValues}
+          getData={getData}
         />
       ))}
       <SelectTips getInfo={getInfo} setValue={setValue} getValues={getValues} setNamecommissionPolicyId={setNamecommissionPolicyId}/>
@@ -136,6 +137,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
           unit={row.unit}
           getNamecommissionPolicyId={getNamecommissionPolicyId}
           getValues={getValues}
+          getData={getData}
         />
       ))}
      <Signature
