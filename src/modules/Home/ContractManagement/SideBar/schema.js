@@ -32,6 +32,10 @@ const schema = yup
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
       return /^\d+$/.test(value.replace(/\./g, ''));
     }),
+    totalDepositAmount: yup.string().required("Số tiền cọc giữ phòng") .test('is-valid-number', 'Số tiền cọc giữ phòng phải là số hợp lệ', value => {
+      // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
+      return /^\d+$/.test(value.replace(/\./g, ''));
+    }),
     depositDate: yup.string().required("Ngày đặt cọc là bắt buộc"),
     depositAmount: yup.string().required("Số tiền cọc giữ phòng là bắt buộc") .test('is-valid-number', 'Số tiền cọc giữ phòng phải là số hợp lệ', value => {
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
@@ -50,7 +54,8 @@ const schema = yup
     rentalTerm: yup.string().required("Thời hạn hợp đồng là bắt buộc"),
     commissionPolicyId:yup.string(),
     commissionPolicyLable:yup.string(),
-    signature:yup.string() 
+    commissionPolicyMonth:yup.number(),
+    signature:yup.string()
   })
   .required();
 

@@ -85,24 +85,24 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     try {
       // Gửi yêu cầu API và nhận file PDF
       const response = await PostDeposit(i.depositId).unwrap();
-      
+      console.log(response.data)
       // Kiểm tra xem response có phải là Blob không
-      if (response) {
-        const blob = new Blob([response], {
-          type: 'application/pdf', // Đảm bảo loại MIME cho file PDF
-        });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `HDCOC-P.${i.roomCode}-${i.customerName}.pdf`;
-        link.click();
+      // if (response) {
+      //   const blob = new Blob([response.data], {
+      //     type: 'application/pdf', // Đảm bảo loại MIME cho file PDF
+      //   });
+      //   const link = document.createElement('a');
+      //   link.href = window.URL.createObjectURL(blob);
+      //   link.download = `HDCOC-P.${i.roomCode}-${i.customerName}.pdf`;
+      //   link.click();
 
-        // Clean up the URL object
-        window.URL.revokeObjectURL(link.href);
-        toast.success("Xuất hợp đồng thành công!");
+      //   // Clean up the URL object
+      //   window.URL.revokeObjectURL(link.href);
+      //   toast.success("Xuất hợp đồng thành công!");
        
-      } else {
-        toast.error("Dữ liệu không hợp lệ.");
-      }
+      // } else {
+      //   toast.error("Dữ liệu không hợp lệ.");
+      // }
     } catch (error) {
       toast.error(error.message || "Có lỗi xảy ra!");
     }

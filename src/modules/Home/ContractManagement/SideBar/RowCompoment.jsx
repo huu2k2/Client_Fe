@@ -10,8 +10,6 @@ const RowComponent = ({
   name,
   getInfo,
   setValue,
-  isSidebarOpen,
-  getNamecommissionPolicyId,
   getValues,
 }) => {
   const isDisabled = [
@@ -21,36 +19,53 @@ const RowComponent = ({
     "rentalTerm",
     "chuongTrinhUuDai",
     "totalDepositAmount",
-    "roomCode"
+    "roomCode",
+    "additionalDepositAmount"
   ].includes(name);
 
-  const priceValue = ["depositAmount", "additionalDepositAmount","rentalPrice"].includes(
-    name
-  );
+  const priceValue = [
+    "depositAmount",
+    "additionalDepositAmount",
+    "totalDepositAmount",
+    "rentalPrice",
+  ].includes(name);
 
   const [value, setValues] = useState(getValues(name));
 
-  const NameValue = ["fullName", "issuedBy", "permanentAddress","additionalDepositAmount"].includes(name);
-useEffect(()=>{
+  useEffect(() => {
+    const initialValue = getValues(name);
+    if (priceValue && initialValue) {
+      setValues(Number(initialValue).toLocaleString("vi-VN"));
+    } else {
+      setValues(initialValue);
+    }
+  }, [getValues, name, priceValue]);
 
-},[])
- 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
-    if (priceValue) {
-      const numericValue = inputValue?.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-      setValues(Number(numericValue)?.toLocaleString("vi-VN"));
-      setValue(inputValue)
-    } else if (NameValue) {
-      const strValue = inputValue.split(" ");
-      let capitalizedStr = strValue
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-      setValues(capitalizedStr);
-      setValue(capitalizedStr)
+    const numericValue = inputValue.replace(/[^0-9]/g, "");
+
+    if (name === "rentalPrice") {
+      setValue(name, numericValue);
+      setValues(Number(numericValue).toLocaleString("vi-VN"));
+
+      const totalDepositAmount =
+        numericValue * Number(getValues("commissionPolicyMonth"));
+ 
+      setValue("totalDepositAmount", totalDepositAmount.toLocaleString("vi-VN"));
+       setValue("additionalDepositAmount", (totalDepositAmount - Number(getValues("depositAmount").replace(/[^0-9]/g, ""))).toLocaleString("vi-VN"));
+    } else if (name === "depositAmount") {
+      setValue(name, numericValue);
+      setValues(Number(numericValue).toLocaleString("vi-VN"));
+      const additionalDepositAmount = getValues("totalDepositAmount").replace(/[^0-9]/g, "") - numericValue;
+ 
+      setValue("additionalDepositAmount", additionalDepositAmount.toLocaleString("vi-VN"));
+    } else if (priceValue) {
+      setValues(Number(numericValue).toLocaleString("vi-VN"));
+      setValue(name, numericValue);
     } else {
       setValues(inputValue);
-      setValue(inputValue)
+      setValue(name, inputValue);
     }
   };
 
@@ -69,18 +84,12 @@ useEffect(()=>{
         }`}
       >
         <input
-          {...(name === "datcoc" || name === "tip" ? {} : register(name))}
+          {...register(name)}
           type={type}
           className="w-full outline-none text-sm font-normal leading-tight"
           placeholder={placeholder}
-          disabled={getInfo.status==="3"?true:isDisabled}
-          value={
-            name === "totalDepositAmount"
-              ? (
-                  Number(getNamecommissionPolicyId) * getInfo.rentalPrice
-                ).toLocaleString("vi-VN")
-              : value
-          }
+          disabled={getInfo.status === "3" ? true : isDisabled}
+          value={value}
           onChange={handleChangeValue}
         />
         {unit && (

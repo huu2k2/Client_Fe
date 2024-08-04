@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
 
 const ItemFurniture = ({ item, setFurnitureInserts }) => {
-    const [price, setPrice] = useState('')
+    const [displayPrice, setDisplayPrice] = useState('')
+    const [actualPrice, setActualPrice] = useState(0)
     const [isChecked, setIsChecked] = useState(false)
 
     useEffect(() => {
         setIsChecked(item.isActived)
-        setPrice(item.price === 0 ? "Trang bị có sẵn" : item.price.toLocaleString('vi-VN'))
+        const priceValue = item.price === 0 ? "Trang bị có sẵn" : item.price
+        setDisplayPrice(priceValue === "Trang bị có sẵn" ? priceValue : priceValue.toLocaleString('vi-VN'))
+        setActualPrice(item.price)
     }, [item])
 
     const handlePriceChange = (e) => {
-        const inputValue = e.target.value.replace(/,/g, '')
+        const inputValue = e.target.value.replace(/[^0-9]/g, '')
         const newPrice = inputValue === '' ? 0 : parseFloat(inputValue)
-        setPrice(inputValue === '' ? '' : newPrice.toLocaleString('vi-VN'))
-        
+        setActualPrice(newPrice)
+        setDisplayPrice(inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+
         setFurnitureInserts((prev) =>
             prev.map((furniture) =>
                 furniture.furnitureId === item.furnitureId
@@ -55,7 +59,7 @@ const ItemFurniture = ({ item, setFurnitureInserts }) => {
                     <div className="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
                         <input
                             type="text"
-                            value={price}
+                            value={displayPrice}
                             onChange={handlePriceChange}
                             className="w-full outline-none text-sm font-normal leading-tight"
                         />

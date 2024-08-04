@@ -56,6 +56,7 @@ const SideBar = ({ getInfo }) => {
       numberOfPeople: Number(data.numberOfPeople),
       numberOfVehicle: Number(data.numberOfVehicle),
       id: getInfo.depositId,
+      totalDepositAmount:Number(data.totalDepositAmount?.replace(/[^0-9]/g, "")),
     };
 
     const kq = await putDeposit(convertData);
@@ -135,6 +136,12 @@ const SideBar = ({ getInfo }) => {
         )
       );
       setValue(
+        "totalDepositAmount",
+        DataDepositInfomation?.response.totalDepositAmount?.toLocaleString(
+          "vi-VN"
+        )
+      );
+      setValue(
         "depositAmount",
         DataDepositInfomation?.response.depositAmount?.toLocaleString(
           "vi-VN"
@@ -184,10 +191,12 @@ const SideBar = ({ getInfo }) => {
       );
       setServiceInserts(DataDepositInfomation?.response?.services);
       setFurnitureInserts(DataDepositInfomation?.response?.furnitures);
-      setValue("signature", DataDepositInfomation?.response?.signatureUrl);
+      setValue("signature", DataDepositInfomation?.response?.signature);
+      setValue("signatureUrl", DataDepositInfomation?.response?.signatureUrl);
+      setValue("commissionPolicyMonth",DataDepositInfomation?.response?.commissionPolicy?.deposit)
     }
   }, [DataDepositInfomation, isSidebarOpen]);
-console.log("DataDepositInfomation",DataDepositInfomation)
+console.log(DataDepositInfomation)
   return (
     <div className="drawer drawer-end">
       <input
