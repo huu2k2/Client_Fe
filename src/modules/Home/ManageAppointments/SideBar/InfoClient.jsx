@@ -59,7 +59,7 @@ const convertDate = (dateString) => {
   // Định dạng lại từ đối tượng Date sang "yyyy-MM-dd"
   return format(parsedDate, "yyyy-MM-dd");
 };
-const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
+const InfoClient = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
   const [isLoading, setIsLoading] = useIsLoading()
   const [getCCCD, setCCCD] = useState({ mt: "", ms: "" });
   const [postCCCD] = usePostCCCDMutation();
@@ -118,6 +118,7 @@ const InfoClient = ({ register, getInfo, setValue, isSidebarOpen }) => {
           placeholder={row.placeholder}
           unit={row.unit}
           InfoCCCD={InfoCCCD}
+          getValues={getValues}
         />
       ))}
       {muiltyRowCCCD.map((i, index) => (

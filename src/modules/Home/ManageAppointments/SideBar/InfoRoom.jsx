@@ -99,7 +99,7 @@ const muiltyRow1 = [
     name: "chuongTrinhUuDai",
   },
 ];
-const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
+const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
   const [getRentalPrice,setRentalPrice] = useState(getInfo["rentalPrice"])
   const [getNamecommissionPolicyId, setNamecommissionPolicyId] = useState("");
   const [getRentalMonth, setRentalMonth] = useState("");
@@ -136,6 +136,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
           getRentalMonth={getRentalMonth}
           getRentalPrice={getRentalPrice}
           setRentalPrice={setRentalPrice}
+          getValues={getValues}
         />
       ))}
       <SelectTips
@@ -161,6 +162,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen }) => {
           getRentalMonth={getRentalMonth}
           getRentalPrice={getRentalPrice}
           setRentalPrice={setRentalPrice}
+          getValues={getValues}
         />
       ))}
       <Signature

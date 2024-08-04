@@ -16,15 +16,13 @@ import {
   useGetListOfAppointmentsQuery,
 } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
- 
- 
+
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
 
 const SideBar = ({ getInfo }) => {
- 
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
@@ -32,7 +30,7 @@ const SideBar = ({ getInfo }) => {
   const [isCheckSuccess, setIsCheckSuccess] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
-  const [_, setIsLoading] = useIsLoading()
+  const [_, setIsLoading] = useIsLoading();
 
   useEffect(() => {
     if (Data?.response) {
@@ -45,19 +43,25 @@ const SideBar = ({ getInfo }) => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const { refetch } = useGetListOfAppointmentsQuery();
-  const [postChangeRoom,{isLoading}] = usePostChangeRoomMutation();
+  const [postChangeRoom] = usePostChangeRoomMutation();
 
-  useEffect(()=>{
-setValue("sheduleId",getInfo.scheduleId)
-  },[getInfo])
-  const onSubmit = async(data) => {
+  useEffect(() => {
+    setValue("sheduleId", getInfo.scheduleId);
+    setValue("phoneNumber", getInfo.phoneNumber);
+    setValue("houseAddress", getInfo.houseAddress);
+    setValue("rentalPrice", getInfo.rentalPrice);
+  }, [getInfo]);
 
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    setValue("chuongTrinhUuDai", "");
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -71,18 +75,20 @@ setValue("sheduleId",getInfo.scheduleId)
       rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,
-      additionalDepositAmount: Number(data.additionalDepositAmount.replace(/\./g, "")),
+      additionalDepositAmount: Number(
+        data.additionalDepositAmount.replace(/\./g, "")
+      ),
       depositAmount: Number(data.depositAmount.replace(/\./g, "")),
       numberOfPeople: Number(data.numberOfPeople),
       numberOfVehicle: Number(data.numberOfVehicle),
       fullName: data.fullName,
       phoneNumber: data.phoneNumber,
-      totalDepositAmount:Number(data.totalDepositAmount)
+      totalDepositAmount: Number(data.totalDepositAmount),
     };
 
     try {
       const kq = await addDeposit(convertData);
-
+ 
       if (kq?.error) {
         toast.error(kq.error.data.message);
         setIsCheckSuccess(false);
@@ -96,18 +102,21 @@ setValue("sheduleId",getInfo.scheduleId)
         };
 
         await postChangeRoom(body).unwrap();
-        refetch();
+        // refetch();
+        setIsLoading(false);
       }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
-    }  
+    } finally {
+      setIsLoading(false);
+    }
   };
   const debouncedOnSubmit = useCallback(debounce(onSubmit, 2000), []);
- 
+
   useEffect(() => {
     if (Object.keys(errors).length > 5) {
-      toast.error("Bạn điền thiếu thông tin! Vui lòng nhập lại!")
-    }else{
+      toast.error("Bạn điền thiếu thông tin! Vui lòng nhập lại!");
+    } else {
       Object.values(errors).forEach((error) => toast.error(error.message));
     }
   }, [errors]);
@@ -119,9 +128,6 @@ setValue("sheduleId",getInfo.scheduleId)
     }
   };
 
- useEffect(()=>{
-  setIsLoading(isLoading)
- },[isLoading])
   return (
     <div className="drawer drawer-end bg-white">
       <input
@@ -159,6 +165,7 @@ setValue("sheduleId",getInfo.scheduleId)
               getInfo={getInfo}
               setValue={setValue}
               isSidebarOpen={isSidebarOpen}
+              getValues={getValues}
             />
             <hr className="bg-gray-700 w-full h-px" />
             <InfoRoom
@@ -166,6 +173,7 @@ setValue("sheduleId",getInfo.scheduleId)
               getInfo={getInfo}
               setValue={setValue}
               isSidebarOpen={isSidebarOpen}
+              getValues={getValues}
             />
             <hr className="bg-gray-700 w-full h-px" />
             <Surcharges

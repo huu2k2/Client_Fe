@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
+import { useFetcher } from "react-router-dom";
 
 const RowComponent = ({
   title,
@@ -17,6 +18,7 @@ const RowComponent = ({
   getRentalPrice,
   setRentalPrice,
   InfoCCCD,
+  getValues,
 }) => {
   const isDisabled = [
     "fullName",
@@ -44,25 +46,20 @@ const RowComponent = ({
     "permanentAddress",
   ].includes(name);
 
-  const priceValue = ["depositAmount", "additionalDepositAmount"].includes(name);
-  const plaValue = ["roomId", "houseAddress", "datcoc", "phoneNumber"].includes(name);
-  const showAutoPrice = ["depositAmount"].includes(name);
+  const plaValue = ["houseAddress", "phoneNumber"].includes(name);
+
+  const priceValue = ["depositAmount"].includes(
+    name
+  );
   const rentalTermMonth = ["rentalTerm"].includes(name);
-  const NameValue = ["fullName", "issuedBy", "permanentAddress"].includes(name);
+ 
 
   const [value, setValues] = useState("");
   const [options, setOptions] = useState([]);
   const [valueOptions, setValuesOptions] = useState(null);
 
   const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
-
-  useEffect(() => {
-    if (getDataFromCMND && InfoCCCD[name]) {
-      setValue(name, InfoCCCD[name]);
-      setValues(InfoCCCD[name]);
-    }
-  }, [getDataFromCMND, InfoCCCD, name, setValue]);
-
+  // check is open sidebar
   useEffect(() => {
     if (!isSidebarOpen) {
       setValues("");
@@ -71,33 +68,41 @@ const RowComponent = ({
     }
   }, [isSidebarOpen]);
 
+  //  auto import data from detech CCCD into input
   useEffect(() => {
-    if (plaValue && getInfo[name]) {
-      const formattedValue = getInfo[name]?.toLocaleString("vi-VN");
-      setValues(formattedValue);
-      setValue(name, formattedValue);
-    } else if (name === "rentalPrice" && value === "") {
-      const rentalPrice = Number(getRentalPrice.toString().replace(/\./g, ""));
-      setRentalPrice(rentalPrice);
-      const formattedValue = rentalPrice.toLocaleString("vi-VN");
-      setValues(formattedValue);
-      setValue(name, formattedValue);
+    if (getDataFromCMND && InfoCCCD[name]) {
+      setValue(name, InfoCCCD[name]);
+      setValues(InfoCCCD[name]);
     }
-  }, [getInfo, name, plaValue, setValue, value, getRentalPrice, setRentalPrice]);
-
+  }, [getDataFromCMND, InfoCCCD, name, setValue]);
+  // get all infomations dont change
   useEffect(() => {
-    if (name === "rentalPrice" && value) {
-      const totalDepositAmount = (getNamecommissionPolicyId * Number(value.toString().replace(/\./g, ""))).toLocaleString("vi-VN");
-      setValue("totalDepositAmount", totalDepositAmount);
+    if (plaValue) {
+      setValues(getValues(name));
     }
-    if (showAutoPrice && getRentalPrice) {
-      const additionalDepositAmount = (getNamecommissionPolicyId * Number(getRentalPrice.toString().replace(/\./g, "")) - Number(value.replace(/[^0-9]/g, ""))).toLocaleString("vi-VN");
-      setValue("additionalDepositAmount", additionalDepositAmount);
+    //  import auto for price begin
+    if (name === "rentalPrice") {
+      setValues(getValues("rentalPrice")?.toLocaleString("vi-VN"));
     }
-    
-    setValue("chuongTrinhUuDai", "");
-  }, [getNamecommissionPolicyId, getRentalPrice, name, setValue, value, showAutoPrice]);
+    if(name==="totalDepositAmount"){
+      setValues(getValues("totalDepositAmount")?.toLocaleString("vi-VN"));
+    }
+    if(name==="depositAmount"){
+      setValue("additionalDepositAmount",getValues("totalDepositAmount")-Number(value.toString().replace(/\./g, "")))
+    }
+  
+  }, []);
 
+  // import price totalDepositAmount
+  useEffect(()=>{
+if(getRentalPrice && getNamecommissionPolicyId && name ==="totalDepositAmount"){
+  setValue("totalDepositAmount",getRentalPrice*getNamecommissionPolicyId)
+  setValues((getRentalPrice*getNamecommissionPolicyId)?.toLocaleString("vi-VN"))
+}
+  },[getNamecommissionPolicyId,getRentalPrice])
+ // handle additionalDepositAmount
+
+  //
   useEffect(() => {
     if (data && data.response) {
       const Data = data.response.map((i) => ({
@@ -110,9 +115,7 @@ const RowComponent = ({
       if (name === "roomId" && !valueOptions) {
         setValue("roomId", getInfo.id);
       }
-      if (name === "rentalPrice" && getInfo["rentalPrice"]) {
-        setValues(getInfo["rentalPrice"].toLocaleString("vi-VN"));
-      }
+
     }
   }, [data, getInfo, name, setValue, valueOptions]);
 
@@ -129,19 +132,17 @@ const RowComponent = ({
 
     if (priceValue) {
       const numericValue = inputValue.replace(/[^0-9]/g, "");
-      setValues(Number(numericValue).toLocaleString("vi-VN"));
+      setValues(Number(numericValue)?.toLocaleString("vi-VN"));
+      setValue("depositAmount",numericValue)
+      setValue("additionalDepositAmount",(getValues("totalDepositAmount")-numericValue)?.toLocaleString("vi-VN"))
     } else if (name === "rentalPrice") {
       const numericValue = inputValue.replace(/[^0-9]/g, "");
-      setValues(Number(numericValue).toLocaleString("vi-VN"));
-      setRentalPrice(Number(numericValue).toLocaleString("vi-VN"));
-    } else if (NameValue) {
-      const strValue = inputValue.split(" ");
-      let capitalizedStr = strValue
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-      setValues(capitalizedStr);
-    } else {
+      setValues(Number(numericValue)?.toLocaleString("vi-VN"));
+      setValue("rentalPrice",numericValue)
+      setRentalPrice(Number(numericValue));
+    }  else {
       setValues(e.target.value);
+      setValue(name,e.target.value)
     }
   };
 
@@ -156,12 +157,18 @@ const RowComponent = ({
         {title}
       </div>
       <div
-        className={`h-[38px] py-[9px] w-[318px] ${isDisabled ? "bg-gray-50" : "bg-white"} rounded-md shadow border border-gray-300 ${unit ? "justify-start items-center gap-2 flex" : "justify-between items-center flex"}`}
+        className={`h-[38px] py-[9px] w-[318px] ${
+          isDisabled ? "bg-gray-50" : "bg-white"
+        } rounded-md shadow border border-gray-300 ${
+          unit
+            ? "justify-start items-center gap-2 flex"
+            : "justify-between items-center flex"
+        }`}
       >
         {name !== "roomId" ? (
           <>
             <input
-              {...(name === "datcoc" ? {} : register(name))}
+              {...register(name)}
               type={type}
               className="w-full outline-none text-sm font-normal leading-tight px-[13px]"
               placeholder={placeholder}
