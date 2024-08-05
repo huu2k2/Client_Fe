@@ -37,73 +37,67 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
   // get infomation of room
-  const { data: DataDepositInfomation, isLoading } =
+  const { data: DataDepositInfomation, isLoading ,refetch } =
     useGetDepositInfomationQuery(getInfo.depositId && getInfo.depositId);
   useEffect(() => {
     setLoading(isLoading);
   }, [isLoading]);
 
   useEffect(() => {
-    if(isSidebarOpen&&DataDepositInfomation?.response){
-    const response = DataDepositInfomation?.response;
-    // Prepare the data object with all the required fields
-    const updatedData = {
-      fullName: response.fullName,
-      phoneNumber: response.phoneNumber,
-      birthOfDay: format(new Date(response.birthOfDay), "yyyy-MM-dd"),
-      identification: response.identification,
-      dateRange: format(new Date(response.dateRange), "yyyy-MM-dd"),
-      issuedBy: response.issuedBy,
-      permanentAddress: response.permanentAddress,
-      roomId: response.roomId,
-      roomCode: getInfo.roomId,
-      houseAddress: response.houseAddress,
-      rentalPrice: response.rentalPrice?.toLocaleString("vi-VN"),
-      depositDate: format(new Date(response.depositDate), "yyyy-MM-dd"),
-      totalDepositAmount: response.totalDepositAmount?.toLocaleString("vi-VN"),
-      depositAmount: response.depositAmount?.toLocaleString("vi-VN") || 0,
-      additionalDepositAmount:
-        response.additionalDepositAmount?.toLocaleString("vi-VN") || 0,
-      depositPaymentDeadline: format(
-        new Date(response.depositPaymentDeadline),
-        "yyyy-MM-dd"
-      ),
-      rentalStartDate: format(new Date(response.rentalStartDate), "yyyy-MM-dd"),
-      numberOfPeople: response.numberOfPeople,
-      numberOfVehicle: response.numberOfVehicle,
-      chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
-      note: response.note,
-      rentalTerm: response.rentalTerm,
-      commissionPolicyId: response?.commissionPolicy?.id,
-      commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
-      signature: response?.signature,
-      signatureUrl: response?.signatureUrl,
-      commissionPolicyMonth: response?.commissionPolicy?.deposit,
-    };
+    if (isSidebarOpen && DataDepositInfomation?.response) {
+      const response = DataDepositInfomation?.response;
+      // Prepare the data object with all the required fields
+      const updatedData = {
+        fullName: response.fullName,
+        phoneNumber: response.phoneNumber,
+        birthOfDay: format(new Date(response.birthOfDay), "yyyy-MM-dd"),
+        identification: response.identification,
+        dateRange: format(new Date(response.dateRange), "yyyy-MM-dd"),
+        issuedBy: response.issuedBy,
+        permanentAddress: response.permanentAddress,
+        roomId: response.roomId,
+        roomCode: getInfo.roomId,
+        houseAddress: response.houseAddress,
+        rentalPrice: response.rentalPrice?.toLocaleString("vi-VN"),
+        depositDate: format(new Date(response.depositDate), "yyyy-MM-dd"),
+        totalDepositAmount:
+          response.totalDepositAmount?.toLocaleString("vi-VN"),
+        depositAmount: response.depositAmount?.toLocaleString("vi-VN") || 0,
+        additionalDepositAmount:
+          response.additionalDepositAmount?.toLocaleString("vi-VN") || 0,
+        depositPaymentDeadline: format(
+          new Date(response.depositPaymentDeadline),
+          "yyyy-MM-dd"
+        ),
+        rentalStartDate: format(
+          new Date(response.rentalStartDate),
+          "yyyy-MM-dd"
+        ),
+        numberOfPeople: response.numberOfPeople,
+        numberOfVehicle: response.numberOfVehicle,
+        chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
+        note: response.note,
+        rentalTerm: response.rentalTerm,
+        commissionPolicyId: response?.commissionPolicy?.id,
+        commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
+        signature: response?.signature,
+        signatureUrl: response?.signatureUrl,
+        commissionPolicyMonth: response?.commissionPolicy?.deposit,
+      };
 
-    // Update the state with the prepared data
-    setData(updatedData);
-    //
-    setValue("roomId", response.roomId);
-    setValue("roomCode", getInfo.roomId);
-    setValue("signature", response?.signature);
-    setValue("signatureUrl", response?.signatureUrl);
-    setValue("commissionPolicyId", response?.commissionPolicy?.id);
-    // Optionally update other states
-    setServiceInserts(response?.services);
-    setFurnitureInserts(response?.furnitures);
-  }
-  else{
-    setData([])
-    setValue("roomId", "");
-    setValue("roomCode", "");
-    setValue("signature", "");
-    setValue("signatureUrl", "");
-    setValue("commissionPolicyId", "");
-    setServiceInserts([]);
-    setFurnitureInserts([]);
-  }
-  }, [isSidebarOpen,getInfo,DataDepositInfomation]);
+      // Update the state with the prepared data
+      setData(updatedData);
+      //
+      setValue("roomId", response.roomId);
+      setValue("roomCode", getInfo.roomId);
+      setValue("signature", response?.signature);
+      setValue("signatureUrl", response?.signatureUrl);
+      setValue("commissionPolicyId", response?.commissionPolicy?.id);
+      // Optionally update other states
+      setServiceInserts(response?.services);
+      setFurnitureInserts(response?.furnitures);
+    }
+  }, [isSidebarOpen, getInfo, DataDepositInfomation]);
 
   // Display toast notifications for form errors
   useEffect(() => {
@@ -126,6 +120,7 @@ const SideBar = ({ getInfo }) => {
 
   // Form submission handler
   const onSubmit = async (data) => {
+    setLoading(true)
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -150,11 +145,15 @@ const SideBar = ({ getInfo }) => {
         data.totalDepositAmount?.replace(/[^0-9]/g, "")
       ),
     };
-    const kq = await putDeposit(convertData);
-    if (kq?.error) {
-      toast.error(kq?.error?.data.message);
-    } else {
+    try {
+      const kq = await putDeposit(convertData);
+      refetch()
       toast.success(kq.data.message);
+      setIsSidebarOpen(false)
+      setLoading(false)
+    } catch (error) {
+      toast.error(error);
+      setLoading(false)
     }
   };
 
@@ -219,7 +218,6 @@ const SideBar = ({ getInfo }) => {
             />
             <hr className="bg-gray-700 w-full h-[1px]" />
             <ButtonDeposit
-              setIsSidebarOpen={setIsSidebarOpen}
               getInfo={getInfo}
             />
           </div>

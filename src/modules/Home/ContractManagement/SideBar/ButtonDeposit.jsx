@@ -1,6 +1,6 @@
 import React from "react";
 
-const ButtonDeposit = ({ setIsSidebarOpen, getInfo }) => {
+const ButtonDeposit = ({ getInfo }) => {
   return (
     <div className="w-[501px] h-[78px] pl-4 py-5 justify-end items-center gap-4 inline-flex">
       <div className="h-[38px] px-[17px] py-[9px] bg-white rounded-md shadow border border-gray-300 justify-center items-center flex">
@@ -17,7 +17,7 @@ const ButtonDeposit = ({ setIsSidebarOpen, getInfo }) => {
           <button
             className="text-white text-sm font-medium  leading-tight"
             type="submit"
-            onClick={() => setIsSidebarOpen(false)}
+          
           >
             Cập nhập
           </button>
