@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const ItemFurniture = ({ item, handleChangePrice }) => {
+const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange}) => {
   return (
     <div
       className="w-[501px] h-fit flex justify-between items-start"
@@ -13,7 +13,7 @@ const ItemFurniture = ({ item, handleChangePrice }) => {
           className="w-4 h-4 relative rounded border border-gray-300 custom-checkbox"
           checked={item.isActived}
           onChange={() => {
-            handleChangePrice(item.furnitureId, !item.isActived);
+            handleCheckboxChange(item.furnitureId, !item.isActived);
           }}
         />
         <div className="text-gray-700 text-sm font-medium leading-tight">
@@ -47,7 +47,8 @@ const ItemFurniture = ({ item, handleChangePrice }) => {
 };
 
 const Furniture = ({ furnitureInserts, setFurnitureInserts }) => {
-  const [localFurnitureInserts, setLocalFurnitureInserts] = useState(furnitureInserts);
+  const [localFurnitureInserts, setLocalFurnitureInserts] =
+    useState(furnitureInserts);
 
   useEffect(() => {
     setLocalFurnitureInserts(furnitureInserts);
@@ -57,12 +58,21 @@ const Furniture = ({ furnitureInserts, setFurnitureInserts }) => {
   const handleChangePrice = (e, furnitureId) => {
     const updatedValue = e.target.value;
     // Remove non-numeric characters except commas
-    const numericValue = parseInt(updatedValue.replace(/[^0-9]/g, ''), 10);
+    const numericValue = parseInt(updatedValue.replace(/[^0-9]/g, ""), 10);
 
     setLocalFurnitureInserts((prev) =>
       prev.map((item) =>
         item.furnitureId === furnitureId
           ? { ...item, price: isNaN(numericValue) ? 0 : numericValue }
+          : item
+      )
+    );
+  };
+  const handleCheckboxChange = (furnitureId) => {
+    setLocalFurnitureInserts((prev) =>
+      prev.map((item) =>
+        item.furnitureId === furnitureId
+          ? { ...item, isActived: !item.isActived }
           : item
       )
     );
@@ -81,7 +91,12 @@ const Furniture = ({ furnitureInserts, setFurnitureInserts }) => {
       {/* Map through localFurnitureInserts */}
       {localFurnitureInserts &&
         localFurnitureInserts.map((item) => (
-          <ItemFurniture item={item} handleChangePrice={handleChangePrice} key={item.furnitureId} />
+          <ItemFurniture
+            item={item}
+            handleChangePrice={handleChangePrice}
+            key={item.furnitureId}
+            handleCheckboxChange={handleCheckboxChange}
+          />
         ))}
     </div>
   );
