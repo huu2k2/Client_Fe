@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
-import { usePostChangeRoomMutation,useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
- 
- 
+import {
+  usePostChangeRoomMutation,
+  useGetListOfAppointmentsQuery,
+} from "@apis/slice/Agencies";
 
 const ModalChangeRoom = ({ houseId, roomCode, scheduleId }) => {
   const { data } = useGetListRoomCodeNotDepositQuery(houseId);
-  const { refetch } = useGetListOfAppointmentsQuery();
+  const { refetch } = useGetListOfAppointmentsQuery({ queries: {}, body: {} });
   const [roomid, setRoomid] = useState(null);
   const [RoomCode, setRoomCode] = useState(null);
   const [ListRooms, setListRooms] = useState([]);
@@ -65,9 +66,11 @@ const ModalChangeRoom = ({ houseId, roomCode, scheduleId }) => {
             </option>
             {ListRooms &&
               ListRooms.map((i, index) => (
-                <option key={index} value={i.roomId} label={`P.${i.roomCode}`}>
-                   
-                </option>
+                <option
+                  key={index}
+                  value={i.roomId}
+                  label={`P.${i.roomCode}`}
+                ></option>
               ))}
           </select>
         </div>
@@ -76,7 +79,6 @@ const ModalChangeRoom = ({ houseId, roomCode, scheduleId }) => {
             {/* if there is a button in form, it will close the modal */}
             <button className="btn rounded-lg">Hủy</button>
             <button
-               
               className="btn bg-rose-700 hover:bg-rose-700 ml-4 rounded-lg text-white"
               onClick={handleClickSuccess}
             >

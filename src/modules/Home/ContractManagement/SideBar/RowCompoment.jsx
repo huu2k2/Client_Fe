@@ -10,8 +10,8 @@ const RowComponent = ({
   name,
   getInfo,
   setValue,
-  getValues,
-  getData
+  getData,
+  isSidebarOpen
 }) => {
   const isDisabled = [
     "commissionPolicyId",
@@ -21,28 +21,24 @@ const RowComponent = ({
     "chuongTrinhUuDai",
     "totalDepositAmount",
     "roomCode",
-    "additionalDepositAmount"
+    "additionalDepositAmount",
   ].includes(name);
 
-  const priceValue = [
-    // "depositAmount",
-    "additionalDepositAmount",
-    "totalDepositAmount",
-    // "rentalPrice",
-  ].includes(name);
+  const priceValue = ["additionalDepositAmount", "totalDepositAmount"].includes(
+    name
+  );
 
   const [value, setValues] = useState(getData[name]);
-// console.log(getData('totalDepositAmount'))
   useEffect(() => {
     const initialValue = getData[name];
     if (priceValue && initialValue) {
       setValues(Number(initialValue).toLocaleString("vi-VN"));
-      setValue(name,getData[name])
+      setValue(name, getData[name]);
     } else {
       setValues(initialValue);
-      setValue(name,getData[name])
+      setValue(name, getData[name]);
     }
-  }, [getData, name, priceValue]);
+  }, [getData, name,isSidebarOpen]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
@@ -54,14 +50,27 @@ const RowComponent = ({
 
       const totalDepositAmount =
         numericValue * Number(getData["commissionPolicyMonth"]);
- 
-      setValue("totalDepositAmount", totalDepositAmount.toLocaleString("vi-VN"));
-       setValue("additionalDepositAmount", (totalDepositAmount - Number(getData["depositAmount"].replace(/[^0-9]/g, ""))).toLocaleString("vi-VN"));
+
+      setValue(
+        "totalDepositAmount",
+        totalDepositAmount.toLocaleString("vi-VN")
+      );
+      setValue(
+        "additionalDepositAmount",
+        (
+          totalDepositAmount -
+          Number(getData["depositAmount"].replace(/[^0-9]/g, ""))
+        ).toLocaleString("vi-VN")
+      );
     } else if (name === "depositAmount") {
       setValue(name, numericValue);
       setValues(Number(numericValue).toLocaleString("vi-VN"));
-      const additionalDepositAmount = getData["totalDepositAmount"].replace(/[^0-9]/g, "") - numericValue;
-      setValue("additionalDepositAmount", additionalDepositAmount.toLocaleString("vi-VN"));
+      const additionalDepositAmount =
+        getData["totalDepositAmount"].replace(/[^0-9]/g, "") - numericValue;
+      setValue(
+        "additionalDepositAmount",
+        additionalDepositAmount.toLocaleString("vi-VN")
+      );
     } else if (priceValue) {
       setValues(Number(numericValue).toLocaleString("vi-VN"));
       setValue(name, numericValue);
@@ -70,7 +79,7 @@ const RowComponent = ({
       setValue(name, inputValue);
     }
   };
- 
+
   return (
     <div className="w-[501px] self-stretch justify-between items-center gap-4 inline-flex">
       <div className="w-fit text-gray-700 text-sm font-medium leading-tight">

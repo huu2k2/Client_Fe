@@ -57,7 +57,7 @@ const Agencies = createApi({
       }),
     }),
     getListOfAppointments: build.query({
-      query: ({ queries, body }) => ({
+      query: ({  queries = {}, body = {} }) => ({
         url: `/v2/Agencies/get-schedules?${Object.keys(queries)
           .map((key) => `${key}=${queries[key]}`)
           .join("&")}`,

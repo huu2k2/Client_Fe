@@ -49,7 +49,7 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
-  const { refetch } = useGetListOfAppointmentsQuery();
+  const { refetch } = useGetListOfAppointmentsQuery({queries: {}, body: {} });
   const [postChangeRoom] = usePostChangeRoomMutation();
 
   useEffect(() => {

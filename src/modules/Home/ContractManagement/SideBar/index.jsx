@@ -19,9 +19,13 @@ function coverDate(dateString) {
   return date.toISOString();
 }
 const SideBar = ({ getInfo }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
   const [_, setLoading] = useIsLoading();
+  const [getData, setData] = useState([]);
+  const [putDeposit] = usePutDepositInfomationMutation();
   // React Hook Form setup with Yup validation schema
   const {
     register,
@@ -32,9 +36,94 @@ const SideBar = ({ getInfo }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  // get infomation of room
+  const { data: DataDepositInfomation, isLoading } =
+    useGetDepositInfomationQuery(getInfo.depositId && getInfo.depositId);
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
-const [getData,setData] = useState([])
-  const [putDeposit] = usePutDepositInfomationMutation();
+  useEffect(() => {
+    if(isSidebarOpen&&DataDepositInfomation?.response){
+    const response = DataDepositInfomation?.response;
+    // Prepare the data object with all the required fields
+    const updatedData = {
+      fullName: response.fullName,
+      phoneNumber: response.phoneNumber,
+      birthOfDay: format(new Date(response.birthOfDay), "yyyy-MM-dd"),
+      identification: response.identification,
+      dateRange: format(new Date(response.dateRange), "yyyy-MM-dd"),
+      issuedBy: response.issuedBy,
+      permanentAddress: response.permanentAddress,
+      roomId: response.roomId,
+      roomCode: getInfo.roomId,
+      houseAddress: response.houseAddress,
+      rentalPrice: response.rentalPrice?.toLocaleString("vi-VN"),
+      depositDate: format(new Date(response.depositDate), "yyyy-MM-dd"),
+      totalDepositAmount: response.totalDepositAmount?.toLocaleString("vi-VN"),
+      depositAmount: response.depositAmount?.toLocaleString("vi-VN") || 0,
+      additionalDepositAmount:
+        response.additionalDepositAmount?.toLocaleString("vi-VN") || 0,
+      depositPaymentDeadline: format(
+        new Date(response.depositPaymentDeadline),
+        "yyyy-MM-dd"
+      ),
+      rentalStartDate: format(new Date(response.rentalStartDate), "yyyy-MM-dd"),
+      numberOfPeople: response.numberOfPeople,
+      numberOfVehicle: response.numberOfVehicle,
+      chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
+      note: response.note,
+      rentalTerm: response.rentalTerm,
+      commissionPolicyId: response?.commissionPolicy?.id,
+      commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
+      signature: response?.signature,
+      signatureUrl: response?.signatureUrl,
+      commissionPolicyMonth: response?.commissionPolicy?.deposit,
+    };
+
+    // Update the state with the prepared data
+    setData(updatedData);
+    //
+    setValue("roomId", response.roomId);
+    setValue("roomCode", getInfo.roomId);
+    setValue("signature", response?.signature);
+    setValue("signatureUrl", response?.signatureUrl);
+    setValue("commissionPolicyId", response?.commissionPolicy?.id);
+    // Optionally update other states
+    setServiceInserts(response?.services);
+    setFurnitureInserts(response?.furnitures);
+  }
+  else{
+    setData([])
+    setValue("roomId", "");
+    setValue("roomCode", "");
+    setValue("signature", "");
+    setValue("signatureUrl", "");
+    setValue("commissionPolicyId", "");
+    setServiceInserts([]);
+    setFurnitureInserts([]);
+  }
+  }, [isSidebarOpen,getInfo,DataDepositInfomation]);
+
+  // Display toast notifications for form errors
+  useEffect(() => {
+    if (Object.keys(errors).length > 5) {
+      toast.error("Bạn chưa  điền thêm 1 số trường!");
+    } else {
+      Object.values(errors).forEach((error) => toast.error(error.message));
+    }
+  }, [errors]);
+
+  const handleDrawerChange = (event) => {
+    setIsSidebarOpen(event.target.checked);
+    if (event.target.checked) {
+      sidebarRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   // Form submission handler
   const onSubmit = async (data) => {
     const convertData = {
@@ -57,7 +146,9 @@ const [getData,setData] = useState([])
       numberOfPeople: Number(data.numberOfPeople),
       numberOfVehicle: Number(data.numberOfVehicle),
       id: getInfo.depositId,
-      totalDepositAmount:Number(data.totalDepositAmount?.replace(/[^0-9]/g, "")),
+      totalDepositAmount: Number(
+        data.totalDepositAmount?.replace(/[^0-9]/g, "")
+      ),
     };
     const kq = await putDeposit(convertData);
     if (kq?.error) {
@@ -67,82 +158,6 @@ const [getData,setData] = useState([])
     }
   };
 
-  // Display toast notifications for form errors
-  useEffect(() => {
-    if (Object.keys(errors).length > 5) {
-      toast.error("Bạn chưa  điền thêm 1 số trường!");
-    } else {
-      Object.values(errors).forEach((error) => toast.error(error.message));
-    }
-  }, [errors]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const sidebarRef = useRef(null);
-
-  const handleDrawerChange = (event) => {
-    setIsSidebarOpen(event.target.checked);
-    if (event.target.checked) {
-      sidebarRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  // get infomation of room
-  const { data: DataDepositInfomation, isLoading } =
-    useGetDepositInfomationQuery(getInfo.depositId);
-  useEffect(() => {
-    setLoading(isLoading);
-  }, [isLoading]);
-
-  useEffect(() => {
-  if (DataDepositInfomation?.isSuccess) {
-    const response = DataDepositInfomation?.response;
-console.log(response)
-    // Prepare the data object with all the required fields
-    const updatedData = {
-      fullName: response.fullName,
-      phoneNumber: response.phoneNumber,
-      birthOfDay: format(new Date(response.birthOfDay), "yyyy-MM-dd"),
-      identification: response.identification,
-      dateRange: format(new Date(response.dateRange), "yyyy-MM-dd"),
-      issuedBy: response.issuedBy,
-      permanentAddress: response.permanentAddress,
-      roomId: response.roomId,
-      roomCode: getInfo.roomId,
-      houseAddress: response.houseAddress,
-      rentalPrice: response.rentalPrice?.toLocaleString("vi-VN"),
-      depositDate: format(new Date(response.depositDate), "yyyy-MM-dd"),
-      totalDepositAmount: response.totalDepositAmount?.toLocaleString("vi-VN"),
-      depositAmount: response.depositAmount?.toLocaleString("vi-VN") || 0,
-      additionalDepositAmount: response.additionalDepositAmount?.toLocaleString("vi-VN") || 0,
-      depositPaymentDeadline: format(new Date(response.depositPaymentDeadline), "yyyy-MM-dd"),
-      rentalStartDate: format(new Date(response.rentalStartDate), "yyyy-MM-dd"),
-      numberOfPeople: response.numberOfPeople,
-      numberOfVehicle: response.numberOfVehicle,
-      chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
-      note: response.note,
-      rentalTerm: response.rentalTerm,
-      commissionPolicyId: response?.commissionPolicy?.id,
-      commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
-      signature: response?.signature,
-      signatureUrl: response?.signatureUrl,
-      commissionPolicyMonth: response?.commissionPolicy?.deposit,
-    };
-
-    // Update the state with the prepared data
-    setData(updatedData);
-    // 
-    setValue("roomId", response.roomId);
-    setValue("roomCode", getInfo.roomId);
-    setValue("signature", response?.signature);
-    setValue("signatureUrl", response?.signatureUrl);
-    setValue("commissionPolicyId", response?.commissionPolicy?.id);
-    // Optionally update other states
-    setServiceInserts(response?.services);
-    setFurnitureInserts(response?.furnitures);
-  }
-}, [isSidebarOpen]);
   return (
     <div className="drawer drawer-end">
       <input
