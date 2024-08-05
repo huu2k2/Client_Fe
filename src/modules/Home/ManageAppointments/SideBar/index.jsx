@@ -58,7 +58,7 @@ const SideBar = ({ getInfo }) => {
     setValue("houseAddress", getInfo.houseAddress);
     setValue("rentalPrice", getInfo.rentalPrice);
   }, [getInfo]);
-
+ 
   const onSubmit = async (data) => {
     setIsLoading(true);
     setValue("chuongTrinhUuDai", "");
@@ -85,7 +85,7 @@ const SideBar = ({ getInfo }) => {
       phoneNumber: data.phoneNumber,
       totalDepositAmount: Number(data.totalDepositAmount),
     };
-
+ 
     try {
       const kq = await addDeposit(convertData);
  
@@ -101,8 +101,8 @@ const SideBar = ({ getInfo }) => {
           roomId: Number(data.roomId),
         };
 
-        // await postChangeRoom(body).unwrap();
-        // refetch();
+        await postChangeRoom(body).unwrap();
+        refetch();
         setIsLoading(false);
       }
     } catch (error) {

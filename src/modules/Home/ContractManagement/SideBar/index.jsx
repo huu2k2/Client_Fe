@@ -98,7 +98,7 @@ const [getData,setData] = useState([])
   useEffect(() => {
   if (DataDepositInfomation?.isSuccess) {
     const response = DataDepositInfomation?.response;
-
+console.log(response)
     // Prepare the data object with all the required fields
     const updatedData = {
       fullName: response.fullName,
@@ -137,7 +137,7 @@ const [getData,setData] = useState([])
     setValue("roomCode", getInfo.roomId);
     setValue("signature", response?.signature);
     setValue("signatureUrl", response?.signatureUrl);
-
+    setValue("commissionPolicyId", response?.commissionPolicy?.id);
     // Optionally update other states
     setServiceInserts(response?.services);
     setFurnitureInserts(response?.furnitures);
