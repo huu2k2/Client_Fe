@@ -3,7 +3,7 @@ import ItemHome from "./ItemHome";
 import { useGetAllHousesQuery } from "@apis/slice/Houses";
 import { debounce } from "../../../../utils/Debounce";
 
-const Sidebar = ({ idHolder }) => {
+const Sidebar = ({ idHolder,setFilterData }) => {
   const { data: dataListHome } = useGetAllHousesQuery(idHolder);
   const [data, setData] = useState([]);
 
@@ -63,7 +63,7 @@ const Sidebar = ({ idHolder }) => {
             </div>
             <div className="divider mt-1"></div>
             {data.map((i, index) => (
-              <ItemHome key={index} item={i} />
+              <ItemHome key={index} item={i} setFilterData={setFilterData}/>
             ))}
           </div>
         </div>

@@ -4,7 +4,7 @@ import { AiFillLock } from "react-icons/ai";
 import { usePostVeriPWMutation } from "../../../../apis/slice/Houses";
 import { toast } from "react-toastify";
 import ImgLock from  '../../../../assets/lock.png'
-const ItemHome = ({ item }) => {
+const ItemHome = ({ item ,setFilterData}) => {
   const navigate = useNavigate();
   const [isLock, setIsLock] = useState(item.isExclusive);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +32,9 @@ const ItemHome = ({ item }) => {
         houseId: item.houseId,
         housePass: getText.trim(),
       }).unwrap();
-      console.log(kq);
       if (kq.statusCode === 200 && kq.response) {
         setIsLock(false);
-      
+        setFilterData((prev)=>({...prev,housePass:getText.trim(),houseId:item.houseId}))
         toast.success('Nhập password thành công!');
        
       } else {

@@ -32,7 +32,7 @@ const Index = () => {
 
   const [query, setQuery] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const initialFilterData = {
+  const [filterData, setFilterData] = useState({
     houseId: idHome,
     districtId: null,
     wardId: null,
@@ -49,13 +49,14 @@ const Index = () => {
     freeHour: null,
     washing: null,
     roomQuantity: null,
-  };
+    housePass: null,
+  });
   const [getRoomsFilter, { data: DataOF, isLoading }] =
     useGetRoomsofhouseMutation();
   const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
   useEffect(() => {
     const rs = async () => {
-      const kq = await getRoomsFilter(initialFilterData).unwrap();
+      const kq = await getRoomsFilter(filterData).unwrap();
       setFilteredData(kq?.response);
     };
 
@@ -76,7 +77,7 @@ const Index = () => {
     }
   }, [query, idHome]);
   const { data: dataNameHome } = useGetInfoHomeQuery(idHome);
- 
+ console.log(filterData)
   return (
     <>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
@@ -152,7 +153,7 @@ const Index = () => {
         />
       </div>
       {dataNameHome?.response && (
-        <Sidebar idHolder={dataNameHome?.response?.houseHolderId} />
+        <Sidebar idHolder={dataNameHome?.response?.houseHolderId} setFilterData={setFilterData}/>
       )}
     </>
   );
