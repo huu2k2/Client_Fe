@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IoMdHeart } from "react-icons/io";
 import { BsGeoAlt } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   useAddFavoriteMutation,
   useRemoveFavoriteMutation,
@@ -10,7 +10,7 @@ import {
 import ImgHome from "../../assets/notfound(1).png";
 
 const Index = ({ item, faveritedata }) => {
-
+const  navigate = useNavigate()
   const img = item.image || ImgHome;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
@@ -39,7 +39,12 @@ const Index = ({ item, faveritedata }) => {
     setIsHeart(!isHeart);
     refetch();
   };
-
+ 
+  const handleChangePage = (item) => {
+    if (item.status === "0") {
+      navigate(`/overview/${item.houseId}`);
+    }
+  };
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
       <div className="relative flex justify-center items-center rounded-lg">
@@ -118,6 +123,7 @@ const Index = ({ item, faveritedata }) => {
               ? "text-[#2563eb] bg-[#EFF6FF]"
               : "text-[#D97706] bg-[#FFFBEB]"
               }`}
+              onClick={()=>handleChangePage(item)}
           >
             {item.status === "0" ? "Phòng trống:" : "Phòng sắp trống:"}{" "}
             <span className="text-black">{item.emptyRoomTotal}</span>

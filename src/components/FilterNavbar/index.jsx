@@ -9,6 +9,7 @@ import FilterAdd from "./FilterAdd";
 import { useQueryFilterData } from "@customhooks";
 import { debounce } from "@utils";
 import { useClickRemoveFilter } from "@customhooks/FilterCustomHook";
+ 
 import {
   useGetHouseNameQuery,
   usePostVeriPWMutation,
@@ -60,36 +61,41 @@ const FilterNavbar = ({ setOption }) => {
   //  check password
   const [getTextS, setTextS] = useState("");
   const [getHome, setHome] = useState(null);
+  const [filterData, setFilterData] = useQueryFilterData()
+
   const handlePickOption = (option) => {
     if (option.isExclusive) {
       setHome(option);
       document.getElementById("modal_oclock_main").showModal();
     } else {
-      console.log( option)
-      setOption(option.houseId), setSearchInput(option.houseName);
+      setOption(option.houseId), 
+      setFilterData((prev)=>({...prev,houseId:option.houseId}))
+      setSearchInput(option.houseName);
       setColse(false);
     }
   };
   const modalRef = useRef(null); 
   const [postCheckPW] = usePostVeriPWMutation();
   const hanldeCheckPW = async () => {
-    // try {
-    //   const kq = await postCheckPW({
-    //     houseId: getHome.houseId,
-    //     housePass: getTextS,
-    //   }).unwrap();
-    //   if (kq.response) {
-        console.log( getHome.houseId,getHome.houseName)
-        setOption(getHome.houseId), setSearchInput(getHome.houseName);
+    try {
+      const kq = await postCheckPW({
+        houseId: getHome.houseId,
+        housePass: getTextS,
+      }).unwrap();
+      if (kq.response) {
+        console.log( kq.response)
+        setOption(getHome.houseId)
+        setFilterData((prev)=>({...prev,houseId:getHome.houseId}))
+         setSearchInput(getHome.houseName);
         setColse(false);
         modalRef.current.close();
-    //   } else {
-    //     setTextS("");
-    //     toast.error("Hãy Nhập Lại Mật Khẩu!");
-    //   }
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+      } else {
+        setTextS("");
+        toast.error("Hãy Nhập Lại Mật Khẩu!");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
