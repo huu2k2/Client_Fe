@@ -23,7 +23,7 @@ const SelectTips = ({ getInfo, setValue, setNamecommissionPolicyId, getValues })
   useEffect(() => {
     const CovertData = data?.response?.map((i) => ({
       value: i.id,
-      label: `${i.month} Tháng - Cọc ${i.deposit} - Hoa hồng ${i.commission} %`,
+      label: `HĐ ${i.month} Tháng - Cọc ${i.deposit} - Hoa hồng ${i.commission} %`,
     }));
 
     if (CovertData && CovertData.length > 0) {

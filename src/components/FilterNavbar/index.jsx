@@ -6,16 +6,20 @@ import TypeRoom from "./FilterTypeRoomDropdown";
 import FilterStatusDropdow from "./FilterStatusDropdow";
 import FilterPriceDropDow from "./FilterPriceDropDow";
 import FilterAdd from "./FilterAdd";
-import { useQueryFilterData } from "@customhooks";
+import {
+  useQueryFilterData,
+  useQueryData,
+  useClickRemoveFilter,
+} from "@customhooks";
 import { debounce } from "@utils";
-import { useClickRemoveFilter } from "@customhooks/FilterCustomHook";
- 
 import {
   useGetHouseNameQuery,
   usePostVeriPWMutation,
 } from "../../apis/slice/Houses";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import ImgLock from '../../assets/lock.png'
+import ImgLock from "../../assets/lock.png";
+import { toast } from "react-toastify";
+
 const removeDiacritics = (str) => {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
@@ -58,23 +62,24 @@ const FilterNavbar = ({ setOption }) => {
     location.reload();
   }, 500);
 
-  //  check password
+  // check password
   const [getTextS, setTextS] = useState("");
   const [getHome, setHome] = useState(null);
-  const [filterData, setFilterData] = useQueryFilterData()
+  const [filterData, setFilterData] = useQueryFilterData();
 
   const handlePickOption = (option) => {
     if (option.isExclusive) {
       setHome(option);
       document.getElementById("modal_oclock_main").showModal();
     } else {
-      setOption(option.houseId), 
-      setFilterData((prev)=>({...prev,houseId:option.houseId}))
+      setOption(option.houseId);
+      setFilterData((prev) => ({ ...prev, houseId: option.houseId }));
       setSearchInput(option.houseName);
       setColse(false);
     }
   };
-  const modalRef = useRef(null); 
+
+  const modalRef = useRef(null);
   const [postCheckPW] = usePostVeriPWMutation();
   const hanldeCheckPW = async () => {
     try {
@@ -83,18 +88,22 @@ const FilterNavbar = ({ setOption }) => {
         housePass: getTextS,
       }).unwrap();
       if (kq.response) {
-        console.log( kq.response)
-        setOption(getHome.houseId)
-        setFilterData((prev)=>({...prev,houseId:getHome.houseId}))
-         setSearchInput(getHome.houseName);
+        setFilterData((prev) => ({
+          ...prev,
+          houseId: getHome.houseId,
+          housePass: getTextS.trim(),
+        }));
+        setSearchInput(getHome.houseName);
         setColse(false);
-        modalRef.current.close();
+        setTextS(""); // Clear the password input
+        modalRef.current.close(); // Close the modal
       } else {
         setTextS("");
-        toast.error("Hãy Nhập Lại Mật Khẩu!");
+        toast.error("Mật khẩu không chính xác!");
       }
     } catch (error) {
-      toast.error(error.message);
+      setTextS("");
+      toast.error("Mật khẩu không chính xác!");
     }
   };
 
@@ -117,19 +126,23 @@ const FilterNavbar = ({ setOption }) => {
             >
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
-                  <div className="flex justify-between items-center w-full px-2">
+                  <div
+                    className="flex justify-between items-center w-full px-2"
+                    key={index}
+                  >
                     <p
-                      key={index}
                       onClick={() => handlePickOption(option)}
-                      className=" w-[90%] pl-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
+                      className="w-[90%] pl-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
                     >
                       {option.houseName}
                     </p>
-                    {option.isExclusive &&  <img src={ImgLock} className="w-5 h-5"/>}
+                    {option.isExclusive && (
+                      <img src={ImgLock} className="w-5 h-5" alt="lock icon" />
+                    )}
                   </div>
                 ))
               ) : (
-                <p className="p-2 text-rose-500">không tìm thấy!</p>
+                <p className="p-2 text-rose-500">Không tìm thấy!</p>
               )}
             </div>
           )}
@@ -137,12 +150,12 @@ const FilterNavbar = ({ setOption }) => {
         {searchInput && (
           <button
             className="text-gray-500 text-xl rounded-[50%] ml-4 absolute right-2"
-            onClick={() => (
-              setOption(null),
-              setColse(false),
-              setOption(""),
-              setSearchInput("")
-            )}
+            onClick={() => {
+              setOption(null);
+              setColse(false);
+              setOption("");
+              setSearchInput("");
+            }}
           >
             <IoMdCloseCircleOutline />
           </button>
@@ -160,7 +173,7 @@ const FilterNavbar = ({ setOption }) => {
         <RiDeleteBin6Line className="w-5 h-5 text-white" />
       </div>
       {/* my modal */}
- 
+
       <dialog id="modal_oclock_main" className="modal z-10" ref={modalRef}>
         <div className="modal-box">
           <form method="dialog">
@@ -180,9 +193,8 @@ const FilterNavbar = ({ setOption }) => {
             className="input input-bordered w-full max-w-xs mt-5"
           />
           <div className="modal-action">
-            <button className="btn btn-outline " onClick={hanldeCheckPW}>
-              {" "}
-              OK{" "}
+            <button className="btn btn-outline" onClick={hanldeCheckPW}>
+              OK
             </button>
           </div>
         </div>

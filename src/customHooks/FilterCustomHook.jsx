@@ -18,6 +18,7 @@ export const FilterCustomHook = ({ children }) => {
 
   const initialFilterData = {
     houseId: null,
+    housePass:null,
     districtId: null,
     wardId: null,
     categories: null,
@@ -96,7 +97,7 @@ export const useQueryFilterData = () => {
   return [filterData, setFilterData];
 };
 
-export const useQueryData = () => {
+export  const useQueryData = () => {
   const { data, isLoading, isError, error } = useContext(FilterHookContext);
   return [data, isLoading, isError, error];
 };

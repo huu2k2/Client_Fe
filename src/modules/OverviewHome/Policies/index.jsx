@@ -16,7 +16,7 @@ const index = () => {
  
   return (
     <>
-      <div className="w-full h-[116px] py-10 shadow justify-center items-center inline-flex bg-black">
+      <div className="w-full h-fitpy-10 shadow justify-center items-center inline-flex bg-black">
         <div className="grow shrink basis-0 h-9 px-[280px] justify-start items-start flex"></div>
       </div>
 

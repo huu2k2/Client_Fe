@@ -62,7 +62,7 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     }
   }, [option, data]);
 
-  if (data?.response.length === 0) {
+  if (data?.response?.length === 0 || !data?.response) {
     return (
       <div className="w-full h-full flex justify-center items-center">
         <p className="text-rose-500">Không tìm thấy phòng tương tự!</p>
