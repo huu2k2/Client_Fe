@@ -46,6 +46,7 @@ const SideBar = ({ getInfo }) => {
   useEffect(() => {
     if (isSidebarOpen && DataDepositInfomation?.response) {
       const response = DataDepositInfomation?.response;
+      console.log(response)
       // Prepare the data object with all the required fields
       const updatedData = {
         fullName: response.fullName,
@@ -96,6 +97,12 @@ const SideBar = ({ getInfo }) => {
       // Optionally update other states
       setServiceInserts(response?.services);
       setFurnitureInserts(response?.furnitures);
+      // 
+      setValue("afterIdentificationBase64", response?.afterIdentificationBase64);
+      setValue("afterIdentificationUrl", response?.afterIdentificationUrl);
+      setValue("beforeIdentificationBase64", response?.beforeIdentificationBase64);
+      setValue("beforeIdentificationUrl", response?.beforeIdentificationUrl);
+      
     }
   }, [isSidebarOpen, getInfo, DataDepositInfomation]);
 
