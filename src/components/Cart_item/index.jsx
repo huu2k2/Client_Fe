@@ -41,9 +41,9 @@ const  navigate = useNavigate()
   };
  
   const handleChangePage = (item) => {
-    if (item.status === "0") {
+     
       navigate(`/overview/${item.houseId}`);
-    }
+ 
   };
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">

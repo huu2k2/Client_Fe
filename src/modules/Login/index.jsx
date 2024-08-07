@@ -27,12 +27,12 @@ const hanldeClick =()=>{
   change('/')
 }
   return (
-    <div className="w-full h-full nthd_flex relative self-stretch flex-1">
+    <div className="lg:w-full h-screen nthd_flex relative self-stretch flex-1">
     
 
       {/* xac thuc opt */}
       <div id="recaptcha-container"></div>
-      <div className="h-screen w-[1344px] " >
+      <div className=" lg:h-screen w-[1344px] " >
         <img src={img} alt="Login img" className="w-full h-fit " />
       </div>
 
