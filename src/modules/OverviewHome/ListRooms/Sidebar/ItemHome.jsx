@@ -33,6 +33,7 @@ const ItemHome = ({ item ,setFilterData}) => {
         housePass: getText.trim(),
       }).unwrap();
       if (kq.statusCode === 200 && kq.response) {
+        localStorage.setItem("kwomkdnkadvadvad",getText.trim())
         setIsLock(false);
         setFilterData((prev)=>({...prev,housePass:getText.trim(),houseId:item.houseId}))
         toast.success('Nhập password thành công!');

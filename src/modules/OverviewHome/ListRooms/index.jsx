@@ -49,7 +49,7 @@ const Index = () => {
     freeHour: null,
     washing: null,
     roomQuantity: null,
-    housePass: null,
+    housePass: localStorage.getItem('kwomkdnkadvadvad')||null,
   });
   const [getRoomsFilter, { data: DataOF, isLoading }] =
     useGetRoomsofhouseMutation();
@@ -77,7 +77,7 @@ const Index = () => {
     }
   }, [query, idHome]);
   const { data: dataNameHome } = useGetInfoHomeQuery(idHome);
- console.log(filterData)
+ 
   return (
     <>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
