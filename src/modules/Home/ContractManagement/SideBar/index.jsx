@@ -79,7 +79,7 @@ const SideBar = ({ getInfo }) => {
         chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
         note: response.note,
         rentalTerm: response.rentalTerm,
-        commissionPolicyId: response?.commissionPolicy?.id,
+        commissionPolicyId: response?.commissionPolicyId,
         commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
         signature: response?.signature,
         signatureUrl: response?.signatureUrl,
@@ -93,7 +93,8 @@ const SideBar = ({ getInfo }) => {
       setValue("roomCode", getInfo.roomId);
       setValue("signature", response?.signature);
       setValue("signatureUrl", response?.signatureUrl);
-      setValue("commissionPolicyId", response?.commissionPolicy?.id);
+      setValue("commissionPolicyId", response?.commissionPolicyId);
+      setValue("commissionPolicy", response?.commissionPolicy);
       // Optionally update other states
       setServiceInserts(response?.services);
       setFurnitureInserts(response?.furnitures);
