@@ -14,14 +14,20 @@ const RowComponent = ({
   isSidebarOpen
 }) => {
   const isDisabled = [
+    "fullName",
+    "birthOfDay",
+    "identification",
+    "dateRange",
+    "issuedBy",
+    "permanentAddress",
+    "roomId",
     "commissionPolicyId",
     "datcoc",
     "houseAddress",
-    "rentalTerm",
+    "additionalDepositAmount",
     "chuongTrinhUuDai",
     "totalDepositAmount",
-    "roomCode",
-    "additionalDepositAmount",
+    "rentalTerm",
   ].includes(name);
 
   const priceValue = ["additionalDepositAmount", "totalDepositAmount"].includes(

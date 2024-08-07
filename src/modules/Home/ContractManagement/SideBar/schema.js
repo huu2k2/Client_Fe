@@ -14,8 +14,7 @@ const schema = yup
       return isBefore(birthDate, new Date());
     }),
     identification: yup.string()
-    .required("Số chứng minh thư là bắt buộc")
-    .matches(/^\d{12}$/, "Số chứng minh thư phải có 12 số"),
+    .required("Số chứng minh thư là bắt buộc"),
     dateRange: yup.string().required("Ngày hợp lệ là bắt buộc").test('is-before-today', 'Ngày cấp phải trước ngày hiện tại', value => {
       if (!value) return false;
       const birthDate = parse(value, 'yyyy-MM-dd', new Date());  

@@ -12,7 +12,6 @@ import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { toast } from "react-toastify";
 import { debounce } from "lodash";
 import {
-  usePostChangeRoomMutation,
   useGetListOfAppointmentsQuery,
 } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
@@ -50,8 +49,7 @@ const SideBar = ({ getInfo }) => {
   });
 
   const { refetch } = useGetListOfAppointmentsQuery({queries: {}, body: {} });
-  const [postChangeRoom] = usePostChangeRoomMutation();
-
+  
   useEffect(() => {
     setValue("sheduleId", getInfo.scheduleId);
     setValue("phoneNumber", getInfo.phoneNumber);
@@ -100,8 +98,6 @@ const SideBar = ({ getInfo }) => {
           scheduleId: Number(getInfo.scheduleId),
           roomId: Number(data.roomId),
         };
-
-        await postChangeRoom(body).unwrap();
         refetch();
         setIsLoading(false);
       }
