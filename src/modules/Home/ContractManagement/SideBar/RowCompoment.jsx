@@ -93,7 +93,7 @@ const RowComponent = ({
       </div>
       <div
         className={`w-[318px] h-[38px] px-[13px] py-[9px] ${
-          isDisabled ? "bg-gray-50" : "bg-white"
+          (isDisabled || getInfo.status==="3") ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
           unit
             ? "justify-start items-center gap-2 flex"

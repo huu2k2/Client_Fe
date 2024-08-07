@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const RowSurcharges = ({ label, unit, price, onChange }) => {
+const RowSurcharges = ({ label, unit, price, onChange ,getInfo}) => {
   const [value, setValue] = useState(price);
 
   // Hàm để định dạng giá trị số thành chuỗi tiền tệ
@@ -33,6 +33,7 @@ const RowSurcharges = ({ label, unit, price, onChange }) => {
             value={formatNumber(value)}
             onChange={handleChange}
             placeholder="Nhập số tiền"
+            disabled={getInfo.status==="3"}
           />
         </div>
         <div className="w-16 pl-[15px] pr-[17px] py-[9px] bg-gray-50 rounded-tr-md rounded-br-md border border-gray-300 justify-center items-center gap-2 flex">

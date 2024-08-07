@@ -4,6 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import SignatureCanvas from "react-signature-canvas";
 
 const Signature = ({ name, img, onChange,type="show" }) => {
+  const [count,setCount] = useState(0)
   const [selectedImage, setSelectedImage] = useState(img);
   const [imagePreview, setImagePreview] = useState(img);
   const inputFileRef = useRef(null);
@@ -37,6 +38,7 @@ if(img){
   };
 
   const handleClear = () => {
+    setCount(0)
     sigCanvas.current.clear();
   };
 
@@ -44,6 +46,7 @@ if(img){
     const dataURL = sigCanvas.current.toDataURL("image/png");
     setImagePreview(dataURL);
     onChange(dataURL);
+    setCount(1)
     document.getElementById("my_modal_1").close();
   };
 
@@ -51,7 +54,7 @@ if(img){
     <div className="w-[501px] flex justify-between items-start">
       <span className="w-fit h-5 not-italic text-gray-700">{name}</span>
       <div className="flex flex-col gap-4  w-[318px]">
-        <div className="w-[318px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
+        {/* <div className="w-[318px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
           {imagePreview ? (
             <div className="relative">
               <img
@@ -94,13 +97,13 @@ if(img){
               </div>
             </>
           )}
-        </div>
+        </div> */}
         {type==="show"?<button
           type="button"
           onClick={() => document.getElementById("my_modal_1").showModal()}
-          className="text-white w-full bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2"
+          className={`text-white w-full ${count===0?"bg-black":"bg-rose-600 border-rose-600 hover:bg-rose-700"}  border  focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2`}
         >
-          Tạo chữ ký
+         { count===0? "Chưa tạo chữ kí" :"Đã tạo chữ ký"}
         </button> :<></>}
         
 

@@ -102,7 +102,7 @@ const SideBar = ({ getInfo }) => {
       setValue("afterIdentificationUrl", response?.afterIdentificationUrl);
       setValue("beforeIdentificationBase64", response?.beforeIdentificationBase64);
       setValue("beforeIdentificationUrl", response?.beforeIdentificationUrl);
-      
+
     }
   }, [isSidebarOpen, getInfo, DataDepositInfomation]);
 
@@ -124,10 +124,11 @@ const SideBar = ({ getInfo }) => {
       });
     }
   };
-
+const [isSubmit,setIsSubmit] =useState(false)
   // Form submission handler
   const onSubmit = async (data) => {
     setLoading(true)
+    setIsSubmit(true)
     const convertData = {
       ...data,
       furnitures: furnitureInserts,
@@ -158,9 +159,11 @@ const SideBar = ({ getInfo }) => {
       toast.success(kq.data.message);
       setIsSidebarOpen(false)
       setLoading(false)
+      setIsSubmit(false)
     } catch (error) {
       toast.error(error);
       setLoading(false)
+      setIsSubmit(false)
     }
   };
 
@@ -218,14 +221,17 @@ const SideBar = ({ getInfo }) => {
               register={register}
               serviceInserts={serviceInserts}
               setServiceInserts={setServiceInserts}
+              getInfo={getInfo}
             />
             <Furniture
               furnitureInserts={furnitureInserts}
               setFurnitureInserts={setFurnitureInserts}
+              getInfo={getInfo}
             />
             <hr className="bg-gray-700 w-full h-[1px]" />
             <ButtonDeposit
               getInfo={getInfo}
+              isSubmit={isSubmit}
             />
           </div>
         </form>

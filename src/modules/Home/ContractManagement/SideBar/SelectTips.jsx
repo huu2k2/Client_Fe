@@ -54,6 +54,7 @@ const SelectTips = ({ getInfo, setValue, setNamecommissionPolicyId, getValues })
           value={value}
           onChange={handleChangeValue}
           options={options}
+          isDisabled={getInfo.status === "3"}
         />
       </div>
     </div>

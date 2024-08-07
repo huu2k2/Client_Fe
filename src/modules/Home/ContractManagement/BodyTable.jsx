@@ -76,9 +76,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     setTotalItems(totalItemsMemo);
   }, [data, date, getTextSearch]);
 
-  
   const handleExportDeposit = async (i) => {
-
     try {
       const response = await axios.post(
         `${API_URL}/Deposits/export-pdf/${i.depositId}`,
@@ -88,8 +86,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
           headers: {
             "Content-Type": "application/json",
             accept: "*/*",
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -319,11 +316,13 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                               Xuất hợp đồng cọc
                             </span>
                           </li>
-                          <li onClick={() => handleCancledeposite(i)}>
-                            <span className="text-gray-700 text-sm font-normal  leading-tight">
-                              Hủy cọc
-                            </span>
-                          </li>
+                          {i.status !== "3" && (
+                            <li onClick={() => handleCancledeposite(i)}>
+                              <span className="text-gray-700 text-sm font-normal  leading-tight">
+                                Hủy cọc
+                              </span>
+                            </li>
+                          )}
                         </ul>
                       </div>
                     </td>

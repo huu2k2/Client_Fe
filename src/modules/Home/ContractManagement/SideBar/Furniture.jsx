@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange}) => {
+const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange,getInfo}) => {
   return (
     <div
       className="w-[501px] h-fit flex justify-between items-start"
@@ -15,6 +15,7 @@ const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange}) => {
           onChange={() => {
             handleCheckboxChange(item.furnitureId, !item.isActived);
           }}
+          disabled={getInfo.status==="3"}
         />
         <div className="text-gray-700 text-sm font-medium leading-tight">
           {item.name}
@@ -33,6 +34,7 @@ const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange}) => {
                   ? "Trang bị có sẵn"
                   : item.price.toLocaleString("vi-VN")
               }
+              disabled={getInfo.status==="3"}
               className="w-full outline-none text-sm font-normal leading-tight"
               onChange={(e) => handleChangePrice(e, item.furnitureId)}
             />
@@ -46,7 +48,7 @@ const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange}) => {
   );
 };
 
-const Furniture = ({ furnitureInserts, setFurnitureInserts }) => {
+const Furniture = ({ furnitureInserts, setFurnitureInserts,getInfo }) => {
   const [localFurnitureInserts, setLocalFurnitureInserts] =
     useState(furnitureInserts);
 
@@ -96,6 +98,7 @@ const Furniture = ({ furnitureInserts, setFurnitureInserts }) => {
             handleChangePrice={handleChangePrice}
             key={item.furnitureId}
             handleCheckboxChange={handleCheckboxChange}
+            getInfo={getInfo}
           />
         ))}
     </div>

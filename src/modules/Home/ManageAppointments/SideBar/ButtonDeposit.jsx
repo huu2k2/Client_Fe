@@ -1,7 +1,7 @@
 import React from "react";
-
+import { useIsLoading } from "@customhooks";
 const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
-  
+  const [isLoading, _] = useIsLoading();
   const handeClick = ()=>{
     if(isCheckSuccess){
       setIsSidebarOpen(false)
@@ -20,10 +20,11 @@ const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
       </div>
       <div className=" px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
         <button
-          className="text-white text-sm font-medium  leading-tight"
+          className="text-white text-sm font-medium  leading-tight flex gap-2 justify-center items-center"
           type="submit"
           onClick={handeClick}
         >
+          {isLoading && <span className="loading loading-spinner text-neutral"></span>}
           Lên hợp đồng
         </button>
       </div>

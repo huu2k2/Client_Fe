@@ -1,31 +1,37 @@
-import React from 'react';
-import RowSurcharges from './RowSurcharges'; // Đảm bảo đường dẫn đúng
+import React from "react";
+import RowSurcharges from "./RowSurcharges"; // Đảm bảo đường dẫn đúng
 
-const Surcharges = ({register,serviceInserts,setServiceInserts}) => {
+const Surcharges = ({ register, serviceInserts, setServiceInserts,getInfo }) => {
   const handleServicePriceChange = (index, newPrice) => {
     const updatedServiceInserts = serviceInserts.map((item, i) =>
       i === index ? { ...item, servicePrice: newPrice } : item
     );
     setServiceInserts(updatedServiceInserts);
   };
- 
+
   return (
     <div className="w-[501px]  h-[425px] pl-4 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
         Các khoản phụ thu
       </div>
-      {serviceInserts && serviceInserts?.map((i,index)=>(
-        <RowSurcharges label={i.name} unit={i.dvt} price={i.servicePrice} key={index} onChange={(newPrice) => handleServicePriceChange(index, newPrice)}
+      {serviceInserts &&
+        serviceInserts?.map((i, index) => (
+          <RowSurcharges
+            label={i.name}
+            unit={i.dvt}
+            price={i.servicePrice}
+            key={index}
+            onChange={(newPrice) => handleServicePriceChange(index, newPrice)}
+            getInfo={getInfo}
+          />
+        ))}
 
-/>
-      ))}
-     
       <div className="w-[501px] h-[105px]  flex justify-between items-start">
         <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
           Ghi chú nội bộ
         </div>
         <textarea
-        {...register("note")}
+          {...register("note")}
           className="w-[318px] h-full py-[9px] bg-white rounded-md shadow border border-gray-300 overflow-y-auto"
           placeholder=""
         />
