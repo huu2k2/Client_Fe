@@ -37,7 +37,7 @@ const ItemHome = ({ item ,setFilterData}) => {
         setIsLock(false);
         setFilterData((prev)=>({...prev,housePass:getText.trim(),houseId:item.houseId}))
         toast.success('Nhập password thành công!');
-       
+        navigate(`/overview/${item.houseId}`);
       } else {
         toast.error('Nhập password thất bại!');
       }
