@@ -48,7 +48,7 @@ const Floor = ({ data }) => {
                 </div>
               </>
             ))}
-            <ContainerImg item={imgdata} data={null}/>
+            <ContainerImg item={imgdata} data={imgdata}/>
             {/* End card */}
           </div>
 

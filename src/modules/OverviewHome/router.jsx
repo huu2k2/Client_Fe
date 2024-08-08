@@ -5,8 +5,7 @@ import Policies from "./Policies";
 import Deposit from "./Deposit";
 import Booking from "./Booking";
 import ServicesContextHook from "@customhooks/ServicesCustomHook";
-import { ProtectedRoute } from "@customhooks/AuthGuardHook";
-import AuthProvider from "../../customHooks/AuthGuardHook";
+import { ShowModalHook } from "../../customHooks";
 const Page = lazy(() => import("./index"));
 const router = {
   path: "/overview/:idHome",
@@ -20,7 +19,7 @@ const router = {
   children: [
     {
       path: "",
-      element: <ListRooms />,
+      element:<ShowModalHook> <ListRooms /></ShowModalHook>,
        
     },
     {

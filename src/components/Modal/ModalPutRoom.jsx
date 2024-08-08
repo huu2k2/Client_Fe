@@ -21,25 +21,30 @@ const validationSchema = yup.object().shape({
   viewDate: yup
     .string()
     .required("Ngày xem phòng là bắt buộc")
-    .test("is-future-date", "Ngày xem phòng phải lớn hơn hoặc bằng ngày hiện tại", (value) => {
-      return new Date(value) >= new Date().setHours(0, 0, 0, 0);
-    }),
-  viewTime: yup.string()
-    .required("Giờ xem phòng là bắt buộc"),
+    .test(
+      "is-future-date",
+      "Ngày xem phòng phải lớn hơn hoặc bằng ngày hiện tại",
+      (value) => {
+        return new Date(value) >= new Date().setHours(0, 0, 0, 0);
+      }
+    ),
+  viewTime: yup.string().required("Giờ xem phòng là bắt buộc"),
 
   note: yup.string(),
 });
 
-export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCode, id }) => {
+export const ModalPutRoom = ({
+  dropdownRef,
+  setIsShowModal,
+  roomId,
+  setStatusCode,
+  id,
+}) => {
   const { data: housedata } = useGetRoomsNotDepositOfHouseQuery(id);
-  console.log("🚀 ~ ModalPutRoom ~ housedata:", housedata)
-
-
   const { data: DetailHomeDataa } = useGetAllDetailQuery(id);
-  console.log("🚀 ~ ModalPutRoom ~ DetailHomeDataa:", DetailHomeDataa)
   const options = housedata?.response.map((i) => ({
     value: i.roomId,
-    label: "P." + i.roomCode
+    label: "P." + i.roomCode,
   }));
 
   const [formData, setFormData] = useState({
@@ -57,24 +62,23 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
   });
 
   const [response, setResponse] = useState(null);
-  const [message, setMessage] = useState("");
-
   const SalerName = data?.response?.managers?.[0]?.managerName || "";
   const SalerPhone = data?.response?.managers?.[0]?.phoneNumber || "";
   const company = data?.response?.holder?.fullName || "";
 
-  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    reset,
+  } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  ;
   const onSubmit = async (formData) => {
-    console.log("🚀 ~ onSubmit ~ formData:", formData)
+    const viewTime = `${formData.viewDate}T${formData.viewTime}:11.805Z`;
 
-
-    const viewTime = (`${formData.viewDate}T${formData.viewTime}:11.805Z`);
-
-    console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
     try {
       const response = await postschedule({
         ...formData,
@@ -84,7 +88,6 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         SalerName,
         SalerPhone,
       }).unwrap();
-      console.log("🚀 ~ onSubmit ~ viewTime:", viewTime)
       setResponse(response);
       if (response.statusCode === 200) {
         toast.success("Đặt lịch thành công!");
@@ -100,11 +103,13 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
         // setStatusCode(400);
       }
     } catch (error) {
-      toast.error("Đặt lịch thất bại, bạn hãy cập nhật tất cả thông tin cá nhân trong hồ sơ !");
+      toast.error(
+        "Đặt lịch thất bại, bạn hãy cập nhật tất cả thông tin cá nhân trong hồ sơ !"
+      );
       // setStatusCode(400);
     }
   };
-
+ 
   return (
     <div
       className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
@@ -118,16 +123,19 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
           <AiFillCloseCircle />
         </div>
         {/* title */}
-        <div className="flex flex-col justify-start gap-1 self-stretch h-12">
+        {/* <div className="flex flex-col justify-start gap-1 self-stretch h-12">
           <span className="text-gray-900 text-lg leading-6 font-medium">
             {DetailHomeDataa?.response?.houseName}
           </span>
           <span className="text-gray-500 font-normal text-sm leading-5">
             {DetailHomeDataa?.response?.houseAddress}
           </span>
-        </div>
+        </div> */}
 
-        <form className="w-[1280px] h-fit gap-8 flex flex-col justify-start" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="w-[1280px] h-fit gap-8 flex flex-col justify-start"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="gap-5 flex">
             <div className="w-full h-fit gap-5 flex flex-col justify-start">
               <Input
@@ -186,7 +194,8 @@ export const ModalPutRoom = ({ dropdownRef, setIsShowModal, roomId, setStatusCod
               />
               <p className="text-rose-500">{errors.viewDate?.message}</p>
               <Input
-                min="06:00" max="19:00"
+                min="06:00"
+                max="19:00"
                 label="Giờ xem phòng"
                 type="time"
                 name="viewTime"

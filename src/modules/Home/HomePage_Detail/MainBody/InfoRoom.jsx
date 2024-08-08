@@ -9,7 +9,6 @@ import {
 import { Skeleton } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDateType } from "@utils/ConverDate";
-import { useGetPolicyOfHomeQuery } from "../../../../apis/slice/Houses";
 import { useGetAllDetailQuery } from '@apis/slice/services';
 
 const InfoRoom = () => {

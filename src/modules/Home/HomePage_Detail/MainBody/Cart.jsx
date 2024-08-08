@@ -4,7 +4,7 @@ import { BsFillPersonPlusFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
  
 import { useGetHolder } from "@customhooks";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
 import ShowImages from "../../../../components/ShowImages";
 const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
@@ -72,7 +72,9 @@ const Cart = () => {
         <div className="nthd_flex_between_full h-fit pt-8">
           <div className="w-[196px] h-fit gap-6 flex flex-col">
             <div className="nthd_flex_between_full">
+              <Link to={`/overview/${id}`}>
               <img src={UserImg} alt="hinh anh nguoi dung..." />
+              </Link>
               <div>
                 <h1 className="nthd_text_normal_lg">
                   {holder?.fullName}
