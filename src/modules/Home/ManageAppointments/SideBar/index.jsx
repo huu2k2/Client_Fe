@@ -11,9 +11,7 @@ import { useAddDepositMutation } from "@apis/slice/Deposit";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { toast } from "react-toastify";
 import { debounce } from "lodash";
-import {
-  useGetListOfAppointmentsQuery,
-} from "@apis/slice/Agencies";
+import { useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
 
 function coverDate(dateString) {
@@ -48,56 +46,50 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
 
-  const { refetch } = useGetListOfAppointmentsQuery({queries: {}, body: {} });
-  
+  const { refetch } = useGetListOfAppointmentsQuery({ queries: {}, body: {} });
+
   useEffect(() => {
     setValue("sheduleId", getInfo.scheduleId);
     setValue("phoneNumber", getInfo.phoneNumber);
     setValue("houseAddress", getInfo.houseAddress);
     setValue("rentalPrice", getInfo.rentalPrice);
   }, [getInfo]);
- 
+
   const onSubmit = async (data) => {
     setIsLoading(true);
     setValue("chuongTrinhUuDai", "");
-    const convertData = {
-      ...data,
-      furnitures: furnitureInserts,
-      services: serviceInserts,
-      birthOfDay: coverDate(data.birthOfDay),
-      depositDate: coverDate(data.depositDate),
-      rentalStartDate: coverDate(data.rentalStartDate),
-      dateRange: coverDate(data.dateRange),
-      depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-      roomId: data.roomId,
-      rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
-      commissionPolicyId: Number(data.commissionPolicyId),
-      houseId: getInfo.houseId,
-      additionalDepositAmount: Number(
-        data.additionalDepositAmount.replace(/\./g, "")
-      ),
-      depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-      numberOfPeople: Number(data.numberOfPeople),
-      numberOfVehicle: Number(data.numberOfVehicle),
-      fullName: data.fullName,
-      phoneNumber: data.phoneNumber,
-      totalDepositAmount: Number(data.totalDepositAmount),
-    };
- 
+
     try {
-      const kq = await addDeposit(convertData);
- 
+      const kq = await addDeposit({
+        ...data,
+        furnitures: furnitureInserts,
+        services: serviceInserts,
+        birthOfDay: coverDate(data.birthOfDay),
+        depositDate: coverDate(data.depositDate),
+        rentalStartDate: coverDate(data.rentalStartDate),
+        dateRange: coverDate(data.dateRange),
+        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+        roomId: data.roomId,
+        rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
+        commissionPolicyId: Number(data.commissionPolicyId),
+        houseId: getInfo.houseId,
+        additionalDepositAmount: Number(
+          data.additionalDepositAmount.replace(/\./g, "")
+        ),
+        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+        numberOfPeople: Number(data.numberOfPeople),
+        numberOfVehicle: Number(data.numberOfVehicle),
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber,
+        totalDepositAmount: Number(data.totalDepositAmount),
+      });
+
       if (kq?.error) {
         toast.error(kq.error.data.message);
         setIsCheckSuccess(false);
       } else {
         toast.success(kq.data.message);
         setIsCheckSuccess(true);
-
-        const body = {
-          scheduleId: Number(getInfo.scheduleId),
-          roomId: Number(data.roomId),
-        };
         refetch();
         setIsLoading(false);
       }
