@@ -9,9 +9,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <ShowLoadingCustomHook>
-    <FilterCustomHook>
+    <ShowLoadingCustomHook className='z-[100]'>
       <ToastContainer className={'z-[200]'}/>
+    <FilterCustomHook>
       <App />
     </FilterCustomHook>
     </ShowLoadingCustomHook>

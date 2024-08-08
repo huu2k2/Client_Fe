@@ -15,6 +15,7 @@ const muiltyRow = [
   {
     id: 3,
     title: "Giá cho thuê",
+    title1:"(Chưa bao gồm tiền nội thất)",
     type: "text",
     placeholder: "",
     unit: "đ",
@@ -137,6 +138,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
           getRentalPrice={getRentalPrice}
           setRentalPrice={setRentalPrice}
           getValues={getValues}
+          title1={row.title1}
         />
       ))}
       <SelectTips

@@ -11,7 +11,8 @@ const RowComponent = ({
   getInfo,
   setValue,
   getData,
-  isSidebarOpen
+  isSidebarOpen,
+  title1 = "",
 }) => {
   const isDisabled = [
     "fullName",
@@ -44,7 +45,7 @@ const RowComponent = ({
       setValues(initialValue);
       setValue(name, getData[name]);
     }
-  }, [getData, name,isSidebarOpen]);
+  }, [getData, name, isSidebarOpen]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
@@ -85,15 +86,16 @@ const RowComponent = ({
       setValue(name, inputValue);
     }
   };
-
+ 
   return (
     <div className="w-[501px] self-stretch justify-between items-center gap-4 inline-flex">
-      <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
-        {title}
+      <div className="w-fit max-w-[160px] text-gray-700 text-sm font-medium leading-tight">
+        <p>{title}</p>
+        <p className="italic">{title1}</p>
       </div>
       <div
         className={`w-[318px] h-[38px] px-[13px] py-[9px] ${
-          (isDisabled || getInfo.status==="3") ? "bg-gray-50" : "bg-white"
+          isDisabled || getInfo.status === "3" ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
           unit
             ? "justify-start items-center gap-2 flex"

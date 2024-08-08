@@ -4,8 +4,8 @@ import "animate.css";
 import { useQueryFilterData } from "@customhooks";
 import { useLocation } from "react-router-dom";
 import { Badge } from "@mui/material";
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
 const Index = ({ clear, setClear }) => {
   const [filterData, setFilterData] = useQueryFilterData();
@@ -34,7 +34,7 @@ const Index = ({ clear, setClear }) => {
     if (filterData.price && filterData.price > 0) {
       setValueRange([
         Math.floor(filterData.price.min / 1000000),
-        Math.ceil(filterData.price.max / 1000000)
+        Math.ceil(filterData.price.max / 1000000),
       ]);
     }
   }, [filterData]);
@@ -51,7 +51,7 @@ const Index = ({ clear, setClear }) => {
       ...prev,
       price: {
         min: valueRange[0] * 1000000,
-        max: valueRange[1] * 1000000
+        max: valueRange[1] * 1000000,
       },
     }));
     setIsOpen(false);
@@ -73,7 +73,7 @@ const Index = ({ clear, setClear }) => {
       sx={{
         "& .MuiBadge-badge": {
           backgroundColor: "#dc2626",
-          color: "#dc2626",
+          color: "#fff",
         },
       }}
       className="mr-2 text-center"
@@ -92,7 +92,9 @@ const Index = ({ clear, setClear }) => {
         </div>
 
         <div
-          className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"}`}
+          className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
+            isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+          }`}
         >
           <div className="flex flex-col gap-2">
             <div className="w-full flex justify-between items-center">
@@ -116,10 +118,19 @@ const Index = ({ clear, setClear }) => {
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={valueRange[0] ? (valueRange[0] * 1000000).toLocaleString('vi-VN') : 0}
-                onChange={(e) => setValueRange([valueRange[0], parseInt(e.target.value) / 1000000])}
+                value={
+                  valueRange[0]
+                    ? (valueRange[0] * 1000000).toLocaleString("vi-VN")
+                    : 0
+                }
+                onChange={(e) =>
+                  setValueRange([
+                    parseInt(e.target.value.replace(/\./g, ''), 10) / 1000000,
+                    valueRange[1]
+                    
+                  ])
+                }
                 className="w-full outline-none text-sm border-none"
-                readOnly
               />
               <span>VND</span>
             </div>
@@ -127,8 +138,17 @@ const Index = ({ clear, setClear }) => {
             <div className="w-[150px] h-[38px] flex px-[13px] py-[9px] justify-between items-center self-stretch rounded-md border border-gray-300 bg-white shadow-sm text-gray-500 font-normal leading-5">
               <input
                 type="text"
-                value={valueRange[1] ? (valueRange[1] * 1000000).toLocaleString('vi-VN') : 0}
-                onChange={(e) => setValueRange([valueRange[0], parseInt(e.target.value) / 1000000])}
+                value={
+                  valueRange[1]
+                    ? (valueRange[1] * 1000000).toLocaleString("vi-VN")
+                    : 0
+                }
+                onChange={(e) =>
+                  setValueRange([
+                    valueRange[0],
+                    parseInt(e.target.value.replace(/\./g, ''), 10) / 1000000,
+                  ])
+                }
                 className="w-full outline-none text-sm border-none"
               />
               <span>VND</span>

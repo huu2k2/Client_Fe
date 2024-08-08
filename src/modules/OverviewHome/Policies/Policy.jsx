@@ -25,7 +25,7 @@ const Policy = ({data}) => {
               className="w-[838px] text-gray-900 text-sm font-normal 
              leading-tight"
             >
-              {i.servicePrice.toLocaleString()} {i.dvt}
+              {i.servicePrice.toLocaleString()} / {i.dvt}
             </div>
           </div>
           

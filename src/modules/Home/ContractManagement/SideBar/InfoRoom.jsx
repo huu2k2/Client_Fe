@@ -18,6 +18,7 @@ const muiltyRow = [
     placeholder: "",
     unit: "đ",
     name: "rentalPrice",
+    title1:"(Chưa bao gồm tiền nội thất)"
   },
   {
     id: 4,
@@ -120,6 +121,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues,getDat
           unit={row.unit}
           getValues={getValues}
           getData={getData}
+          title1={row.title1||""}
         />
       ))}
       <SelectTips getInfo={getInfo} setValue={setValue} getValues={getValues} setNamecommissionPolicyId={setNamecommissionPolicyId}/>
@@ -138,6 +140,7 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues,getDat
           getNamecommissionPolicyId={getNamecommissionPolicyId}
           getValues={getValues}
           getData={getData}
+          
         />
       ))}
      <Signature

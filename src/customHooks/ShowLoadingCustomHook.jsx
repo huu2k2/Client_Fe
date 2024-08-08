@@ -7,7 +7,7 @@ export const ShowLoadingCustomHook = ({children}) => {
     const [isLoading,setIsLoading] = useState(false)
     
   return (
-    <ShowLoadingContext.Provider value={{ isLoading,setIsLoading  }}>
+    <ShowLoadingContext.Provider value={{ isLoading,setIsLoading  }} >
       {children}
     </ShowLoadingContext.Provider>
   )

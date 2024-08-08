@@ -79,6 +79,7 @@ const SideBar = ({ getInfo }) => {
         chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
         note: response.note,
         rentalTerm: response.rentalTerm,
+        commissionPolicy:response.commissionPolicy,
         commissionPolicyId: response?.commissionPolicyId,
         commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
         signature: response?.signature,
