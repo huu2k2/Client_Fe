@@ -13,12 +13,12 @@ import { useIsLoading } from "./ShowLoadingCustomHook";
 export const FilterHookContext = createContext();
 
 export const FilterCustomHook = ({ children }) => {
-  const [_,setIsLoading] =useIsLoading() 
+  const [_, setIsLoading] = useIsLoading();
   const [getRoomsFilter, { data, isLoading, isError, error }] = useGetRoomsFilterMutation();
-
+  
   const initialFilterData = {
     houseId: null,
-    housePass:null,
+    housePass: null,
     districtId: null,
     wardId: null,
     categories: null,
@@ -37,37 +37,69 @@ export const FilterCustomHook = ({ children }) => {
   };
 
   const [filterData, setFilterData] = useState(initialFilterData);
-useEffect(()=>{
-setIsLoading(isLoading)
-},[isLoading])
+
   useEffect(() => {
+    setIsLoading(isLoading);
+  }, [isLoading]);
+
+  useEffect(() => {
+    const controller = new AbortController();
     const fetchData = async () => {
       try {
         await getRoomsFilter(filterData).unwrap();
       } catch (err) {
-        console.error('Error fetching rooms:', err);
+        if (err.name === 'AbortError') {
+          console.log('Request was aborted');
+        } else {
+          console.error('Error fetching rooms:', err);
+        }
       }
     };
 
     fetchData();
+
+    return () => {
+      controller.abort(); // Hủy bỏ yêu cầu khi component bị gỡ bỏ hoặc filterData thay đổi
+    };
   }, [filterData, getRoomsFilter]);
 
   const handleClickSearch = useCallback(async () => {
+    const controller = new AbortController();
     try {
       await getRoomsFilter(filterData).unwrap();
     } catch (err) {
-      console.error('Error fetching rooms:', err);
-      alert('Error fetching rooms. Please try again later.');
+      if (err.name === 'AbortError') {
+        console.log('Request was aborted');
+      } else {
+        console.error('Error fetching rooms:', err);
+        alert('Error fetching rooms. Please try again later.');
+      }
     }
+
+    return () => {
+      controller.abort(); // Hủy bỏ yêu cầu khi cần
+    };
   }, [filterData, getRoomsFilter]);
 
   const handleClickRemoveFilter = useCallback(async () => {
+    const controller = new AbortController();
+
+
     try {
+      setFilterData(initialFilterData)
       await getRoomsFilter(initialFilterData).unwrap();
     } catch (err) {
-      console.error('Error fetching rooms:', err);
-      alert('Error fetching rooms. Please try again later.');
+      if (err.name === 'AbortError') {
+        console.log('Request was aborted');
+      } else {
+        console.error('Error fetching rooms:', err);
+        alert('Error fetching rooms. Please try again later.');
+      }
     }
+
+    return () => {
+      controller.abort(); // Hủy bỏ yêu cầu khi cần
+    };
   }, [getRoomsFilter]);
 
   const contextValue = useMemo(
@@ -97,7 +129,7 @@ export const useQueryFilterData = () => {
   return [filterData, setFilterData];
 };
 
-export  const useQueryData = () => {
+export const useQueryData = () => {
   const { data, isLoading, isError, error } = useContext(FilterHookContext);
   return [data, isLoading, isError, error];
 };
