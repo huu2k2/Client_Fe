@@ -4,7 +4,7 @@ import ImgAvatar from "@assets/Avatar.png";
 import { BsBell } from "react-icons/bs";
 import ImgGroupIcon from "@assets/iconGroupUser.png";
 import ImgDocumentIcon from "@assets/iconDocument.png";
-
+import { useClickRemoveFilter } from "../../customHooks/FilterCustomHook";
 // const GroudButton = () => {
 //   return (
 //     <div className="h-full flex gap-2">
@@ -23,7 +23,7 @@ import ImgDocumentIcon from "@assets/iconDocument.png";
 // };
 
 const index = ({ isShow=null, setShow=null }) => {
-
+  const handleRemoveFilter = useClickRemoveFilter();
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.assign("/login");
@@ -31,6 +31,7 @@ const index = ({ isShow=null, setShow=null }) => {
 
   const handleLinkClick = (event) => {
     event.preventDefault();
+    handleRemoveFilter()
     window.location.assign("/");
   };
 

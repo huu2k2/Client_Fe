@@ -29,7 +29,7 @@ const ContainerImg = ({ item,data }) => {
               className="btn bg-rose-600 text-white hover:bg-rose-500"
               onClick={handleClick}
             >
-              Đặt lịch
+              Đặt lịch xem phòng
             </button>:<></>}
            
             <Link

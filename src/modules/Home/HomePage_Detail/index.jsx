@@ -50,6 +50,7 @@ const index = () => {
       handleClickSearch();
     }
   }, [filterData]);
+  console.log("data",data)
   return (
     <>
       {isShowModal && (
@@ -74,7 +75,7 @@ const index = () => {
           <RoomOrder
             title={`Phòng tương tự của ${data?.response?.holder?.fullName}`}
             data={id}
-            money={null}
+            money={data?.response?.rentPrice}
             address={data?.response?.houseAddress
               ?.split(",")[1]
               ?.toString()
@@ -87,7 +88,7 @@ const index = () => {
           <RoomOrder
             title={`Phòng tương tự  `}
             data={null}
-            money={null}
+            money={data?.response?.rentPrice}
             address={data?.response?.houseAddress
               ?.split(",")[1]
               ?.toString()

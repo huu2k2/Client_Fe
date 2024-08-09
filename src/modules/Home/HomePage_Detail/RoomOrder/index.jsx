@@ -11,8 +11,8 @@ const Index = ({ title, data, money, address,category }) => {
     const path = data
       ? `/similarRooms?idRoom=${data}&Price=${money}&Address=${address}&category=${category}`
       : `/similarRooms?Price=${money}&Address=${address}`;
-    // navigate(path);
-    window.location.assign(path)
+    navigate(path);
+    // window.location.assign(path)
   };
 
   return (

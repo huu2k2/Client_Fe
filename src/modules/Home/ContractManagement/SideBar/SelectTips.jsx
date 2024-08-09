@@ -46,7 +46,7 @@ const SelectTips = ({ getInfo, setValue, setNamecommissionPolicyId, getValues })
   return (
     <div className="w-[501px] flex justify-between items-center gap-4">
       <div className="w-fit text-gray-700 text-sm font-medium leading-tight">
-        Đặt cọc
+        Hợp đồng
       </div>
       <div className="w-[318px] h-[38px] bg-white rounded-md shadow border border-gray-300 justify-between items-center flex">
         <Select

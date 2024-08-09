@@ -59,7 +59,7 @@ const FilterNavbar = ({ setOption }) => {
   };
 
   const debounceHandleRemoveFilter = debounce(() => {
-    location.reload();
+    handleRemoveFilter()
   }, 500);
 
   // check password
