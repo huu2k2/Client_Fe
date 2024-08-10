@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { useGetRoomsofhouseMutation } from "@apis/slice/rooms";
 import Sidebar from "./Sidebar";
 import { useGetInfoHomeQuery } from "@apis/slice/Houses";
-
 const calculateRoomStatusTotals = (data) => {
   return data.reduce(
     (totals, item) => {
@@ -25,7 +24,7 @@ const calculateRoomStatusTotals = (data) => {
       empty: 0,
       toBeEmpty: 0,
       booked: 0,
-      rented: 0
+      rented: 0,
     }
   );
 };
@@ -52,12 +51,15 @@ const Index = () => {
     freeHour: null,
     washing: null,
     roomQuantity: null,
-    housePass: null,
+    housePass:
+    Number(JSON.parse(localStorage.getItem("kwomkdnkadvadvad"))?.idhome) ===
+      Number(idHome)
+        ? JSON.parse(localStorage.getItem("kwomkdnkadvadvad"))?.pass
+        : null,
   });
-  const storedData = localStorage.getItem("kwomkdnkadvadvad");
 
- console.log( JSON.parse(storedData))
-  const [getRoomsFilter, { data: DataOF, isLoading }] = useGetRoomsofhouseMutation();
+  const [getRoomsFilter, { data: DataOF, isLoading }] =
+    useGetRoomsofhouseMutation();
   const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const Index = () => {
     };
 
     rs();
-  }, [idHome, filterData]); // Sử dụng idHome và filterData làm dependencies
+  }, [filterData]); // Sử dụng idHome và filterData làm dependencies
 
   // Cập nhật dữ liệu lọc khi query thay đổi
   useEffect(() => {
@@ -160,7 +162,10 @@ const Index = () => {
         />
       </div>
       {dataNameHome?.response && (
-        <Sidebar idHolder={dataNameHome?.response?.houseHolderId} setFilterData={setFilterData} />
+        <Sidebar
+          idHolder={dataNameHome?.response?.houseHolderId}
+          setFilterData={setFilterData}
+        />
       )}
     </>
   );
