@@ -30,7 +30,7 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
   const query = useMemo(() => ({
     houseId: id || null,
     districtId: findDistrictId(address, datadistrict) || null,
-    price: {
+    price: Number(money) === 0 ?null :{
       min: Number(money) === 0 ? null : Math.max(Number(money) - 500000, 0),
       max: Number(money) === 0 ? null : Number(money) + 500000,
     },

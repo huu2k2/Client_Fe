@@ -4,7 +4,7 @@ import LazyWrapper from "@components/LazyLoad";
 const PageHomeMain = lazy(() => import("./index"));
 import PageHomeDetail from "./HomePage_Detail";
 import HomePage from "./HomePage";
-import { ShowModalHook } from "@customhooks";
+import { ShowModalHook,FilterCustomHook } from "@customhooks";
 import ServicesContextHook from "@customhooks/ServicesCustomHook";
 import PageHomeManagement from './ListRoomsLike'
 import PageCOntractManagement from './ContractManagement'
@@ -13,9 +13,11 @@ const router = {
   path: "/",
   element: (
     <LazyWrapper>
+      <FilterCustomHook>
       <ServicesContextHook>
         <PageHomeMain />
       </ServicesContextHook>
+      </FilterCustomHook>
     </LazyWrapper>
   ),
   children: [

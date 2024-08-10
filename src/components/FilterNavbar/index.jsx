@@ -8,7 +8,6 @@ import FilterPriceDropDow from "./FilterPriceDropDow";
 import FilterAdd from "./FilterAdd";
 import {
   useQueryFilterData,
-  useQueryData,
   useClickRemoveFilter,
 } from "@customhooks";
 import { debounce } from "@utils";

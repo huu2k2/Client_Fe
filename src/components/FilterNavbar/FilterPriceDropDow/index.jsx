@@ -16,7 +16,7 @@ const Index = ({ clear, setClear }) => {
     if (filterData.price) {
       setValueRange([
         Math.floor(Number(filterData.price.min) / 1000000),
-        Math.ceil(Number(filterData.price.max )/ 1000000),
+        Math.ceil(Number(filterData.price.max )/ 1000000) || 30,
       ]);
     }
   }, [filterData]);
