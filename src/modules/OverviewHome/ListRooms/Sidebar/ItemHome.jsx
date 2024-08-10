@@ -13,11 +13,12 @@ const ItemHome = ({ item ,setFilterData}) => {
     if (isLock) {
       setIsOpen(!isOpen);
     } else {
-      localStorage.removeItem('kwomkdnkadvadvad')
-      setTimeout(()=>{
+      // localStorage.removeItem('kwomkdnkadvadvad')
+      // setTimeout(()=>{
 
-        window.location.assign(`/overview/${item.houseId}`)
-      },150)
+      //   window.location.assign(`/overview/${item.houseId}`)
+      // },150)
+      navigate(`/overview/${item.houseId}`);
     }
   };
   const handleChange = (e) => {
@@ -37,7 +38,11 @@ const ItemHome = ({ item ,setFilterData}) => {
         housePass: getText.trim(),
       }).unwrap();
       if (kq.statusCode === 200 && kq.response) {
-        localStorage.setItem("kwomkdnkadvadvad",getText.trim())
+        const dataToStore = {
+          idhome: item.houseId,
+          pass: getText.trim()
+        };
+        localStorage.setItem("kwomkdnkadvadvad", JSON.stringify(dataToStore));
         setIsLock(false);
         setFilterData((prev)=>({...prev,housePass:getText.trim(),houseId:item.houseId}))
         toast.success('Nhập password thành công!');

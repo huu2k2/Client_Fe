@@ -52,9 +52,11 @@ const Index = () => {
     freeHour: null,
     washing: null,
     roomQuantity: null,
-    housePass: localStorage.getItem('kwomkdnkadvadvad') || null,
+    housePass: null,
   });
+  const storedData = localStorage.getItem("kwomkdnkadvadvad");
 
+ console.log( JSON.parse(storedData))
   const [getRoomsFilter, { data: DataOF, isLoading }] = useGetRoomsofhouseMutation();
   const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
 
