@@ -30,7 +30,6 @@ const index = ({ isShow=null, setShow=null }) => {
   };
 
   const handleLinkClick = (event) => {
-    event.preventDefault();
     handleRemoveFilter()
     window.location.assign("/");
   };
