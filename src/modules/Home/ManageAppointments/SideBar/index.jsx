@@ -55,61 +55,6 @@ const SideBar = ({ getInfo }) => {
     setValue("rentalPrice", getInfo.rentalPrice);
   }, [getInfo]);
 
-  const onSubmit = async (data) => {
-    setIsLoading(true);
-    setValue("chuongTrinhUuDai", "");
-
-    try {
-      console.log(furnitureInserts,serviceInserts)
-      // const kq = await addDeposit({
-      //   ...data,
-      //   furnitures: furnitureInserts,
-      //   services: serviceInserts,
-      //   birthOfDay: coverDate(data.birthOfDay),
-      //   depositDate: coverDate(data.depositDate),
-      //   rentalStartDate: coverDate(data.rentalStartDate),
-      //   dateRange: coverDate(data.dateRange),
-      //   depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-      //   roomId: data.roomId,
-      //   rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
-      //   commissionPolicyId: Number(data.commissionPolicyId),
-      //   houseId: getInfo.houseId,
-      //   additionalDepositAmount: Number(
-      //     data.additionalDepositAmount.replace(/\./g, "")
-      //   ),
-      //   depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-      //   numberOfPeople: Number(data.numberOfPeople),
-      //   numberOfVehicle: Number(data.numberOfVehicle),
-      //   fullName: data.fullName,
-      //   phoneNumber: data.phoneNumber,
-      //   totalDepositAmount: Number(data.totalDepositAmount),
-      // });
-
-      // if (kq?.error) {
-      //   toast.error(kq.error.data.message);
-      //   setIsCheckSuccess(false);
-      // } else {
-      //   toast.success(kq.data.message);
-      //   setIsCheckSuccess(true);
-      //   refetch();
-      //   setIsLoading(false);
-      // }
-    } catch (error) {
-      toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  const debouncedOnSubmit = useCallback(debounce(onSubmit, 500), []);
-
-  useEffect(() => {
-    if (Object.keys(errors).length > 5) {
-      toast.error("Bạn điền thiếu thông tin! Vui lòng nhập lại!");
-    } else {
-      Object.values(errors).forEach((error) => toast.error(error.message));
-    }
-  }, [errors]);
-
   const handleDrawerChange = (event) => {
     setIsSidebarOpen(event.target.checked);
     if (event.target.checked) {
@@ -117,6 +62,62 @@ const SideBar = ({ getInfo }) => {
     }
   };
 
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    setValue("chuongTrinhUuDai", "");
+
+    try {
+     
+      if(furnitureInserts.length>0 && serviceInserts.length>0){
+      const kq = await addDeposit({
+        ...data,
+        furnitures:furnitureInserts,
+        services:serviceInserts,
+        birthOfDay: coverDate(data.birthOfDay),
+        depositDate: coverDate(data.depositDate),
+        rentalStartDate: coverDate(data.rentalStartDate),
+        dateRange: coverDate(data.dateRange),
+        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+        roomId: data.roomId,
+        rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
+        commissionPolicyId: Number(data.commissionPolicyId),
+        houseId: getInfo.houseId,
+        additionalDepositAmount: Number(
+          data.additionalDepositAmount.replace(/\./g, "")
+        ),
+        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+        numberOfPeople: Number(data.numberOfPeople),
+        numberOfVehicle: Number(data.numberOfVehicle),
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber,
+        totalDepositAmount: Number(data.totalDepositAmount),
+      });
+      if (kq?.error) {
+        toast.error(kq.error.data.message);
+        setIsCheckSuccess(false);
+      } else {
+        toast.success(kq.data.message);
+        setIsCheckSuccess(true);
+        refetch();
+        setIsLoading(false);
+      }
+      console.log("kq",furnitureInserts,serviceInserts)
+    }else{
+      console.log("looix")
+    }
+    } catch (error) {
+      toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (Object.keys(errors).length > 5) {
+      toast.error("Bạn điền thiếu thông tin! Vui lòng nhập lại!");
+    } else {
+      Object.values(errors).forEach((error) => toast.error(error.message));
+    }
+  }, [errors]);
   return (
     <div className="drawer drawer-end bg-white">
       <input
@@ -135,7 +136,7 @@ const SideBar = ({ getInfo }) => {
         ></label>
 
         <form
-          onSubmit={handleSubmit(debouncedOnSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           className="menu bg-white w-[556px] h-screen text-base-content min-h-full flex flex-col relative"
         >
           <div className="w-full h-fit p-6 bg-black flex-col justify-start items-start gap-1 inline-flex fixed top-0 right-0">

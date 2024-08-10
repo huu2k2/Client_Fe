@@ -92,13 +92,13 @@ const muiltyRow1 = [
     placeholder: "",
     name: "numberOfVehicle",
   },
-  {
-    id: 14,
-    title: "Chương trình ưu đãi",
-    type: "text",
-    placeholder: "",
-    name: "chuongTrinhUuDai",
-  },
+  // {
+  //   id: 14,
+  //   title: "Chương trình ưu đãi",
+  //   type: "text",
+  //   placeholder: "",
+  //   name: "chuongTrinhUuDai",
+  // },
 ];
 const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
   const [getRentalPrice,setRentalPrice] = useState(getInfo["rentalPrice"])
