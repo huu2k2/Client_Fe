@@ -15,7 +15,7 @@ const muiltyRow = [
   {
     id: 3,
     title: "Giá cho thuê",
-    title1:"(Chưa bao gồm tiền nội thất)",
+    title1:"(Chưa bao gồm nội thất)",
     type: "text",
     placeholder: "",
     unit: "đ",

@@ -60,46 +60,47 @@ const SideBar = ({ getInfo }) => {
     setValue("chuongTrinhUuDai", "");
 
     try {
-      const kq = await addDeposit({
-        ...data,
-        furnitures: furnitureInserts,
-        services: serviceInserts,
-        birthOfDay: coverDate(data.birthOfDay),
-        depositDate: coverDate(data.depositDate),
-        rentalStartDate: coverDate(data.rentalStartDate),
-        dateRange: coverDate(data.dateRange),
-        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-        roomId: data.roomId,
-        rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
-        commissionPolicyId: Number(data.commissionPolicyId),
-        houseId: getInfo.houseId,
-        additionalDepositAmount: Number(
-          data.additionalDepositAmount.replace(/\./g, "")
-        ),
-        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-        numberOfPeople: Number(data.numberOfPeople),
-        numberOfVehicle: Number(data.numberOfVehicle),
-        fullName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        totalDepositAmount: Number(data.totalDepositAmount),
-      });
+      console.log(furnitureInserts,serviceInserts)
+      // const kq = await addDeposit({
+      //   ...data,
+      //   furnitures: furnitureInserts,
+      //   services: serviceInserts,
+      //   birthOfDay: coverDate(data.birthOfDay),
+      //   depositDate: coverDate(data.depositDate),
+      //   rentalStartDate: coverDate(data.rentalStartDate),
+      //   dateRange: coverDate(data.dateRange),
+      //   depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+      //   roomId: data.roomId,
+      //   rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
+      //   commissionPolicyId: Number(data.commissionPolicyId),
+      //   houseId: getInfo.houseId,
+      //   additionalDepositAmount: Number(
+      //     data.additionalDepositAmount.replace(/\./g, "")
+      //   ),
+      //   depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+      //   numberOfPeople: Number(data.numberOfPeople),
+      //   numberOfVehicle: Number(data.numberOfVehicle),
+      //   fullName: data.fullName,
+      //   phoneNumber: data.phoneNumber,
+      //   totalDepositAmount: Number(data.totalDepositAmount),
+      // });
 
-      if (kq?.error) {
-        toast.error(kq.error.data.message);
-        setIsCheckSuccess(false);
-      } else {
-        toast.success(kq.data.message);
-        setIsCheckSuccess(true);
-        refetch();
-        setIsLoading(false);
-      }
+      // if (kq?.error) {
+      //   toast.error(kq.error.data.message);
+      //   setIsCheckSuccess(false);
+      // } else {
+      //   toast.success(kq.data.message);
+      //   setIsCheckSuccess(true);
+      //   refetch();
+      //   setIsLoading(false);
+      // }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
     } finally {
       setIsLoading(false);
     }
   };
-  const debouncedOnSubmit = useCallback(debounce(onSubmit, 2000), []);
+  const debouncedOnSubmit = useCallback(debounce(onSubmit, 500), []);
 
   useEffect(() => {
     if (Object.keys(errors).length > 5) {

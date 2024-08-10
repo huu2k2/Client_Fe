@@ -91,7 +91,7 @@ const RowComponent = ({
     <div className="w-[501px] self-stretch justify-between items-center gap-4 inline-flex">
       <div className="w-fit max-w-[160px] text-gray-700 text-sm font-medium leading-tight">
         <p>{title}</p>
-        <p className="italic">{title1}</p>
+        <p className="text-sm font-sans text-gray-900 italic ">{title1}</p>
       </div>
       <div
         className={`w-[318px] h-[38px] px-[13px] py-[9px] ${

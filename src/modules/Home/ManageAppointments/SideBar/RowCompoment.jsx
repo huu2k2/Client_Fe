@@ -68,14 +68,6 @@ const RowComponent = ({
       setValuesOptions(null);
     }
   }, [isSidebarOpen]);
-
-  //  auto import data from detech CCCD into input
-  useEffect(() => {
-    if (getDataFromCMND && InfoCCCD[name]) {
-      setValue(name, InfoCCCD[name]);
-      setValues(InfoCCCD[name]);
-    }
-  }, [getDataFromCMND, InfoCCCD, name, setValue]);
   // get all infomations dont change
   useEffect(() => {
     if (plaValue) {
@@ -83,7 +75,7 @@ const RowComponent = ({
     }
     //  import auto for price begin
     if (name === "rentalPrice") {
-      setValues(getValues("rentalPrice")?.toLocaleString("vi-VN"));
+      setValues(getValues("rentalPrice") && getValues("rentalPrice").toLocaleString("vi-VN"));
     }
     if(name==="totalDepositAmount"){
       setValues(getValues("totalDepositAmount")?.toLocaleString("vi-VN"));
@@ -92,7 +84,15 @@ const RowComponent = ({
       setValue("additionalDepositAmount",getValues("totalDepositAmount")-Number(value.toString().replace(/\./g, "")))
     }
   
-  }, []);
+  }, [name,setValue,setValues,getValues,isSidebarOpen]);
+  //  auto import data from detech CCCD into input
+  useEffect(() => {
+    if (getDataFromCMND && InfoCCCD[name]) {
+      setValue(name, InfoCCCD[name]);
+      setValues(InfoCCCD[name]);
+    }
+  }, [getDataFromCMND, InfoCCCD, name, setValue]);
+
 
   // import price totalDepositAmount
   useEffect(()=>{
@@ -154,9 +154,9 @@ if(getRentalPrice && getNamecommissionPolicyId && name ==="totalDepositAmount"){
 
   return (
     <div className="w-[501px] self-stretch justify-between items-start gap-4 inline-flex">
-      <div className="w-fit max-w-[160px] text-gray-700 text-sm font-medium leading-tight">
-        <p>{title}</p>
-        <p className="italic ">{title1}</p>
+      <div className="w-fit max-w-[160px] text-gray-700   ">
+        <p className="text-sm font-medium leading-tight">{title}</p>
+        <p className="text-sm font-sans text-gray-900 italic ">{title1}</p>
       </div>
       <div
         className={`h-[38px] py-[9px] w-[318px] ${

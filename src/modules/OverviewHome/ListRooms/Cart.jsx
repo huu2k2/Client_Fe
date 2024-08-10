@@ -18,7 +18,7 @@ const Cart = ({ data }) => {
       case "2":
         return "bg-rose-800";
       default:
-        return " bg-amber-100";
+        return " bg-rose-800";
     }
   };
 
@@ -30,21 +30,21 @@ const Cart = ({ data }) => {
       case "1":
         return `Phòng sắp trống ${formatDateToVietnamese(i)}`;
       case "2":
-        return `Đã đặt cọc ${formatDateToVietnamese(i)}`;
+        return `Đã đặt cọc `;
       default:
-        return "Đã cho thuê";
+        return "Đã đặt cọc";
     }
   };
   const getText = (status) => {
     switch (status) {
       case "0":
-        return "text-white";
+        return "text-emerald-800";
       case "1":
-        return `text-white`;
+        return `text-amber-800`;
       case "2":
-        return `text-white`;
+        return `text-[#a70b33]`;
       default:
-        return "text-amber-700";
+        return "text-[#a70b33]";
     }
   };
 
@@ -55,7 +55,7 @@ const Cart = ({ data }) => {
           data?.status
         )} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >
-        <div className={`text-center ${getText(data?.status)} text-lg font-medium leading-normal`}>
+        <div className={`text-center text-white text-lg font-medium leading-normal`}>
           P.{data?.roomCode || "000"}
         </div>
       </div>

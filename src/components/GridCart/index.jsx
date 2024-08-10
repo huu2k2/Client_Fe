@@ -25,7 +25,7 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
   const [isPending, startTransition] = useTransition();
   const [data, { isLoading }] = useQueryData();
   const [items, setItems] = useState([]);
-  
+
   // Kiểm soát lần load đầu tiên
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
@@ -36,28 +36,33 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     return district ? district.district_id : null;
   }, []);
 
-  const query = useMemo(
-    () => ({
+  const query = useMemo(() => {
+    const x = {
       houseId: id,
       districtId: findDistrictId(address, datadistrict),
       price:
         Number(money) === 0
           ? null
           : {
-              min:
-                Number(money) === 0
-                  ? null
-                  : Math.max(Number(money) - 500000, 0),
-              max: Number(money) === 0 ? null : Number(money) + 500000,
+              min: Math.max(Number(money) - 500000, 0),
+              max: Number(money) + 500000,
             },
       categories: category ? [category] : null,
-    }),
-    [id, money, category, datadistrict, findDistrictId]
-  );
+    };
+  
+    for (const key in x) {
+      if (x[key] === null) {
+        delete x[key];
+      }
+    }
+  
+    return x; // Ensure the object is returned
+  }, [id, money, category, datadistrict, findDistrictId]);
 
   useEffect(() => {
     if (isFirstLoad) {
       setIsFirstLoad(false);
+
       // Thực hiện gọi API với query lần đầu tiên
       setFilterData({ ...filterData, ...query });
       handleClickSearch(); // Gọi API ngay lập tức lần đầu tiên

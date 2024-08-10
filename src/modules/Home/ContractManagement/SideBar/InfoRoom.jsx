@@ -18,7 +18,7 @@ const muiltyRow = [
     placeholder: "",
     unit: "đ",
     name: "rentalPrice",
-    title1:"(Chưa bao gồm tiền nội thất)"
+    title1:"(Chưa bao gồm nội thất)"
   },
   {
     id: 4,

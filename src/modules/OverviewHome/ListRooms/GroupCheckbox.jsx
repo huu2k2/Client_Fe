@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
-  const [isEmptyRoomChecked, setIsEmptyRoomChecked] = useState(false);
-  const [isRoomToBeEmptyChecked, setIsRoomToBeEmptyChecked] = useState(false);
-  const [isBookedRoomChecked, setIsBookedRoomChecked] = useState(false);
-  const [isRentedRoomChecked, setIsRentedRoomChecked] = useState(false);
+  const [isEmptyRoomChecked, setIsEmptyRoomChecked] = useState( localStorage.getItem('adadvadadv') === "0" ?true:false);
+  const [isRoomToBeEmptyChecked, setIsRoomToBeEmptyChecked] = useState(localStorage.getItem('adadvadadv') === "1" ?true:false);
+  const [isBookedRoomChecked, setIsBookedRoomChecked] = useState(localStorage.getItem('adadvadadv') === "2" ?true:false);
+  const [isRentedRoomChecked, setIsRentedRoomChecked] = useState(localStorage.getItem('adadvadadv') === "3" ?true:false);
   useEffect(() => {
     const updatedQuery = [];
 

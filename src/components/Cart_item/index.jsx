@@ -41,7 +41,7 @@ const  navigate = useNavigate()
   };
  
   const handleChangePage = (item) => {
-     
+    localStorage.setItem("adadvadadv",item.status)
       navigate(`/overview/${item.houseId}`);
  
   };
