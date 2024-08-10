@@ -39,13 +39,13 @@ const RowComponent = ({
   useEffect(() => {
     const initialValue = getData[name];
     if (priceValue && initialValue) {
-      setValues(Number(initialValue).toLocaleString("vi-VN"));
+      setValues(initialValue.toLocaleString("vi-VN"));
       setValue(name, getData[name]);
     } else {
       setValues(initialValue);
       setValue(name, getData[name]);
     }
-  }, [getData, name, isSidebarOpen]);
+  }, [getData, name, isSidebarOpen,priceValue]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;

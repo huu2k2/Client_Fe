@@ -4,7 +4,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
   const [isEmptyRoomChecked, setIsEmptyRoomChecked] = useState( localStorage.getItem('adadvadadv') === "0" ?true:false);
   const [isRoomToBeEmptyChecked, setIsRoomToBeEmptyChecked] = useState(localStorage.getItem('adadvadadv') === "1" ?true:false);
   const [isBookedRoomChecked, setIsBookedRoomChecked] = useState(localStorage.getItem('adadvadadv') === "2" ?true:false);
-  const [isRentedRoomChecked, setIsRentedRoomChecked] = useState(localStorage.getItem('adadvadadv') === "3" ?true:false);
+  // const [isRentedRoomChecked, setIsRentedRoomChecked] = useState(localStorage.getItem('adadvadadv') === "3" ?true:false);
   useEffect(() => {
     const updatedQuery = [];
 
@@ -18,14 +18,15 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
 
     if (isBookedRoomChecked) {
       updatedQuery.push('2');
-    }
-    
-    if (isRentedRoomChecked) {
       updatedQuery.push('3');
     }
+    
+    // if (isRentedRoomChecked) {
+    //   updatedQuery.push('3');
+    // }
 
     setQuery(updatedQuery);
-  }, [isEmptyRoomChecked, isRoomToBeEmptyChecked, isBookedRoomChecked,isRentedRoomChecked]);
+  }, [isEmptyRoomChecked, isRoomToBeEmptyChecked, isBookedRoomChecked]);
 
   const handleEmptyRoomChange = () => {
     setIsEmptyRoomChecked(!isEmptyRoomChecked);
@@ -38,9 +39,9 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
   const handleBookedRoomChange = () => {
     setIsBookedRoomChecked(!isBookedRoomChecked);
   };
-  const handleRentalRoomChange=()=>{
-    setIsRentedRoomChecked(!isRentedRoomChecked)
-  }
+  // const handleRentalRoomChange=()=>{
+  //   setIsRentedRoomChecked(!isRentedRoomChecked)
+  // }
   return (
     <div className="self-stretch h-5 flex-col justify-center items-start gap-2 flex">
       <div className="justify-start items-center gap-4 inline-flex">
@@ -81,7 +82,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             Đã đặt cọc ({statusTotals?.booked})
           </label>
         </div>
-        <div className="justify-start items-center gap-2 flex">
+        {/* <div className="justify-start items-center gap-2 flex">
           <input
             type="checkbox"
             className="custom-checkbox bg-white"
@@ -92,7 +93,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
           <label htmlFor="booked" className="text-white text-sm font-medium leading-tight cursor-pointer">
             Đã cho thuê ({statusTotals?.rented})
           </label>
-        </div>
+        </div> */}
       </div>
     </div>
   );

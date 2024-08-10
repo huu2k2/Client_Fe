@@ -4,11 +4,7 @@ import ContainerImg from "./ContainerImg";
 
 const groupByFloor = (data) => {
   return data?.reduce((acc, item) => {
-    const floorNumber = item.roomCode
-      ? isNaN(parseInt(item.roomCode[0], 10))
-        ? 0
-        : parseInt(item.roomCode[0], 10)
-      : 0;
+    const floorNumber = item.floor
     if (!acc[floorNumber]) {
       acc[floorNumber] = [];
     }
