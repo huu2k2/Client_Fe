@@ -31,8 +31,8 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     houseId: id || null,
     districtId: findDistrictId(address, datadistrict) || null,
     price: {
-      min: Number(money) === 0 ? null : Math.max(Number(money) - 1000000, 0),
-      max: Number(money) === 0 ? null : Number(money) + 1000000,
+      min: Number(money) === 0 ? null : Math.max(Number(money) - 500000, 0),
+      max: Number(money) === 0 ? null : Number(money) + 500000,
     },
     categories: category ? [category] : null,
   }), [id, money, category, datadistrict, findDistrictId]);

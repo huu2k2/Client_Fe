@@ -108,9 +108,11 @@ const Index = ({ clear, setClear }) => {
                 valueLabelDisplay="auto"
                 min={0}
                 max={30}
-                step={0.1} // Smaller steps to fine-tune the slider
-                marks
+                step={0.3} // Smaller steps to fine-tune the slider
+                 
                 valueLabelFormat={(value) => `${value} tr`}
+                color="error"
+                
               />
             </Box>
           </div>

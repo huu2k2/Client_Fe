@@ -13,7 +13,11 @@ const ItemHome = ({ item ,setFilterData}) => {
     if (isLock) {
       setIsOpen(!isOpen);
     } else {
-      navigate(`/overview/${item.houseId}`);
+      localStorage.removeItem('kwomkdnkadvadvad')
+      setTimeout(()=>{
+
+        window.location.assign(`/overview/${item.houseId}`)
+      },150)
     }
   };
   const handleChange = (e) => {

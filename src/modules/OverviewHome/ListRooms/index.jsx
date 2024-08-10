@@ -16,6 +16,8 @@ const calculateRoomStatusTotals = (data) => {
         totals.toBeEmpty += 1;
       } else if (item.status === "2") {
         totals.booked += 1;
+      } else {
+        totals.rented += 1;
       }
       return totals;
     },
@@ -23,6 +25,7 @@ const calculateRoomStatusTotals = (data) => {
       empty: 0,
       toBeEmpty: 0,
       booked: 0,
+      rented: 0
     }
   );
 };
@@ -49,11 +52,12 @@ const Index = () => {
     freeHour: null,
     washing: null,
     roomQuantity: null,
-    housePass: localStorage.getItem('kwomkdnkadvadvad')||null,
+    housePass: localStorage.getItem('kwomkdnkadvadvad') || null,
   });
-  const [getRoomsFilter, { data: DataOF, isLoading }] =
-    useGetRoomsofhouseMutation();
+
+  const [getRoomsFilter, { data: DataOF, isLoading }] = useGetRoomsofhouseMutation();
   const statusTotals = calculateRoomStatusTotals(DataOF?.response || []);
+
   useEffect(() => {
     const rs = async () => {
       const kq = await getRoomsFilter(filterData).unwrap();
@@ -61,7 +65,7 @@ const Index = () => {
     };
 
     rs();
-  }, [idHome]);
+  }, [idHome, filterData]); // Sử dụng idHome và filterData làm dependencies
 
   // Cập nhật dữ liệu lọc khi query thay đổi
   useEffect(() => {
@@ -75,9 +79,10 @@ const Index = () => {
         setFilteredData(DataOF?.response);
       }
     }
-  }, [query, idHome]);
+  }, [query, DataOF]); // Sử dụng query và DataOF làm dependencies
+
   const { data: dataNameHome } = useGetInfoHomeQuery(idHome);
- 
+
   return (
     <>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
@@ -153,7 +158,7 @@ const Index = () => {
         />
       </div>
       {dataNameHome?.response && (
-        <Sidebar idHolder={dataNameHome?.response?.houseHolderId} setFilterData={setFilterData}/>
+        <Sidebar idHolder={dataNameHome?.response?.houseHolderId} setFilterData={setFilterData} />
       )}
     </>
   );

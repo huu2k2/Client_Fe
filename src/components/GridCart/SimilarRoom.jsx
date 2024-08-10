@@ -22,8 +22,8 @@ const SimilarRoom = ({ id, money, address, category }) => {
     houseId: id,
     districtId: findDistrictId(address, datadistrict),
     price: {
-      min: (Number(money) - 1000000) < 0 ? 0 : Number(money) - 1000000,
-      max: Number(money) + 1000000 || 30000000,
+      min: (Number(money) - 500000) < 0 ? 0 : Number(money) - 500000,
+      max: Number(money) + 500000 || 30000000,
     },
     categories: category && [category],
   };

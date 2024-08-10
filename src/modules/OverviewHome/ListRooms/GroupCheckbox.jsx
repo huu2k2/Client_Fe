@@ -4,7 +4,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
   const [isEmptyRoomChecked, setIsEmptyRoomChecked] = useState(false);
   const [isRoomToBeEmptyChecked, setIsRoomToBeEmptyChecked] = useState(false);
   const [isBookedRoomChecked, setIsBookedRoomChecked] = useState(false);
-
+  const [isRentedRoomChecked, setIsRentedRoomChecked] = useState(false);
   useEffect(() => {
     const updatedQuery = [];
 
@@ -19,9 +19,13 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
     if (isBookedRoomChecked) {
       updatedQuery.push('2');
     }
+    
+    if (isRentedRoomChecked) {
+      updatedQuery.push('3');
+    }
 
     setQuery(updatedQuery);
-  }, [isEmptyRoomChecked, isRoomToBeEmptyChecked, isBookedRoomChecked]);
+  }, [isEmptyRoomChecked, isRoomToBeEmptyChecked, isBookedRoomChecked,isRentedRoomChecked]);
 
   const handleEmptyRoomChange = () => {
     setIsEmptyRoomChecked(!isEmptyRoomChecked);
@@ -34,7 +38,9 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
   const handleBookedRoomChange = () => {
     setIsBookedRoomChecked(!isBookedRoomChecked);
   };
-
+  const handleRentalRoomChange=()=>{
+    setIsRentedRoomChecked(!isRentedRoomChecked)
+  }
   return (
     <div className="self-stretch h-5 flex-col justify-center items-start gap-2 flex">
       <div className="justify-start items-center gap-4 inline-flex">
@@ -73,6 +79,18 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
           />
           <label htmlFor="booked" className="text-white text-sm font-medium leading-tight cursor-pointer">
             Đã đặt cọc ({statusTotals?.booked})
+          </label>
+        </div>
+        <div className="justify-start items-center gap-2 flex">
+          <input
+            type="checkbox"
+            className="custom-checkbox bg-white"
+            checked={isRentedRoomChecked}
+            onChange={handleRentalRoomChange}
+            id="booked"
+          />
+          <label htmlFor="booked" className="text-white text-sm font-medium leading-tight cursor-pointer">
+            Đã cho thuê ({statusTotals?.rented})
           </label>
         </div>
       </div>
