@@ -12,7 +12,14 @@ const Index = ({ clear, setClear }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [valueRange, setValueRange] = useState([0, 30]);
-
+  useEffect(() => {
+    if (filterData.price) {
+      setValueRange([
+        Math.floor(Number(filterData.price.min) / 1000000),
+        Math.ceil(Number(filterData.price.max )/ 1000000),
+      ]);
+    }
+  }, [filterData]);
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -30,14 +37,7 @@ const Index = ({ clear, setClear }) => {
   const queryParams = new URLSearchParams(location.search);
   const idRoom = queryParams.get("idRoom") || null;
 
-  useEffect(() => {
-    if (filterData.price && filterData.price > 0) {
-      setValueRange([
-        Math.floor(filterData.price.min / 1000000),
-        Math.ceil(filterData.price.max / 1000000),
-      ]);
-    }
-  }, [filterData]);
+
 
   useEffect(() => {
     if (clear) {
