@@ -9,7 +9,7 @@ const ItemFurniture = ({ item, setFurnitureInserts }) => {
         const priceValue = item.price === 0 ? "Trang bị có sẵn" : item.price.toLocaleString('vi-VN');
         setDisplayPrice(priceValue);
         setActualPrice(item.price);
-        setIsChecked(item.isActived);
+        setIsChecked(item.price === 0  || item.isActived);
     }, [item]);
 
     const handlePriceChange = (e) => {

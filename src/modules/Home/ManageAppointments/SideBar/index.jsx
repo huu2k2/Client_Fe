@@ -69,44 +69,45 @@ const SideBar = ({ getInfo }) => {
     try {
      
       if(furnitureInserts.length>0 && serviceInserts.length>0){
-      const kq = await addDeposit({
-        ...data,
-        furnitures:furnitureInserts,
-        services:serviceInserts,
-        birthOfDay: coverDate(data.birthOfDay),
-        depositDate: coverDate(data.depositDate),
-        rentalStartDate: coverDate(data.rentalStartDate),
-        dateRange: coverDate(data.dateRange),
-        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-        roomId: data.roomId,
-        rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
-        commissionPolicyId: Number(data.commissionPolicyId),
-        houseId: getInfo.houseId,
-        additionalDepositAmount: Number(
-          data.additionalDepositAmount.replace(/\./g, "")
-        ),
-        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-        numberOfPeople: Number(data.numberOfPeople),
-        numberOfVehicle: Number(data.numberOfVehicle),
-        fullName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        totalDepositAmount: Number(data.totalDepositAmount),
-      });
-      if (kq?.error) {
-        toast.error(kq.error.data.message);
-        setIsCheckSuccess(false);
-      } else {
-        toast.success(kq.data.message);
-        setIsCheckSuccess(true);
-        refetch();
-        setIsLoading(false);
-      }
+      // const kq = await addDeposit({
+      //   ...data,
+      //   furnitures:furnitureInserts,
+      //   services:serviceInserts,
+      //   birthOfDay: coverDate(data.birthOfDay),
+      //   depositDate: coverDate(data.depositDate),
+      //   rentalStartDate: coverDate(data.rentalStartDate),
+      //   dateRange: coverDate(data.dateRange),
+      //   depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+      //   roomId: data.roomId,
+      //   rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
+      //   commissionPolicyId: Number(data.commissionPolicyId),
+      //   houseId: getInfo.houseId,
+      //   additionalDepositAmount: Number(
+      //     data.additionalDepositAmount.replace(/\./g, "")
+      //   ),
+      //   depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+      //   numberOfPeople: Number(data.numberOfPeople),
+      //   numberOfVehicle: Number(data.numberOfVehicle),
+      //   fullName: data.fullName,
+      //   phoneNumber: data.phoneNumber,
+      //   totalDepositAmount: Number(data.totalDepositAmount),
+      // });
+      // if (kq?.error) {
+      //   toast.error(kq.error.data.message);
+      //   setIsCheckSuccess(false);
+      // } else {
+      //   toast.success(kq.data.message);
+      //   setIsCheckSuccess(true);
+      //   refetch();
+      //   setIsLoading(false);
+      // }
       console.log("kq",furnitureInserts,serviceInserts)
     }else{
       console.log("looix")
     }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
+      console.log(error)
     } finally {
       setIsLoading(false);
     }

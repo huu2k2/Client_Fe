@@ -187,7 +187,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                   </th>
                   <th className="w-40 h-10 px-6 py-3 bg-blue-900 justify-start items-center flex">
                     <span className="text-white text-xs font-medium uppercase leading-none tracking-wide">
-                      Hoa hồng
+                      Hoa hồng (VNĐ)
                     </span>
                   </th>
                   <th className="flex-1 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
@@ -232,7 +232,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
                     <td className="w-[120px] h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
-                        A.{i.roomCode}
+                        P.{i.roomCode}
                       </span>
                     </td>
 
@@ -244,7 +244,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
 
                     <td className="w-40 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
                       <span className=" text-black text-sm font-normal  leading-tight">
-                        {i.commission}
+                        {(i.rentalPrice*i.commission/100).toLocaleString("vi-VN")}
                       </span>
                     </td>
 
