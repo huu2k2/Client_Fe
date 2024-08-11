@@ -12,7 +12,7 @@ const Index = (option) => {
   const category = queryParams.get("category") || null;
   const { data: faveritedata } = useGetFavoriteQuery();
   return (
-    <div className="w-[1360px] flex flex-col gap-5 mb-20">
+    <div className="w-fit lg:w-[1360px] flex flex-col gap-5 mb-20">
       <GridCart
         option={option}
         id={idroom}

@@ -103,10 +103,10 @@ const Otp = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4 w-full gap-6 text-center">
-      <div className="w-[384px] h-[44px] flex justify-center items-center gap-3">
+    <div className="flex flex-col justify-center items-center space-y-4 w-full gap-6 text-center">
+      <div className="w-10/12 lg:w-[384px] h-[44px] flex justify-between items-center gap-3">
         {[...Array(length)].map((_, i) => (
-          <div key={i} className="flex flex-col items-center">
+          <div key={i} className="flex flex-col items-center ">
             <input
               type="text"
               maxLength={1}
@@ -133,7 +133,7 @@ const Otp = () => {
       )}
       <button
         onClick={handleSendOtp}
-        className="flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+        className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
       >
         Xác thực
       </button>

@@ -107,7 +107,7 @@ const FilterNavbar = ({ setOption }) => {
   };
 
   return (
-    <div className="w-[1360px] h-[70px] p-4 gap-2 flex items-center">
+    <div className="w-fit h-fit lg:w-[1360px] lg:h-[70px] py-4 gap-2 flex items-center justify-start flex-wrap">
       <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border relative border-gray-300 shadow-sm bg-white">
         <AiOutlineSearch className="w-5 h-5 text-[#888]" />
         <div className="relative mt-4 h-full w-full">

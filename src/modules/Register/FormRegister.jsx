@@ -61,11 +61,11 @@ const FormRegister = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col  w-full gap-6 "
+        className="flex flex-col justify-center items-center w-full gap-6 "
       >
         {isLoading && <LoadingSpinner isLoading={isLoading} />}
         {/* fullName */}
-        <div className="w-[384px] gap-1">
+        <div className="w-10/12 lg:w-[384px] gap-1">
           <label
             htmlFor="fullName"
             className="text-gray-700 text-sm font-medium"
@@ -84,7 +84,7 @@ const FormRegister = () => {
           )}
         </div>
         {/* Phone number */}
-        <div className="w-[384px] gap-1">
+        <div className="w-10/12 lg:w-[384px] gap-1">
           <label htmlFor="phone" className="text-gray-700 text-sm font-medium">
             Số điện thoại
           </label>
@@ -100,7 +100,7 @@ const FormRegister = () => {
           )}
         </div>
         {/* Email */}
-        <div className="w-[384px] gap-1">
+        <div className="w-10/12 lg:w-[384px] gap-1">
           <label htmlFor="email" className="text-gray-700 text-sm font-medium">
             Email
           </label>
@@ -116,8 +116,8 @@ const FormRegister = () => {
           )}
         </div>
         {/* password */}
-        <div>
-          <div className="relative">
+        <div className="w-10/12 lg:w-[384px]">
+          <div className="relative ">
             <label
               htmlFor="password"
               className="text-gray-700 text-sm font-medium"
@@ -144,13 +144,13 @@ const FormRegister = () => {
         </div>
 
         {/* check box */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+        <div className="flex justify-between items-center w-10/12 lg:w-[384px]">
+          <div className="flex items-start justify-between gap-2">
             <input
               id="isCheckbox"
               type="checkbox"
               {...register("isCheckbox")}
-              className=""
+              className="mt-1"
             />
             <label
               htmlFor="isCheckbox"
@@ -182,7 +182,7 @@ const FormRegister = () => {
         )}
         <button
           type="submit"
-          className="flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+          className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
         >
           Đăng ký
         </button>

@@ -81,12 +81,12 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
     <div className=" w-full h-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full gap-6 relative"
+        className="flex flex-col justify-center items-center w-full gap-6 relative"
       >
         {isLoading && <LoadingSpinner isLoading={isLoading} />}
 
         {/* userName */}
-        <div className="w-[384px] gap-1">
+        <div className="w-10/12 lg:w-[384px] gap-1">
           <label
             htmlFor="userName"
             className="text-gray-700 text-sm font-medium"
@@ -110,7 +110,7 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
         </div>
 
         {/* password */}
-        <div className="relative w-[384px] gap-1">
+        <div className="relative  w-10/12 lg:w-[384px] gap-1">
           <label
             htmlFor="password"
             className="text-gray-700 text-sm font-medium"
@@ -138,7 +138,7 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
         </div>
 
         {/* check box */}
-        <div className="flex justify-between items-center">
+        <div className="flex w-10/12 lg:w-[384px] justify-between items-center">
           <div className="flex items-center gap-2">
             <input
               id="remeber"
@@ -165,7 +165,7 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
 
         <button
           type="submit"
-          className="flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+          className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
         >
           Đăng nhập
         </button>

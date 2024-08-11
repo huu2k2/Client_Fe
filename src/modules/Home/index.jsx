@@ -25,7 +25,7 @@ const Index = () => {
         {isShow && <Profile setShow={setShow} />}
         <div className="w-full h-fit flex flex-col items-center justify-start  ">
           <Header setShow={setShow} isShow={isShow} />
-          <Outlet />
+          <Outlet/>
         </div>
       </div>
     </p>

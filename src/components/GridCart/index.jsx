@@ -111,7 +111,7 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
   }
 
   return (
-    <div className="w-full grid grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-[56px] relative min-h-[400px] max-h-fit">
       {items.map((item, index) => (
         <CartRoom key={index} item={item} faveritedata={faveritedata} />
       ))}

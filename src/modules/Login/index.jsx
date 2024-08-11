@@ -27,16 +27,16 @@ const hanldeClick =()=>{
   change('/')
 }
   return (
-    <div className="lg:w-full h-screen nthd_flex relative self-stretch flex-1">
+    <div className="w-full h-screen nthd_flex relative self-stretch flex-1">
     
 
       {/* xac thuc opt */}
-      <div id="recaptcha-container"></div>
-      <div className=" lg:h-screen w-[1344px] " >
-        <img src={img} alt="Login img" className="w-full h-fit " />
+      <div id="recaptcha-container" ></div>
+      <div className=" hidden lg:basis-7/10 lg:h-screen xl:block grow shrink" >
+        <img src={img} alt="Login img" className="hidden lg:w-full lg:block h-full " />
       </div>
 
-      <div className="w-[576px] h-screen flex items-center justify-start flex-col py-[76px] px-[6rem] gap-8">
+      <div className="basic-full lg:basis-3/10  h-screen grow shrink-0 flex items-center justify-center lg:justify-start flex-col py-[76px] px-[6rem] gap-8">
         {/* logo */}
         <div className="w-full h-[7.5rem] flex flex-col justify-center items-center gap-8">
           <img src={LogoImg} alt="logo" className="h-6 w-[135px] cursor-pointer" onClick={hanldeClick}/>

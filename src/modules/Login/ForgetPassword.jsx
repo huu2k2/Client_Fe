@@ -47,11 +47,11 @@ const ForgetPassword = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col space-y-4 w-full gap-6 "
+      className="flex flex-col justify-center items-center space-y-4 w-full gap-6 "
     >
       {/* Phone number */}
 
-      <div className="w-[384px] gap-1 relative">
+      <div className="w-10/12 lg:w-[384px] gap-1 relative">
         {isLoading && (
           <div className="absolute inset-0 flex justify-center items-center w-full h-full">
             <span className="loading loading-spinner loading-lg  bg-slate-500 "></span>
@@ -74,7 +74,7 @@ const ForgetPassword = () => {
 
       <button
         type="submit"
-        className="flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+        className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
       >
         Xác nhận
       </button>

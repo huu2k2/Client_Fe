@@ -57,11 +57,11 @@ const ResetPassword = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col space-y-4 w-full gap-6 "
+      className="flex flex-col justify-center items-center space-y-4 w-full gap-6 "
     >
       {/* Phone number */}
-      <div>
-        <div className="w-[384px] gap-1 relative">
+      <div className="w-10/12 lg:w-[384px] ">
+        <div className="gap-1 relative">
           <label
             htmlFor="Password"
             className="text-gray-700 text-sm font-medium"
@@ -88,8 +88,8 @@ const ResetPassword = () => {
       </div>
 
       {/* password */}
-      <div>
-        <div className="relative w-[384px] gap-1">
+      <div className="w-10/12 lg:w-[384px] ">
+        <div className="relative  gap-1">
           <label
             htmlFor="Confirm_password"
             className="text-gray-700 text-sm font-medium"
@@ -118,7 +118,7 @@ const ResetPassword = () => {
       </div>
       <button
         type="submit"
-        className="flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+        className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
       >
         Xác nhận
       </button>
