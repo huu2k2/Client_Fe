@@ -34,7 +34,7 @@ const ItemFurniture = ({ item, handleChangePrice ,handleCheckboxChange,getInfo})
                   ? "Trang bị có sẵn"
                   : item.price.toLocaleString("vi-VN")
               }
-              disabled={getInfo.status==="3"}
+              disabled={getInfo.status==="3" || item.price===0}
               className="w-full outline-none text-sm font-normal leading-tight"
               onChange={(e) => handleChangePrice(e, item.furnitureId)}
             />

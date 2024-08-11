@@ -12,8 +12,7 @@ const ContainerImg = ({ item,data }) => {
     document.getElementById("my_modal_showimg").close();
     setIsShowModal(!isShowModal)
   };
- console.log(data)
-  return (
+   return (
     <>
       <dialog id="my_modal_showimg" className="modal my-5 ">
         <div className="modal-box w-11/12 max-w-7xl h-fit">

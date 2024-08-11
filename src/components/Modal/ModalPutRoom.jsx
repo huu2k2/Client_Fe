@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Input from "./Input";
 import TextArea from "./TextArea";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import { useGetRoomsNotDepositOfHouseQuery } from "../../apis/slice/rooms";
 import Select from "react-select";
+import { debounce } from "lodash";
 
 const validationSchema = yup.object().shape({
   customerName: yup.string().required("Tên khách hàng là bắt buộc"),
@@ -29,7 +30,6 @@ const validationSchema = yup.object().shape({
       }
     ),
   viewTime: yup.string().required("Giờ xem phòng là bắt buộc"),
-
   note: yup.string(),
 });
 
@@ -76,6 +76,22 @@ export const ModalPutRoom = ({
     resolver: yupResolver(validationSchema),
   });
 
+  const debouncedSetFormData = useCallback(
+    debounce((name, value) => {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+      setValue(name, value);
+    }, 300),
+    []
+  );
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    debouncedSetFormData(name, value);
+  };
+
   const onSubmit = async (formData) => {
     const viewTime = `${formData.viewDate}T${formData.viewTime}:11.805Z`;
 
@@ -83,7 +99,7 @@ export const ModalPutRoom = ({
       const response = await postschedule({
         ...formData,
         dateView: viewTime,
-        roomId: selectedRoom, // Use the selected room ID
+        roomId: selectedRoom,
         company,
         SalerName,
         SalerPhone,
@@ -109,7 +125,7 @@ export const ModalPutRoom = ({
       // setStatusCode(400);
     }
   };
- 
+
   return (
     <div
       className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
@@ -122,15 +138,6 @@ export const ModalPutRoom = ({
         >
           <AiFillCloseCircle />
         </div>
-        {/* title */}
-        {/* <div className="flex flex-col justify-start gap-1 self-stretch h-12">
-          <span className="text-gray-900 text-lg leading-6 font-medium">
-            {DetailHomeDataa?.response?.houseName}
-          </span>
-          <span className="text-gray-500 font-normal text-sm leading-5">
-            {DetailHomeDataa?.response?.houseAddress}
-          </span>
-        </div> */}
 
         <form
           className="w-[1280px] h-fit gap-8 flex flex-col justify-start"
@@ -142,10 +149,7 @@ export const ModalPutRoom = ({
                 label="Tên khách hàng"
                 name="customerName"
                 value={formData.customerName}
-                onChange={(e) => {
-                  setFormData({ ...formData, customerName: e.target.value });
-                  setValue("customerName", e.target.value);
-                }}
+                onChange={handleInputChange}
                 width={"w-[400px]"}
                 ref={register}
               />
@@ -154,10 +158,7 @@ export const ModalPutRoom = ({
                 label="SĐT khách hàng"
                 name="customerPhone"
                 value={formData.customerPhone}
-                onChange={(e) => {
-                  setFormData({ ...formData, customerPhone: e.target.value });
-                  setValue("customerPhone", e.target.value);
-                }}
+                onChange={handleInputChange}
                 width={"w-[400px]"}
                 ref={register}
               />
@@ -185,10 +186,7 @@ export const ModalPutRoom = ({
                 type="date"
                 name="viewDate"
                 value={formData.viewDate}
-                onChange={(e) => {
-                  setFormData({ ...formData, viewDate: e.target.value });
-                  setValue("viewDate", e.target.value);
-                }}
+                onChange={handleInputChange}
                 width={"w-[400px]"}
                 ref={register}
               />
@@ -200,10 +198,7 @@ export const ModalPutRoom = ({
                 type="time"
                 name="viewTime"
                 value={formData.viewTime}
-                onChange={(e) => {
-                  setFormData({ ...formData, viewTime: e.target.value });
-                  setValue("viewTime", e.target.value);
-                }}
+                onChange={handleInputChange}
                 defaultValue={"00:00"}
                 width={"w-[400px]"}
                 ref={register}
@@ -213,10 +208,7 @@ export const ModalPutRoom = ({
                 label="Ghi chú"
                 name="note"
                 value={formData.note}
-                onChange={(e) => {
-                  setFormData({ ...formData, note: e.target.value });
-                  setValue("note", e.target.value);
-                }}
+                onChange={handleInputChange}
                 width={"w-[400px]"}
                 ref={register}
               />
@@ -226,9 +218,6 @@ export const ModalPutRoom = ({
           <div className="mt-[7px]">
             <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
             <div className="flex justify-end mt-5 w-full h-[38px]">
-              {/* {error && <p className="text-rose-600 mr-10 flex items-center">{error?.data?.message}</p>} */}
-              {/* {response && <p className="text-green-600 mr-10 flex items-center">{response?.message}</p>} */}
-
               <button
                 type="submit"
                 className="flex justify-center items-center px-4 py-2 rounded-md bg-red-600 shadow-sm text-white text-sm font-medium leading-5"
