@@ -35,7 +35,7 @@ const index = ({ isShow=null, setShow=null }) => {
   };
 
   return (
-    <div className="min-w-full h-[64px] bg-black flex justify-center items-center grow shrink">
+    <div className=" px-10 md:px-0 min-w-full h-[64px] bg-black flex justify-center items-center grow shrink">
       <div className="w-full lg:w-[1360px] h-full flex justify-between items-center">
         <div onClick={handleLinkClick}>
           <img

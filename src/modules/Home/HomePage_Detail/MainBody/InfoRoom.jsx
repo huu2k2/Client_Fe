@@ -50,7 +50,7 @@ const InfoRoom = () => {
 
   return (
     <>
-      <div className="w-[723px] h-[578px] gap-4 flex flex-col justify-between">
+      <div className="w-full md:w-[723px] h-fit md:h-[578px] gap-4 flex flex-col justify-between">
         {/* name home in stress */}
         <div className="w-full h-fit">
           {address && data ? (
@@ -64,8 +64,8 @@ const InfoRoom = () => {
         </div>
 
         {/* endow */}
-        <div className="w-[723px] h-fit rounded-[4px] border p-2 gap-[102px] bg-[#FFFBEB] border-[#B45309]">
-          <div className="w-[707px] h-fit gap-2">
+        <div className="w-full md:w-[723px] h-fit rounded-[4px] border p-2 gap-[102px] bg-[#FFFBEB] border-[#B45309]">
+          <div className="w-full md:w-[707px] h-fit gap-2">
             {/* gift */}
             <div className="w-[82px] h-[24px] gap-2 flex">
               <BsGiftFill />
@@ -90,6 +90,7 @@ const InfoRoom = () => {
                     </li>
                   ))
                   : null}
+                  
               </ul>
             </div>
           </div>
@@ -99,8 +100,8 @@ const InfoRoom = () => {
         <div className="w-full rounded-[4px] h-[250px] border px-6 gap-6 py-8 bg-[#F9FAFB] flex flex-col justify-center overflow-y-auto custom-scrollbar scroll-smooth">
           {serviceInserts?.length > 0 ? (
             serviceInserts.map((service, index) => (
-              <div className="h-[20px] gap-2 w-fit flex" key={index}>
-                <div className="w-[320px] nthd_text_medium_sm_h20 block">
+              <div className="h-fit md:h-[20px] gap-2 w-full flex justify-between" key={index}>
+                <div className=" w-full md:w-[320px] nthd_text_medium_sm_h20 block">
                   {service?.serviceName}
                 </div>
                 <div className="nthd_text_medium_sm_h20">
@@ -117,25 +118,25 @@ const InfoRoom = () => {
           )}
         </div>
 
-        <div className="flex justify-between w-full items-center h-40">
+        <div className="flex justify-between w-full items-center  md:h-40 flex-wrap gap-4">
           <div className="text-[28px] flex font-semibold leading-[28px] text-red-700">
             {new Intl.NumberFormat("vi-VN").format(price)} VND
           </div>
 
           {/* button */}
-          <div className="w-fit flex gap-2">
+          <div className="w-full md:w-fit flex flex-col md:flex-row gap-4 md:gap-2">
             <div onClick={handleShowModal}>
               <Button
                 text={" Đặt lịch xem phòng"}
                 color={"text-white"}
-                background={"bg-red-700"}
+                background={"bg-red-700 w-full"}
               />
             </div>
             <div onClick={handleClick}>
               <Button
                 text={"Tổng quan nhà trọ"}
                 color={"text-red-700"}
-                background={"bg-red-100"}
+                background={"bg-red-100 w-full"}
               />
             </div>
           </div>
