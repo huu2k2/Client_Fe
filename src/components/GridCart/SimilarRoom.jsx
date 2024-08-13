@@ -44,7 +44,7 @@ const SimilarRoom = ({ id, money, address, category }) => {
   }, [money, address, category, id, datadistrict]);
 
   return (
-    <div className="grid grid-cols-4 gap-4 gap-y-[56px] relative w-full min-h-[400px] max-h-fit">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 gap-y-[56px] relative w-full h-fit min-h-[400px] max-h-fit">
       {!isLoading && !isPending && rooms.map((item, index) => (
         <CartRoom key={index} item={item} />
       ))}

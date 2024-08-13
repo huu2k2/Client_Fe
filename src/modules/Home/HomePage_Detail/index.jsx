@@ -61,8 +61,8 @@ const index = () => {
           id={id}
         />
       )}
-      <div className="mt-[18px] w-[1360px] h-fit bg-white nthd_flex_col_between mb-10 custom-scrollbar">
-        <div className="bg-black text-center py-2 px-[411px]  w-full rounded-[4px]  nthd_text_normal_sm">
+      <div className="mt-[18px] w-full px-10 lg:px-0 lg:w-[1360px] h-fit bg-white flex flex-col justify-center lg:justify-between items-center mb-10 custom-scrollbar">
+        <div className="bg-black text-center py-2 lg:px-[411px]  w-full rounded-[4px]  nthd_text_normal_sm">
           <span className="text-white flex justify-center items-center gap-1">
             <BsLightningCharge />
             Giữ phòng tối đa 7 ngày

@@ -17,8 +17,8 @@ const Index = ({ title, data, money, address,category }) => {
   };
 
   return (
-    <div className="w-full h-[381px] nthd_flex_col_between ">
-      <div className="w-full h-8 flex justify-between">
+    <div className="w-full h-fit nthd_flex_col_between gap-4">
+      <div className="w-full h-fit lg:h-8 flex flex-col lg:flex-row gap-2 items-start justify-center md:justify-between">
         <h1 className="font-semibold text-2xl">{title}</h1>
         <button
           onClick={handleNavigate}

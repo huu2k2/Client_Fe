@@ -33,9 +33,9 @@ const Cart = () => {
 
   return (
     <>
-      <div className="w-[557px] h-fit gap-2 flex flex-col ">
+      <div className="w-full px-10 md:px-0 md:w-[557px] h-fit gap-2 flex flex-col flex-wrap">
 
-        <div className="w-full h-[313px]">
+        <div className="hidden md:block w-full h-[313px]">
           <img
             src={result[mainImageIndex]?.url}
             alt="Slide 1"
@@ -43,11 +43,11 @@ const Cart = () => {
           />
         </div>
 
-        <div className="w-full h-[102px] gap-2 relative flex ">
+        <div className="w-full h-fit md:h-[102px] gap-2 relative flex flex-row flex-wrap">
           {result.map((image, index) => (
             <div
               key={index}
-              className="w-[180px] h-[102px] rounded-md overflow-hidden cursor-pointer"
+              className="w-full md:w-[180px] h-full rounded-md overflow-hidden cursor-pointer"
             >
               <img
                 src={image?.url}
@@ -69,8 +69,8 @@ const Cart = () => {
         </div>
         <ShowImages images={images} />
 
-        <div className="nthd_flex_between_full h-fit pt-8">
-          <div className="w-[196px] h-fit gap-6 flex flex-col">
+        <div className="flex-col md:flex-row nthd_flex_between_full h-fit pt-8">
+          <div className="w-full md:w-[196px] h-fit gap-6 flex flex-col">
             <div className="nthd_flex_between_full">
               <Link to={`/overview/${id}`}>
               <img src={UserImg} alt="hinh anh nguoi dung..." />
@@ -91,8 +91,8 @@ const Cart = () => {
             </div>
           </div>
 
-          <div className="w-[288px] h-[76px] nthd_flex_between">
-            <div className="w-[136px] h-full p-2 gap-2">
+          <div className="md:w-[288px] h-[76px] nthd_flex_between">
+            <div className="md:w-[136px] h-full p-2 gap-2 flex flex-col justify-between items-center">
               <h2 className="nthd_text_normal_sm_text">Phòng sắp trống</h2>
               <h1 className="nthd_semibold_2xl_text">
                 {rooms?.roomToBeEmpty}
@@ -101,7 +101,7 @@ const Cart = () => {
 
             <div className="border border-gray-400 h-[40px] bg-[#E7E7E7]"></div>
 
-            <div className="w-[136px] h-full p-2 gap-2">
+            <div className="md:w-[136px] h-full p-2 gap-2 flex flex-col justify-between items-center">
               <h2 className="nthd_text_normal_sm_text">Phòng trống</h2>
               <h1 className="nthd_semibold_2xl_text">
                 {rooms?.emptyRoom}

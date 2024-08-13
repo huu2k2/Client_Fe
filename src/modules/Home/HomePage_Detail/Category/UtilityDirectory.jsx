@@ -14,7 +14,7 @@ const UtilityDirectory = () => {
             <div className="text-black text-base font-medium   leading-normal">Danh mục tiện ích</div>
           </div>
 
-          <div className="w-fit flex justify-start items-center gap-2">
+          <div className="w-fit flex justify-start items-center flex-wrap gap-2">
             {utility.map((i, index) => {
               return (
                 i.value && (
