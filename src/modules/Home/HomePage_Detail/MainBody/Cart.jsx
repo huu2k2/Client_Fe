@@ -19,7 +19,7 @@ const Cart = () => {
   const [result, setResult] = useState([]);
 
   useEffect(() => {
-    if (images?.response?.length < 4) {
+    if (images?.response?.length <2) {
       setDisplay(" hidden");
     } else {
       setDisplay(" block");
@@ -58,10 +58,9 @@ const Cart = () => {
           ))}
 
           <div
-            onClick={() => document.getElementById("my_modal_4").showModal()}
-            className={`w-[180px] h-[102px] rounded-md overflow-hidden absolute  right-0 bg-black translate-x-[-1px] bg-opacity-60 cursor-pointer ${display}`}
+            onClick={() => document.getElementById("mymodalshowanh").showModal()}
+            className={`w-[180px] h-[102px] rounded-md overflow-hidden absolute  top-0 right-0 bg-black translate-x-[-1px] bg-opacity-60 cursor-pointer ${display}`}
           >
-
             <div className="absolute top-0 bottom-0 flex justify-center items-center w-full h-full bg-gray-500 bg-opacity-50">
               <span className="text-white">Xem tất cả hình ảnh</span>
             </div>

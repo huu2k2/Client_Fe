@@ -13,6 +13,7 @@ useEffect(()=>{
 if(img){
   setImagePreview(img)
   setSelectedImage(img)
+  setCount(1)
 }
 },[img])
   const handleImageChange = (event) => {
@@ -44,6 +45,7 @@ if(img){
 
   const handleSave = () => {
     const dataURL = sigCanvas.current.toDataURL("image/png");
+    console.log(dataURL)
     setImagePreview(dataURL);
     onChange(dataURL);
     setCount(1)
@@ -111,7 +113,21 @@ if(img){
           <div className="modal-box">
             <h3 className="font-bold text-lg">Tạo chữ ký</h3>
             <div className="py-4 border">
-              <SignatureCanvas
+            {imagePreview ? (
+            <div className="relative">
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="w-[260px] h-[180px] object-cover"
+              />
+              <AiFillCloseCircle
+                className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white text-gray-600 cursor-pointer"
+                onClick={handleRemoveImage}
+              />
+            </div>
+          ) : (
+            <>
+             <SignatureCanvas
                 penColor="black"
                 canvasProps={{
                   width: 300,
@@ -120,6 +136,9 @@ if(img){
                 }}
                 ref={sigCanvas}
               />
+            </>
+          )}
+              
             </div>
             <form method="dialog" className="modal-action">
               <button

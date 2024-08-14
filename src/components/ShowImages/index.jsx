@@ -18,7 +18,7 @@ function ShowImages({ images }) {
   return (
     <dialog
       className="bg-gray-500 bg-opacity-50   flex justify-center items-center modal modal-action "
-      id="my_modal_4"
+      id="mymodalshowanh"
     >
       <div className="flex bg-white shadow-lg rounded-lg  w-9/12 h-[80vh]  relative">
         <form method="dialog" className="absolute top-2 right-1 rounded-full">

@@ -19,7 +19,6 @@ const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
-console.log(data)
   const [isExiting, setIsExiting] = useState(false);
 
   // handle get avatar
@@ -99,12 +98,11 @@ console.log(data)
     accountNumber: "",
     accountName: "",
   });
-
   useEffect(() => {
     if (data) {
       setFormData({
         AgencyAccountId: data.response.agencyAccountId || null,
-        signatureBase64: data.response.signatureUrl || null,
+        signatureBase64: null,
         beforeIdentificationBase64: data.response.beforeIdentification ? data.response.beforeIdentification.split(",")[1] : null,
         afterIdentificationBase64: data.response.afterIdentification ? data.response.afterIdentification.split(",")[1] : null,
         bankCode: data.response.bankCode || null,
@@ -137,7 +135,7 @@ console.log(data)
 
     return Object.keys(tempErrors).length === 0;
   };
-
+console.log("formData",formData)
   const handleUpdate = async () => {
     if (!validate()) {
       toast.error("Vui lòng kiểm tra các trường bắt buộc");
@@ -147,7 +145,7 @@ console.log(data)
     try {
       const updatedFormData = {
         ...formData,
-        signatureBase64: formData.signatureBase64?.split(",")[1],
+        signatureBase64: formData?.signatureBase64?.split(",")[1],
         bankCode: formData.bankCode.toString(),
         bod: "2024-07-26T14:54:51.919Z",
       };
