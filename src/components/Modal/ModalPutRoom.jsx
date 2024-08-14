@@ -131,7 +131,7 @@ export const ModalPutRoom = ({
       className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
       ref={dropdownRef}
     >
-      <div className="relative w-full lg:w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
+      <div className="relative w-full lg:w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start overflow-y-auto scroll-hidden">
         <div
           className="absolute top-2 right-10 lg:right-2 cursor-pointer"
           onClick={() => setIsShowModal(false)}
@@ -140,7 +140,7 @@ export const ModalPutRoom = ({
         </div>
 
         <form
-          className="w-full px-10 lg:px-0 lg:w-[1280px] h-fit gap-8 flex flex-col justify-start overflow-y-auto scroll-hidden"
+          className="w-full px-10 lg:px-0 lg:w-[1280px] h-fit gap-8 flex flex-col justify-start "
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="gap-5 flex">
@@ -171,7 +171,7 @@ export const ModalPutRoom = ({
 
                   <p className="w-full md:w-[411px] lg:w-[368px]">Chọn phòng</p>
                   </div>
-                  <div className="w-full md:flex justify-center md:justify-start">
+                  <div className="w-full flex justify-center items-center lg:justify-start">
                     <Select
                       className="w-full md:w-[400px] lg:w-[370px]"
                       placeholder="Chọn phòng"
@@ -212,7 +212,7 @@ export const ModalPutRoom = ({
                 name="note"
                 value={formData.note}
                 onChange={handleInputChange}
-                width={"w-[400px]"}
+                width={"w-full md:w-[400px]"}
                 ref={register}
               />
             </div>

@@ -8,7 +8,8 @@ const InputFiel = ({
   isEnable = false,
   setFormData,
   variable,
-  disabled
+  disabled,
+  readonly=false
 }) => {
   const [value, setValue] = useState(label); // Sử dụng label như giá trị ban đầu cho input
 
@@ -45,8 +46,8 @@ const InputFiel = ({
         type={type}
         value={value || ""} // Đảm bảo value không bị undefined
         className="w-[312px] h-[38px] px-[13px] py-[9px] border-2 rounded-md"
-        disabled={isEnable}
         onChange={handleChange}
+        disabled={readonly || isEnable}
       />
     </div>
   );

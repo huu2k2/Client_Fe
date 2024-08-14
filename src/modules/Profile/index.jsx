@@ -19,7 +19,7 @@ const Index = ({ setShow }) => {
   const refContainer = useRef(null);
   const { data, isLoading, isSuccess } = useGetProfileQuery();
   const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
-
+console.log(data)
   const [isExiting, setIsExiting] = useState(false);
 
   // handle get avatar
@@ -302,6 +302,7 @@ useEffect(()=>{
             setFormData={setFormData}
             variable={"fullName"}
             error={errors.fullName}
+            readonly={true}
           />
           <InputFiel
             name={"Số điện thoại"}
@@ -320,6 +321,7 @@ useEffect(()=>{
             setFormData={setFormData}
             variable={"identification"}
             error={errors.identification}
+            readonly={true}
           />
           <InputFiel
             name={"Ngày cấp"}
@@ -329,6 +331,7 @@ useEffect(()=>{
             setFormData={setFormData}
             variable={"dateRange"}
             error={errors.dateRange}
+            readonly={true}
           />
           <InputFiel
             name={"Nơi cấp"}
@@ -338,6 +341,7 @@ useEffect(()=>{
             setFormData={setFormData}
             variable={"issuedBy"}
             error={errors.issuedBy}
+            readonly={true}
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
@@ -347,6 +351,7 @@ useEffect(()=>{
             setFormData={setFormData}
             variable={"permanentAddress"}
             error={errors.permanentAddress}
+            readonly={true}
           />
 
           <Signature
@@ -410,6 +415,7 @@ useEffect(()=>{
             onClick={handleUpdate}
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-rose-600 text-white shadow-sm"
           >
+            {isLoadings && (<span className="loading loading-spinner text-neutral"></span> )}
             Cập nhật
           </button>
         </div>
