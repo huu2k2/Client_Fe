@@ -131,16 +131,16 @@ export const ModalPutRoom = ({
       className="w-screen h-screen flex flex-col justify-center items-center fixed bg-gray-500 bg-opacity-50 inset-0 z-50"
       ref={dropdownRef}
     >
-      <div className="relative w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
+      <div className="relative w-full lg:w-[1360px] h-fit py-6 px-10 gap-5 bg-white rounded-lg shadow-custom flex flex-col justify-start">
         <div
-          className="absolute top-2 right-2 cursor-pointer"
+          className="absolute top-2 right-10 lg:right-2 cursor-pointer"
           onClick={() => setIsShowModal(false)}
         >
           <AiFillCloseCircle />
         </div>
 
         <form
-          className="w-[1280px] h-fit gap-8 flex flex-col justify-start"
+          className="w-full px-10 lg:px-0 lg:w-[1280px] h-fit gap-8 flex flex-col justify-start overflow-y-auto scroll-hidden"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="gap-5 flex">
@@ -166,11 +166,14 @@ export const ModalPutRoom = ({
 
               <div>
                 <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
-                <div className="flex mr-[135px] w-full mt-5">
-                  <p className="flex justify-start">Chọn phòng</p>
-                  <div className="flex justify-center ml-[300px]">
+                <div className="flex lg:mr-[135px] w-full mt-5 flex-col lg:flex-row justify-center items-center gap-6 lg:justify-start">
+                  <div className="w-full md:flex md:justify-center">
+
+                  <p className="w-full md:w-[411px] lg:w-[368px]">Chọn phòng</p>
+                  </div>
+                  <div className="w-full md:flex md:justify-center">
                     <Select
-                      className="w-[370px]"
+                      className="w-full md:w-[400px] lg:w-[370px]"
                       placeholder="Chọn phòng"
                       options={options}
                       onChange={(selectedOption) => {

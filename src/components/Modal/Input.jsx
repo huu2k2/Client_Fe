@@ -15,12 +15,12 @@ const Input = ({ label, name, value, onChange, type = "text", defaultValue, widt
   return (
     <>
       <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
-      <div className="w-[755px] h-[38px] gap-6 flex items-center self-stretch justify-start">
-        <span className="text-gray-700 w-[411px] text-sm font-medium leading-5">
+      <div className="w-full lg:w-[755px] h-fit lg:h-[38px] gap-6 flex flex-col lg:flex-row items-center self-stretch justify-start">
+        <span className="text-gray-700 w-full md:w-[411px] text-sm font-medium leading-5">
           {label}
         </span>
         <input
-          className={`px-4 py-2 border rounded-md ${width}   outline-none `}
+          className={`px-4 py-2 border rounded-md w-full md:${width}   outline-none `}
           type={type}
           name={name}
           onChange={handleChange}

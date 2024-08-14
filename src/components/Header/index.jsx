@@ -61,7 +61,7 @@ const index = ({ isShow=null, setShow=null }) => {
           </div>
 
           {localStorage.getItem("token") ? (
-            <div className="group relative dropdown">
+            <div className="group relative dropdown dropdown-end">
               {/* Avatar */}
               <div
                 tabIndex={0}

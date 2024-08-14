@@ -50,8 +50,8 @@ export default {
             transform: "translateX(0)",
             backgroundColor: "rgba(255, 255, 255, 0.5)",
           },
-          "10%": {
-            transform: "translateX(0)",
+          "20%": {
+            transform: "translateX(50%)",
             backgroundColor: "rgba(107, 114, 128, 0)",
           },
           "100%": {

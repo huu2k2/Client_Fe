@@ -105,7 +105,7 @@ const Index = ({ clear, setClear }) => {
     >
       <div className="relative cursor-pointer" ref={dropdownRef}>
         <div
-          className="flex w-[148px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
+          className="flex w-[362px] md:w-[148px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
           <AiOutlineFilter className="w-5 h-5 text-[#888888]" />
@@ -117,7 +117,7 @@ const Index = ({ clear, setClear }) => {
         </div>
 
         <div
-          className={`absolute z-10 top-12 right-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+          className={`absolute z-10 top-12 left-0 md:right-0  w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
             }`}
         >
           {/* show select */}

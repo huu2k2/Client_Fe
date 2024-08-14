@@ -80,7 +80,7 @@ const Index = ({ clear, setClear }) => {
     >
       <div className="relative cursor-pointer" ref={dropdownRef}>
         <div
-          className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
+          className="flex w-[362px] md:w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm"
           onClick={() => setIsOpen(!isOpen)}
         >
           <TbCoin className="w-5 h-5 text-[#888888]" />

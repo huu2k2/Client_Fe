@@ -39,11 +39,11 @@ const Location = ({ clear, setClear }) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <div
-        className="flex w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
+        className="flex w-[362px] md:w-[183px] px-[13px] py-[9px] items-center gap-2 rounded-[6px] border border-gray-300 bg-white shadow-sm cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
         onClick={() => setIsOpen(!isOpen)}
       >
         <AiOutlineEnvironment className="w-5 h-5 text-[#888888]" />
-        <div className="w-auto block h-full text-gray-500 truncate">
+        <div className="w-fit block h-full text-gray-500 truncate">
           <span className=" ">
             {selectedOption || selectedOptionWard
               ? `${selectedOption?.label}, ${selectedOptionWard?.label ? selectedOptionWard?.label : ''}`
@@ -53,7 +53,7 @@ const Location = ({ clear, setClear }) => {
       </div>
 
       <div
-        className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+        className={`absolute z-10 top-12  left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
           }`}
       >
         <ProvinceInput
