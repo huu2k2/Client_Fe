@@ -166,12 +166,12 @@ export const ModalPutRoom = ({
 
               <div>
                 <hr className="w-full text-gray-200 h-[1px] self-stretch bg-gray-200" />
-                <div className="flex lg:mr-[135px] w-full mt-5 flex-col lg:flex-row justify-center items-center gap-6 lg:justify-start">
-                  <div className="w-full md:flex md:justify-center">
+                <div className="flex lg:mr-[135px] w-full mt-5 flex-col lg:flex-row justify-center  items-center gap-6 lg:justify-start">
+                  <div className="w-full md:w-auto md:flex justify-center md:justify-start">
 
                   <p className="w-full md:w-[411px] lg:w-[368px]">Chọn phòng</p>
                   </div>
-                  <div className="w-full md:flex md:justify-center">
+                  <div className="w-full md:flex justify-center md:justify-start">
                     <Select
                       className="w-full md:w-[400px] lg:w-[370px]"
                       placeholder="Chọn phòng"
