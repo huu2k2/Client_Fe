@@ -36,7 +36,7 @@ const Sidebar = ({ idHolder,setFilterData }) => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="min-h-screen h-fit w-[556px] bg-white ">
+        <div className="min-h-screen h-fit w-full md:w-[556px] bg-white ">
           <div className="w-full p-6 bg-black flex-col justify-center items-start gap-1 inline-flex h-[90px]">
             <div className="self-stretch justify-between items-center inline-flex ">
               <div className="text-white text-xl font-medium leading-7">
