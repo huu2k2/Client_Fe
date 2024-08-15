@@ -28,9 +28,9 @@ const Index = () => {
   };
 
   return (
-    <div className="w-full h-16 bg-black justify-between items-start flex flex-col">
-      <div className="w-full grow shrink basis-0 self-stretch px-[280px] justify-start items-center gap-[738px] flex">
-        <div className="w-full justify-start items-center gap-6 flex">
+    <div className="w-full h-fit lg:h-16 bg-black justify-center items-center flex flex-col">
+      <div className="p-10 lg:p-0 w-full grow shrink basis-0 self-stretch justify-center items-center gap-[738px] flex">
+        <div className="w-[1360px] justify-start items-center gap-6 flex flex-wrap">
           <div className="w-fit h-6 pr-[0.48px] justify-center items-center flex">
             <Link to={'/'} className="w-[134.52px] h-6 relative">
               <img className="w-full h-full" src={logo} alt="Logo" />
@@ -58,24 +58,6 @@ const Index = () => {
             >
               <p className="text-white text-sm font-medium  leading-tight">Chính sách</p>
             </Link>
-            {/* <Link
-              to={`/overview/${idHome}/booking`}
-              className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
-                activeLink === 2 ? 'bg-rose-700' : ''
-              }`}
-              onClick={() => handleLinkClick(2)}
-            >
-              <p className="text-white text-sm font-medium  leading-tight">Đặt lịch dẫn khách</p>
-            </Link> */}
-            {/* <Link
-              to={`/overview/${idHome}/deposit`}
-              className={`px-3 cursor-pointer py-2 rounded-md justify-start items-center flex ${
-                activeLink === 3 ? 'bg-rose-700' : ''
-              }`}
-              onClick={() => handleLinkClick(3)}
-            >
-              <p className="text-white text-sm font-medium  leading-tight">Đặt cọc giữ chỗ</p>
-            </Link> */}
           </div>
         </div>
       </div>

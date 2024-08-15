@@ -35,7 +35,7 @@ const Floor = ({ data }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-10 lg:gap-4 ">
             {/* Start card */}
             {groupedData[floorNumber].map((item, index) => (
               <>

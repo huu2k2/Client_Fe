@@ -94,9 +94,9 @@ const Index = () => {
           <div className="self-stretch h-px bg-zinc-700" />
         </div>
 
-        <div className="self-stretch w-full h-40 py-10 shadow flex-col justify-center items-start gap-6 flex">
-          <div className="self-stretch w-full px-[280px] justify-between items-center flex">
-            <div className="flex flex-col gap-6 w-full">
+        <div className="self-stretch w-full h-fit lg:h-40 py-10 shadow  justify-center items-center gap-6 flex">
+          <div className="self-stretch w-[1360px] h-fit justify-between items-center flex px-10 lg:px-0  flex-col md:flex-row gap-10">
+            <div className="flex flex-col gap-6 w-full flex-wrap">
               <div className="text-white text-3xl font-bold leading-9 flex justify-start items-center">
                 {dataNameHome && dataNameHome?.response?.houseName}
                 <label

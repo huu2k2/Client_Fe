@@ -3,14 +3,14 @@ import React from "react";
 const BuildingPolicy = ({ data }) => {
   return (
     <>
-      <div className="self-stretch h-fit bg-white rounded-lg shadow flex-col justify-start items-start flex">
+      <div className="w-full self-stretch h-fit bg-white rounded-lg shadow flex-col justify-start items-start flex">
         <div className="self-stretch h-16 px-6 py-5 bg-neutral-100 flex-col justify-start items-start gap-1 flex">
           <div className="self-stretch text-rose-800 text-lg font-medium leading-normal">
             Chính sách toà nhà
           </div>
         </div>
         <div className="self-stretch h-px bg-gray-200" />
-        <div className="self-stretch flex-col justify-center items-center flex my-5">
+        <div className="w-full self-stretch flex-col justify-center items-center flex my-5">
           <div className="self-stretch bg-white border justify-start items-start flex flex-col">
             <div className="self-stretch flex flex-row">
               <div className="w-1/3 bg-gray-50 px-6 py-3 justify-start items-center flex">
@@ -29,11 +29,11 @@ const BuildingPolicy = ({ data }) => {
                 </div>
               </div>
             </div>
-            <div className="self-stretch h-px bg-gray-200" />
+            <div className="w-full self-stretch h-px bg-gray-200" />
             {data?.commissionPolicies?.map((i, index) => (
               <div
                 key={index}
-                className="w-[1312px] flex justify-between items-center "
+                className="w-full lg:w-[1312px] flex justify-between items-center "
               >
                 <div className="self-stretch flex flex-row w-full">
                   <div className="w-1/3 px-6 py-4 justify-start items-center flex">

@@ -39,13 +39,11 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
   const handleBookedRoomChange = () => {
     setIsBookedRoomChecked(!isBookedRoomChecked);
   };
-  // const handleRentalRoomChange=()=>{
-  //   setIsRentedRoomChecked(!isRentedRoomChecked)
-  // }
+ 
   return (
     <div className="self-stretch h-5 flex-col justify-center items-start gap-2 flex">
-      <div className="justify-start items-center gap-4 inline-flex">
-        <div className="justify-start items-center gap-2 flex">
+      <div className="justify-start items-center gap-4 inline-flex flex-wrap">
+        <div className="justify-start items-start gap-2 flex">
           <input
             type="checkbox"
             className="custom-checkbox bg-white"
@@ -57,7 +55,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             Phòng trống ({statusTotals?.empty})
           </label>
         </div>
-        <div className="justify-start items-center gap-2 flex">
+        <div className="justify-start items-start gap-2 flex">
           <input
             type="checkbox"
             className="custom-checkbox bg-white"
@@ -70,7 +68,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
           </label>
         </div>
 
-        <div className="justify-start items-center gap-2 flex">
+        <div className="justify-start items-start gap-2 flex">
           <input
             type="checkbox"
             className="custom-checkbox bg-white"
@@ -82,18 +80,7 @@ const GroupCheckbox = ({ query, setQuery, statusTotals }) => {
             Đã đặt cọc ({statusTotals?.booked})
           </label>
         </div>
-        {/* <div className="justify-start items-center gap-2 flex">
-          <input
-            type="checkbox"
-            className="custom-checkbox bg-white"
-            checked={isRentedRoomChecked}
-            onChange={handleRentalRoomChange}
-            id="booked"
-          />
-          <label htmlFor="booked" className="text-white text-sm font-medium leading-tight cursor-pointer">
-            Đã cho thuê ({statusTotals?.rented})
-          </label>
-        </div> */}
+ 
       </div>
     </div>
   );

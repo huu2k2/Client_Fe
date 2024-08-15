@@ -29,9 +29,9 @@ const UtilityDirectory = ({ data }) => {
         </div>
       </div>
       <div className="self-stretch h-px bg-gray-200" />
-      <div className="self-stretch h-fit w-full grid grid-cols-4  ">
+      <div className="self-stretch h-fit w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
         {HaveData.filter(i => i.have).map((i, index) => (
-          <div className="w-fit h-[60px] px-6 py-5 justify-start items-center gap-2 inline-flex" key={index}>
+          <div className="w-fit h-fit lg:h-[60px] px-6 py-5 justify-start items-center gap-2 inline-flex " key={index}>
             <img src={IMGICON} alt="" className="w-5 h-5 relative" />
             <div className="grow shrink basis-0 text-gray-500 text-sm font-medium leading-tight">
               {i.name}

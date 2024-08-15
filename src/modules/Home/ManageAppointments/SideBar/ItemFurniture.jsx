@@ -9,14 +9,14 @@ const ItemFurniture = ({ item, setFurnitureInserts }) => {
     const priceValue =
       item.price === 0 ? "Trang bị có sẵn" : item.price.toLocaleString("vi-VN");
     setDisplayPrice(priceValue);
-    setActualPrice(item.price);
+    // setActualPrice(item.price);
     setIsChecked(item.price === 0 || item.isActived);
   }, [item]);
 
   const handlePriceChange = (e) => {
     const inputValue = e.target.value.replace(/[^0-9]/g, "");
     const newPrice = inputValue === "" ? inputValue : parseFloat(inputValue);
-    setActualPrice(newPrice);
+    // setActualPrice(newPrice);
     setDisplayPrice(inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     if (newPrice !== 0) {
       setFurnitureInserts((prev) =>

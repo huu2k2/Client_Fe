@@ -87,7 +87,7 @@ const index = () => {
           />
           <RoomOrder
             title={`Phòng tương tự  `}
-            data={null}
+            data={id}
             money={data?.response?.rentPrice}
             address={data?.response?.houseAddress
               ?.split(",")[1]

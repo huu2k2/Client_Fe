@@ -51,7 +51,7 @@ const Cart = ({ data }) => {
   return (
     <div className="flex-col justify-start items-start inline-flex">
       <div
-        className={`w-[200px] px-5 py-2 ${getStatusBgColor(
+        className={`w-full md:w-[200px] px-5 py-2 ${getStatusBgColor(
           data?.status
         )} rounded-tl-lg rounded-tr-lg shadow flex justify-center items-center gap-2`}
       >
@@ -60,7 +60,7 @@ const Cart = ({ data }) => {
         </div>
       </div>
       <img
-        className="w-[200px] h-24 object-cover"
+        className="w-[400px] h-48 md:w-[200px] md:h-24 object-cover"
         src={data?.image || "https://via.placeholder.com/200x96"}
         alt={`Room ${data?.roomCode}`}
       />
