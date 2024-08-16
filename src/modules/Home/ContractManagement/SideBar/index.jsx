@@ -187,10 +187,10 @@ const [isSubmit,setIsSubmit] =useState(false)
         ></label>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="menu bg-white h-screen  relative  text-base-content min-h-full   w-[556px] "
+          className="menu bg-white h-screen  relative  text-base-content min-h-full   w-full md:w-[556px] "
         >
           {/* Header */}
-          <div className="w-[556px] h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex fixed top-0 right-0">
+          <div className="w-full md:w-[556px] h-[100px] p-6 bg-black flex-col justify-start items-start gap-1 inline-flex fixed top-0 right-0">
             <div className="self-stretch justify-between items-center inline-flex">
               <div className="text-white text-lg font-medium leading-7">
                 Lên hợp đồng cọc giữ chỗ
@@ -202,7 +202,7 @@ const [isSubmit,setIsSubmit] =useState(false)
             </div>
           </div>
           {/* Header End */}
-          <div className="w-[556px] h-fit flex flex-col overflow-y-auto custom-scrollbar mt-24">
+          <div className="w-full h-fit flex flex-col overflow-y-auto custom-scrollbar mt-24">
             <InfoClient
               register={register}
               getInfo={getInfo}

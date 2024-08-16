@@ -21,7 +21,7 @@ const SearchInput = ({ data, setListData, getTextSearch, setTextSearch }) => {
   }, [getTextSearch, data]);
 
   return (
-    <div className="  flex justify-start items-center gap-2 p-2  w-80 focus:outline-none focus-visible:border-none text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:border-none">
+    <div className="flex justify-start items-center gap-2 p-2  w-80 focus:outline-none focus-visible:border-none text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:border-none">
       <svg
         className=" w-4 h-4 text-gray-500 dark:text-gray-400"
         aria-hidden="true"
@@ -41,7 +41,7 @@ const SearchInput = ({ data, setListData, getTextSearch, setTextSearch }) => {
         onChange={handleChangeSearch}
         type="search"
         id="default-search"
-        className="w-11/12 outline-none bg-gray-50"
+        className="w-full lg:w-11/12 outline-none bg-gray-50"
         placeholder="Tìm kiếm tên khách hàng..."
       />
     </div>

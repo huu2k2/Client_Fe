@@ -56,9 +56,9 @@ const Pagination = ({currentPage, setCurrentPage , totalPages}) => {
   };
  
   return (
-    <div className="w-[1360px] h-[38px] relative">
-      <div className="w-[1360px] h-px absolute top-0 left-0 bg-gray-200" />
-      <div className="w-[1360px] absolute top-0 left-0 flex justify-between items-center">
+    <div className="w-full lg:w-[1360px] h-[38px] relative">
+      <div className="w-full h-px absolute top-0 left-0 bg-gray-200" />
+      <div className="w-full absolute top-0 left-0 flex justify-between items-center">
         {/* Phần nút "Trước" */}
         <div
           className={`flex-col justify-start items-start inline-flex cursor-pointer ${currentPage > 1 ? '' : 'text-gray-300'}`}

@@ -20,7 +20,7 @@ const index = () => {
   });
  
   return (
-    <div className="gap-4 flex flex-col items-start">
+    <div className="gap-4 flex flex-col items-start justify-center lg:justify-start px-10 lg:px-0 w-full lg:w-[1360px]">
       <Header />
       <Tiltle />
       <BodyTable setIsShow={setIsShow} isShow={isShow} setInfo={setInfo} />

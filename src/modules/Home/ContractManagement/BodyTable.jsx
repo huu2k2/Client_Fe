@@ -118,11 +118,11 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
     }
   };
   return (
-    <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
-      <div className="flex justify-start items-start gap-4 relative">
+    <div className="w-full lg:max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex flex-wrap">
+      <div className="flex justify-start items-start gap-4 relative flex-wrap">
         <SelectCompoment setIsShow={setIsShow} setDate={setDate} />
         <div className="flex">
-          <div className=" w-[405px] h-[38px] px-4 py-[9px] bg-blue-50 rounded-tl-md rounded-bl-md flex items-center gap-3">
+          <div className=" w-full lg:w-[405px] h-[38px] px-4 py-[9px] bg-blue-50 rounded-tl-md rounded-bl-md flex items-center gap-3">
             <div className="w-5 h-5 relative"></div>
             <div className="text-blue-800 text-sm font-normal leading-tight">
               Tổng số hợp đồng từ {date[0] && date[0]} {date[1] && "-"}{" "}
@@ -154,10 +154,10 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
       </div>
 
       {/* table */}
-      <div className="w-[1360px] h-[879px] flex-col justify-start items-start gap-4 flex">
+      <div className="w-full lg:w-[1360px] h-[879px] flex-col justify-start items-start gap-4 flex">
         <div className="w-full self-stretch h-[825px] flex-col justify-start items-start gap-4 flex">
-          <div className="w-full bg-white rounded-lg shadow border border-gray-200">
-            <table className="w-full table-auto min-h-[500px]">
+          <div className="w-full bg-white rounded-lg shadow border border-gray-200 overflow-x-auto overflow-y-auto">
+            <table className="w-full table-auto min-h-[500px] min-x-[500px]">
               <thead>
                 <tr className="flex items-center">
                   <th className="w-16 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">

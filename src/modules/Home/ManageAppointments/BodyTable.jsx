@@ -74,11 +74,11 @@ const [_,setLoading] = useIsLoading()
    },[isLoading])
 
   return (
-    <div className="max-w-[1360px] mx-auto flex-col justify-start items-start gap-4 flex">
-      <div className="flex justify-start items-start gap-4 relative">
+    <div className="w-full lg:max-w-[1360px] mx-auto flex-col justify-start items-center gap-4 flex">
+      <div className="flex justify-start items-start gap-4 relative flex-wrap w-full">
         <SelectCompoment setIsShow={setIsShow} setDate={setDate} />
         <div className="flex">
-          <div className=" w-[405px] h-[38px] px-4 py-[9px] bg-blue-50 rounded-tl-md rounded-bl-md flex items-center gap-3">
+          <div className=" w-full lg:w-[405px] h-[38px] px-4 py-[9px] bg-blue-50 rounded-tl-md rounded-bl-md flex items-center gap-3">
             <div className="w-5 h-5 relative"></div>
             <div className="text-blue-800 text-sm font-normal leading-tight">
               Tổng số lịch hẹn từ {date[0] && date[0]} {date[1] && "-"}{" "}
@@ -108,10 +108,10 @@ const [_,setLoading] = useIsLoading()
       </div>
 
       {/* table */}
-      <div className="w-[1360px] h-[879px] flex-col justify-start items-start gap-4 flex">
-        <div className="w-full self-stretch h-[825px] flex-col justify-start items-start gap-4 flex">
-          <div className="w-full bg-white rounded-lg shadow border border-gray-200">
-            <table className="w-full table-auto min-h-[500px]">
+      <div className="w-full  lg:w-[1360px] h-[879px] flex-col justify-start items-start gap-4 flex">
+        <div className="w-full self-stretch h-fit lg:h-[825px] flex-col justify-start items-start gap-4 flex">
+          <div className="w-full bg-white rounded-lg shadow border border-gray-200 overflow-x-auto overflow-y-auto">
+            <table className="w-full table-auto min-h-[500px] min-x-[500px]  ">
               <thead>
                 <tr className="flex items-center">
                   <th className="w-16 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
@@ -152,17 +152,17 @@ const [_,setLoading] = useIsLoading()
                   <th className="w-16 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex cursor-pointer"></th>
                 </tr>
               </thead>
-              <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">
+              <tbody className="h-fit lg:h-[460px] overflow-y-auto block custom-scrollbar">
                 {ListData?.map((i, index) => (
                   <tr className="flex w-full" key={index}>
-                    <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-16 h-fit lg:h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                         {index + 1 + (currentPage - 1) * pageSize}
                       </p>
                     </td>
-                    <td className="w-[260px] h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
+                    <td className="w-[260px] h-fit lg:h-[72px] px-6 py-4 justify-start items-center gap-4 flex">
                       <img
-                        className="w-10 h-10 rounded-full"
+                        className="w-10 h-fit lg:h-10 rounded-full"
                         src="https://via.placeholder.com/40x40"
                       />
                       <div className="grow shrink basis-0 flex-col justify-center items-start flex">
@@ -174,7 +174,7 @@ const [_,setLoading] = useIsLoading()
                         </div>
                       </div>
                     </td>
-                    <td className="w-[360px] h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-[360px] h-fit lg:h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal w-full  leading-tight">
                         {i.houseName +
                           " " +
@@ -184,19 +184,19 @@ const [_,setLoading] = useIsLoading()
                       </span>
                     </td>
 
-                    <td className="w-[120px] h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-[120px] h-fit lg:h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
                         P.{i.roomCode}
                       </span>
                     </td>
 
-                    <td className="w-[152px] h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-[152px] h-fit lg:h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal leading-tight">
                         {i.rentalPrice.toLocaleString("vi-VN")}
                       </span>
                     </td>
 
-                    <td className="w-[196px] h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-[196px] h-fit lg:h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
                         {format(parseISO(i.dateView), "HH:mm dd/MM/yyyy", {
                           locale: vi,
@@ -204,13 +204,13 @@ const [_,setLoading] = useIsLoading()
                       </span>
                     </td>
 
-                    <td className="w-36 h-[72px] px-6 py-4 justify-start items-center flex">
+                    <td className="w-36 h-fit lg:h-[72px] px-6 py-4 justify-start items-center flex">
                       <span className="text-gray-500 text-sm font-normal  leading-tight">
                         {i.scheduleId}
                       </span>
                     </td>
 
-                    <td className="w-16 h-[72px] justify-center items-center flex  ">
+                    <td className="w-16 h-fit lg:h-[72px] justify-center items-center flex  ">
                       <div className="w-full dropdown dropdown-end">
                         <div
                           tabIndex={index}
