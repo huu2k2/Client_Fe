@@ -22,7 +22,7 @@ function ShowImages({ images }) {
       className="bg-gray-500 bg-opacity-50 flex justify-center items-center modal modal-action "
       id="mymodalshowanh"
     >
-      <div className="flex flex-col lg:flex-row bg-white shadow-lg rounded-lg  w-9/12 h-[80vh]  relative">
+      <div className="flex flex-col lg:flex-row bg-white shadow-lg rounded-lg  w-9/12  h-[80vh]  relative">
         <form method="dialog" className="absolute top-2 right-1 rounded-full z-50">
           {/* if there is a button, it will close the modal */}
           <button className="btn bg-transparent bg-opacity-50 rounded-full">
@@ -40,7 +40,7 @@ function ShowImages({ images }) {
           <img
             src={images?.response[mainImageIndex]?.url}
             alt="Main Image"
-            className="h-[500px]  w-full lg:h-[90%] object-cover rounded-lg"
+            className="h-[350px]  w-full lg:h-[90%] object-cover rounded-lg"
             loading="lazy"
           />
           <button

@@ -128,7 +128,7 @@ if(img){
           ) : (
             <>
              <SignatureCanvas
-                penColor="black"
+                penColor="red"
                 canvasProps={{
                   width: 300,
                   height: 200,
