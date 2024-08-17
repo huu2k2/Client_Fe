@@ -32,7 +32,7 @@ const Surcharges = ({ register, serviceInserts, setServiceInserts,getInfo }) => 
         </div>
         <textarea
           {...register("note")}
-          className="w-[318px] h-full py-[9px] bg-white rounded-md shadow border border-gray-300 overflow-y-auto"
+          className="w-[318px] h-full p-[9px] bg-white rounded-md shadow border border-gray-300 overflow-y-auto"
           placeholder=""
         />
       </div>

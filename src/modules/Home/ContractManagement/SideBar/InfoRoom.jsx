@@ -143,12 +143,12 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen ,getValues,getDat
           
         />
       ))}
-     <Signature
+     {/* <Signature
         name={"Chữ ký"}
         img={getValues('signatureUrl')}
         onChange={(file) => handleFileChange("signatureUrl", file)}
         type="hide"
-      />
+      /> */}
     </div>
   );
 };

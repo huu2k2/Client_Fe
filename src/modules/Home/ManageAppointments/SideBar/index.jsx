@@ -118,6 +118,7 @@ const SideBar = ({ getInfo }) => {
       Object.values(errors).forEach((error) => toast.error(error.message));
     }
   }, [errors]);
+ 
   return (
     <div className="drawer drawer-end bg-white">
       <input

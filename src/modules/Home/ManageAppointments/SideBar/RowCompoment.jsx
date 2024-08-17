@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
-import { useFetcher } from "react-router-dom";
+
 
 const RowComponent = ({
   title = null,
@@ -75,7 +75,7 @@ const RowComponent = ({
     }
     //  import auto for price begin
     if (name === "rentalPrice") {
-      setValues(getValues("rentalPrice") && getValues("rentalPrice").toLocaleString("vi-VN"));
+      setValues(getValues("rentalPrice") && getValues("rentalPrice")?.toLocaleString("vi-VN"));
     }
     if(name==="totalDepositAmount"){
       setValues(getValues("totalDepositAmount")?.toLocaleString("vi-VN"));

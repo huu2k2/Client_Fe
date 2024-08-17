@@ -62,10 +62,10 @@ const SideBar = ({ getInfo }) => {
         rentalPrice: response.rentalPrice?.toLocaleString("vi-VN"),
         depositDate: format(new Date(response.depositDate), "yyyy-MM-dd"),
         totalDepositAmount:
-          response.totalDepositAmount?.toLocaleString("vi-VN"),
+          (Number(response?.commissionPolicy?.deposit)*Number(getInfo.rentalPrice))?.toLocaleString("vi-VN"),
         depositAmount: response.depositAmount?.toLocaleString("vi-VN") || 0,
         additionalDepositAmount:
-          response.additionalDepositAmount?.toLocaleString("vi-VN") || 0,
+          (Number(response?.commissionPolicy?.deposit)*Number(getInfo.rentalPrice)-Number(response.depositAmount))?.toLocaleString("vi-VN") || 0,
         depositPaymentDeadline: format(
           new Date(response.depositPaymentDeadline),
           "yyyy-MM-dd"
@@ -129,6 +129,7 @@ const SideBar = ({ getInfo }) => {
 const [isSubmit,setIsSubmit] =useState(false)
   // Form submission handler
   const onSubmit = async (data) => {
+    console.log("data",data)
     setLoading(true)
     setIsSubmit(true)
     const convertData = {
@@ -140,7 +141,8 @@ const [isSubmit,setIsSubmit] =useState(false)
       rentalStartDate: coverDate(data.rentalStartDate),
       dateRange: coverDate(data.dateRange),
       depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-      roomId: Number(getInfo.id),
+      roomId: Number(data.roomId),
+      roomCode: (data.roomCode),
       rentalPrice: Number(data.rentalPrice.replace(/\./g, "")),
       commissionPolicyId: Number(data.commissionPolicyId),
       houseId: getInfo.houseId,

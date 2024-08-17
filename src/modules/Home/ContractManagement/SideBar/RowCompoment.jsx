@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
-
+import Select from "react-select";
+import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
 const RowComponent = ({
   title,
   type,
@@ -13,9 +13,11 @@ const RowComponent = ({
   getData,
   isSidebarOpen,
   title1 = "",
+  getValues
 }) => {
   const isDisabled = [
     "fullName",
+    "phoneNumber",
     "birthOfDay",
     "identification",
     "dateRange",
@@ -29,6 +31,11 @@ const RowComponent = ({
     "chuongTrinhUuDai",
     "totalDepositAmount",
     "rentalTerm",
+    "depositDate",
+    "depositAmount",
+    "rentalStartDate",
+    "numberOfPeople",
+    "numberOfVehicle",
   ].includes(name);
 
   const priceValue = ["additionalDepositAmount", "totalDepositAmount"].includes(
@@ -36,6 +43,18 @@ const RowComponent = ({
   );
 
   const [value, setValues] = useState(getData[name]);
+  const [options, setOptions] = useState([]);
+  const [valueOptions, setValuesOptions] = useState(null);
+  // 
+  const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
+  // check is open sidebar
+  useEffect(() => {
+    if (!isSidebarOpen) {
+      setValues("");
+      setOptions([]);
+      setValuesOptions(null);
+    }
+  }, [isSidebarOpen]);
   useEffect(() => {
     const initialValue = getData[name];
     if (priceValue && initialValue) {
@@ -45,7 +64,7 @@ const RowComponent = ({
       setValues(initialValue);
       setValue(name, getData[name]);
     }
-  }, [getData, name, isSidebarOpen,priceValue]);
+  }, [getData, name, isSidebarOpen, priceValue]);
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
@@ -86,7 +105,27 @@ const RowComponent = ({
       setValue(name, inputValue);
     }
   };
- 
+  const handleChangeValueOptions = (selectedOption) => {
+    setValuesOptions(selectedOption);
+    setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
+    setValue("roomCode",selectedOption && selectedOption.label.slpit('.')[1])
+  };
+  useEffect(() => {
+    if (data && data.response) {
+      const Data = data.response.map((i) => ({
+        value: i.roomId,
+        label: "P." + i.roomCode,
+      }));
+
+      setOptions(Data || []);
+
+      if (name === "roomId" && !valueOptions) {
+        setValue("roomId", getInfo.id);
+      }
+
+    }
+  }, [data, getInfo, name, setValue, valueOptions]);
+
   return (
     <div className="w-[501px] self-stretch justify-between items-center gap-4 inline-flex">
       <div className="w-fit max-w-[160px] text-gray-700 text-sm font-medium leading-tight">
@@ -94,27 +133,43 @@ const RowComponent = ({
         <p className="text-sm font-sans text-gray-900 italic ">{title1}</p>
       </div>
       <div
-        className={`w-[318px] h-[38px] px-[13px] py-[9px] ${
-          isDisabled || getInfo.status === "3" ? "bg-gray-50" : "bg-white"
+        className={`w-[318px] h-[38px] ${
+          name === "roomCode" ? "px-0" : "px-[13px] "
+        }py-[9px] ${
+          isDisabled || getInfo.status === "3"|| (Number(getValues("additionalDepositAmount")) === 0 ) ? "bg-gray-50" : "bg-white"
         } rounded-md shadow border border-gray-300 ${
           unit
             ? "justify-start items-center gap-2 flex"
             : "justify-between items-center flex"
         }`}
       >
-        <input
-          {...register(name)}
-          type={type}
-          className="w-full outline-none text-sm font-normal leading-tight"
-          placeholder={placeholder}
-          disabled={getInfo.status === "3" ? true : isDisabled}
-          value={value}
-          onChange={handleChangeValue}
-        />
-        {unit && (
-          <div className="text-gray-500 text-sm font-normal leading-tight">
-            {unit}
-          </div>
+        {name !== "roomCode" ? (
+          <>
+            <input
+              {...register(name)}
+              type={type}
+              className="w-full outline-none text-sm font-normal leading-tight h-full"
+              placeholder={placeholder}
+              disabled={(getInfo.status === "3" || (Number(getValues("additionalDepositAmount")) === 0 )) ? true : isDisabled}
+              value={value}
+              onChange={handleChangeValue}
+            />
+            {unit && (
+              <div className="text-gray-500 text-sm font-normal leading-tight">
+                {unit}
+              </div>
+            )}
+          </>
+        ) : (
+          <Select
+            className="w-full outline-none text-sm font-normal leading-tight"
+            value={valueOptions}
+            defaultValue={valueOptions}
+            onChange={handleChangeValueOptions}
+            options={options}
+            placeholder={"P." + getInfo.roomId}
+            isDisabled={(getInfo.status === "3" || (Number(getValues("additionalDepositAmount")) === 0 )) ? true : isDisabled}
+          />
         )}
       </div>
     </div>
