@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useGetCommisstionPoliciesQuery } from "@apis/slice/Houses";
+import { useDayMonthofSelect, useSetInfo, useSetIsSidebarOpen } from "../../../../customHooks";
 
 const SelectTips = ({
-  getInfo,
   setValue,
-  setNamecommissionPolicyId,
-  setRentalMonth,
-  isSidebarOpen,
+ 
 }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useSetIsSidebarOpen();
+  const [getInfo, setInfo] = useSetInfo();
+  const [
+    getNamecommissionPolicyId,
+    setNamecommissionPolicyId,
+    getRentalMonth,
+    setRentalMonth,
+  ] = useDayMonthofSelect();
   const [value, setValues] = useState(null);
   const { data } = useGetCommisstionPoliciesQuery(getInfo.houseId || 0);
 

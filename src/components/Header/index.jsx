@@ -5,6 +5,8 @@ import { BsBell } from "react-icons/bs";
 import ImgGroupIcon from "@assets/iconGroupUser.png";
 import ImgDocumentIcon from "@assets/iconDocument.png";
 import { useClickRemoveFilter } from "../../customHooks/FilterCustomHook";
+import { RiContractLine } from "react-icons/ri";
+import { FaFileContract } from "react-icons/fa6";
 // const GroudButton = () => {
 //   return (
 //     <div className="h-full flex gap-2">
@@ -53,10 +55,10 @@ const index = ({ isShow=null, setShow=null }) => {
             </div>
 
             <Link to={"/quan_ly_lich_hen"} className="p-[7px] cursor-pointer">
-              <img src={ImgGroupIcon} className="bg-white rounded-full" />
+            <RiContractLine className="bg-white rounded w-6 h-6"  />
             </Link>
-            <Link to={"/quan_ly_hop_dong"} className="p-[7px] cursor-pointer">
-              <img src={ImgDocumentIcon} className="bg-white rounded-full" />
+            <Link to={"/quan_ly_hop_dong"} className="p-[10px] cursor-pointer ">
+              <FaFileContract className="text-white rounded w-6 h-6"  />
             </Link>
           </div>
 

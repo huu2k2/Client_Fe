@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import RowComponent from "./RowCompoment";
 import SelectTips from "./SelectTips";
 import Signature from "@components/BaseInput/Signature";
- 
+import { useSetInfo, useSetIsSidebarOpen } from "../../../../customHooks";
+
 const muiltyRow = [
   {
     id: 1,
@@ -15,7 +16,7 @@ const muiltyRow = [
   {
     id: 3,
     title: "Giá cho thuê",
-    title1:"(Chưa bao gồm nội thất)",
+    title1: "(Chưa bao gồm nội thất)",
     type: "text",
     placeholder: "",
     unit: "đ",
@@ -23,15 +24,24 @@ const muiltyRow = [
   },
   {
     id: 4,
+    title: "Giá cho thuê",
+    title1: "(Bao gồm nội thất)",
+    type: "text",
+    placeholder: "",
+    unit: "đ",
+    name: "totalReduce",
+  },
+  // { id: 5, title: 'Đặt cọc', type: 'text', placeholder: '' ,unit: 'Tháng' ,name:'datcoc'},
+];
+const muiltyRow1 = [
+  {
+    id: 5,
     title: "Thời hạn hợp đồng",
     type: "text",
     placeholder: "",
     unit: "Tháng",
     name: "rentalTerm",
   },
-  // { id: 5, title: 'Đặt cọc', type: 'text', placeholder: '' ,unit: 'Tháng' ,name:'datcoc'},
-];
-const muiltyRow1 = [
   {
     id: 7,
     title: "Ngày đặt cọc",
@@ -100,18 +110,14 @@ const muiltyRow1 = [
   //   name: "chuongTrinhUuDai",
   // },
 ];
-const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
-  const [getRentalPrice,setRentalPrice] = useState(getInfo["rentalPrice"])
-  const [getNamecommissionPolicyId, setNamecommissionPolicyId] = useState("");
-  const [getRentalMonth, setRentalMonth] = useState("");
+const InfoRoom = ({ register, setValue, getValues }) => {
+  const [isSidebarOpen, _] = useSetIsSidebarOpen();
   const handleFileChange = (name, file) => {
-     setValue(name, file.split(',')[1] );
+    setValue(name, file.split(",")[1]);
   };
   useEffect(() => {
     if (!isSidebarOpen) {
       setValue("signature", "");
-    }else{
-      setRentalPrice(getInfo["rentalPrice"])
     }
   }, [isSidebarOpen]);
   return (
@@ -119,13 +125,10 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
       <div className="text-rose-800 text-lg font-medium leading-7">
         Thông tin căn hộ
       </div>
-       
-   
+
       {muiltyRow.map((row) => (
         <RowComponent
-          getInfo={getInfo}
           setValue={setValue}
-          isSidebarOpen={isSidebarOpen}
           register={register}
           name={row.name}
           key={row.id}
@@ -133,26 +136,14 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
           type={row.type}
           placeholder={row.placeholder}
           unit={row.unit}
-          getNamecommissionPolicyId={getNamecommissionPolicyId}
-          getRentalMonth={getRentalMonth}
-          getRentalPrice={getRentalPrice}
-          setRentalPrice={setRentalPrice}
           getValues={getValues}
           title1={row.title1}
         />
       ))}
-      <SelectTips
-        getInfo={getInfo}
-        setValue={setValue}
-        setNamecommissionPolicyId={setNamecommissionPolicyId}
-        setRentalMonth={setRentalMonth}
-        isSidebarOpen={isSidebarOpen}
-      />
+      <SelectTips setValue={setValue} />
       {muiltyRow1.map((row) => (
         <RowComponent
-          getInfo={getInfo}
           setValue={setValue}
-          isSidebarOpen={isSidebarOpen}
           register={register}
           name={row.name}
           key={row.id}
@@ -160,10 +151,6 @@ const InfoRoom = ({ register, getInfo, setValue, isSidebarOpen,getValues }) => {
           type={row.type}
           placeholder={row.placeholder}
           unit={row.unit}
-          getNamecommissionPolicyId={getNamecommissionPolicyId}
-          getRentalMonth={getRentalMonth}
-          getRentalPrice={getRentalPrice}
-          setRentalPrice={setRentalPrice}
           getValues={getValues}
         />
       ))}

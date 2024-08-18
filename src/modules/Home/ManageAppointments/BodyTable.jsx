@@ -15,7 +15,9 @@ import { useGetListOfAppointmentsQuery } from "../../../apis/slice/Agencies";
 import { convertDateToISO } from "../../../utils/ConverDate";
 import SearchInput from "../../../components/BaseInput/SearchInput";
 import { useIsLoading } from "@customhooks";
-const BodyTable = ({ isShow, setIsShow, setInfo }) => {
+import { useSetInfo } from "../../../customHooks";
+const BodyTable = ({ isShow, setIsShow }) => {
+  const [getInfo, setInfo]= useSetInfo()
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);

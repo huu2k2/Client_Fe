@@ -1,9 +1,9 @@
 import React from "react";
 import { useIsLoading } from "@customhooks";
-const ButtonDeposit = ({setIsSidebarOpen,isCheckSuccess}) => {
+const ButtonDeposit = ({setIsSidebarOpen}) => {
   const [isLoading, _] = useIsLoading();
   const handeClick = ()=>{
-    if(isCheckSuccess){
+    if(isLoading){
       setIsSidebarOpen(false)
     }
   }

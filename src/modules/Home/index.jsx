@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Header from "@components/Header";
 import Profile from "../Profile/index";
 import { useEffect, useState } from "react";
-
+import Footer from '../../components/Footer'
 const Index = () => {
   if (
     !localStorage.getItem("token") ||
@@ -26,6 +26,7 @@ const Index = () => {
         <div className="w-full h-fit flex flex-col items-center justify-start  ">
           <Header setShow={setShow} isShow={isShow} />
           <Outlet/>
+          <Footer/>
         </div>
       </div>
     </p>

@@ -12,19 +12,20 @@ import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { toast } from "react-toastify";
 import { useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
-
+import { useSetInfo, useSetIsSidebarOpen, useSetTotalReduce } from "../../../../customHooks";
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
 }
 
-const SideBar = ({ getInfo }) => {
+const SideBar = () => {
+  const [getInfo, setInfo] = useSetInfo();
   const [addDeposit] = useAddDepositMutation();
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
-  const [isCheckSuccess, setIsCheckSuccess] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useSetIsSidebarOpen();
+  const [totalReduce, setTotalReduce] = useSetTotalReduce();
   const sidebarRef = useRef(null);
   const [_, setIsLoading] = useIsLoading();
 
@@ -54,6 +55,17 @@ const SideBar = ({ getInfo }) => {
     setValue("rentalPrice", getInfo.rentalPrice);
   }, [getInfo]);
 
+  useEffect(() => {
+    if (furnitureInserts) {
+      setTotalReduce(
+        furnitureInserts
+          .filter((i) => i.isActived) // Filter only checked items
+          .map((i) => i.price) // Map to their prices
+          .reduce((acc, curr) => acc + curr, 0) || 0
+      );
+    }
+  }, [furnitureInserts, getInfo]);
+
   const handleDrawerChange = (event) => {
     setIsSidebarOpen(event.target.checked);
     if (event.target.checked) {
@@ -66,47 +78,44 @@ const SideBar = ({ getInfo }) => {
     setValue("chuongTrinhUuDai", "");
 
     try {
-     
-      if(furnitureInserts.length>0 && serviceInserts.length>0){
-      const kq = await addDeposit({
-        ...data,
-        furnitures:furnitureInserts,
-        services:serviceInserts,
-        birthOfDay: coverDate(data.birthOfDay),
-        depositDate: coverDate(data.depositDate),
-        rentalStartDate: coverDate(data.rentalStartDate),
-        dateRange: coverDate(data.dateRange),
-        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-        roomId: data.roomId,
-        rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
-        commissionPolicyId: Number(data.commissionPolicyId),
-        houseId: getInfo.houseId,
-        additionalDepositAmount: Number(
-          data.additionalDepositAmount.replace(/\./g, "")
-        ),
-        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-        numberOfPeople: Number(data.numberOfPeople),
-        numberOfVehicle: Number(data.numberOfVehicle),
-        fullName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        totalDepositAmount: Number(data.totalDepositAmount),
-      });
-      if (kq?.error) {
-        toast.error(kq.error.data.message);
-        setIsCheckSuccess(false);
+      if (furnitureInserts.length > 0 && serviceInserts.length > 0) {
+        const kq = await addDeposit({
+          ...data,
+          furnitures: furnitureInserts,
+          services: serviceInserts,
+          birthOfDay: coverDate(data.birthOfDay),
+          depositDate: coverDate(data.depositDate),
+          rentalStartDate: coverDate(data.rentalStartDate),
+          dateRange: coverDate(data.dateRange),
+          depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+          roomId: data.roomId,
+          rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
+          commissionPolicyId: Number(data.commissionPolicyId),
+          houseId: getInfo.houseId,
+          additionalDepositAmount: Number(
+            data.additionalDepositAmount.replace(/\./g, "")
+          ),
+          depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+          numberOfPeople: Number(data.numberOfPeople),
+          numberOfVehicle: Number(data.numberOfVehicle),
+          fullName: data.fullName,
+          phoneNumber: data.phoneNumber,
+          totalDepositAmount: Number(data.totalDepositAmount),
+        });
+        if (kq?.error) {
+          toast.error(kq.error.data.message);
+        } else {
+          toast.success(kq.data.message);
+          refetch();
+          setIsLoading(false);
+        }
+        console.log("kq", furnitureInserts, serviceInserts);
       } else {
-        toast.success(kq.data.message);
-        setIsCheckSuccess(true);
-        refetch();
-        setIsLoading(false);
+        console.log("looix");
       }
-      console.log("kq",furnitureInserts,serviceInserts)
-    }else{
-      console.log("looix")
-    }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
-      console.log(error)
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +127,7 @@ const SideBar = ({ getInfo }) => {
       Object.values(errors).forEach((error) => toast.error(error.message));
     }
   }, [errors]);
- 
+
   return (
     <div className="drawer drawer-end bg-white">
       <input
@@ -153,17 +162,13 @@ const SideBar = ({ getInfo }) => {
           <div className="w-full h-fit flex flex-col overflow-y-auto custom-scrollbar mt-24">
             <InfoClient
               register={register}
-              getInfo={getInfo}
               setValue={setValue}
-              isSidebarOpen={isSidebarOpen}
               getValues={getValues}
             />
             <hr className="bg-gray-700 w-full h-px" />
             <InfoRoom
               register={register}
-              getInfo={getInfo}
               setValue={setValue}
-              isSidebarOpen={isSidebarOpen}
               getValues={getValues}
             />
             <hr className="bg-gray-700 w-full h-px" />
@@ -178,10 +183,7 @@ const SideBar = ({ getInfo }) => {
               setFurnitureInserts={setFurnitureInserts}
             />
             <hr className="bg-gray-700 w-full h-px" />
-            <ButtonDeposit
-              setIsSidebarOpen={setIsSidebarOpen}
-              isCheckSuccess={isCheckSuccess}
-            />
+            <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} />
           </div>
         </form>
       </div>

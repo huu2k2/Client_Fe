@@ -4,6 +4,7 @@ import CCCD from "./CCCD";
 import { usePostCCCDMutation } from "../../../../apis/slice/ImageOfRoom";
 import { parse, format } from "date-fns";
 import { useIsLoading } from "@customhooks";
+import { useSetInfo, useSetIsSidebarOpen } from "../../../../customHooks";
 const muiltyRow = [
   {
     id: 1,
@@ -59,8 +60,10 @@ const convertDate = (dateString) => {
   // Định dạng lại từ đối tượng Date sang "yyyy-MM-dd"
   return format(parsedDate, "yyyy-MM-dd");
 };
-const InfoClient = ({ register, getInfo, setValue, isSidebarOpen ,getValues}) => {
-  const [isLoading, setIsLoading] = useIsLoading()
+const InfoClient = ({ register, setValue ,getValues}) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useSetIsSidebarOpen();
+  const [getInfo, setInfo]= useSetInfo()
+  const [_, setIsLoading] = useIsLoading()
   const [getCCCD, setCCCD] = useState({ mt: "", ms: "" });
   const [postCCCD] = usePostCCCDMutation();
   const [InfoCCCD, getInfoCCCD] = useState({

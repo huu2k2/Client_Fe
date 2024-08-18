@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
-
+import {
+  useDayMonthofSelect,
+  useSetInfo,
+  useSetIsSidebarOpen,
+  useSetTotalReduce,
+} from "../../../../customHooks";
 
 const RowComponent = ({
   title = null,
@@ -10,17 +15,19 @@ const RowComponent = ({
   unit = null,
   register = null,
   name = null,
-  getInfo = null,
   setValue = null,
-  isSidebarOpen = null,
-  getNamecommissionPolicyId = null,
-  getRentalMonth = null,
-  getRentalPrice = null,
-  setRentalPrice = null,
   InfoCCCD = null,
   getValues = null,
-  title1=""
+  title1 = "",
 }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useSetIsSidebarOpen();
+  const [getInfo, setInfo] = useSetInfo();
+  const [
+    getNamecommissionPolicyId,
+    setNamecommissionPolicyId,
+    getRentalMonth,
+    setRentalMonth,
+  ] = useDayMonthofSelect();
   const isDisabled = [
     "fullName",
     "birthOfDay",
@@ -36,6 +43,7 @@ const RowComponent = ({
     "chuongTrinhUuDai",
     "totalDepositAmount",
     "rentalTerm",
+    "totalRentalPrice",
   ].includes(name);
 
   const getDataFromCMND = [
@@ -47,18 +55,11 @@ const RowComponent = ({
     "permanentAddress",
   ].includes(name);
 
-  const plaValue = ["houseAddress", "phoneNumber"].includes(name);
-
-  const priceValue = ["depositAmount"].includes(
-    name
-  );
   const rentalTermMonth = ["rentalTerm"].includes(name);
- 
-
+  const [totalReduce, setTotalReduce] = useSetTotalReduce();
   const [value, setValues] = useState("");
   const [options, setOptions] = useState([]);
   const [valueOptions, setValuesOptions] = useState(null);
-
   const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
   // check is open sidebar
   useEffect(() => {
@@ -68,24 +69,7 @@ const RowComponent = ({
       setValuesOptions(null);
     }
   }, [isSidebarOpen]);
-  // get all infomations dont change
-  useEffect(() => {
-    if (plaValue) {
-      setValues(getValues(name));
-    }
-    //  import auto for price begin
-    if (name === "rentalPrice") {
-      setValues(getValues("rentalPrice") && getValues("rentalPrice")?.toLocaleString("vi-VN"));
-    }
-    if(name==="totalDepositAmount"){
-      setValues(getValues("totalDepositAmount")?.toLocaleString("vi-VN"));
-    }
-    if(name==="depositAmount"){
-      setValue("additionalDepositAmount",getValues("totalDepositAmount")-Number(value.toString().replace(/\./g, "")))
-    }
-  
-  }, [name,setValue,setValues,getValues,isSidebarOpen]);
-  //  auto import data from detech CCCD into input
+
   useEffect(() => {
     if (getDataFromCMND && InfoCCCD[name]) {
       setValue(name, InfoCCCD[name]);
@@ -93,17 +77,6 @@ const RowComponent = ({
     }
   }, [getDataFromCMND, InfoCCCD, name, setValue]);
 
-
-  // import price totalDepositAmount
-  useEffect(()=>{
-if(getRentalPrice && getNamecommissionPolicyId && name ==="totalDepositAmount"){
-  setValue("totalDepositAmount",getRentalPrice*getNamecommissionPolicyId)
-  setValues((getRentalPrice*getNamecommissionPolicyId)?.toLocaleString("vi-VN"))
-}
-  },[getNamecommissionPolicyId,getRentalPrice])
- // handle additionalDepositAmount
-
-  //
   useEffect(() => {
     if (data && data.response) {
       const Data = data.response.map((i) => ({
@@ -116,7 +89,6 @@ if(getRentalPrice && getNamecommissionPolicyId && name ==="totalDepositAmount"){
       if (name === "roomId" && !valueOptions) {
         setValue("roomId", getInfo.id);
       }
-
     }
   }, [data, getInfo, name, setValue, valueOptions]);
 
@@ -127,29 +99,55 @@ if(getRentalPrice && getNamecommissionPolicyId && name ==="totalDepositAmount"){
     }
   }, [rentalTermMonth, getRentalMonth, setValue]);
 
-  const handleChangeValue = (e) => {
-    const inputValue = e.target.value;
-    setValues(inputValue);
-
-    if (priceValue) {
-      const numericValue = inputValue.replace(/[^0-9]/g, "");
-      setValues(Number(numericValue)?.toLocaleString("vi-VN"));
-      setValue("depositAmount",numericValue)
-      setValue("additionalDepositAmount",(getValues("totalDepositAmount")-numericValue)?.toLocaleString("vi-VN"))
-    } else if (name === "rentalPrice") {
-      const numericValue = inputValue.replace(/[^0-9]/g, "");
-      setValues(Number(numericValue)?.toLocaleString("vi-VN"));
-      setValue("rentalPrice",numericValue)
-      setRentalPrice(Number(numericValue));
-    }  else {
-      setValues(e.target.value);
-      setValue(name,e.target.value)
-    }
-  };
-
   const handleChangeValueOptions = (selectedOption) => {
     setValuesOptions(selectedOption);
     setValue("roomId", selectedOption ? selectedOption.value : getInfo.id);
+  };
+  // all the orther input
+  // setup some input have value don't change
+  const valueDonChange = ["phoneNumber", "houseAddress"].includes(name);
+  const valueRentalPrice = ["rentalPrice"].includes(name);
+  const valueTotalReduce = ["totalReduce"].includes(name);
+  const valueTotalDepositAmount = ["totalDepositAmount"].includes(name);
+  const valuedepositAmount = ["depositAmount"].includes(name);
+
+  //  create state dependices , check totalReduce from rentalPrice , totalReduce
+  const [valuerentalPrice,setValuerentalPrice] = useState(0)
+  useEffect(() => {
+    if (valueDonChange) {
+      setValues(getValues(name));
+    }
+    if (valueRentalPrice) {
+      const value = Number(getValues(name))
+      setValues(value?.toLocaleString("vi-VN"));
+      setValue("totalReduce", value + totalReduce);
+      setValuerentalPrice(value + totalReduce)
+    }
+    // if(valueTotalReduce){
+    //   const value = Number(getValues(name)) + totalReduce
+    //   setValues((value)?.toLocaleString("vi-VN"));
+    // }
+  }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
+
+  //
+  useEffect(() => {
+    if (valueTotalDepositAmount) {
+      const value =
+        (Number(getValues("rentalPrice")) + totalReduce) *
+        getNamecommissionPolicyId;
+      setValues(value?.toLocaleString("vi-VN"));
+      setValue(name, value);
+    }
+  }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
+  //
+  const handleChangeValue = (e) => {
+    const inputValue = e.target.value;
+    if (valueRentalPrice) {
+      const value = inputValue.replace(/[^0-9]/g, "");
+      setValues(Number(value)?.toLocaleString("vi-VN"));
+      setValue(name, Number(value));
+    }
+
   };
 
   return (
