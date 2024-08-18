@@ -112,42 +112,46 @@ const RowComponent = ({
   const valuedepositAmount = ["depositAmount"].includes(name);
 
   //  create state dependices , check totalReduce from rentalPrice , totalReduce
-  const [valuerentalPrice,setValuerentalPrice] = useState(0)
+  const [valuerentalPrice, setValuerentalPrice] = useState(0);
   useEffect(() => {
     if (valueDonChange) {
       setValues(getValues(name));
     }
     if (valueRentalPrice) {
-      const value = Number(getValues(name))
+      const value = Number(getValues(name));
       setValues(value?.toLocaleString("vi-VN"));
-      setValue("totalReduce", value + totalReduce);
-      setValuerentalPrice(value + totalReduce)
+      setValue("totalReduce", value + Number(totalReduce));
+      setValuerentalPrice(value + Number(totalReduce));
     }
-    // if(valueTotalReduce){
-    //   const value = Number(getValues(name)) + totalReduce
-    //   setValues((value)?.toLocaleString("vi-VN"));
+    // if (valueTotalReduce) {
+    //   const value = Number( getValues("rentalPrice")) + Number(totalReduce);
+    //   console.log(value)
+    //   setValues(value?.toLocaleString("vi-VN"));
     // }
   }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
+ useEffect(()=>{
 
+ },[])
   //
-  useEffect(() => {
-    if (valueTotalDepositAmount) {
-      const value =
-        (Number(getValues("rentalPrice")) + totalReduce) *
-        getNamecommissionPolicyId;
-      setValues(value?.toLocaleString("vi-VN"));
-      setValue(name, value);
-    }
-  }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
+  // useEffect(() => {
+  //   if (valueTotalDepositAmount) {
+  //     const value =
+  //       (Number(getValues("rentalPrice")) + totalReduce) *
+  //       getNamecommissionPolicyId;
+  //     setValues(value?.toLocaleString("vi-VN"));
+  //     setValue(name, value);
+  //   }
+  // }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
   //
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
     if (valueRentalPrice) {
-      const value = inputValue.replace(/[^0-9]/g, "");
+      const value = inputValue?.replace(/[^0-9]/g, "");
       setValues(Number(value)?.toLocaleString("vi-VN"));
       setValue(name, Number(value));
-    }
 
+
+    }
   };
 
   return (

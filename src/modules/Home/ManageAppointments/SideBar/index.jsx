@@ -12,7 +12,11 @@ import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { toast } from "react-toastify";
 import { useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
-import { useSetInfo, useSetIsSidebarOpen, useSetTotalReduce } from "../../../../customHooks";
+import {
+  useSetInfo,
+  useSetIsSidebarOpen,
+  useSetTotalReduce,
+} from "../../../../customHooks";
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -57,12 +61,13 @@ const SideBar = () => {
 
   useEffect(() => {
     if (furnitureInserts) {
-      setTotalReduce(
+      const value = Number(
         furnitureInserts
           .filter((i) => i.isActived) // Filter only checked items
           .map((i) => i.price) // Map to their prices
           .reduce((acc, curr) => acc + curr, 0) || 0
       );
+      setTotalReduce(value);
     }
   }, [furnitureInserts, getInfo]);
 
