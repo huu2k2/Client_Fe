@@ -78,7 +78,7 @@ const Index = ({ clear, setClear }) => {
         </div>
 
         <div
-          className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
+          className={`absolute z-10 top-12 left-0 w-[360px] h-fit p-4 flex flex-col justify-start gap-6 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 md:translate-x-[-50%] ${isOpen ? "animate__fadeInDown" : "animate__fadeOutUp hidden"
             }`}
         >
           {/* show select */}

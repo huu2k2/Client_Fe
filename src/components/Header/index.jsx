@@ -5,24 +5,9 @@ import { BsBell } from "react-icons/bs";
 import ImgGroupIcon from "@assets/iconGroupUser.png";
 import ImgDocumentIcon from "@assets/iconDocument.png";
 import { useClickRemoveFilter } from "../../customHooks/FilterCustomHook";
-// const GroudButton = () => {
-//   return (
-//     <div className="h-full flex gap-2">
-//       <Link to={"/login"}>
-//         <button className="py-[9px] px-[17px] rounded-[6px] bg-[#FFE2E5] shadow-sm text-red-700 text-sm leading-5 font-medium">
-//           Đăng nhập
-//         </button>
-//       </Link>
-//       <Link to={"/register"}>
-//         <button className="py-[9px] px-[17px] rounded-[6px] bg-red-700 shadow-sm text-white text-sm leading-5 font-medium">
-//           Đăng ký
-//         </button>
-//       </Link>
-//     </div>
-//   );
-// };
 
-const index = ({ isShow=null, setShow=null }) => {
+
+const index = ({ isShow = null, setShow = null }) => {
   const handleRemoveFilter = useClickRemoveFilter();
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -35,8 +20,8 @@ const index = ({ isShow=null, setShow=null }) => {
   };
 
   return (
-    <div className=" px-10 md:px-0 min-w-full h-[64px] bg-black flex justify-center items-center grow shrink">
-      <div className="w-full lg:w-[1360px] h-full flex justify-between items-center">
+    <div className=" px-10 md:px-0 w-full h-[64px] bg-black flex justify-center items-center grow shrink m">
+      <div className="w-full lg:w-[1360px] px-2 h-full flex justify-between items-center">
         <div onClick={handleLinkClick}>
           <img
             src={ImgLogo}
@@ -75,23 +60,23 @@ const index = ({ isShow=null, setShow=null }) => {
                 />
               </div>
               <div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52 mt-3"
-              >
-                <li
-                  onClick={() => setShow(!isShow)}
-                  className="cursor-pointer text-base"
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52 mt-3"
                 >
-                  <span>Thông tin tài khoản</span>
-                </li>
-                <li className="cursor-pointer text-base">
-                  <Link to={"/danh_sach_phong_yeu_thich"}>Yêu thích</Link>
-                </li>
-                <li onClick={handleLogout} className="cursor-pointer text-base">
-                  <span>Đăng xuất</span>
-                </li>
-              </ul>
+                  <li
+                    onClick={() => setShow(!isShow)}
+                    className="cursor-pointer text-base"
+                  >
+                    <span>Thông tin tài khoản</span>
+                  </li>
+                  <li className="cursor-pointer text-base">
+                    <Link to={"/danh_sach_phong_yeu_thich"}>Yêu thích</Link>
+                  </li>
+                  <li onClick={handleLogout} className="cursor-pointer text-base">
+                    <span>Đăng xuất</span>
+                  </li>
+                </ul>
               </div>
             </div>
           ) : null}
