@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RowComponent from "./RowCompoment";
 import SelectTips from "./SelectTips";
 import Signature from "@components/BaseInput/Signature";
-import { useSetInfo, useSetIsSidebarOpen } from "../../../../customHooks";
+import {useSetInfo, useSetIsSidebarOpen } from "../../../../customHooks";
 
 const muiltyRow = [
   {
@@ -22,15 +22,15 @@ const muiltyRow = [
     unit: "đ",
     name: "rentalPrice",
   },
-  {
-    id: 4,
-    title: "Giá cho thuê",
-    title1: "(Bao gồm nội thất)",
-    type: "text",
-    placeholder: "",
-    unit: "đ",
-    name: "totalReduce",
-  },
+  // {
+  //   id: 4,
+  //   title: "Giá cho thuê",
+  //   title1: "(Bao gồm nội thất)",
+  //   type: "text",
+  //   placeholder: "",
+  //   unit: "đ",
+  //   name: "totalReduce",
+  // },
   // { id: 5, title: 'Đặt cọc', type: 'text', placeholder: '' ,unit: 'Tháng' ,name:'datcoc'},
 ];
 const muiltyRow1 = [
@@ -111,6 +111,8 @@ const muiltyRow1 = [
   // },
 ];
 const InfoRoom = ({ register, setValue, getValues }) => {
+  const [getInfo, setInfo] =useSetInfo()
+ 
   const [isSidebarOpen, _] = useSetIsSidebarOpen();
   const handleFileChange = (name, file) => {
     setValue(name, file.split(",")[1]);
@@ -120,6 +122,7 @@ const InfoRoom = ({ register, setValue, getValues }) => {
       setValue("signature", "");
     }
   }, [isSidebarOpen]);
+
   return (
     <div className="w-[501px]  h-fit pl-2 py-5 flex-col justify-start items-start gap-5 inline-flex">
       <div className="text-rose-800 text-lg font-medium leading-7">
@@ -138,6 +141,8 @@ const InfoRoom = ({ register, setValue, getValues }) => {
           unit={row.unit}
           getValues={getValues}
           title1={row.title1}
+          
+           
         />
       ))}
       <SelectTips setValue={setValue} />
@@ -152,6 +157,8 @@ const InfoRoom = ({ register, setValue, getValues }) => {
           placeholder={row.placeholder}
           unit={row.unit}
           getValues={getValues}
+         
+           
         />
       ))}
       <Signature

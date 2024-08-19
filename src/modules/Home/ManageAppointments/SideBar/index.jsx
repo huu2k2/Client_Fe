@@ -17,6 +17,7 @@ import {
   useSetIsSidebarOpen,
   useSetTotalReduce,
 } from "../../../../customHooks";
+import RowTotalFinal from "./RowTotalFinal";
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -68,6 +69,7 @@ const SideBar = () => {
           .reduce((acc, curr) => acc + curr, 0) || 0
       );
       setTotalReduce(value);
+      getInfo.totalReduce = getInfo.rentalPrice + value;
     }
   }, [furnitureInserts, getInfo]);
 
@@ -186,6 +188,12 @@ const SideBar = () => {
             <Furniture
               furnitureInserts={furnitureInserts}
               setFurnitureInserts={setFurnitureInserts}
+            />
+            <hr className="bg-gray-700 w-full h-px" />
+            <RowTotalFinal
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
             />
             <hr className="bg-gray-700 w-full h-px" />
             <ButtonDeposit setIsSidebarOpen={setIsSidebarOpen} />

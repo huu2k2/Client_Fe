@@ -45,14 +45,17 @@ const router = {
     },
     {
       path: "/quan_ly_hop_dong",
-      element: <PageCOntractManagement />,
+      element: (
+        <ManageAppointmentsHook>
+          <PageCOntractManagement />
+        </ManageAppointmentsHook>
+      ),
     },
     {
       path: "/quan_ly_lich_hen",
       element: (
         <ManageAppointmentsHook>
-          {" "}
-          <PageManageAppointments />{" "}
+          <PageManageAppointments />
         </ManageAppointmentsHook>
       ),
     },

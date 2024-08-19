@@ -3,6 +3,8 @@ import Select from "react-select";
 import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
 import {
   useDayMonthofSelect,
+  useDepositAmount,
+  useRetalPrice,
   useSetInfo,
   useSetIsSidebarOpen,
   useSetTotalReduce,
@@ -44,6 +46,7 @@ const RowComponent = ({
     "totalDepositAmount",
     "rentalTerm",
     "totalRentalPrice",
+    "totalReduce",
   ].includes(name);
 
   const getDataFromCMND = [
@@ -106,51 +109,79 @@ const RowComponent = ({
   // all the orther input
   // setup some input have value don't change
   const valueDonChange = ["phoneNumber", "houseAddress"].includes(name);
-  const valueRentalPrice = ["rentalPrice"].includes(name);
-  const valueTotalReduce = ["totalReduce"].includes(name);
-  const valueTotalDepositAmount = ["totalDepositAmount"].includes(name);
-  const valuedepositAmount = ["depositAmount"].includes(name);
-
-  //  create state dependices , check totalReduce from rentalPrice , totalReduce
-  const [valuerentalPrice, setValuerentalPrice] = useState(0);
+  const valueConfig = [
+    "rentalPrice",
+    "totalReduce",
+    "totalDepositAmount",
+    "depositAmount",
+    "additionalDepositAmount",
+  ].includes(name);
+  const [RetalPrice, setRetalPrice] = useRetalPrice();
+  const [DepositAmount,setDepositAmount] = useDepositAmount()
   useEffect(() => {
     if (valueDonChange) {
       setValues(getValues(name));
     }
-    if (valueRentalPrice) {
-      const value = Number(getValues(name));
-      setValues(value?.toLocaleString("vi-VN"));
-      setValue("totalReduce", value + Number(totalReduce));
-      setValuerentalPrice(value + Number(totalReduce));
+    if (name === "rentalPrice") {
+      setValues(getInfo.rentalPrice?.toLocaleString("vi-VN"));
+      setRetalPrice(getInfo.rentalPrice)
     }
-    // if (valueTotalReduce) {
-    //   const value = Number( getValues("rentalPrice")) + Number(totalReduce);
-    //   console.log(value)
-    //   setValues(value?.toLocaleString("vi-VN"));
-    // }
-  }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
- useEffect(()=>{
+    if (name === "totalReduce") {
+      setValues(getInfo.totalReduce?.toLocaleString("vi-VN"));
+    }
+  }, [name, isSidebarOpen, totalReduce]);
+  useEffect(() => {
+    if (name === "totalReduce") {
+      setValues(getInfo.totalReduce?.toLocaleString("vi-VN"));
+      setValue(name,getInfo.totalReduce)
+    }
+  }, [RetalPrice]);
+  useEffect(() => {
+    if (name === "totalDepositAmount" && getNamecommissionPolicyId) {
+      const value = getInfo.totalReduce * getNamecommissionPolicyId
+      setValues(value?.toLocaleString("vi-VN"));
+      setValue(name,value)
+    }
+  }, [RetalPrice, totalReduce,getNamecommissionPolicyId]);
 
- },[])
-  //
-  // useEffect(() => {
-  //   if (valueTotalDepositAmount) {
-  //     const value =
-  //       (Number(getValues("rentalPrice")) + totalReduce) *
-  //       getNamecommissionPolicyId;
-  //     setValues(value?.toLocaleString("vi-VN"));
-  //     setValue(name, value);
-  //   }
-  // }, [name, setValues, getValues, isSidebarOpen, totalReduce]);
-  //
+  useEffect(()=>{
+    if (name === "additionalDepositAmount" ) {
+      const value = getInfo.totalReduce * getNamecommissionPolicyId - DepositAmount
+      console.log(value)
+      setValues(value?.toLocaleString("vi-VN"));
+      setValue(name,value)
+    }
+  },[DepositAmount,totalReduce])
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
-    if (valueRentalPrice) {
-      const value = inputValue?.replace(/[^0-9]/g, "");
-      setValues(Number(value)?.toLocaleString("vi-VN"));
-      setValue(name, Number(value));
+    if (name === "rentalPrice") {
+      // Extract only numeric characters
+      const numericValue = inputValue.replace(/[^0-9]/g, "");
 
+      // Convert to a number and format as a Vietnamese locale string
+      const formattedValue = Number(numericValue).toLocaleString("vi-VN");
+      // Update the state with the formatted value
+      setValues(formattedValue);
+      // Update the form value with the raw numeric value
+      setValue(name, Number(numericValue));
+      getInfo.rentalPrice = Number(numericValue);
+      getInfo.totalReduce = Number(numericValue) + totalReduce;
+      setRetalPrice(Number(numericValue));
+    }
+    else if(name === "depositAmount"){
+      const numericValue = inputValue.replace(/[^0-9]/g, "");
 
+      // Convert to a number and format as a Vietnamese locale string
+      const formattedValue = Number(numericValue).toLocaleString("vi-VN");
+      // Update the state with the formatted value
+      setValues(formattedValue);
+      // Update the form value with the raw numeric value
+      setValue(name, Number(numericValue));
+      setDepositAmount(Number(numericValue))
+    }
+    else {
+      // If valueConfig is not set, update state with raw input value
+      setValues(inputValue);
     }
   };
 

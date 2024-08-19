@@ -14,6 +14,8 @@ import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
 import { usePutDepositInfomationMutation } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
+import RowTotalFinal from "./RowTotalFinal";
+import { useDayMonthofSelect, useRetalPrice, useSetTotalReduce } from "../../../../customHooks";
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -23,9 +25,12 @@ const SideBar = ({ getInfo }) => {
   const sidebarRef = useRef(null);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
-  const [_, setLoading] = useIsLoading();
+  const [, setLoading] = useIsLoading();
   const [getData, setData] = useState([]);
   const [putDeposit] = usePutDepositInfomationMutation();
+  const [, setTotalReduce] = useSetTotalReduce();
+  const [,setRetalPrice]= useRetalPrice()
+  const  [, setNamecommissionPolicyId, , ]= useDayMonthofSelect()
   // React Hook Form setup with Yup validation schema
   const {
     register,
@@ -42,6 +47,18 @@ const SideBar = ({ getInfo }) => {
   useEffect(() => {
     setLoading(isLoading);
   }, [isLoading]);
+
+  useEffect(() => {
+    if (furnitureInserts) {
+      const value = Number(
+        furnitureInserts
+          .filter((i) => i.isActived) // Filter only checked items
+          .map((i) => i.price) // Map to their prices
+          .reduce((acc, curr) => acc + curr, 0) || 0
+      );
+      setTotalReduce(value);
+    }
+  }, [furnitureInserts, getInfo]);
 
   useEffect(() => {
     if (isSidebarOpen && DataDepositInfomation?.response) {
@@ -90,6 +107,8 @@ const SideBar = ({ getInfo }) => {
       // Update the state with the prepared data
       setData(updatedData);
       //
+      setNamecommissionPolicyId(response?.commissionPolicy?.deposit)
+      setRetalPrice(getInfo.rentalPrice)
       setValue("roomId", response.roomId);
       setValue("roomCode", getInfo.roomId);
       setValue("signature", response?.signature);
@@ -231,6 +250,12 @@ const [isSubmit,setIsSubmit] =useState(false)
               furnitureInserts={furnitureInserts}
               setFurnitureInserts={setFurnitureInserts}
               getInfo={getInfo}
+            />
+             <hr className="bg-gray-700 w-full h-px" />
+            <RowTotalFinal
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
             />
             <hr className="bg-gray-700 w-full h-[1px]" />
             <ButtonDeposit

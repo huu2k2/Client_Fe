@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { useGetListRoomCodeNotDepositQuery } from "@apis/slice/rooms";
+import { useDayMonthofSelect, useRetalPrice, useSetTotalReduce } from "../../../../customHooks";
 const RowComponent = ({
   title,
   type,
@@ -45,6 +46,9 @@ const RowComponent = ({
   const [value, setValues] = useState(getData[name]);
   const [options, setOptions] = useState([]);
   const [valueOptions, setValuesOptions] = useState(null);
+  const [RetalPrice,setRetalPrice]= useRetalPrice()
+  const [totalReduce, setTotalReduce] = useSetTotalReduce();
+  const  [getNamecommissionPolicyId, , , ]= useDayMonthofSelect()
   // 
   const { data } = useGetListRoomCodeNotDepositQuery(getInfo.houseId);
   // check is open sidebar
@@ -60,11 +64,19 @@ const RowComponent = ({
     if (priceValue && initialValue) {
       setValues(initialValue.toLocaleString("vi-VN"));
       setValue(name, getData[name]);
-    } else {
+    }
+ 
+    else {
       setValues(initialValue);
       setValue(name, getData[name]);
     }
   }, [getData, name, isSidebarOpen, priceValue]);
+
+useEffect(()=>{
+  setValue("totalDepositAmount", (((RetalPrice+totalReduce)*getNamecommissionPolicyId))?.toLocaleString("vi-VN"));
+  const value = ((RetalPrice+totalReduce)*(getNamecommissionPolicyId)-Number(getValues("depositAmount")?.replace(/[^0-9]/g, "")))?.toLocaleString("vi-VN")
+  setValue("additionalDepositAmount", value);
+},[RetalPrice,totalReduce])
 
   const handleChangeValue = (e) => {
     const inputValue = e.target.value;
@@ -73,7 +85,7 @@ const RowComponent = ({
     if (name === "rentalPrice") {
       setValue("rentalPrice", numericValue);
       setValues(Number(numericValue).toLocaleString("vi-VN"));
-
+      setRetalPrice(Number(numericValue))
       const totalDepositAmount =
         numericValue * Number(getData["commissionPolicyMonth"]);
 
