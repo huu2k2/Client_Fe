@@ -8,12 +8,12 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token && token.split(".").length === 3) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
     }
   }, []);
 

@@ -32,9 +32,9 @@ const ForgetPassword = () => {
     try {
       const kq =postSendOtp({email:data.email}).unwrap()
      
-      localStorage.setItem("remainingTime", 60);
+      sessionStorage.setItem("remainingTime", 60);
       setTimeout(() => {
-        localStorage.setItem("email", data.email);
+        sessionStorage.setItem("email", data.email);
         setLoading(false);
         change("/login/otp");
       }, 2000);

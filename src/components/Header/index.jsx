@@ -27,7 +27,7 @@ import { FaFileContract } from "react-icons/fa6";
 const index = ({ isShow=null, setShow=null }) => {
   const handleRemoveFilter = useClickRemoveFilter();
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     window.location.assign("/login");
   };
 
@@ -62,7 +62,7 @@ const index = ({ isShow=null, setShow=null }) => {
             </Link>
           </div>
 
-          {localStorage.getItem("token") ? (
+          {sessionStorage.getItem("token") ? (
             <div className="group relative dropdown dropdown-end">
               {/* Avatar */}
               <div

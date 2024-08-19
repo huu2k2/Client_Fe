@@ -23,10 +23,10 @@ const InfoRoom = () => {
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
 
   const handleShowModal = () => {
-    if (localStorage.getItem("token")) {
+    if (sessionStorage.getItem("token")) {
       setIsShowModal(!isShowModal);
     } else {
-      localStorage.setItem("redirectAfterLogin", location.pathname);
+      sessionStorage.setItem("redirectAfterLogin", location.pathname);
       changeLink("/login");
     }
   };
@@ -38,12 +38,13 @@ const InfoRoom = () => {
 
 
   const handleClick = () => {
-    if (localStorage.getItem("token")) {
-      localStorage.setItem("idroom", roomId);
+    if (sessionStorage.getItem("token")) {
+      sessionStorage.setItem("idroom", roomId);
+      sessionStorage.removeItem("adadvadadv")
       // Chuyển hướng
       changeLink(`/overview/${id}`);
     } else {
-      localStorage.setItem("redirectAfterLogin", location.pathname);
+      sessionStorage.setItem("redirectAfterLogin", location.pathname);
       changeLink("/login");
     }
   };

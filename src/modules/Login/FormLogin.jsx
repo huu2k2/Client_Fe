@@ -27,7 +27,7 @@ const FormLogin = () => {
   const navigate = useNavigate();
   // check token changepage to home
   useEffect(()=>{
-if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.split('.')?.length==3){
+if(sessionStorage.getItem('token')?.split('.') && sessionStorage.getItem('token')?.split('.')?.length==3){
   navigate('/')
 }
   },[])
@@ -42,7 +42,7 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
   });
 
   const [postLogin, { isLoading, error, data }] = usePostLoginMutation();
-  let saveAcount =JSON.parse(localStorage.getItem('rememberedUser'))
+  let saveAcount =JSON.parse(sessionStorage.getItem('rememberedUser'))
   useEffect(()=>{
     
     if(saveAcount){
@@ -53,17 +53,17 @@ if(localStorage.getItem('token')?.split('.') && localStorage.getItem('token')?.s
   const onSubmit = async (data) => {
     
     if(data.remeber ){
-      localStorage.setItem('rememberedUser', JSON.stringify({ userName :data.userName, password :data.password}));
+      sessionStorage.setItem('rememberedUser', JSON.stringify({ userName :data.userName, password :data.password}));
     }else{
-      localStorage.removeItem('rememberedUser');
+      sessionStorage.removeItem('rememberedUser');
     }
     const response = await postLogin(data);
  
     if (response?.data?.isSuccess ) {
-      localStorage.setItem("token", response.data.token);
-      const redirectUrl = localStorage.getItem("redirectAfterLogin");
+      sessionStorage.setItem("token", response.data.token);
+      const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
       if (redirectUrl) {
-        localStorage.removeItem("redirectAfterLogin");
+        sessionStorage.removeItem("redirectAfterLogin");
         navigate(redirectUrl);
       } else {
         navigate("/");

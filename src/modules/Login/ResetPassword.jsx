@@ -35,7 +35,7 @@ const ResetPassword = () => {
   const onSubmit = async(data) => {
     try {
       const query ={
-        email: localStorage.getItem('email'),
+        email: sessionStorage.getItem('email'),
         newPassword: data.Password,
         confirmPassword: data.Confirm_password
       }

@@ -23,7 +23,7 @@ const index = () => {
   });
   const onSubmit = async (data) => {
     const formData = {
-      roomId: localStorage.getItem("idroom"),
+      roomId: sessionStorage.getItem("idroom"),
       ...data,
       dateView: convertToDateISOString(data.dateView),
     };

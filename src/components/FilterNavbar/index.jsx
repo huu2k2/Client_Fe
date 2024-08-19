@@ -92,7 +92,7 @@ const FilterNavbar = ({ setOption }) => {
           houseId: getHome.houseId,
           housePass: getTextS.trim(),
         }));
-        localStorage.setItem('kwomkdnkadvadvad', JSON.stringify({idhome: getHome.houseId, pass: getTextS.trim()}));
+        sessionStorage.setItem('kwomkdnkadvadvad', JSON.stringify({idhome: getHome.houseId, pass: getTextS.trim()}));
         setSearchInput(getHome.houseName);
         setColse(false);
         setTextS(""); // Clear the password input

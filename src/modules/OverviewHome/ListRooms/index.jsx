@@ -52,9 +52,9 @@ const Index = () => {
     washing: null,
     roomQuantity: null,
     housePass:
-    Number(JSON.parse(localStorage.getItem("kwomkdnkadvadvad"))?.idhome) ===
+    Number(JSON.parse(sessionStorage.getItem("kwomkdnkadvadvad"))?.idhome) ===
       Number(idHome)
-        ? JSON.parse(localStorage.getItem("kwomkdnkadvadvad"))?.pass
+        ? JSON.parse(sessionStorage.getItem("kwomkdnkadvadvad"))?.pass
         : null,
   });
 

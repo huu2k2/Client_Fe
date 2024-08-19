@@ -45,7 +45,7 @@ const Otp = () => {
   const handleSendOtp = async () => {
     try {
       const ks = await postValidateOtp({
-        email: localStorage.getItem("email"),
+        email: sessionStorage.getItem("email"),
         otp: otp.join(""),
       }).unwrap();
       console.log(ks);
@@ -56,7 +56,7 @@ const Otp = () => {
   };
 
   const getInitialTime = (path) => {
-    const savedTime = localStorage.getItem("remainingTime");
+    const savedTime = sessionStorage.getItem("remainingTime");
     if (path === "/login/otp" && savedTime) {
       return parseInt(savedTime, 10);
     }
@@ -68,14 +68,14 @@ const Otp = () => {
   const tick = useCallback(() => {
     setSeconds((prevSeconds) => {
       const newSeconds = prevSeconds - 1;
-      localStorage.setItem("remainingTime", newSeconds);
+      sessionStorage.setItem("remainingTime", newSeconds);
       return newSeconds;
     });
   }, []);
 
   useEffect(() => {
     if (seconds <= 0) {
-      localStorage.removeItem("remainingTime");
+      sessionStorage.removeItem("remainingTime");
       return;
     }
 
@@ -92,10 +92,10 @@ const Otp = () => {
   const { sendOtp, isRecaptchaReady } = useOTP();
   const handleSendAgain = () => {
     if (seconds === 0) {
-      localStorage.setItem("remainingTime", 60);
+      sessionStorage.setItem("remainingTime", 60);
       setSeconds(60);
       if (isRecaptchaReady) {
-        sendOtp(localStorage.getItem("number"));
+        sendOtp(sessionStorage.getItem("number"));
       } else {
         alert("reCAPTCHA is not ready yet.");
       }

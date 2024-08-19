@@ -38,7 +38,7 @@ const ItemHome = ({ item ,setFilterData}) => {
           idhome: item.houseId,
           pass: getText.trim()
         };
-        localStorage.setItem("kwomkdnkadvadvad", JSON.stringify(dataToStore));
+        sessionStorage.setItem("kwomkdnkadvadvad", JSON.stringify(dataToStore));
         setIsLock(false);
         setFilterData((prev)=>({...prev,housePass:getText.trim(),houseId:item.houseId}))
         toast.success('Nhập password thành công!');

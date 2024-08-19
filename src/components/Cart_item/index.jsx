@@ -41,7 +41,7 @@ const  navigate = useNavigate()
   };
  
   const handleChangePage = (item) => {
-    localStorage.setItem("adadvadadv",item.status)
+    sessionStorage.setItem("adadvadadv",item.status)
       navigate(`/overview/${item.houseId}`);
  
   };
@@ -58,11 +58,11 @@ const  navigate = useNavigate()
             className="h-full w-full object-cover bg-[#0000001c]"
           />
         </Link>
-        <div className="w-[53px] h-5 px-2 py-0.5 bg-rose-600 rounded-2xl backdrop-blur-[28px] flex justify-center items-center gap-2 absolute top-2 left-2">
+       {item.hasPreferential && <div className="w-[53px] h-5 px-2 py-0.5 bg-rose-600 rounded-2xl backdrop-blur-[28px] flex justify-center items-center gap-2 absolute top-2 left-2">
           <span className="text-white text-xs font-normal leading-none h-4 flex justify-center items-center">
             Ưu đãi
           </span>
-        </div>
+        </div>}
 
         <span
           onClick={handleFavoriteClick}

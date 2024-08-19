@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import Footer from '../../components/Footer'
 const Index = () => {
   if (
-    !localStorage.getItem("token") ||
-    localStorage.getItem("token")?.split(".").length !== 3
+    !sessionStorage.getItem("token") ||
+    sessionStorage.getItem("token")?.split(".").length !== 3
   ) {
     window.location.href = "/login";
   }
