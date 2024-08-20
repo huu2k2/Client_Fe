@@ -48,7 +48,7 @@ const InfoRoom = () => {
       changeLink("/login");
     }
   };
-
+ 
   return (
     <>
       <div className="w-full md:w-[723px] h-fit md:h-[578px] gap-4 flex flex-col justify-between">
@@ -75,11 +75,11 @@ const InfoRoom = () => {
             {/* gift content */}
             <div className="w-full h-fit gap-2 px-8 pb-5 mt-2 overflow-y-auto custom-scrollbar scroll-smooth">
               <ul className="list-disc">
-                <li className="nthd_text_normal_sm_text2">
-                  Chương trình sale áp dụng từ ngày{" "}
-                  {formatDateType(brokeragePolicy?.startDate)} -{" "}
-                  {formatDateType(brokeragePolicy?.endDate)}
-                </li>
+               {brokeragePolicy?.startDate &&  <li className="nthd_text_normal_sm_text2">
+                Chương trình sale áp dụng từ ngày
+                  {brokeragePolicy?.startDate && formatDateType(brokeragePolicy?.startDate) +"_"}
+                  {brokeragePolicy?.endDate && formatDateType(brokeragePolicy?.endDate)}
+                </li>}
                 {Arr?.length > 0
                   ? Arr.map((item, index) => (
                     <li
