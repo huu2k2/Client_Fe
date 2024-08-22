@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { usePostResetPasswordMutation } from "../../apis/slice/Acount";
+import { Helmet } from "react-helmet";
 
 const schema = yup.object().shape({
   Password: yup
@@ -31,98 +32,105 @@ const ResetPassword = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [postResetPassword, { isLoading, error, data:Data }] = usePostResetPasswordMutation();
-  const onSubmit = async(data) => {
+  const [postResetPassword, { isLoading, error, data: Data }] =
+    usePostResetPasswordMutation();
+  const onSubmit = async (data) => {
     try {
-      const query ={
-        email: sessionStorage.getItem('email'),
+      const query = {
+        email: sessionStorage.getItem("email"),
         newPassword: data.Password,
-        confirmPassword: data.Confirm_password
-      }
+        confirmPassword: data.Confirm_password,
+      };
       const result = await postResetPassword(query).unwrap();
 
-    // Kiểm tra nếu có lỗi trong phản hồi
-    if (result.error) {
-      throw new Error(result.error);
-    }
-      alert('Password reset request sent successfully.');
+      // Kiểm tra nếu có lỗi trong phản hồi
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      alert("Password reset request sent successfully.");
       change("/login");
     } catch (err) {
-      console.error('Failed to send reset request:', err);
-      alert('Failed to send password reset request.');
+      console.error("Failed to send reset request:", err);
+      alert("Failed to send password reset request.");
     }
   };
   const [isHide, setIsHide] = useState(false);
   const [isHideConfirm, setIsHideConfirm] = useState(false);
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center items-center space-y-4 w-full gap-6 "
-    >
-      {/* Phone number */}
-      <div className="w-10/12 lg:w-[384px] ">
-        <div className="gap-1 relative">
-          <label
-            htmlFor="Password"
-            className="text-gray-700 text-sm font-medium"
-          >
-            Mật khẩu mới
-          </label>
-          <input
-            id="Password"
-            type={!isHide ? "password" : "text"}
-            placeholder="Mật khẩu"
-            {...register("Password")}
-            className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
-          />
-          <span
-            className="absolute bottom-3 right-2"
-            onClick={() => setIsHide(!isHide)}
-          >
-            {!isHide ? <AiFillEyeInvisible /> : <AiFillEye />}
-          </span>
-        </div>
-        {errors.Password && (
-          <span className="text-red-500">{errors.Password.message}</span>
-        )}
-      </div>
-
-      {/* password */}
-      <div className="w-10/12 lg:w-[384px] ">
-        <div className="relative  gap-1">
-          <label
-            htmlFor="Confirm_password"
-            className="text-gray-700 text-sm font-medium"
-          >
-            Xác nhận lại mật khẩu mới
-          </label>
-          <input
-            id="Confirm_password"
-            type={!isHideConfirm ? "password" : "text"}
-            placeholder="Nhập lại mật khẩu"
-            {...register("Confirm_password")}
-            className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
-          />
-          <span
-            className="absolute bottom-3 right-2"
-            onClick={() => setIsHideConfirm(!isHideConfirm)}
-          >
-            {!isHideConfirm ? <AiFillEyeInvisible /> : <AiFillEye />}
-          </span>
-        </div>
-        {errors.Confirm_password && (
-          <span className="text-red-500">
-            {errors.Confirm_password.message}
-          </span>
-        )}
-      </div>
-      <button
-        type="submit"
-        className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+    <>
+      <Helmet>
+        <title>Nhập lại mật khẩu</title>
+        <meta name="description" content="Nhập lại mật khẩu" />
+      </Helmet>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col justify-center items-center space-y-4 w-full gap-6 "
       >
-        Xác nhận
-      </button>
-    </form>
+        {/* Phone number */}
+        <div className="w-10/12 lg:w-[384px] ">
+          <div className="gap-1 relative">
+            <label
+              htmlFor="Password"
+              className="text-gray-700 text-sm font-medium"
+            >
+              Mật khẩu mới
+            </label>
+            <input
+              id="Password"
+              type={!isHide ? "password" : "text"}
+              placeholder="Mật khẩu"
+              {...register("Password")}
+              className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
+            />
+            <span
+              className="absolute bottom-3 right-2"
+              onClick={() => setIsHide(!isHide)}
+            >
+              {!isHide ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </span>
+          </div>
+          {errors.Password && (
+            <span className="text-red-500">{errors.Password.message}</span>
+          )}
+        </div>
+
+        {/* password */}
+        <div className="w-10/12 lg:w-[384px] ">
+          <div className="relative  gap-1">
+            <label
+              htmlFor="Confirm_password"
+              className="text-gray-700 text-sm font-medium"
+            >
+              Xác nhận lại mật khẩu mới
+            </label>
+            <input
+              id="Confirm_password"
+              type={!isHideConfirm ? "password" : "text"}
+              placeholder="Nhập lại mật khẩu"
+              {...register("Confirm_password")}
+              className="px-4 py-2 items-center rounded-md border border-gray-300 bg-white shadow-sm w-full"
+            />
+            <span
+              className="absolute bottom-3 right-2"
+              onClick={() => setIsHideConfirm(!isHideConfirm)}
+            >
+              {!isHideConfirm ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </span>
+          </div>
+          {errors.Confirm_password && (
+            <span className="text-red-500">
+              {errors.Confirm_password.message}
+            </span>
+          )}
+        </div>
+        <button
+          type="submit"
+          className="w-10/12 lg:w-[384px] flex px-4 py-2 justify-center items-center rounded-md bg-red-600 shadow-sm text-white text-sm font-medium"
+        >
+          Xác nhận
+        </button>
+      </form>
+    </>
   );
 };
 

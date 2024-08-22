@@ -10,7 +10,7 @@ import {
 import ImgHome from "../../assets/notfound(1).png";
 
 const Index = ({ item, faveritedata }) => {
-const  navigate = useNavigate()
+  const navigate = useNavigate();
   const img = item.image || ImgHome;
   const [isHeart, setIsHeart] = useState(false);
   const [isShow, setShow] = useState(false);
@@ -29,7 +29,6 @@ const  navigate = useNavigate()
   }, [faveritedata, item.roomId]);
 
   const handleFavoriteClick = async () => {
-
     // if ()
     if (isHeart) {
       await removeFavorite(item.roomId);
@@ -39,11 +38,12 @@ const  navigate = useNavigate()
     setIsHeart(!isHeart);
     refetch();
   };
- 
+
   const handleChangePage = (item) => {
-    sessionStorage.setItem("adadvadadv",item.status)
+    if (sessionStorage.getItem("token")) {
+      sessionStorage.setItem("adadvadadv", item.status);
       navigate(`/overview/${item.houseId}`);
- 
+    }
   };
   return (
     <div className="w-[328px] h-fit gap-2 flex flex-col justify-between">
@@ -58,27 +58,31 @@ const  navigate = useNavigate()
             className="h-full w-full object-cover bg-[#0000001c]"
           />
         </Link>
-       {item.hasPreferential && <div className="w-[53px] h-5 px-2 py-0.5 bg-rose-600 rounded-2xl backdrop-blur-[28px] flex justify-center items-center gap-2 absolute top-2 left-2">
-          <span className="text-white text-xs font-normal leading-none h-4 flex justify-center items-center">
-            Ưu đãi
-          </span>
-        </div>}
+        {item.hasPreferential && (
+          <div className="w-[53px] h-5 px-2 py-0.5 bg-rose-600 rounded-2xl backdrop-blur-[28px] flex justify-center items-center gap-2 absolute top-2 left-2">
+            <span className="text-white text-xs font-normal leading-none h-4 flex justify-center items-center">
+              Ưu đãi
+            </span>
+          </div>
+        )}
 
         <span
           onClick={handleFavoriteClick}
           className={`absolute right-2 top-2 cursor-pointer w-7 h-7 rounded-full flex justify-center items-center active:bg-gray-300 bg-white group transition-colors`}
         >
           <IoMdHeart
-            className={`${isHeart ? "text-red-500" : "text-[#d1d1d1]"
-              } hover:text-red-500 group-hover:text-red-500 flex justify-center items-center`}
+            className={`${
+              isHeart ? "text-red-500" : "text-[#d1d1d1]"
+            } hover:text-red-500 group-hover:text-red-500 flex justify-center items-center`}
           />
         </span>
       </div>
 
       <div className="w-full h-fit flex flex-col justify-start gap-1">
         <div
-          className={`w-fit h-5 rounded-2xl py-[2px] px-2 ${item.category ? "bg-red-100" : "bg-white"
-            } text-red-700 gap-2 flex justify-center items-center`}
+          className={`w-fit h-5 rounded-2xl py-[2px] px-2 ${
+            item.category ? "bg-red-100" : "bg-white"
+          } text-red-700 gap-2 flex justify-center items-center`}
         >
           <span className="font-normal text-sm flex justify-center items-center">
             {item.category}
@@ -119,11 +123,12 @@ const  navigate = useNavigate()
           )}
 
           <span
-            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl ${item.status === "0"
-              ? "text-[#2563eb] bg-[#EFF6FF]"
-              : "text-[#D97706] bg-[#FFFBEB]"
-              }`}
-              onClick={()=>handleChangePage(item)}
+            className={`font-normal text-sm px-2 py-1 gap-1 rounded-xl ${
+              item.status === "0"
+                ? "text-[#2563eb] bg-[#EFF6FF]"
+                : "text-[#D97706] bg-[#FFFBEB]"
+            }`}
+            onClick={() => handleChangePage(item)}
           >
             {item.status === "0" ? "Phòng trống:" : "Phòng sắp trống:"}{" "}
             <span className="text-black">{item.emptyRoomTotal}</span>

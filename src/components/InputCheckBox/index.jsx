@@ -1,4 +1,3 @@
-import React from 'react'
 
 const index = ({ value, label, checked, onChange }) => {
   return (

@@ -10,6 +10,7 @@ import { Skeleton } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { formatDateType } from "@utils/ConverDate";
 import { useGetAllDetailQuery } from '@apis/slice/services';
+import { toast } from "react-toastify";
 
 const InfoRoom = () => {
   const { id, roomId } = useParams();
@@ -26,8 +27,9 @@ const InfoRoom = () => {
     if (sessionStorage.getItem("token")) {
       setIsShowModal(!isShowModal);
     } else {
-      sessionStorage.setItem("redirectAfterLogin", location.pathname);
-      changeLink("/login");
+      // sessionStorage.setItem("redirectAfterLogin", location.pathname);
+      // changeLink("/login");
+      toast.info("Bạn chưa đăng nhập!")
     }
   };
 
@@ -44,8 +46,9 @@ const InfoRoom = () => {
       // Chuyển hướng
       changeLink(`/overview/${id}`);
     } else {
-      sessionStorage.setItem("redirectAfterLogin", location.pathname);
-      changeLink("/login");
+      // sessionStorage.setItem("redirectAfterLogin", location.pathname);
+      // changeLink("/login");
+      toast.info("Bạn chưa đăng nhập!")
     }
   };
  

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useGetRoomsofhouseMutation } from "@apis/slice/rooms";
 import Sidebar from "./Sidebar";
 import { useGetInfoHomeQuery } from "@apis/slice/Houses";
+import { Helmet } from "react-helmet";
 const calculateRoomStatusTotals = (data) => {
   return data.reduce(
     (totals, item) => {
@@ -52,7 +53,7 @@ const Index = () => {
     washing: null,
     roomQuantity: null,
     housePass:
-    Number(JSON.parse(sessionStorage.getItem("kwomkdnkadvadvad"))?.idhome) ===
+      Number(JSON.parse(sessionStorage.getItem("kwomkdnkadvadvad"))?.idhome) ===
       Number(idHome)
         ? JSON.parse(sessionStorage.getItem("kwomkdnkadvadvad"))?.pass
         : null,
@@ -89,6 +90,10 @@ const Index = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Danh sách phòng trống</title>
+        <meta name="description" content="Danh sách phòng trống" />
+      </Helmet>
       <div className="w-full h-fit bg-black flex-col justify-center items-center flex flex-1">
         <div className="w-full h-px flex-col justify-start items-start flex">
           <div className="self-stretch h-px bg-zinc-700" />

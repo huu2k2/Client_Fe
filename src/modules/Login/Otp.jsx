@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useOTP } from "../../customHooks/OtpHook";
 import { usePostValidateOtpMutation } from "../../apis/slice/Acount";
+import { Helmet } from "react-helmet";
 
 const Otp = () => {
   const navigate = useNavigate();
@@ -63,7 +64,9 @@ const Otp = () => {
     return 60;
   };
 
-  const [seconds, setSeconds] = useState(() => getInitialTime(location?.pathname));
+  const [seconds, setSeconds] = useState(() =>
+    getInitialTime(location?.pathname)
+  );
 
   const tick = useCallback(() => {
     setSeconds((prevSeconds) => {
@@ -104,6 +107,10 @@ const Otp = () => {
 
   return (
     <div className="flex flex-col justify-center items-center space-y-4 w-full gap-6 text-center">
+      <Helmet>
+        <title>Nhập OTP</title>
+        <meta name="description" content="Nhập OTP" />
+      </Helmet>
       <div className="w-10/12 lg:w-[384px] h-[44px] flex justify-between items-center gap-3">
         {[...Array(length)].map((_, i) => (
           <div key={i} className="flex flex-col items-center ">

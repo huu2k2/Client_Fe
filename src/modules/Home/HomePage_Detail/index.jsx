@@ -14,6 +14,7 @@ import {
   useClickSearchFilter,
   useQueryFilterData,
 } from "@customhooks/FilterCustomHook";
+import { Helmet } from "react-helmet";
 
 const initialFilterData = {
   houseId: null,
@@ -50,9 +51,13 @@ const index = () => {
       handleClickSearch();
     }
   }, [filterData]);
-  console.log("data",data)
+
   return (
     <>
+    <Helmet>
+        <title>Chi tiết phòng</title>
+        <meta name="description" content="Chi tiết phòng" />
+    </Helmet>
       {isShowModal && (
         <ModalPutRoom
           dropdownRef={dropdownRef}

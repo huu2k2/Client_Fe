@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import img from "@assets/Login_img.png";
-import backImg from "@assets/arrow_back_ios.png";
 import LogoImg from "@assets/Logo.png";
-
+import {Helmet} from "react-helmet";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -12,23 +10,26 @@ const Index = () => {
   const isForget = pathname.includes("forgot_password");
   const isResetPassword = pathname.includes("reset_password");
 
-  const handleBack = () => {
-    change("");
-  };
+  // const handleBack = () => {
+  //   change("");
+  // };
 
-  const handleBackOtp = () => {
-    change("forgot_password");
-  };
+  // const handleBackOtp = () => {
+  //   change("forgot_password");
+  // };
 
-  const handleBacktoOtp = () => {
-    change("otp");
-  };
+  // const handleBacktoOtp = () => {
+  //   change("otp");
+  // };
 const hanldeClick =()=>{
   change('/')
 }
   return (
     <div className="w-full h-screen nthd_flex relative self-stretch flex-1">
-    
+     <Helmet>
+        <title>Đăng nhập</title>
+        <meta name="description" content="Đăng nhập trang web dịch vụ mô giới số 1 Việt Nam" />
+    </Helmet>
 
       {/* xac thuc opt */}
       <div id="recaptcha-container" ></div>

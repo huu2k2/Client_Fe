@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 const FormWrapper = () => {
   const {
     register,
@@ -31,45 +32,58 @@ const FormWrapper = () => {
     setFurnitureInserts(Data?.response?.furnitureInserts);
   }, [idRoom, Data]);
 
-  const onSubmit = (data) =>{
-    console.log(data)
-    console.log(PickServiceInserts)
-    console.log(PickFurnitureInserts)
-    }
+  const onSubmit = (data) => {
+    console.log(data);
+    console.log(PickServiceInserts);
+    console.log(PickFurnitureInserts);
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="h-fit px-10 py-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex"
-    >
-      <div className="self-stretch h-fit flex-col justify-start items-start gap-8 flex">
-        <InfoTitle register={register} errors={errors} />
-        <InformationApartment
-          register={register}
-          errors={errors}
-          control={control}
-        />
-        <AdditionalCharges serviceInserts={serviceInserts} setPickServiceInserts={setPickServiceInserts} register={register}
-          errors={errors}/>
-        <FurnitureCatalog furnitureInserts={furnitureInserts} setPickFurnitureInserts={setPickFurnitureInserts}/>
-        {/* <SalesInformation />  bỏ*/}
-        <div className="self-stretch h-[59px] flex-col justify-start items-start gap-5 flex">
-          <div className="self-stretch h-px flex-col justify-start items-start flex">
-            <div className="self-stretch h-px bg-gray-200" />
-          </div>
-          <div className="self-stretch justify-end items-center gap-3 inline-flex">
-            <div className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
-              <button
-                className="cursor-pointer text-white text-sm font-medium leading-tight"
-                type="submit"
-              >
-                Đặt cọc
-              </button>
+    <>
+      <Helmet>
+        <title>Chính sách</title>
+        <meta name="description" content="Chính sách" />
+      </Helmet>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="h-fit px-10 py-6 left-[280px] top-0 absolute bg-white rounded-lg shadow flex-col justify-start items-center gap-6 inline-flex"
+      >
+        <div className="self-stretch h-fit flex-col justify-start items-start gap-8 flex">
+          <InfoTitle register={register} errors={errors} />
+          <InformationApartment
+            register={register}
+            errors={errors}
+            control={control}
+          />
+          <AdditionalCharges
+            serviceInserts={serviceInserts}
+            setPickServiceInserts={setPickServiceInserts}
+            register={register}
+            errors={errors}
+          />
+          <FurnitureCatalog
+            furnitureInserts={furnitureInserts}
+            setPickFurnitureInserts={setPickFurnitureInserts}
+          />
+          {/* <SalesInformation />  bỏ*/}
+          <div className="self-stretch h-[59px] flex-col justify-start items-start gap-5 flex">
+            <div className="self-stretch h-px flex-col justify-start items-start flex">
+              <div className="self-stretch h-px bg-gray-200" />
+            </div>
+            <div className="self-stretch justify-end items-center gap-3 inline-flex">
+              <div className="px-[17px] py-[9px] bg-rose-600 rounded-md shadow justify-center items-center flex">
+                <button
+                  className="cursor-pointer text-white text-sm font-medium leading-tight"
+                  type="submit"
+                >
+                  Đặt cọc
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
 

@@ -3,13 +3,14 @@ import Header from "@components/Header";
 import Profile from "../Profile/index";
 import { useEffect, useState } from "react";
 import Footer from '../../components/Footer'
+import { Helmet } from "react-helmet";
 const Index = () => {
-  if (
-    !sessionStorage.getItem("token") ||
-    sessionStorage.getItem("token")?.split(".").length !== 3
-  ) {
-    window.location.href = "/login";
-  }
+  // if (
+  //   !sessionStorage.getItem("token") ||
+  //   sessionStorage.getItem("token")?.split(".").length !== 3
+  // ) {
+  //   window.location.href = "/login";
+  // }
   const [isShow, setShow] = useState(false);
   const { pathname } = useLocation();
 
@@ -22,11 +23,15 @@ const Index = () => {
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">
+        <Helmet>
+          <title>Trang chủ</title>
+          <meta name="description" content="Trang chủ" />
+        </Helmet>
         {isShow && <Profile setShow={setShow} />}
         <div className="w-full h-fit flex flex-col items-center justify-start  ">
           <Header setShow={setShow} isShow={isShow} />
-          <Outlet/>
-          <Footer/>
+          <Outlet />
+          <Footer />
         </div>
       </div>
     </p>

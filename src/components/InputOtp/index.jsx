@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import{ useRef, useState } from "react";
 
 const index = ({ length, onComplete }) => {
   // if you're not using Typescript, simply do const inputRef = useRef()
