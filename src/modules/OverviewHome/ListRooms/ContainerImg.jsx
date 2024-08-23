@@ -35,13 +35,13 @@ const ContainerImg = ({ item, data }) => {
     <>
       <Helmet>
         {/* Meta cơ bản */}
-        <title>Danh sách phòng trống</title>
+        <title>{`Danh sách phòng trống`}</title>
         <meta name="description" content="Danh sách phòng trống" />
 
         {/* Open Graph meta tags */}
         <meta property="og:title" content={`Phòng P.${item.roomCode}`} />
         <meta property="og:description" content="Phòng trọ giá rẻ tại Aloper" />
-        <meta property="og:image" content={images?.response[0].url} />
+        <meta property="og:image" content={images?.response[0]?.url || ""} />
         <meta
           property="og:url"
           content={"http://aloper.fun:82/overview/" + idHome}
