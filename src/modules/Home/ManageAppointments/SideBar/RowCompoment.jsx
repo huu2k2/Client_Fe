@@ -125,6 +125,7 @@ const RowComponent = ({
     if (name === "rentalPrice") {
       setValues(getInfo.rentalPrice?.toLocaleString("vi-VN"));
       setRetalPrice(getInfo.rentalPrice)
+      setValue("rentalPrice",getInfo.rentalPrice)
     }
     if (name === "totalReduce") {
       setValues(getInfo.totalReduce?.toLocaleString("vi-VN"));

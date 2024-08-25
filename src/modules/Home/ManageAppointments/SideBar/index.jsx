@@ -83,7 +83,6 @@ const SideBar = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     setValue("chuongTrinhUuDai", "");
-
     try {
       if (furnitureInserts.length > 0 && serviceInserts.length > 0) {
         const kq = await addDeposit({

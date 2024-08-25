@@ -30,10 +30,7 @@ const schema = yup
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
       return /^\d+$/.test(value.replace(/\./g, ''));
     }),
-    totalReduce: yup.string().required("Giá cho thuê là bắt buộc").test('is-valid-number', 'Giá cho thuê phải là số hợp lệ', value => {
-      // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
-      return /^\d+$/.test(value.replace(/\./g, ''));
-    }),
+    totalReduce: yup.string(),
     depositDate: yup.string().required("Ngày đặt cọc là bắt buộc"),
     depositAmount: yup.string().required("Số tiền cọc trước là bắt buộc") .test('is-valid-number', 'Số tiền cọc trước phải là số hợp lệ', value => {
       // Loại bỏ dấu chấm và kiểm tra xem chuỗi có phải là số hay không
