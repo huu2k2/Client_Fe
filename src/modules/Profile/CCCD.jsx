@@ -1,14 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AddImg from "@assets/addImg.png";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 
-const CCCD = ({ title, title2, id, setCCCD, setValue }) => {
+const CCCD = ({ title, title2, id, setCCCD ,img ,onChange}) => {
   const [count, setCount] = useState(0);
   const [imagePreview, setImagePreview] = useState(null);
   const [imgSelect, setImgSelect] = useState("");
   const inputFileRef = useRef(null);
-
+useEffect(()=>{
+if(img){
+  setImagePreview(img)
+  setImgSelect(img)
+  setCount(1)
+}
+},[img])
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
     if (!imageFile) return;
@@ -16,7 +22,7 @@ const CCCD = ({ title, title2, id, setCCCD, setValue }) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImgSelect(reader.result.split(",")[1]);
-
+      
       setImagePreview(reader.result);
     };
     setCount(1);
@@ -64,14 +70,12 @@ const CCCD = ({ title, title2, id, setCCCD, setValue }) => {
         return { ...prev, ms: imgSelect };
       }
     });
-    if (id === 1) {
-      setValue("beforeIdentificationBase64", imgSelect);
-    } else {
-      setValue("afterIdentificationBase64", imgSelect);
-    }
+    onChange(imgSelect)
     document.getElementById(`modal_${title2}`).close();
   };
-
+const handleCancle =()=>{
+  document.getElementById(`modal_${title2}`).close();
+}
   return (
     <div className="w-[501px] flex justify-between items-start">
       <div className="flex flex-col gap-2">
@@ -91,7 +95,7 @@ const CCCD = ({ title, title2, id, setCCCD, setValue }) => {
           {count === 1 ? "Đã tải" : "Tải hình ảnh"}
         </button>
 
-        <dialog id={`modal_${title2}`} className="modal">
+        <dialog id={`modal_${title2}`} className="modal" > 
           <div className="modal-box">
             <h3 className="font-bold text-lg">Tải hình ảnh</h3>
             <div className="py-4 border">
@@ -154,6 +158,13 @@ const CCCD = ({ title, title2, id, setCCCD, setValue }) => {
                 className="text-white bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2"
               >
                 Lưu
+              </button>
+              <button
+                onClick={handleCancle}
+                type="button"
+                className="text-white bg-rose-600 border border-rose-600 focus:outline-none hover:bg-rose-700 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2"
+              >
+                Hủy
               </button>
             </form>
           </div>

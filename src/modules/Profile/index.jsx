@@ -4,26 +4,41 @@ import ImgAvatar from "@assets/Profile.png";
 import InputFiel from "./InputFiel";
 import TitleContainer from "./TitleContainer";
 import InputSelect from "./InputSelect";
-import InputFileImg from "./InputFileImg";
+import CCCDCOMPOMENT from "./CCCD";
 import { useGetProfileQuery, usePostUpdateMutation } from "@apis/slice/profile";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
 import { formatDate } from "@utils";
 import { BsCameraFill } from "react-icons/bs";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Signature from "@components/BaseInput/Signature";
 import { usePostCCCDMutation } from "../../apis/slice/ImageOfRoom";
 import { parse, format } from "date-fns";
-
+const muiltyRowCCCD = [
+  {
+    id: 1,
+    title: "CCCD/CMND ",
+    title2: "(Mặt trước)",
+    name: "CCCDBefore",
+    nameCCCD: "beforeIdentificationBase64",
+  },
+  {
+    id: 2,
+    title: "CCCD/CMND ",
+    title2: "(Mặt sau)",
+    name: "CCCDAfter",
+    nameCCCD: "afterIdentificationBase64",
+  },
+];
 const Index = ({ setShow }) => {
   const refContainer = useRef(null);
-  const { data, isLoading, isSuccess } = useGetProfileQuery();
-  const [postUpdate, { isLoading: isLoadingUpdate, isError }] = usePostUpdateMutation();
+  const { data, isLoading } = useGetProfileQuery();
+  const [postUpdate] = usePostUpdateMutation();
   const [isExiting, setIsExiting] = useState(false);
 
   // handle get avatar
   const inputFileRef = useRef(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [_, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   // handle close
@@ -103,8 +118,12 @@ const Index = ({ setShow }) => {
       setFormData({
         AgencyAccountId: data.response.agencyAccountId || null,
         signatureBase64: null,
-        beforeIdentificationBase64: data.response.beforeIdentification ? data.response.beforeIdentification.split(",")[1] : null,
-        afterIdentificationBase64: data.response.afterIdentification ? data.response.afterIdentification.split(",")[1] : null,
+        beforeIdentificationBase64: data.response.beforeIdentification
+          ? data.response.beforeIdentification.split(",")[1]
+          : null,
+        afterIdentificationBase64: data.response.afterIdentification
+          ? data.response.afterIdentification.split(",")[1]
+          : null,
         bankCode: data.response.bankCode || null,
         accountNumber: data.response.accountNumber || null,
         accountName: data.response.accountName || null,
@@ -122,20 +141,24 @@ const Index = ({ setShow }) => {
     let tempErrors = {};
 
     if (!formData.fullName) tempErrors.fullName = "Họ và tên là bắt buộc";
-    if (!formData.phoneNumber) tempErrors.phoneNumber = "Số điện thoại là bắt buộc";
-    if (!formData.identification) tempErrors.identification = "CMND/CCCD là bắt buộc";
+    if (!formData.phoneNumber)
+      tempErrors.phoneNumber = "Số điện thoại là bắt buộc";
+    if (!formData.identification)
+      tempErrors.identification = "CMND/CCCD là bắt buộc";
     if (!formData.dateRange) tempErrors.dateRange = "Ngày cấp là bắt buộc";
     if (!formData.issuedBy) tempErrors.issuedBy = "Nơi cấp là bắt buộc";
-    if (!formData.permanentAddress) tempErrors.permanentAddress = "Địa chỉ thường trú là bắt buộc";
+    if (!formData.permanentAddress)
+      tempErrors.permanentAddress = "Địa chỉ thường trú là bắt buộc";
     if (!formData.bankCode) tempErrors.bankCode = "Mã ngân hàng là bắt buộc";
-    if (!formData.accountNumber) tempErrors.accountNumber = "Số tài khoản là bắt buộc";
-    if (!formData.accountName) tempErrors.accountName = "Chủ tài khoản là bắt buộc";
+    if (!formData.accountNumber)
+      tempErrors.accountNumber = "Số tài khoản là bắt buộc";
+    if (!formData.accountName)
+      tempErrors.accountName = "Chủ tài khoản là bắt buộc";
 
     setErrors(tempErrors);
 
     return Object.keys(tempErrors).length === 0;
   };
-console.log("formData",formData)
   const handleUpdate = async () => {
     if (!validate()) {
       toast.error("Vui lòng kiểm tra các trường bắt buộc");
@@ -149,7 +172,6 @@ console.log("formData",formData)
         bankCode: formData.bankCode.toString(),
         bod: "2024-07-26T14:54:51.919Z",
       };
-
       const rs = await postUpdate(updatedFormData);
 
       if (rs.data.statusCode === 200) {
@@ -167,55 +189,59 @@ console.log("formData",formData)
     setFormData((prevData) => ({ ...prevData, [name]: file }));
   };
   const [postCCCD] = usePostCCCDMutation();
-const [CCCD,setCCCD] = useState({mt:'',ms:''})
-const [InfoCCCD, getInfoCCCD] = useState({
-  fullName: "",
-  birthOfDay: "",
-  identification: "",
-  dateRange: "",
-  issuedBy: "",
-  permanentAddress: "",
-});
-const [isLoadings, setIsLoading] = useState(false);
-const convertDate = (dateString) => {
-  // Chuyển đổi từ "dd/MM/yyyy" sang đối tượng Date
-  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
-  // Định dạng lại từ đối tượng Date sang "yyyy-MM-dd"
-  return format(parsedDate, "yyyy-MM-dd");
-};
-useEffect(()=>{
-  async function GetInfoFromCCCD() {
-    try {
-      if (CCCD.mt !== "" && CCCD.ms !== "") {
-        setIsLoading(true);
-        const kq = await postCCCD({
-          iD_Front: CCCD.mt,
-          iD_Back: CCCD.ms,
-        }).unwrap();
-
-        getInfoCCCD({
-          fullName: kq.result.name,
-          birthOfDay: convertDate(kq.result.dob),
-          identification: kq.result.id,
-          dateRange: convertDate(kq.result.issue_date),
-          issuedBy: kq.result.issue_loc,
-          permanentAddress: kq?.result?.address,
-        });
-        
+  const [CCCD, setCCCD] = useState({ mt: "", ms: "" });
+  const [InfoCCCD, getInfoCCCD] = useState({
+    fullName: "",
+    birthOfDay: "",
+    identification: "",
+    dateRange: "",
+    issuedBy: "",
+    permanentAddress: "",
+  });
+  const [isLoadings, setIsLoading] = useState(false);
+  const convertDate = (dateString) => {
+    // Chuyển đổi từ "dd/MM/yyyy" sang đối tượng Date
+    const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+    // Định dạng lại từ đối tượng Date sang "yyyy-MM-dd"
+    return format(parsedDate, "yyyy-MM-dd");
+  };
+  useEffect(() => {
+    async function GetInfoFromCCCD() {
+      try {
+        if (CCCD.mt !== "" && CCCD.ms !== "") {
+          setIsLoading(true);
+          const kq = await postCCCD({
+            iD_Front: CCCD.mt,
+            iD_Back: CCCD.ms,
+          }).unwrap();
+          setFormData((prev) => ({
+            ...prev,
+            beforeIdentificationBase64: CCCD.mt,
+            afterIdentificationBase64: CCCD.ms,
+          }));
+          getInfoCCCD({
+            fullName: kq.result.name,
+            birthOfDay: convertDate(kq.result.dob),
+            identification: kq.result.id,
+            dateRange: convertDate(kq.result.issue_date),
+            issuedBy: kq.result.issue_loc,
+            permanentAddress: kq?.result?.address,
+          });
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
     }
-     
-  }
-  GetInfoFromCCCD();
-},[CCCD])
+    GetInfoFromCCCD();
+  }, [CCCD]);
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-end profile ${isExiting ? "animate-slide-out" : "animate-slide-in"}`}
+      className={`fixed inset-0 z-50 flex justify-end profile ${
+        isExiting ? "animate-slide-out" : "animate-slide-in"
+      }`}
     >
       <div
         ref={refContainer}
@@ -272,7 +298,7 @@ useEffect(()=>{
           <TitleContainer title={"Thông tin người dùng"} />
           <InputFiel
             name={"Họ và tên"}
-            label={InfoCCCD.fullName||data?.response?.fullName}
+            label={InfoCCCD.fullName || data?.response?.fullName}
             type={"text"}
             isEnable={true}
             setFormData={setFormData}
@@ -280,7 +306,7 @@ useEffect(()=>{
             error={errors.fullName}
           />
           <InputFiel
-            disabled={'disabled'}
+            disabled={"disabled"}
             name={"Tên đăng nhập"}
             label={data?.response?.userName}
             type={"text"}
@@ -313,7 +339,7 @@ useEffect(()=>{
           />
           <InputFiel
             name={"CMND/CCCD"}
-            label={InfoCCCD.identification||data?.response?.identification}
+            label={InfoCCCD.identification || data?.response?.identification}
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -323,7 +349,7 @@ useEffect(()=>{
           />
           <InputFiel
             name={"Ngày cấp"}
-            label={InfoCCCD.dateRange||formatDate(data?.response?.dateRange)}
+            label={InfoCCCD.dateRange || formatDate(data?.response?.dateRange)}
             type={"date"}
             isEnable={false}
             setFormData={setFormData}
@@ -343,7 +369,9 @@ useEffect(()=>{
           />
           <InputFiel
             name={"Địa chỉ thường trú"}
-            label={InfoCCCD.permanentAddress || data?.response?.permanentAddress}
+            label={
+              InfoCCCD.permanentAddress || data?.response?.permanentAddress
+            }
             type={"text"}
             isEnable={false}
             setFormData={setFormData}
@@ -351,24 +379,31 @@ useEffect(()=>{
             error={errors.permanentAddress}
             readonly={true}
           />
+          {isLoadings && (
+            <div className="w-full flex justify-center items-center">
+              <span className="loading loading-bars loading-md"></span>
+            </div>
+          )}
 
+          {muiltyRowCCCD.map((i, index) => (
+            <CCCDCOMPOMENT
+              title={i.title}
+              title2={i.title2}
+              key={index}
+              id={i.id}
+              setCCCD={setCCCD}
+              img={
+                i.name === "CCCDBefore"
+                  ? data?.response?.beforeIdentification
+                  : data?.response?.afterIdentification
+              }
+              onChange={(file) => handleFileChange(i.fullName, file)}
+            />
+          ))}
           <Signature
             name={"Chữ ký"}
             img={data?.response?.signatureUrl}
             onChange={(file) => handleFileChange("signatureBase64", file)}
-          />
-          {isLoadings && <div className="w-full flex justify-center items-center"><span className="loading loading-bars loading-md"></span></div>}
-          <InputFileImg
-            name={"CCCD (Mặt trước)"}
-            img={data?.response?.beforeIdentification}
-            onChange={(file) => handleFileChange("beforeIdentificationBase64", file)}
-            setCCCD={setCCCD}
-          />
-          <InputFileImg
-            name={"CCCD (Mặt sau)"}
-            img={data?.response?.afterIdentification}
-            onChange={(file) => handleFileChange("afterIdentificationBase64", file)}
-            setCCCD={setCCCD}
           />
         </div>
 
@@ -413,7 +448,9 @@ useEffect(()=>{
             onClick={handleUpdate}
             className="flex w-fit py-[9px] px-[17px] justify-center items-center rounded-[6px] border border-gray-300 bg-rose-600 text-white shadow-sm"
           >
-            {isLoadings && (<span className="loading loading-spinner text-neutral"></span> )}
+            {isLoadings && (
+              <span className="loading loading-spinner text-neutral"></span>
+            )}
             Cập nhật
           </button>
         </div>

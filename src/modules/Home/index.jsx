@@ -6,12 +6,12 @@ import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet";
 import ImgLogo from './../../assets/logo1.png'
 const Index = () => {
-  // if (
-  //   !sessionStorage.getItem("token") ||
-  //   sessionStorage.getItem("token")?.split(".").length !== 3
-  // ) {
-  //   window.location.href = "/login";
-  // }
+  if (
+    !sessionStorage.getItem("token") ||
+    sessionStorage.getItem("token")?.split(".").length !== 3
+  ) {
+    window.location.href = "/login";
+  }
   const [isShow, setShow] = useState(false);
   const { pathname } = useLocation();
 
