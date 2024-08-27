@@ -17,16 +17,16 @@ const DepositsApi = createApi({
         data: body,
       }),
     }),
-    getDeposit:build.query({
+    getDeposit: build.query({
       query: (id) => ({
         url: `/Deposits/get-deposit-by-id/${id}`,
         method: "GET",
 
       }),
     }),
-   
+
   }),
 });
 
-export const {useAddDepositMutation,useGetDepositQuery } = DepositsApi;
+export const { useAddDepositMutation, useGetDepositQuery } = DepositsApi;
 export default DepositsApi;

@@ -4,7 +4,7 @@ import Floor from "./Floor";
 import CustomLoading from "../../../components/CustomLoading";
 import { format } from "date-fns";
 
-const Body = ({ data, isLoading ,dataNameHome}) => {
+const Body = ({ data, isLoading, dataNameHome }) => {
   return (
     <>
       <div className="w-full h-fit  relative flex flex-col justify-center items-center mt-5  ">
@@ -18,7 +18,7 @@ const Body = ({ data, isLoading ,dataNameHome}) => {
                     <img src={ImageSpeaker} alt="spearker" />
                   </div>
                   <div className="text-white text-base font-medium leading-normal">
-                  Chương trình sale áp dụng từ ngày {dataNameHome?.saleStartDate ? format(new Date(dataNameHome?.saleStartDate), 'dd/MM/yyyy'):"hôm nay"} - {dataNameHome?.saleEndDate && format(new Date(dataNameHome?.saleEndDate), 'dd/MM/yyyy')}
+                    Chương trình sale áp dụng từ ngày {dataNameHome?.saleStartDate ? format(new Date(dataNameHome?.saleStartDate), 'dd/MM/yyyy') : "hôm nay"} - {dataNameHome?.saleEndDate && format(new Date(dataNameHome?.saleEndDate), 'dd/MM/yyyy')}
                   </div>
                 </div>
               </div>

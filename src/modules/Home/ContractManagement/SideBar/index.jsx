@@ -14,6 +14,7 @@ import { useGetDepositInfomationQuery } from "@apis/slice/Agencies";
 import { format } from "date-fns";
 import { usePutDepositInfomationMutation } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
+
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -37,7 +38,7 @@ const SideBar = ({ getInfo }) => {
     resolver: yupResolver(schema),
   });
   // get infomation of room
-  const { data: DataDepositInfomation, isLoading ,refetch } =
+  const { data: DataDepositInfomation, isLoading, refetch } =
     useGetDepositInfomationQuery(getInfo.depositId && getInfo.depositId);
   useEffect(() => {
     setLoading(isLoading);
@@ -79,7 +80,7 @@ const SideBar = ({ getInfo }) => {
         chuongTrinhUuDai: response.chuongTrinhUuDai || " ",
         note: response.note,
         rentalTerm: response.rentalTerm,
-        commissionPolicy:response.commissionPolicy,
+        commissionPolicy: response.commissionPolicy,
         commissionPolicyId: response?.commissionPolicyId,
         commissionPolicyLable: `${response?.commissionPolicy?.month} tháng - Cọc ${response?.commissionPolicy?.deposit} - Hoa hồng ${response?.commissionPolicy?.commission}`,
         signature: response?.signature,
@@ -126,7 +127,7 @@ const SideBar = ({ getInfo }) => {
       });
     }
   };
-const [isSubmit,setIsSubmit] =useState(false)
+  const [isSubmit, setIsSubmit] = useState(false)
   // Form submission handler
   const onSubmit = async (data) => {
     setLoading(true)
@@ -238,6 +239,7 @@ const [isSubmit,setIsSubmit] =useState(false)
           </div>
         </form>
       </div>
+
     </div>
   );
 };
