@@ -147,7 +147,6 @@ const SideBar = () => {
       {depositId && isPaysment && <Payment
         id={depositId}
         setIsPayment={setIsPayment}
-
       />}
       <input
         id="my-drawer-4"

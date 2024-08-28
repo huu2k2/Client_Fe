@@ -55,7 +55,7 @@ if(img){
   return (
     <div className="w-[516px] flex justify-between items-start">
       <span className="w-fit h-5 not-italic text-gray-900">{name}</span>
-      <div className="flex flex-col gap-4  w-[318px]">
+      <div className="flex flex-col gap-4  w-[318px] mr-4">
         {/* <div className="w-[318px] h-fit px-[26px] py-[22px] border-dashed rounded-md border-gray-300 border-2 flex flex-col gap-1 items-center justify-start">
           {imagePreview ? (
             <div className="relative">
