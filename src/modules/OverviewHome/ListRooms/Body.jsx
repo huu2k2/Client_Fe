@@ -4,7 +4,7 @@ import Floor from "./Floor";
 import CustomLoading from "../../../components/CustomLoading";
 import { format } from "date-fns";
 
-const Body = ({ data, isLoading, dataNameHome }) => {
+
 const Body = ({ data, isLoading, dataNameHome }) => {
   return (
     <>

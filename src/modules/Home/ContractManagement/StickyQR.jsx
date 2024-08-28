@@ -10,4 +10,4 @@ const StickyQR = () => {
   )
 }
 
-export default StickyQR
+export default StickyQR;
