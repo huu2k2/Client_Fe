@@ -79,3 +79,4 @@ function Payment({ id, setIsPayment }) {
 }
 
 export default Payment;
+

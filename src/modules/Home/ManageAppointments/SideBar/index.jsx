@@ -14,6 +14,7 @@ import { useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
 import { useSetInfo, useSetTotalReduce } from "../../../../customHooks";
 import RowTotalFinal from "./RowTotalFinal";
+import Payment from "../../../../components/Modal/Payment";
 
 function coverDate(dateString) {
   const date = new Date(dateString);
@@ -32,6 +33,8 @@ const SideBar = () => {
   const [_, setIsLoading] = useIsLoading();
   const [depositId, setDepositId] = useState(null); // New state for deposit ID
   const [, setTotalReduce] = useSetTotalReduce();
+  const [isPaysment, setIsPayment] = useState(true);
+
   useEffect(() => {
     if (Data?.response) {
       setServiceInserts(Data.response.serviceInserts);
@@ -85,43 +88,44 @@ const SideBar = () => {
     setValue("chuongTrinhUuDai", "");
     try {
 
-      if(furnitureInserts.length>0 && serviceInserts.length>0){
-      const kq = await addDeposit({
-        ...data,
-        furnitures:furnitureInserts,
-        services:serviceInserts,
-        birthOfDay: coverDate(data.birthOfDay),
-        depositDate: coverDate(data.depositDate),
-        rentalStartDate: coverDate(data.rentalStartDate),
-        dateRange: coverDate(data.dateRange),
-        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-        roomId: data.roomId,
-        rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
-        commissionPolicyId: Number(data.commissionPolicyId),
-        houseId: getInfo.houseId,
-        additionalDepositAmount: Number(
-          data.additionalDepositAmount.replace(/\./g, "")
-        ),
-        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-        numberOfPeople: Number(data.numberOfPeople),
-        numberOfVehicle: Number(data.numberOfVehicle),
-        fullName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        totalDepositAmount: Number(data.totalDepositAmount),
-      });
-      if (kq?.error) {
-        toast.error(kq.error.data.message);
-        setIsCheckSuccess(false);
+      if (furnitureInserts.length > 0 && serviceInserts.length > 0) {
+        const kq = await addDeposit({
+          ...data,
+          furnitures: furnitureInserts,
+          services: serviceInserts,
+          birthOfDay: coverDate(data.birthOfDay),
+          depositDate: coverDate(data.depositDate),
+          rentalStartDate: coverDate(data.rentalStartDate),
+          dateRange: coverDate(data.dateRange),
+          depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+          roomId: data.roomId,
+          rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
+          commissionPolicyId: Number(data.commissionPolicyId),
+          houseId: getInfo.houseId,
+          additionalDepositAmount: Number(
+            data.additionalDepositAmount.replace(/\./g, "")
+          ),
+          depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+          numberOfPeople: Number(data.numberOfPeople),
+          numberOfVehicle: Number(data.numberOfVehicle),
+          fullName: data.fullName,
+          phoneNumber: data.phoneNumber,
+          totalDepositAmount: Number(data.totalDepositAmount),
+        });
+        if (kq?.error) {
+          toast.error(kq.error.data.message);
+          setIsCheckSuccess(false);
+        } else {
+          toast.success(kq.data.message);
+          setIsCheckSuccess(true);
+          setDepositId(kq.data.depositId);
+          refetch();
+          setIsLoading(false);
+        }
+        console.log("kq", furnitureInserts, serviceInserts)
       } else {
-        toast.success(kq.data.message);
-        setIsCheckSuccess(true);
-        refetch();
-        setIsLoading(false);
+        console.log("looix")
       }
-      console.log("kq",furnitureInserts,serviceInserts)
-    }else{
-      console.log("looix")
-    }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
       console.log(error);

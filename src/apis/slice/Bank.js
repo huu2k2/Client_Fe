@@ -26,3 +26,4 @@ const BankApi = createApi({
 
 export const { useGetBankQuery, useCreateDepositPaymentLinkFirstMutation } = BankApi;
 export default BankApi;
+
