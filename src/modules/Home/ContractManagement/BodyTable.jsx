@@ -272,7 +272,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                           {i.status === "2"
                             ? "Đặt cọc"
                             : i.status === "6"
-                            ? "Đã hủy cọc"
+                            ? "Hủy cọc"
                             : "Đã thuê"}
                         </div>
                       </div>
