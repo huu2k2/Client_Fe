@@ -111,8 +111,6 @@ const muiltyRow1 = [
   // },
 ];
 const InfoRoom = ({ register, setValue, getValues }) => {
-  const [getInfo, setInfo] =useSetInfo()
- 
   const [isSidebarOpen, _] = useSetIsSidebarOpen();
   const handleFileChange = (name, file) => {
     setValue(name, file.split(",")[1]);

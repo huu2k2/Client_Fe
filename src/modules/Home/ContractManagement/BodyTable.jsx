@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { AiOutlineMore } from "react-icons/ai";
+import { IoEllipsisVerticalOutline } from "react-icons/io5";
 import { format, parseISO } from "date-fns";
 import Pagination from "./Pagination";
 import SelectCompoment from "./SelectCompoment";
@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import SearchInput from "@components/BaseInput/SearchInput";
 import { useIsLoading } from "@customhooks";
 import axios from "axios";
+import StickyQR from "./StickyQR";
 const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
@@ -185,22 +186,23 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                       Giá thuê (VNĐ)
                     </span>
                   </th>
-                  <th className="w-40 h-10 px-6 py-3 bg-blue-900 justify-start items-center flex">
+                  <th className="w-32 h-10 px-6 py-3 bg-blue-900 justify-start items-center flex">
                     <span className="text-white text-xs font-medium uppercase leading-none tracking-wide">
                       Hoa hồng (VNĐ)
                     </span>
                   </th>
-                  <th className="flex-1 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
+                  <th className="w-36 h-10 px-6 py-3 bg-gray-50 justify-start items-center flex">
                     <span className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                       Trạng thái
                     </span>
                   </th>
-                  <th className="w-20 h-10 px-6 py-3 bg-gray-50 "></th>
+                  <th className="w-16 h-10 px-6 py-3 bg-gray-50 "></th>
+                  <th className="w-10 h-10 px-6 py-3 bg-gray-50 "></th>
                 </tr>
               </thead>
               <tbody className="h-[460px] overflow-y-auto block custom-scrollbar">
                 {ListData?.map((i, index) => (
-                  <tr className="flex w-full" key={index}>
+                  <tr className="flex w-full border-y-[1px] border-gray-100 " key={index}>
                     <td className="w-16 h-[72px] px-6 py-4 justify-start items-center flex">
                       <p className="text-gray-500 text-xs font-medium uppercase leading-none tracking-wide">
                         {index + 1 + (currentPage - 1) * pageSize}
@@ -242,7 +244,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                       </span>
                     </td>
 
-                    <td className="w-40 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
+                    <td className="w-32 h-[72px] bg-blue-100 px-6 py-4 justify-start items-center flex">
                       <span className=" text-black text-sm font-normal  leading-tight">
                         {(i.rentalPrice*i.commission/100).toLocaleString("vi-VN")}
                       </span>
@@ -283,7 +285,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                           role="button"
                           className="btn m-1  -z-10 bg-white hover:bg-white outline-none border-0  shadow-none border-transparent"
                         >
-                          <AiOutlineMore />
+                          <IoEllipsisVerticalOutline  />
                         </div>
 
                         <ul
@@ -325,6 +327,10 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
                           )}
                         </ul>
                       </div>
+                    </td>
+                    <td className="relative w-10 h-[72px]">
+
+                    <StickyQR/>
                     </td>
                   </tr>
                 ))}

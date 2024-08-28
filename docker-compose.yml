@@ -7,6 +7,8 @@ services:
     container_name: fe-client-image-container # Đặt tên cho container ở đây
     ports:
       - "82:82"
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
     volumes:
       - .:/app
       - /app/node_modules

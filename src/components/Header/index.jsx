@@ -3,8 +3,8 @@ import ImgLogo from "@assets/logo1.png";
 import ImgAvatar from "@assets/Avatar.png";
 import { BsBell } from "react-icons/bs";
 import { useClickRemoveFilter } from "../../customHooks/FilterCustomHook";
-import { RiContractLine } from "react-icons/ri";
 import { FaFileContract } from "react-icons/fa6";
+import { BsCalendar2Date } from "react-icons/bs";
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -59,7 +59,7 @@ const index = ({ isShow = null, setShow = null }) => {
                   to={"/quan_ly_lich_hen"}
                   className="p-[7px] cursor-pointer"
                 >
-                  <RiContractLine className="bg-white rounded w-6 h-6" />
+                  <BsCalendar2Date className="bg-white rounded w-6 h-6" />
                 </Link>
                 <Link
                   to={"/quan_ly_hop_dong"}
