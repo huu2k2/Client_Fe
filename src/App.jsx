@@ -6,7 +6,7 @@ function App() {
   const [isLoading,_] =useIsLoading() 
   return (
     <>
-     { isLoading && <BarLoader height={4} width={"100%"} color="#c60000" loading={true} />}
+     { isLoading && <BarLoader height={5} width={"100%"} color="#c60000" loading={true} className="z-[100]"/>}
       <RouterProvider router={routers} />
     </>
   );
