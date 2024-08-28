@@ -18,7 +18,7 @@ const InfoRoom = () => {
   const [a, serviceInserts] = useDataServices();
   const [address, price, address2] = useGetInfoItem();
   const { data } = useGetAllDetailQuery(roomId);
- 
+
 
   const [brokeragePolicy] = useGetBrokeragePolicy();
   const [isShowModal, setIsShowModal] = useBooleanIsShowModal();
@@ -56,7 +56,7 @@ const InfoRoom = () => {
     <>
       <div className="w-full md:w-[723px] h-fit md:h-[578px] gap-4 flex flex-col justify-between">
         {/* name home in stress */}
-        <div className="w-full h-fit">
+        <div className="w-full h-fit md:hidden xl:block">
           {address && data ? (
             <>
               <h1 className="nthd_semibold_2xl_text truncate w-[730px] ">{data?.response?.houseName} </h1>
@@ -94,7 +94,7 @@ const InfoRoom = () => {
                     </li>
                   ))
                   : null}
-                  
+
               </ul>
             </div>
           </div>
@@ -109,7 +109,7 @@ const InfoRoom = () => {
                   {service?.serviceName}
                 </div>
                 <div className="nthd_text_medium_sm_h20">
-                {new Intl.NumberFormat("vi-VN").format(service.servicePrice)}/{service.dvt}
+                  {new Intl.NumberFormat("vi-VN").format(service.servicePrice)}/{service.dvt}
                 </div>
               </div>
             ))

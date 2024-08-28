@@ -12,12 +12,7 @@ import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { toast } from "react-toastify";
 import { useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
-import {
-  useSetInfo,
-  useSetIsSidebarOpen,
-  useSetTotalReduce,
-} from "../../../../customHooks";
-import RowTotalFinal from "./RowTotalFinal";
+
 function coverDate(dateString) {
   const date = new Date(dateString);
   return date.toISOString();
@@ -29,10 +24,11 @@ const SideBar = () => {
   const { data: Data } = useGetServicesOfRoomQuery(getInfo.id || 0);
   const [furnitureInserts, setFurnitureInserts] = useState([]);
   const [serviceInserts, setServiceInserts] = useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useSetIsSidebarOpen();
-  const [totalReduce, setTotalReduce] = useSetTotalReduce();
+  const [isCheckSuccess, setIsCheckSuccess] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
   const [_, setIsLoading] = useIsLoading();
+  const [depositId, setDepositId] = useState(null); // New state for deposit ID
 
   useEffect(() => {
     if (Data?.response) {
@@ -52,6 +48,8 @@ const SideBar = () => {
   });
 
   const { refetch } = useGetListOfAppointmentsQuery({ queries: {}, body: {} });
+
+
 
   useEffect(() => {
     setValue("sheduleId", getInfo.scheduleId);
@@ -84,41 +82,44 @@ const SideBar = () => {
     setIsLoading(true);
     setValue("chuongTrinhUuDai", "");
     try {
-      if (furnitureInserts.length > 0 && serviceInserts.length > 0) {
-        const kq = await addDeposit({
-          ...data,
-          furnitures: furnitureInserts,
-          services: serviceInserts,
-          birthOfDay: coverDate(data.birthOfDay),
-          depositDate: coverDate(data.depositDate),
-          rentalStartDate: coverDate(data.rentalStartDate),
-          dateRange: coverDate(data.dateRange),
-          depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
-          roomId: data.roomId,
-          rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
-          commissionPolicyId: Number(data.commissionPolicyId),
-          houseId: getInfo.houseId,
-          additionalDepositAmount: Number(
-            data.additionalDepositAmount.replace(/\./g, "")
-          ),
-          depositAmount: Number(data.depositAmount.replace(/\./g, "")),
-          numberOfPeople: Number(data.numberOfPeople),
-          numberOfVehicle: Number(data.numberOfVehicle),
-          fullName: data.fullName,
-          phoneNumber: data.phoneNumber,
-          totalDepositAmount: Number(data.totalDepositAmount),
-        });
-        if (kq?.error) {
-          toast.error(kq.error.data.message);
-        } else {
-          toast.success(kq.data.message);
-          refetch();
-          setIsLoading(false);
-        }
-        console.log("kq", furnitureInserts, serviceInserts);
+     
+      if(furnitureInserts.length>0 && serviceInserts.length>0){
+      const kq = await addDeposit({
+        ...data,
+        furnitures:furnitureInserts,
+        services:serviceInserts,
+        birthOfDay: coverDate(data.birthOfDay),
+        depositDate: coverDate(data.depositDate),
+        rentalStartDate: coverDate(data.rentalStartDate),
+        dateRange: coverDate(data.dateRange),
+        depositPaymentDeadline: coverDate(data.depositPaymentDeadline),
+        roomId: data.roomId,
+        rentalPrice: Number(data?.rentalPrice?.replace(/\./g, "")),
+        commissionPolicyId: Number(data.commissionPolicyId),
+        houseId: getInfo.houseId,
+        additionalDepositAmount: Number(
+          data.additionalDepositAmount.replace(/\./g, "")
+        ),
+        depositAmount: Number(data.depositAmount.replace(/\./g, "")),
+        numberOfPeople: Number(data.numberOfPeople),
+        numberOfVehicle: Number(data.numberOfVehicle),
+        fullName: data.fullName,
+        phoneNumber: data.phoneNumber,
+        totalDepositAmount: Number(data.totalDepositAmount),
+      });
+      if (kq?.error) {
+        toast.error(kq.error.data.message);
+        setIsCheckSuccess(false);
       } else {
-        console.log("looix");
+        toast.success(kq.data.message);
+        setIsCheckSuccess(true);
+        refetch();
+        setIsLoading(false);
       }
+      console.log("kq",furnitureInserts,serviceInserts)
+    }else{
+      console.log("looix")
+    }
     } catch (error) {
       toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
       console.log(error);
@@ -126,6 +127,7 @@ const SideBar = () => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     if (Object.keys(errors).length > 5) {
       toast.error("Bạn điền thiếu thông tin! Vui lòng nhập lại!");
@@ -136,6 +138,11 @@ const SideBar = () => {
 
   return (
     <div className="drawer drawer-end bg-white">
+      {depositId && isPaysment && <Payment
+        id={depositId}
+        setIsPayment={setIsPayment}
+
+      />}
       <input
         id="my-drawer-4"
         type="checkbox"
@@ -199,6 +206,7 @@ const SideBar = () => {
           </div>
         </form>
       </div>
+
     </div>
   );
 };

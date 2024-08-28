@@ -8,6 +8,9 @@ import { Link, useParams } from "react-router-dom";
 import { useGetImagesQuery } from "@apis/slice/ImageOfRoom";
 import ShowImages from "../../../../components/ShowImages";
 const API_URL = import.meta.env.VITE_APP_URL_IMAGE;
+import { useGetAllDetailQuery } from '@apis/slice/services';
+import { useGetInfoItem } from './../../../../customHooks/ServicesCustomHook';
+import { Skeleton } from "@mui/material";
 
 const Cart = () => {
   const [holder, rooms] = useGetHolder();
@@ -16,6 +19,8 @@ const Cart = () => {
   const [display, setDisplay] = useState("");
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [result, setResult] = useState([]);
+  const [address, price, address2] = useGetInfoItem();
+  const { data } = useGetAllDetailQuery(roomId);
 
   useEffect(() => {
     if (images?.response?.length < 2) {
@@ -32,7 +37,18 @@ const Cart = () => {
 
   return (
     <>
+      <div className="w-full h-fit xl:hidden">
+        {address && data ? (
+          <>
+            <h1 className="nthd_semibold_2xl_text truncate w-[730px] ">{data?.response?.houseName} </h1>
+            <p>{address2}</p>
+          </>
+        ) : (
+          <Skeleton height={32} variant="rounded" />
+        )}
+      </div>
       <div className="w-full px-10 md:px-0 md:w-[557px] h-fit gap-2 flex flex-col flex-wrap">
+
         <div className="hidden md:block w-full h-[313px]">
           <img
             src={result[mainImageIndex]?.url}
