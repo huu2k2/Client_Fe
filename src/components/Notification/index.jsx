@@ -17,7 +17,6 @@ const index = () => {
       .catch((err) => console.error("Failed to receive message: ", err));
   }, []);
   const handleSeen=()=>{
-    document.getElementById('sidebarNotifications').close()
     setCountInfo(0)
   }
   return (
@@ -59,7 +58,7 @@ const index = () => {
             </div>
           </div>
           <div className="w-full h-[100px]"></div>
-          <div className="w-full flex justify-end"><span className="text-rose-600 text-lg  font-bold cursor-pointer" onClick={handleSeen}>Đánh dấu là đã đọc</span></div>
+          <div className="w-full flex justify-end px-4"><span className="text-rose-600 text-lg  font-bold cursor-pointer" onClick={handleSeen}>Đánh dấu là đã đọc</span></div>
           <div className="w-full  h-full">
             {dataInfo?.length > 0 &&
               dataInfo?.map((item, index) => (

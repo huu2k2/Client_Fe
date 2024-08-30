@@ -112,11 +112,13 @@ const RowComponent = ({
   const [RetalPrice, setRetalPrice] = useRetalPrice();
   const [DepositAmount,setDepositAmount] = useDepositAmount()
   useEffect(() => {
-    if (valueDonChange) {
-      setValues(getValues(name));
+    if (name==="phoneNumber") {
+      setValues(getInfo.phoneNumber);
+    }
+    if (name==="houseAddress") {
+      setValues(getInfo.houseAddress);
     }
     if (name === "rentalPrice") {
-
       setValues(getInfo.rentalPrice?.toLocaleString("vi-VN"));
       setRetalPrice(getInfo.rentalPrice)
       setValue("rentalPrice",getInfo.rentalPrice)
@@ -124,8 +126,9 @@ const RowComponent = ({
     if (name === "totalReduce") {
       setValues(getInfo.totalReduce?.toLocaleString("vi-VN"));
     }
-  }, [ isSidebarOpen,getInfo]);
+  }, [ name,isSidebarOpen,getInfo]);
 
+ 
   useEffect(() => {
     if (name === "totalReduce") {
       setValues(getInfo.totalReduce.toLocaleString("vi-VN"));

@@ -125,7 +125,7 @@ const SideBar = () => {
         console.log("kq", furnitureInserts, serviceInserts)
         setDataInfo([
 
-          { type: "DATCOC", roomcode:i.roomCode, address: i.houseAddress, time: format(new Date(), 'HH:mm, dd/MM/yyyy') },
+          { type: "DATCOC", roomcode:data.roomCode, address: data.houseAddress, time: format(new Date(), 'HH:mm, dd/MM/yyyy') },
           ...dataInfo
         ]);
         setCountInfo(countInfo+1)

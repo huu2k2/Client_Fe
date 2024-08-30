@@ -2,6 +2,9 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { firebaseApp } from "./firebaseConfig";
 const messaging = getMessaging(firebaseApp);
 export const requestNotificationPermission = async () => {
+  const permission = await Notification.requestPermission();
+  if (permission === 'granted') {
+    console.log('Notification permission granted.');
   try {
     const token = await getToken(messaging, {
       vapidKey:
@@ -18,6 +21,7 @@ export const requestNotificationPermission = async () => {
   } catch (error) {
     console.error("An error occurred while retrieving token. ", error);
   }
+}
 };
 export const onMessageListener = () =>
     new Promise((resolve) => {
