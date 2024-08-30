@@ -10,6 +10,7 @@ import ScheduleApi from '@apis/slice/ScheduleSeeRoom'
 import Agencies from '@apis/slice/Agencies'
 import HousesApi from '@apis/slice/Houses'
 import DepositsApi from '@apis/slice/Deposit'
+import InformationAPi from '@apis/slice/Infomation'
 const Reducer = {
     [ProvicesApi.reducerPath]: ProvicesApi.reducer,
     [RoomsApi.reducerPath]: RoomsApi.reducer,
@@ -22,6 +23,7 @@ const Reducer = {
     [Agencies.reducerPath]: Agencies.reducer,
     [HousesApi.reducerPath]: HousesApi.reducer,
     [DepositsApi.reducerPath]: DepositsApi.reducer,
+    [InformationAPi.reducerPath]: InformationAPi.reducer,
 }
 
 export default Reducer

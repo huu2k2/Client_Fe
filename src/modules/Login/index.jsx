@@ -10,7 +10,7 @@ const Index = () => {
   const isForget = pathname.includes("forgot_password");
   const isResetPassword = pathname.includes("reset_password");
 
-  // const handleBack = () => {
+  // const handleBack = () => {Ffire
   //   change("");
   // };
 
@@ -31,8 +31,6 @@ const hanldeClick =()=>{
         <meta name="description" content="Đăng nhập trang web dịch vụ mô giới số 1 Việt Nam" />
     </Helmet>
 
-      {/* xac thuc opt */}
-      <div id="recaptcha-container" ></div>
       <div className=" hidden lg:basis-7/10 lg:h-screen xl:block grow shrink" >
         <img src={img} alt="Login img" className="hidden lg:w-full lg:block h-full " />
       </div>

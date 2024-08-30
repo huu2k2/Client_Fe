@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IoEllipsisVerticalOutline } from "react-icons/io5";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import Pagination from "./Pagination";
 import SelectCompoment from "./SelectCompoment";
 import DatePicker from "./DatePicker";
@@ -16,6 +16,7 @@ import { useIsLoading } from "@customhooks";
 import axios from "axios";
 import StickyQR from "./StickyQR";
 import Payment from "../../../components/Modal/Payment";
+import { useInfoOfNotification } from "../../../customHooks";
 const API_URL = import.meta.env.VITE_APP_ROOM_URL;
 const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const now = new Date();
@@ -107,12 +108,18 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   };
   // ============== cancle deposite
   const [postCancelDeposite] = usePostCancelDepositeMutation();
-
+  const [dataInfo,setDataInfo,countInfo,setCountInfo] = useInfoOfNotification();
   const handleCancledeposite = async (i) => {
     try {
       const kq = await postCancelDeposite({ depositId: i.depositId }).unwrap();
       console.log("kết quả ", kq);
       toast.success("Hủy hợp đồng thành công!");
+      setDataInfo([
+
+        { type: "HUY", roomcode:i.roomCode, address: i.houseAddress, time: format(new Date(), 'HH:mm, dd/MM/yyyy') },
+        ...dataInfo
+      ]);
+      setCountInfo(countInfo+1)
     } catch (err) {
       // Xử lý lỗi
       toast.error("Hủy hợp đồng thất bại!");
@@ -124,12 +131,11 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
   const [imgQR, setimgQR] = useState(null);
   const [DepositId, setDepositId] = useState(null);
   const handleShowQR = (id, img) => {
-    if(img){
+    if (img) {
       setIsPayment(!isPaysment);
       setimgQR(img);
       setDepositId(id);
     }
-
   };
   return (
     <>

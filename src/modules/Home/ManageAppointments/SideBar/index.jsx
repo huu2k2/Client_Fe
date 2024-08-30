@@ -12,7 +12,7 @@ import { useGetServicesOfRoomQuery } from "@apis/slice/services";
 import { toast } from "react-toastify";
 import { useGetListOfAppointmentsQuery } from "@apis/slice/Agencies";
 import { useIsLoading } from "@customhooks";
-import { useSetInfo, useSetTotalReduce } from "../../../../customHooks";
+import { useInfoOfNotification, useSetInfo, useSetTotalReduce } from "../../../../customHooks";
 import RowTotalFinal from "./RowTotalFinal";
 import Payment from "../../../../components/Modal/Payment";
 
@@ -82,7 +82,7 @@ const SideBar = () => {
       sidebarRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
-
+  const [dataInfo,setDataInfo,countInfo,setCountInfo] = useInfoOfNotification();
   const onSubmit = async (data) => {
     setIsLoading(true);
     setValue("chuongTrinhUuDai", "");
@@ -123,6 +123,12 @@ const SideBar = () => {
           setIsLoading(false);
         }
         console.log("kq", furnitureInserts, serviceInserts)
+        setDataInfo([
+
+          { type: "DATCOC", roomcode:i.roomCode, address: i.houseAddress, time: format(new Date(), 'HH:mm, dd/MM/yyyy') },
+          ...dataInfo
+        ]);
+        setCountInfo(countInfo+1)
       } else {
         console.log("looix")
       }

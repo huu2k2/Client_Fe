@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, onMessage } from "firebase/messaging";
 const firebaseConfig = {
   apiKey: "AIzaSyCxrt4QEedK9O2YuQoPocwCjOgZNqeTlaQ",
   authDomain: "aloper-b0413.firebaseapp.com",
@@ -10,6 +9,6 @@ const firebaseConfig = {
   measurementId: "G-5PF5SRWRJ8",
 };
 const firebaseApp = initializeApp(firebaseConfig);
-const messaging = getMessaging(firebaseApp);
+ 
 
-export { messaging };
+export { firebaseApp };

@@ -109,13 +109,6 @@ const RowComponent = ({
   // all the orther input
   // setup some input have value don't change
   const valueDonChange = ["phoneNumber", "houseAddress"].includes(name);
-  const valueConfig = [
-    "rentalPrice",
-    "totalReduce",
-    "totalDepositAmount",
-    "depositAmount",
-    "additionalDepositAmount",
-  ].includes(name);
   const [RetalPrice, setRetalPrice] = useRetalPrice();
   const [DepositAmount,setDepositAmount] = useDepositAmount()
   useEffect(() => {
@@ -123,6 +116,7 @@ const RowComponent = ({
       setValues(getValues(name));
     }
     if (name === "rentalPrice") {
+
       setValues(getInfo.rentalPrice?.toLocaleString("vi-VN"));
       setRetalPrice(getInfo.rentalPrice)
       setValue("rentalPrice",getInfo.rentalPrice)
@@ -130,10 +124,11 @@ const RowComponent = ({
     if (name === "totalReduce") {
       setValues(getInfo.totalReduce?.toLocaleString("vi-VN"));
     }
-  }, [name, isSidebarOpen, totalReduce]);
+  }, [ isSidebarOpen,getInfo]);
+
   useEffect(() => {
     if (name === "totalReduce") {
-      setValues(getInfo.totalReduce?.toLocaleString("vi-VN"));
+      setValues(getInfo.totalReduce.toLocaleString("vi-VN"));
       setValue(name,getInfo.totalReduce)
     }
   }, [RetalPrice]);

@@ -11,6 +11,7 @@ import ScheduleApi from '@apis/slice/ScheduleSeeRoom';
 import Agencies from '@apis/slice/Agencies';
 import HousesApi from '@apis/slice/Houses'
 import DepositsApi from '@apis/slice/Deposit'
+import InformationAPi from '@apis/slice/Infomation'
 const middleware = (getDefaultMiddleware) =>
   getDefaultMiddleware()
     .concat(ProvicesApi.middleware)
@@ -23,6 +24,6 @@ const middleware = (getDefaultMiddleware) =>
     .concat(ScheduleApi.middleware)
     .concat(Agencies.middleware)
     .concat(HousesApi.middleware)
-    .concat(DepositsApi.middleware);
-
+    .concat(DepositsApi.middleware)
+    .concat(InformationAPi.middleware)
 export default middleware;

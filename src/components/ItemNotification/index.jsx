@@ -8,9 +8,9 @@ const Index = ({ item }) => {
       return (
         <Item
           type={"HUY"}
-          roomcode={item.roomcode}
-          address={item.address}
-          time={item.time}
+          roomcode={item?.roomcode}
+          address={item?.address}
+          time={item?.time}
           title={"Hợp đồng cọc bị hủy"}
           ICON={AiFillFileExcel}
           color={"#E11D48"}
@@ -21,9 +21,9 @@ const Index = ({ item }) => {
       return (
         <Item
           type={"HETHAN"}
-          roomcode={item.roomcode}
-          address={item.address}
-          time={item.time}
+          roomcode={item?.roomcode}
+          address={item?.address}
+          time={item?.time}
           title={"Hợp đồng thuê sắp hết hạn"}
           ICON={AiFillFileExclamation}
           color={"#d97706"}
@@ -34,9 +34,9 @@ const Index = ({ item }) => {
       return (
         <Item
           type={"COCMOI"}
-          roomcode={item.roomcode}
-          address={item.address}
-          time={item.time}
+          roomcode={item?.roomcode}
+          address={item?.address}
+          time={item?.time}
           title={"Hợp đồng cọc mới"}
           ICON={AiFillFileAdd}
           color={"#E11D48"}
@@ -47,9 +47,9 @@ const Index = ({ item }) => {
       return (
         <Item
           type={"THUEMOI"}
-          roomcode={item.roomcode}
-          address={item.address}
-          time={item.time}
+          roomcode={item?.roomcode}
+          address={item?.address}
+          time={item?.time}
           title={"Hợp đồng thuê mới"}
           ICON={AiFillFileAdd}
           color={"#226932"}
@@ -60,9 +60,9 @@ const Index = ({ item }) => {
       return (
         <Item
           type={"HUY"}
-          roomcode={item.roomcode}
-          address={item.address}
-          time={item.time}
+          roomcode={item?.roomcode}
+          address={item?.address}
+          time={item?.time}
           title={"Hợp đồng cọc bị hủy"}
           ICON={AiFillFileExcel}
           color={"#E11D48"}
@@ -87,8 +87,8 @@ const Item = ({ roomcode, address, time, title, ICON, color }) => {
             <p>{title}: </p>
             <p className="text-rose-600 font-bold">P.{roomcode}</p>
           </div>
-          <div className="flex justify-between text-[14px] text-gray-500 w-full">
-            <span>ĐC: {address}</span>
+          <div className="flex justify-between items-end text-[14px] text-gray-500 w-full">
+            <span className="w-[50%]">ĐC: {address}</span>
             <span>{time}</span>
           </div>
         </div>

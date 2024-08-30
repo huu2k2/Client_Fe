@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useOTP } from "../../customHooks/OtpHook";
+
 import { usePostValidateOtpMutation } from "../../apis/slice/Acount";
 import { Helmet } from "react-helmet";
 
@@ -68,13 +68,13 @@ const Otp = () => {
     getInitialTime(location?.pathname)
   );
 
-  const tick = useCallback(() => {
+  const tick = () => {
     setSeconds((prevSeconds) => {
       const newSeconds = prevSeconds - 1;
       sessionStorage.setItem("remainingTime", newSeconds);
       return newSeconds;
     });
-  }, []);
+  }
 
   useEffect(() => {
     if (seconds <= 0) {
@@ -91,18 +91,17 @@ const Otp = () => {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
-
-  const { sendOtp, isRecaptchaReady } = useOTP();
+ 
   const handleSendAgain = () => {
-    if (seconds === 0) {
-      sessionStorage.setItem("remainingTime", 60);
-      setSeconds(60);
-      if (isRecaptchaReady) {
-        sendOtp(sessionStorage.getItem("number"));
-      } else {
-        alert("reCAPTCHA is not ready yet.");
-      }
-    }
+    // if (seconds === 0) {
+    //   sessionStorage.setItem("remainingTime", 60);
+    //   setSeconds(60);
+    //   if (isRecaptchaReady) {
+    //     sendOtp(sessionStorage.getItem("number"));
+    //   } else {
+    //     alert("reCAPTCHA is not ready yet.");
+    //   }
+    // }
   };
 
   return (
@@ -156,7 +155,7 @@ const Otp = () => {
           Gửi lại
         </button>
       </div>
-      <div id="recaptcha-container"></div>
+
     </div>
   );
 };
