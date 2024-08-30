@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Input from "./Input";
 import TextArea from "./TextArea";
@@ -41,7 +41,6 @@ export const ModalPutRoom = ({
   id,
 }) => {
   const { data: housedata } = useGetRoomsNotDepositOfHouseQuery(id);
-  const { data: DetailHomeDataa } = useGetAllDetailQuery(id);
   const options = housedata?.response.map((i) => ({
     value: i.roomId,
     label: "P." + i.roomCode,
@@ -76,15 +75,14 @@ export const ModalPutRoom = ({
     resolver: yupResolver(validationSchema),
   });
 
-  const debouncedSetFormData = useCallback(
+  const debouncedSetFormData = 
     debounce((name, value) => {
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
       setValue(name, value);
-    }, 300),
-    []
+    }
   );
 
   const handleInputChange = (e) => {

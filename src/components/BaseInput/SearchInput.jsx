@@ -5,10 +5,7 @@ const SearchInput = ({ data, setListData, getTextSearch, setTextSearch }) => {
   const handleSearch = (e) => {
     setTextSearch(e.target.value);
   };
-  const handleChangeSearch = useCallback(debounce(handleSearch, 300), [
-    handleSearch,
-  ]);
-
+  const handleChangeSearch = debounce(handleSearch, 300)
   useEffect(() => {
     if (getTextSearch !== "" && data?.response?.items) {
       const searchData = data.response.items.filter((i) =>

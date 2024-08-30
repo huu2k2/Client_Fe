@@ -5,6 +5,45 @@ import { BsBell } from "react-icons/bs";
 import { useClickRemoveFilter } from "../../customHooks/FilterCustomHook";
 import { FaFileContract } from "react-icons/fa6";
 import { BsCalendar2Date } from "react-icons/bs";
+import ItemNotification from "../ItemNotification";
+
+const data = [
+  {
+    id: 1,
+    type: "HUY",
+    roomcode: "101",
+    address: "địa chỉ",
+    time: "thoi gian",
+  },
+  {
+    id: 2,
+    type: "HETHAN",
+    roomcode: "101",
+    address: "địa chỉ",
+    time: "thoi gian",
+  },
+  {
+    id: 3,
+    type: "COCMOI",
+    roomcode: "101",
+    address: "địa chỉ",
+    time: "thoi gian",
+  },
+  {
+    id: 4,
+    type: "THUEMOI",
+    roomcode: "101",
+    address: "địa chỉ",
+    time: "thoi gian",
+  },
+  {
+    id: 5,
+    type: "HUY",
+    roomcode: "101",
+    address: "địa chỉ",
+    time: "thoi gian",
+  },
+];
 const GroudButton = () => {
   return (
     <div className="h-full flex gap-2">
@@ -50,9 +89,48 @@ const index = ({ isShow = null, setShow = null }) => {
 
           {sessionStorage.getItem("token") ? (
             <>
-              <div className="w-fit h-full gap-3 flex items-center">
-                <div className="p-[7px] cursor-pointer">
-                  <BsBell color="white" size={24} />
+              <div className="w-fit h-full gap-3 flex items-center z-[50]">
+                <div className="p-[7px] cursor-pointer drawer drawer-end w-full">
+                  <input
+                    id="sidebarNotifications"
+                    type="checkbox"
+                    className="drawer-toggle"
+                  />
+
+                  <div className="drawer-content w-full">
+                    {/* Page content here */}
+                    <label
+                      htmlFor="sidebarNotifications"
+                      className="drawer-button "
+                    >
+                      {" "}
+                      <BsBell color="white" size={24} />
+                    </label>
+                  </div>
+                  <div className="drawer-side ">
+                    <label
+                      htmlFor="sidebarNotifications"
+                      aria-label="close sidebar"
+                      className="drawer-overlay"
+                    ></label>
+
+                    <ul className="menu  text-base-content min-h-full w-full md:w-[560px] px-5 bg-white  overflow-y-auto">
+                      <div className="w-full h-[100px] p-6 bg-black flex-col justify-center items-start gap-1 inline-flex fixed top-0 right-0">
+                        <div className="self-stretch justify-between items-center inline-flex">
+                          <div className="text-white text-lg font-medium leading-7">
+                            THÔNG BÁO
+                          </div>
+                          <div className="bg-zinc-600 rounded-md justify-center items-center flex"></div>
+                        </div>
+                      </div>
+                     <div className="w-full  h-[100px]"></div>
+                      <div className="w-full  h-full">
+                        {data.map((item, index) => (
+                          <ItemNotification key={index} item={item} />
+                        ))}
+                      </div>
+                    </ul>
+                  </div>
                 </div>
 
                 <Link
@@ -105,7 +183,9 @@ const index = ({ isShow = null, setShow = null }) => {
                 </div>
               </div>
             </>
-          ) : <GroudButton/>}
+          ) : (
+            <GroudButton />
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+
 import Select from 'react-select';
 import { format } from 'date-fns';
 import { vi } from 'date-fns/locale'; // Để định dạng ngày theo locale tiếng Việt
@@ -13,7 +13,7 @@ const options = [
 ];
 
 const SelectCompoment = ({setIsShow,setDate}) => {
-  const handleChangeDebounced = useCallback(
+  const handleChangeDebounced = 
     debounce((selectedOption) => {
       const now = new Date();
       const formattedDate = format(now, 'dd/MM/yyyy', { locale: vi });
@@ -58,8 +58,7 @@ const SelectCompoment = ({setIsShow,setDate}) => {
           setDate([formattedDate]);
           break;
       }
-    }, 300), // Thay đổi thời gian debounce tại đây
-    [setDate, setIsShow]
+    }
   );
 
   return (

@@ -148,7 +148,7 @@ const SideBar = ({ getInfo }) => {
 const [isSubmit,setIsSubmit] =useState(false)
   // Form submission handler
   const onSubmit = async (data) => {
-    console.log("data",data)
+
     setLoading(true)
     setIsSubmit(true)
     const convertData = {
@@ -179,19 +179,19 @@ const [isSubmit,setIsSubmit] =useState(false)
     try {
       const kq = await putDeposit(convertData);
       refetch()
-      toast.success(kq.data.message);
       setIsSidebarOpen(false)
       setLoading(false)
       setIsSubmit(false)
+      toast.success("Lên hợp đồng cọc thành công!");
     } catch (error) {
-      toast.error(error);
+      toast.error("Lỗi cập nhật!");
       setLoading(false)
       setIsSubmit(false)
     }
   };
 
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end z-[100]">
       <input
         id="my-drawer-5"
         type="checkbox"

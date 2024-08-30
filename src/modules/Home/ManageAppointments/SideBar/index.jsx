@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import InfoClient from "./InfoClient";
 import InfoRoom from "./InfoRoom";
 import Surcharges from "./surcharges";
@@ -143,7 +143,7 @@ const SideBar = () => {
   }, [errors]);
 
   return (
-    <div className="drawer drawer-end bg-white">
+    <div className="drawer drawer-end bg-white  z-[100]">
       {depositId && isPaysment && <Payment
         id={depositId}
         setIsPayment={setIsPayment}

@@ -115,7 +115,7 @@ const BodyTable = ({ isShow, setIsShow, setInfo }) => {
       toast.success("Hủy hợp đồng thành công!");
     } catch (err) {
       // Xử lý lỗi
-      toast.error(err);
+      toast.error("Hủy hợp đồng thất bại!");
       console.error("Failed to cancel deposit:", err);
     }
   };
