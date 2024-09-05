@@ -68,7 +68,7 @@ const SelectCompoment = ({setIsShow,setDate}) => {
     defaultValue={options[0]}
     options={options}
     onChange={handleChangeDebounced}
-    className="w-full h-full text-gray-700 text-sm font-medium  leading-tight"
+    className="w-full h-full text-gray-700 text-sm font-medium  leading-tight  "
     
     />
     </div>
