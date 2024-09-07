@@ -11,7 +11,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    command: yarn dev --host
+    # command: yarn dev --host
     networks:
       - aloper-prod_default # Liên kết với mạng đã tồn tại
 
