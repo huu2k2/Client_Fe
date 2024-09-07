@@ -40,17 +40,14 @@ WORKDIR /app
 # Sao chép file package.json và yarn.lock vào container
 COPY package.json yarn.lock ./
 
-# Cài đặt các package của ứng dụng
+# Cài đặt các dependencies
 RUN yarn install
 
 # Sao chép toàn bộ mã nguồn vào container
 COPY . .
 
-# Build ứng dụng React
-RUN yarn build
+# Mở cổng mặc định của Vite (3000)
+EXPOSE 3000
 
-# # Expose cổng chạy ứng dụng
-# EXPOSE 3000
-
-# Khởi chạy ứng dụng
-CMD ["yarn", "dev"]
+# Lệnh để chạy ứng dụng Vite trong môi trường development
+CMD ["yarn", "dev", "--host"]
