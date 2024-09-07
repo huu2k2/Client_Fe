@@ -38,4 +38,4 @@ COPY package.json /app
 RUN yarn install
 COPY . /app
 EXPOSE 9000
-CMD ["yarn", "run", "start"]
+CMD ["yarn", "dev"]
