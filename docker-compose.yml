@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: fe-client-image # Đặt tên cho image
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
       - TZ=Asia/Ho_Chi_Minh
     volumes:
