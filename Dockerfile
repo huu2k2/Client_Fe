@@ -53,4 +53,4 @@ RUN yarn build
 EXPOSE 3000
 
 # Khởi chạy ứng dụng
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
