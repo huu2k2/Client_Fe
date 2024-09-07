@@ -1,12 +1,10 @@
 services:
-  react-app:
-    container_name: REACTCLIENT
+  react-moigioi:
+    container_name: react-moigioi
+    image: react-moigioi
     build:
       context: .
       dockerfile: Dockerfile
-    image: fe-client-image # Đặt tên cho image
-    ports:
-      - "8080:80"
     environment:
       - TZ=Asia/Ho_Chi_Minh
     volumes:
