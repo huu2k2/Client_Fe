@@ -1,14 +1,20 @@
 services:
   react-app:
+    container_name: REACTCLIENT
     build:
       context: .
       dockerfile: Dockerfile
-    image: fe-clinet-image # Đặt tên cho image ở đây
-    container_name: fe-client-image-container # Đặt tên cho container ở đây
+    image: fe-client-image # Đặt tên cho image
     ports:
-      - "82:82"
+      - "80:80"
     environment:
       - TZ=Asia/Ho_Chi_Minh
     volumes:
       - .:/app
       - /app/node_modules
+    networks:
+      - aloper-prod_default # Liên kết với mạng đã tồn tại
+
+networks:
+  aloper-prod_default: # Sử dụng mạng external
+    external: true
