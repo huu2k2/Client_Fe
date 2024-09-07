@@ -31,11 +31,23 @@
 # # Command to run the Nginx server
 # CMD ["nginx", "-g", "daemon off;"]
 
+# Use the official Node.js image as the base image
 FROM node:20.12.2 as build
- 
+
+# Set working directory
 WORKDIR /app
-COPY package.json /app
-RUN yarn install
+
+# Copy package.json and yarn.lock to the container
+COPY package.json yarn.lock /app/
+
+# Install dependencies using yarn
+RUN yarn install --frozen-lockfile
+
+# Copy the rest of the application code
 COPY . /app
+
+# Expose the port the app runs on
 EXPOSE 9000
+
+# Command to start the app
 CMD ["yarn", "dev"]
