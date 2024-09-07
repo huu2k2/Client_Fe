@@ -34,17 +34,23 @@
 # Use the official Node.js image as the base image
 FROM node:20.12.2 as build
 
-# Set working directory
-ENV NODE_ENV development
-# Add a work directory
+# Thiết lập thư mục làm việc trong container
 WORKDIR /app
-# Cache and Install dependencies
-COPY package.json .
-COPY yarn.lock .
+
+# Sao chép file package.json và yarn.lock vào container
+COPY package.json yarn.lock ./
+
+# Cài đặt các package của ứng dụng
 RUN yarn install
-# Copy app files
+
+# Sao chép toàn bộ mã nguồn vào container
 COPY . .
-# Expose port
-EXPOSE 9000
-# Start the app
-CMD [ "yarn", "start" ]
+
+# Build ứng dụng React
+RUN yarn build
+
+# Expose cổng chạy ứng dụng
+EXPOSE 3000
+
+# Khởi chạy ứng dụng
+CMD ["yarn", "start"]
