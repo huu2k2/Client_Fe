@@ -49,8 +49,8 @@ COPY . .
 # Build ứng dụng React
 RUN yarn build
 
-# Expose cổng chạy ứng dụng
-EXPOSE 3000
+# # Expose cổng chạy ứng dụng
+# EXPOSE 3000
 
 # Khởi chạy ứng dụng
 CMD ["yarn", "dev"]
