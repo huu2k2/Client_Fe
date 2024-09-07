@@ -35,19 +35,16 @@
 FROM node:20.12.2 as build
 
 # Set working directory
+ENV NODE_ENV development
+# Add a work directory
 WORKDIR /app
-
-# Copy package.json and yarn.lock to the container
-COPY package.json yarn.lock /app/
-
-# Install dependencies using yarn
-RUN yarn install --frozen-lockfile
-
-# Copy the rest of the application code
-COPY . /app
-
-# Expose the port the app runs on
+# Cache and Install dependencies
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install
+# Copy app files
+COPY . .
+# Expose port
 EXPOSE 9000
-
-# Command to start the app
-CMD ["yarn", "run", "start"]
+# Start the app
+CMD [ "yarn", "start" ]
