@@ -33,8 +33,6 @@
 
 # Use the official Node.js image as the base image
 FROM node:20.12.2 as build
-# Sử dụng image Node.js chính thức
-
 
 # Thiết lập thư mục làm việc trong container
 WORKDIR /app
@@ -48,25 +46,10 @@ RUN yarn install
 # Sao chép toàn bộ mã nguồn vào container
 COPY . .
 
-# Build ứng dụng cho môi trường sản phẩm
-RUN yarn build
+# Mở cổng mặc định của Vite (3000)
+EXPOSE 9000
 
-# Giai đoạn chạy
-FROM node:20.12.2-alpine
-
-# Thiết lập thư mục làm việc trong container
-WORKDIR /app
-
-# Sao chép các file build từ giai đoạn build vào thư mục làm việc
-COPY --from=build /app/dist /app/dist
-
-# Cài đặt serve để phục vụ các file tĩnh
-RUN yarn global add serve
-
-# Mở cổng mặc định của serve (5000)
-EXPOSE 5000
-
-# Lệnh để chạy serve
-CMD ["serve", "-s", "dist", "-l", "5000"]
+# Lệnh để chạy ứng dụng Vite trong môi trường development
+CMD ["yarn", "dev", "--host"]
 
 
