@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - TZ=Asia/Ho_Chi_Minh
-      - NODE_ENV=development
+      # - NODE_ENV=development
     volumes:
       - .:/app
       - /app/node_modules
