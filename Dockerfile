@@ -33,14 +33,9 @@
 
 FROM node:20.12.2 as build
  
-WORKDIR /usr/src/app
- 
-COPY package*.json ./
- 
-RUN npm install
- 
-COPY . .
- 
+WORKDIR /app
+COPY package.json /app
+RUN yarn install
+COPY . /app
 EXPOSE 9000
- 
-CMD [ "yarn", "dev" ]
+CMD ["yarn", "run", "start"]
