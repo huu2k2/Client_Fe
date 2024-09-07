@@ -47,7 +47,7 @@ RUN yarn install
 COPY . .
 
 # Mở cổng mặc định của Vite (3000)
-EXPOSE 3000
+EXPOSE 9000
 
 # Lệnh để chạy ứng dụng Vite trong môi trường development
 CMD ["yarn", "dev", "--host"]

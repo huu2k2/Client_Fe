@@ -11,17 +11,11 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    # ports:
-    #   - 9000:9000
     command: yarn dev --host
     networks:
-      - test-net # Liên kết với mạng đã tồn tại
+      - aloper-prod_default # Liên kết với mạng đã tồn tại
 
-
-# networks:
-#   aloper-prod_default: # Sử dụng mạng external
-#     external: true
 
 networks:
-  test-net:
+  aloper-prod_default: # Sử dụng mạng external
     external: true
