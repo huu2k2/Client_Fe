@@ -50,4 +50,4 @@ COPY . /app
 EXPOSE 9000
 
 # Command to start the app
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
