@@ -16,17 +16,17 @@ COPY . .
 # Build the React application
 RUN yarn build
 
-# Use an official Nginx runtime as a parent image
-FROM nginx:alpine
+# # Use an official Nginx runtime as a parent image
+# FROM nginx:alpine
 
-# Copy the built React application from the build stage
-COPY --from=build /app/dist /usr/share/nginx/html
+# # Copy the built React application from the build stage
+# COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy the custom Nginx configuration file to the container
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# # Copy the custom Nginx configuration file to the container
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80 to the outside world
-EXPOSE 82
+EXPOSE 80
 
 # Command to run the Nginx server
 CMD ["nginx", "-g", "daemon off;"]

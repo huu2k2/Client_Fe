@@ -4,8 +4,10 @@ import Profile from "../Profile/index";
 import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet";
-import ImgLogo from './../../assets/logo1.png'
+import { useSocket } from "../../customHooks/SocketContext";
+import { decodeToken } from "../../utils/GetIdAuth";
 const Index = () => {
+  const socket = useSocket();
   if (
     !sessionStorage.getItem("token") ||
     sessionStorage.getItem("token")?.split(".").length !== 3
@@ -14,13 +16,18 @@ const Index = () => {
   }
   const [isShow, setShow] = useState(false);
   const { pathname } = useLocation();
-
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [pathname]);
+  useEffect(()=>{
+    socket.emit('register',decodeToken(sessionStorage.getItem('token')).Id)
+    return ()=>{
+      socket.off("register")
+    }
+  },[socket])
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">
@@ -33,10 +40,7 @@ const Index = () => {
             content="Phòng trọ giá rẻ tại Aloper"
           />
           <meta property="og:image" content={"http://aloper.fun/logo192.png"} />
-          <meta
-            property="og:url"
-            content={`http://aloper.fun:82`}
-          />
+          <meta property="og:url" content={`http://aloper.fun:82`} />
           <meta property="og:type" content="website" />
         </Helmet>
         {isShow && <Profile setShow={setShow} />}

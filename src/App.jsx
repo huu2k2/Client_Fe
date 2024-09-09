@@ -5,7 +5,8 @@ import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
 import { requestNotificationPermission } from "./helper/NotificationPermission";
 import InfomationHook from "./customHooks/InfomationHook";
- 
+import { SocketProvider } from "./customHooks/SocketContext";
+
 function App() {
   const [isLoading, _] = useIsLoading();
   useEffect(() => {
@@ -22,9 +23,11 @@ function App() {
           className="z-[200]"
         />
       )}
-      <InfomationHook>
-        <RouterProvider router={routers} />
-      </InfomationHook>
+      <SocketProvider>
+        <InfomationHook>
+          <RouterProvider router={routers} />
+        </InfomationHook>
+      </SocketProvider>
     </>
   );
 }

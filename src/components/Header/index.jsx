@@ -23,7 +23,7 @@ const GroudButton = () => {
   );
 };
 
-const index = ({ isShow = null, setShow = null }) => {
+const Index = ({ isShow = null, setShow = null }) => {
   const handleRemoveFilter = useClickRemoveFilter();
   const handleLogout = () => {
     sessionStorage.removeItem("token");
@@ -36,7 +36,7 @@ const index = ({ isShow = null, setShow = null }) => {
   };
 
   return (
-    <div className=" px-10 md:px-0 w-full h-[64px] bg-black flex justify-center items-center grow shrink m">
+    <div className="px-10 md:px-0 w-full h-[64px] bg-black flex justify-center items-center grow shrink">
       <div className="w-full lg:w-[1360px] px-2 h-full flex justify-between items-center">
         <div onClick={handleLinkClick}>
           <img
@@ -48,12 +48,9 @@ const index = ({ isShow = null, setShow = null }) => {
 
         <div className="w-[316px] h-[38px] gap-6 flex items-center justify-end">
           {/* info */}
-
           {sessionStorage.getItem("token") ? (
             <>
-              <div className="w-fit h-full gap-3 flex items-center z-[50]">
-                 <Notification/>
-
+              <div className="w-fit h-full gap-3 flex items-center z-[10]">
                 <Link
                   to={"/quan_ly_lich_hen"}
                   className="p-[7px] cursor-pointer"
@@ -66,6 +63,7 @@ const index = ({ isShow = null, setShow = null }) => {
                 >
                   <FaFileContract className="text-white rounded w-6 h-6" />
                 </Link>
+                <Notification />
               </div>
               <div className="group relative dropdown dropdown-end">
                 {/* Avatar */}
@@ -80,28 +78,26 @@ const index = ({ isShow = null, setShow = null }) => {
                     className="cursor-pointer"
                   />
                 </div>
-                <div>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52 mt-3"
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-20 menu p-2 shadow bg-base-100 rounded-lg w-52 mt-3"
+                >
+                  <li
+                    onClick={() => setShow(!isShow)}
+                    className="cursor-pointer text-base"
                   >
-                    <li
-                      onClick={() => setShow(!isShow)}
-                      className="cursor-pointer text-base"
-                    >
-                      <span>Thông tin tài khoản</span>
-                    </li>
-                    <li className="cursor-pointer text-base">
-                      <Link to={"/danh_sach_phong_yeu_thich"}>Yêu thích</Link>
-                    </li>
-                    <li
-                      onClick={handleLogout}
-                      className="cursor-pointer text-base"
-                    >
-                      <span>Đăng xuất</span>
-                    </li>
-                  </ul>
-                </div>
+                    <span>Thông tin tài khoản</span>
+                  </li>
+                  <li className="cursor-pointer text-base">
+                    <Link to={"/danh_sach_phong_yeu_thich"}>Yêu thích</Link>
+                  </li>
+                  <li
+                    onClick={handleLogout}
+                    className="cursor-pointer text-base"
+                  >
+                    <span>Đăng xuất</span>
+                  </li>
+                </ul>
               </div>
             </>
           ) : (
@@ -113,4 +109,4 @@ const index = ({ isShow = null, setShow = null }) => {
   );
 };
 
-export default index;
+export default Index;

@@ -7,6 +7,7 @@ import store from "./store";
 import { ShowLoadingCustomHook } from "@customhooks";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <ShowLoadingCustomHook className="z-[100]">

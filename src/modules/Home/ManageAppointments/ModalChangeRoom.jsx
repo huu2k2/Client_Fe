@@ -60,17 +60,16 @@ const ModalChangeRoom = ({ houseId, roomCode, scheduleId }) => {
           <select
             className="select select-bordered w-full max-w-xs"
             onChange={handleChangeSelect}
+            value={roomid || ""}
           >
-            <option disabled selected value="">
+            <option disabled value="">
               P.{roomCode}
             </option>
             {ListRooms &&
               ListRooms.map((i, index) => (
-                <option
-                  key={index}
-                  value={i.roomId}
-                  label={`P.${i.roomCode}`}
-                ></option>
+                <option key={index} value={i.roomId}>
+                  P.{i.roomCode}
+                </option>
               ))}
           </select>
         </div>

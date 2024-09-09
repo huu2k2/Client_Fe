@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useDeferredValue,
   useRef,
+  useLayoutEffect,
 } from "react";
 import { useGetRoomsFilterMutation } from "@apis/slice/rooms";
 import { useIsLoading } from "./ShowLoadingCustomHook";
@@ -46,7 +47,7 @@ export const FilterCustomHook = ({ children }) => {
     setIsLoading(isLoading);
   }, [isLoading]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const controller = new AbortController();
     const fetchData = async () => {
       try {

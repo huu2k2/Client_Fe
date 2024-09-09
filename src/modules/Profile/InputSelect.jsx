@@ -1,6 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import { useGetBankQuery } from "@apis/slice/Bank";
+const useGetBankQuery = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL_BANK; // Lấy biến môi trường
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/banks`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch banks');
+        }
+
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // Chạy một lần khi component mount
+
+  return { data, loading, error };
+};
+
 
 const customStyles = {
   control: (provided) => ({
@@ -65,12 +95,12 @@ const InputSelect = ({ label, setFormData, variable }) => {
   };
 
   return (
-    <div className="w-full gap-4 flex justify-start items-center">
+    <div className="w-full gap-4 flex justify-start items-center z-50">
       <span className="w-[180px] h-5 not-italic text-sm font-medium text-gray-900">Ngân hàng</span>
       <Select
         name="bank"
         styles={customStyles}
-        className="w-[312px]"
+        className="w-[312px] max-h-[200px]"
         value={selectedOption}
         options={options}
         onChange={handleSelectChange}

@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCreateDepositPaymentLinkFirstMutation } from "../../apis/slice/Bank";
 import { useIsLoading } from "../../customHooks";
 
 function Payment({ id, setIsPayment }) {
     const [_,setLoading] = useIsLoading()
-//   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+    const countRef = useRef(600)
+  const [timeLeft, setTimeLeft] = useState(countRef.current); // 10 minutes in seconds
   const [createPayment, { data: paymentData, isLoading, isError }] =
     useCreateDepositPaymentLinkFirstMutation();
   useEffect(() => {
     createPayment(id);
   }, [id, createPayment]);
 
-//   useEffect(() => {
-//     // Countdown timer logic
-//     if (timeLeft > 0) {
-//       const timer = setTimeout(() => {
-//         setTimeLeft(timeLeft - 1);
-//       }, 1000);
-//       return () => clearTimeout(timer);
-//     } else {
-//       // Action when the timer reaches 0
-//       // You might want to redirect or show a message here.
-//     }
-//   }, [timeLeft]);
+  useEffect(() => {
+    // Countdown timer logic
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => {
+        countRef.current=timeLeft - 1
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      // Action when the timer reaches 0
+      // You might want to redirect or show a message here.
+    }
+  }, [timeLeft]);
 
-//   const formatTime = (seconds) => {
-//     const minutes = Math.floor(seconds / 60);
-//     const remainingSeconds = seconds % 60;
-//     return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-//   };
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
 
    useEffect(()=>{
     setLoading(isLoading)
@@ -53,11 +55,11 @@ function Payment({ id, setIsPayment }) {
             X
           </button>
         </div>
-        {/* <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full">
           <p className="text-rose-600">
-            Thời gian còn lại: {formatTime(timeLeft)}
+            Thời gian còn lại: {formatTime(countRef.current)}
           </p>
-        </div> */}
+        </div>
         <p className="font-bold text-[20px] text-gray-600">
           <strong className="font-normal">Chủ tài khoản: </strong>Trần Quốc Tài
         </p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { usePostLoginMutation } from "@apis/slice/Acount";
 import LoadingSpinner from "@components/CustomLoading/LoadingSpinner";
-
 const schema = yup
   .object({
     userName: yup
@@ -26,42 +25,49 @@ const schema = yup
 const FormLogin = () => {
   const navigate = useNavigate();
   // check token changepage to home
-  useEffect(()=>{
-if(sessionStorage.getItem('token')?.split('.') && sessionStorage.getItem('token')?.split('.')?.length==3){
-  navigate('/')
-}
-  },[])
+  useEffect(() => {
+    if (
+      sessionStorage.getItem("token")?.split(".") &&
+      sessionStorage.getItem("token")?.split(".")?.length == 3
+    ) {
+      navigate("/");
+    }
+  }, []);
   //
-  
+
   const {
     register,
     handleSubmit,
-    formState: { errors },setValue
+    formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const [postLogin, { isLoading, error, data }] = usePostLoginMutation();
-  let saveAcount =JSON.parse(sessionStorage.getItem('rememberedUser'))
-  useEffect(()=>{
-    
-    if(saveAcount){
-      setValue('userName',saveAcount.userName)
-      setValue('password',saveAcount.password)
+  let saveAcount = JSON.parse(sessionStorage.getItem("rememberedUser"));
+  useEffect(() => {
+    if (saveAcount) {
+      setValue("userName", saveAcount.userName);
+      setValue("password", saveAcount.password);
     }
-  },[saveAcount])
+  }, [saveAcount]);
+
   const onSubmit = async (data) => {
-    
-    if(data.remeber ){
-      sessionStorage.setItem('rememberedUser', JSON.stringify({ userName :data.userName, password :data.password}));
-    }else{
-      sessionStorage.removeItem('rememberedUser');
+    if (data.remeber) {
+      sessionStorage.setItem(
+        "rememberedUser",
+        JSON.stringify({ userName: data.userName, password: data.password })
+      );
+    } else {
+      sessionStorage.removeItem("rememberedUser");
     }
     const response = await postLogin(data);
- 
-    if (response?.data?.isSuccess ) {
+
+    if (response?.data?.isSuccess) {
       sessionStorage.setItem("token", response.data.token);
       const redirectUrl = sessionStorage.getItem("redirectAfterLogin");
+
       if (redirectUrl) {
         sessionStorage.removeItem("redirectAfterLogin");
         navigate(redirectUrl);

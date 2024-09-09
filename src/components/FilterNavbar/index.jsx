@@ -6,15 +6,9 @@ import TypeRoom from "./FilterTypeRoomDropdown";
 import FilterStatusDropdow from "./FilterStatusDropdow";
 import FilterPriceDropDow from "./FilterPriceDropDow";
 import FilterAdd from "./FilterAdd";
-import {
-  useQueryFilterData,
-  useClickRemoveFilter,
-} from "@customhooks";
+import { useQueryFilterData, useClickRemoveFilter } from "@customhooks";
 import { debounce } from "@utils";
-import {
-  useGetHouseNameQuery,
-  usePostVeriPWMutation,
-} from "../../apis/slice/Houses";
+import { useGetHouseNameQuery, usePostVeriPWMutation } from "../../apis/slice/Houses";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import ImgLock from "../../assets/lock.png";
 import { toast } from "react-toastify";
@@ -108,7 +102,7 @@ const FilterNavbar = ({ setOption }) => {
   };
 
   return (
-    <div className="w-fit h-fit px-5 lg:px-0  lg:h-[70px] py-4 gap-2 flex items-center justify-start flex-wrap">
+    <div className="w-fit h-fit px-5 lg:px-0 lg:h-[70px] py-4 gap-2 flex items-center justify-start flex-wrap">
       <div className="flex w-[362px] h-[44px] cursor-pointer px-[13px] py-[9px] items-center gap-2 rounded-[6px] border relative border-gray-300 shadow-sm bg-white">
         <AiOutlineSearch className="w-5 h-5 text-[#888]" />
         <div className="relative mt-4 h-full w-full">
@@ -130,15 +124,17 @@ const FilterNavbar = ({ setOption }) => {
                     className="flex justify-between items-center w-full px-2"
                     key={index}
                   >
-                    <p
-                      onClick={() => handlePickOption(option)}
-                      className="w-[90%] pl-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
-                    >
-                      {option.houseName}
-                    </p>
-                    {option.isExclusive && (
-                      <img src={ImgLock} className="w-5 h-5" alt="lock icon" />
-                    )}
+                    <div className="flex justify-between w-[90%] items-center">
+                      <span
+                        onClick={() => handlePickOption(option)}
+                        className="w-full pl-4 py-3 rounded-md hover:after:w-full cursor-pointer relative after:content-[''] after:bg-rose-500 after:w-0 after:h-1 after:absolute after:left-0 after:duration-200 after:bottom-0"
+                      >
+                        {option.houseName}
+                      </span>
+                      {option.isExclusive && (
+                        <img src={ImgLock} className="w-5 h-5" alt="lock icon" />
+                      )}
+                    </div>
                   </div>
                 ))
               ) : (
@@ -172,19 +168,13 @@ const FilterNavbar = ({ setOption }) => {
       >
         <RiDeleteBin6Line className="w-5 h-5 text-white" />
       </div>
-      {/* my modal */}
 
       <dialog id="modal_oclock_main" className="modal z-10" ref={modalRef}>
         <div className="modal-box">
           <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
-          <h3 className="font-bold text-lg">
-            Bạn hãy nhập mật khẩu của nhà độc quyền!
-          </h3>
+          <h3 className="font-bold text-lg">Bạn hãy nhập mật khẩu của nhà độc quyền!</h3>
           <input
             type="text"
             placeholder=""

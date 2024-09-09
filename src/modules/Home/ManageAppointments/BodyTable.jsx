@@ -16,12 +16,13 @@ import { convertDateToISO } from "../../../utils/ConverDate";
 import SearchInput from "../../../components/BaseInput/SearchInput";
 import { useIsLoading } from "@customhooks";
 import { useSetInfo } from "../../../customHooks";
+ 
 const BodyTable = ({ isShow, setIsShow }) => {
-  const [getInfo, setInfo]= useSetInfo()
+  const [getInfo, setInfo] = useSetInfo();
   const now = new Date();
   const formattedDate = format(now, "dd/MM/yyyy", { locale: vi });
   const [date, setDate] = useState([formattedDate]);
-const [_,setLoading] = useIsLoading()
+  const [_, setLoading] = useIsLoading();
   const refOfModel = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -59,22 +60,39 @@ const [_,setLoading] = useIsLoading()
   const totalPagesMemo = useMemo(
     () =>
       data?.response?.totalPages ? data?.response?.totalPages : totalPages,
-    [data,getTextSearch]
+    [data, getTextSearch]
   );
   const totalItemsMemo = useMemo(
     () => (data?.response?.items ? data?.response?.items?.length : totalItems),
-    [data, date,getTextSearch]
+    [data, date, getTextSearch]
   );
 
   useEffect(() => {
     setTotalPages(totalPagesMemo);
     setTotalItems(totalItemsMemo);
-  }, [data, date,getTextSearch]);
+  }, [data, date, getTextSearch]);
 
-   useEffect(()=>{
-    setLoading(isLoading)
-   },[isLoading])
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
+  // ==========================
+  
 
+  // Lắng nghe sự kiện nhận thông báo
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket.on("notification", (data) => {
+  //       alert(
+  //         `Notification from user ${data.senderId}: ${JSON.parse(JSON.stringify(data.message))}`
+  //       );
+  //     });
+
+  //     return () => {
+  //       socket.off("notification");
+  //     };
+  //   }
+  // }, [socket]);
+  // ==========================
   return (
     <div className="w-full lg:max-w-[1360px] mx-auto flex-col justify-start items-center gap-4 flex">
       <div className="flex justify-start items-start gap-4 relative flex-wrap w-full">
@@ -105,7 +123,12 @@ const [_,setLoading] = useIsLoading()
         </div>
         {/* search */}
 
-        <SearchInput data={data} setListData={setListData} setTextSearch={setTextSearch} getTextSearch={getTextSearch}/>
+        <SearchInput
+          data={data}
+          setListData={setListData}
+          setTextSearch={setTextSearch}
+          getTextSearch={getTextSearch}
+        />
         {/* end */}
       </div>
 
@@ -248,6 +271,7 @@ const [_,setLoading] = useIsLoading()
                               Đặt cọc
                             </label>
                           </li>
+                          
                         </ul>
                       </div>
                     </td>

@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useCallback,
   useTransition,
+  useLayoutEffect,
 } from "react";
 import CartRoom from "../Cart_item";
 import {
@@ -59,7 +60,7 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     return x; // Ensure the object is returned
   }, [id, money, category, datadistrict, findDistrictId]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isFirstLoad) {
       setIsFirstLoad(false);
 
@@ -83,11 +84,11 @@ const Index = ({ id, money, address, category, faveritedata, option }) => {
     }
   }, [location.pathname, money, address, id]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsLoading(isLoading);
   }, [isLoading]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     startTransition(() => {
       if (option?.selectedOption && data?.response) {
         const filteredRooms = data.response.filter(

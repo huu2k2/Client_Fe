@@ -103,7 +103,7 @@ if(img){
         {type==="show"?<button
           type="button"
           onClick={() => document.getElementById("my_modal_1").showModal()}
-          className={`text-white w-full ${count===0?"bg-black":"bg-rose-600 border-rose-600 hover:bg-rose-700"}  border  focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2`}
+          className={`text-white w-full ${count===0?"bg-black":"bg-rose-600 border-rose-600 hover:bg-rose-700"}  border  focus:outline-none  focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2 ml-2`}
         >
          { count===0? "Chưa tạo chữ kí" :"Đã tạo chữ ký"}
         </button> :<></>}

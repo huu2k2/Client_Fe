@@ -15,6 +15,8 @@ import { useIsLoading } from "@customhooks";
 import { useInfoOfNotification, useSetInfo, useSetTotalReduce } from "../../../../customHooks";
 import RowTotalFinal from "./RowTotalFinal";
 import Payment from "../../../../components/Modal/Payment";
+import { decodeToken } from "../../../../utils/GetIdAuth";
+import { useSocket } from "../../../../customHooks/SocketContext";
 
 function coverDate(dateString) {
   const date = new Date(dateString);
@@ -83,6 +85,25 @@ const SideBar = () => {
     }
   };
   const [dataInfo,setDataInfo,countInfo,setCountInfo] = useInfoOfNotification();
+  // socket 
+  const socket = useSocket();
+
+  // Hàm gửi thông báo
+  const handleSendNotification = (receiverID,payload) => {
+    const token = sessionStorage.getItem("token");
+    const decodedToken = decodeToken(token);
+
+    if (decodedToken && decodedToken.Id) {
+      socket.emit(
+        "notification",
+        decodedToken.Id,
+        receiverID,
+        JSON.stringify(payload)
+      );
+    } else {
+      console.error("Invalid token or ID");
+    }
+  };
   const onSubmit = async (data) => {
     setIsLoading(true);
     setValue("chuongTrinhUuDai", "");
@@ -123,6 +144,7 @@ const SideBar = () => {
           setIsLoading(false);
         }
         console.log("kq", furnitureInserts, serviceInserts)
+        
         setDataInfo([
 
           { type: "DATCOC", roomcode:data.roomCode, address: data.houseAddress, time: format(new Date(), 'HH:mm, dd/MM/yyyy') },
