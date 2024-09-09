@@ -1,17 +1,20 @@
 services:
-  react-app:
-    container_name: REACTCLIENT
+  react-moigioi:
+    container_name: react-moigioi
+    image: react-moigioi
     build:
       context: .
       dockerfile: Dockerfile
-    image: fe-client-image # Đặt tên cho image
     environment:
       - TZ=Asia/Ho_Chi_Minh
+      - NODE_ENV=development
     volumes:
       - .:/app
       - /app/node_modules
+    command: yarn dev --host
     networks:
       - aloper-prod_default # Liên kết với mạng đã tồn tại
+
 
 networks:
   aloper-prod_default: # Sử dụng mạng external
