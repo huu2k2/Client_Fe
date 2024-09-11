@@ -23,10 +23,11 @@ function App() {
           className="z-[200]"
         />
       )}
+      <h1>Hello</h1>
       {/* <SocketProvider> */}
-        <InfomationHook>
+        {/* <InfomationHook>
           <RouterProvider router={routers} />
-        </InfomationHook>
+        </InfomationHook> */}
       {/* </SocketProvider> */}
     </>
   );
