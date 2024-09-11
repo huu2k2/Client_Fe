@@ -25,11 +25,11 @@ function App() {
       )}
  
       {/* <SocketProvider> */}
-        {/* <InfomationHook>
+        <InfomationHook>
           <RouterProvider router={routers} />
-        </InfomationHook> */}
+        </InfomationHook>
       {/* </SocketProvider> */}
-      <RouterProvider router={routers} />;
+ 
     </>
   );
 }
