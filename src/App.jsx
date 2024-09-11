@@ -4,7 +4,7 @@ import { useIsLoading } from "@customhooks";
 import { BarLoader } from "react-spinners";
 // import { useEffect } from "react";
 // import { requestNotificationPermission } from "./helper/NotificationPermission";
-// import InfomationHook from "./customHooks/InfomationHook";
+import InfomationHook from "./customHooks/InfomationHook";
 // import { SocketProvider } from "./customHooks/SocketContext";
  
 function App() {
