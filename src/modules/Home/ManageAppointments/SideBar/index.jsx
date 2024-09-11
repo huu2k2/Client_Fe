@@ -16,7 +16,7 @@ import { useInfoOfNotification, useSetInfo, useSetTotalReduce } from "../../../.
 import RowTotalFinal from "./RowTotalFinal";
 import Payment from "../../../../components/Modal/Payment";
 import { decodeToken } from "../../../../utils/GetIdAuth";
-import { useSocket } from "../../../../customHooks/SocketContext";
+// import { useSocket } from "../../../../customHooks/SocketContext";
 
 function coverDate(dateString) {
   const date = new Date(dateString);
@@ -86,23 +86,23 @@ const SideBar = () => {
   };
   const [dataInfo,setDataInfo,countInfo,setCountInfo] = useInfoOfNotification();
   // socket 
-  const socket = useSocket();
+  // const socket = useSocket();
 
   // Hàm gửi thông báo
   const handleSendNotification = (receiverID,payload) => {
     const token = sessionStorage.getItem("token");
     const decodedToken = decodeToken(token);
 
-    if (decodedToken && decodedToken.Id) {
-      socket.emit(
-        "notification",
-        decodedToken.Id,
-        receiverID,
-        JSON.stringify(payload)
-      );
-    } else {
-      console.error("Invalid token or ID");
-    }
+    // if (decodedToken && decodedToken.Id) {
+    //   socket.emit(
+    //     "notification",
+    //     decodedToken.Id,
+    //     receiverID,
+    //     JSON.stringify(payload)
+    //   );
+    // } else {
+    //   console.error("Invalid token or ID");
+    // }
   };
   const onSubmit = async (data) => {
     setIsLoading(true);

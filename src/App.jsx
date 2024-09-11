@@ -3,15 +3,15 @@ import { routers } from "./modules/router";
 import { useIsLoading } from "@customhooks";
 import { BarLoader } from "react-spinners";
 import { useEffect } from "react";
-import { requestNotificationPermission } from "./helper/NotificationPermission";
+// import { requestNotificationPermission } from "./helper/NotificationPermission";
 import InfomationHook from "./customHooks/InfomationHook";
-import { SocketProvider } from "./customHooks/SocketContext";
+// import { SocketProvider } from "./customHooks/SocketContext";
 
 function App() {
   const [isLoading, _] = useIsLoading();
-  useEffect(() => {
-    requestNotificationPermission();
-  }, []);
+  // useEffect(() => {
+  //   requestNotificationPermission();
+  // }, []);
   return (
     <>
       {isLoading && (
@@ -23,11 +23,11 @@ function App() {
           className="z-[200]"
         />
       )}
-      <SocketProvider>
+      {/* <SocketProvider> */}
         <InfomationHook>
           <RouterProvider router={routers} />
         </InfomationHook>
-      </SocketProvider>
+      {/* </SocketProvider> */}
     </>
   );
 }

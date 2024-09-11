@@ -4,10 +4,10 @@ import Profile from "../Profile/index";
 import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet";
-import { useSocket } from "../../customHooks/SocketContext";
+// import { useSocket } from "../../customHooks/SocketContext";
 import { decodeToken } from "../../utils/GetIdAuth";
 const Index = () => {
-  const socket = useSocket();
+  // const socket = useSocket();
   if (
     !sessionStorage.getItem("token") ||
     sessionStorage.getItem("token")?.split(".").length !== 3
@@ -22,12 +22,12 @@ const Index = () => {
       behavior: "smooth",
     });
   }, [pathname]);
-  useEffect(()=>{
-    socket.emit('register',decodeToken(sessionStorage.getItem('token')).Id)
-    return ()=>{
-      socket.off("register")
-    }
-  },[socket])
+  // useEffect(()=>{
+  //   socket.emit('register',decodeToken(sessionStorage.getItem('token')).Id)
+  //   return ()=>{
+  //     socket.off("register")
+  //   }
+  // },[socket])
   return (
     <p>
       <div className="  w-full h-fit custom-scrollbar">
