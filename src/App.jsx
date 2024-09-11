@@ -2,7 +2,7 @@ import { RouterProvider } from "react-router-dom";
 import { routers } from "./modules/router";
 import { useIsLoading } from "@customhooks";
 import { BarLoader } from "react-spinners";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 // import { requestNotificationPermission } from "./helper/NotificationPermission";
 import InfomationHook from "./customHooks/InfomationHook";
 // import { SocketProvider } from "./customHooks/SocketContext";
@@ -25,9 +25,9 @@ function App() {
       )}
       <h1>Hello</h1>
       {/* <SocketProvider> */}
-        {/* <InfomationHook>
+        <InfomationHook>
           <RouterProvider router={routers} />
-        </InfomationHook> */}
+        </InfomationHook>
       {/* </SocketProvider> */}
     </>
   );

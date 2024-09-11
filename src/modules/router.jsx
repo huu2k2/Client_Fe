@@ -10,7 +10,7 @@ export const routers = createBrowserRouter([
   RouterPage404,
   RouterRegister,
   RouterLogin,
-  RouterHome,
-  RouterPageOverviewHome,
+  // RouterHome,
+  // RouterPageOverviewHome,
  
 ]);
