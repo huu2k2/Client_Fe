@@ -15,7 +15,7 @@ import { useIsLoading } from "@customhooks";
 import { useInfoOfNotification, useSetInfo, useSetTotalReduce } from "../../../../customHooks";
 import RowTotalFinal from "./RowTotalFinal";
 import Payment from "../../../../components/Modal/Payment";
-import { decodeToken } from "../../../../utils/GetIdAuth";
+// import { decodeToken } from "../../../../utils/GetIdAuth";
 // import { useSocket } from "../../../../customHooks/SocketContext";
 
 function coverDate(dateString) {
