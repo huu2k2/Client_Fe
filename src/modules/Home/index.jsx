@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet";
 // import { useSocket } from "../../customHooks/SocketContext";
-import { decodeToken } from "../../utils/GetIdAuth";
+// import { decodeToken } from "../../utils/GetIdAuth";
 const Index = () => {
   // const socket = useSocket();
   if (
