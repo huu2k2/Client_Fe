@@ -155,7 +155,7 @@ const SideBar = () => {
         console.log("looix")
       }
     } catch (error) {
-      toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
+      // toast.error("Có lỗi xảy ra khi gửi dữ liệu.");
       console.log(error);
     } finally {
       setIsLoading(false);

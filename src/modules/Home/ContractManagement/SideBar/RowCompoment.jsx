@@ -130,11 +130,9 @@ useEffect(()=>{
       }));
 
       setOptions(Data || []);
-
       if (name === "roomId" && !valueOptions) {
         setValue("roomId", getInfo.id);
       }
-
     }
   }, [data, getInfo, name, setValue, valueOptions]);
 

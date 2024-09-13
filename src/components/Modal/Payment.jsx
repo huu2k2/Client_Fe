@@ -77,7 +77,7 @@ function Payment({ id, setIsPayment }) {
           <div className="text-right text-gray-600 mb-4 flex justify-between items-center">
             <p className="font-bold text-[25px] text-[#2D6BB8]">
               <strong className="font-normal text-black">Số tiền: </strong>
-              {paymentData.response.data.Amount} VND
+              {(paymentData.response.data.Amount).toLocaleString("vi-VN")} VND
             </p>
           </div>
           <div className="flex gap-1">
