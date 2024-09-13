@@ -6,6 +6,9 @@ import path from "path";
 export default defineConfig({
   
   plugins: [react()],
+  build: {
+    outDir: 'dist'
+  },
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "./src/components"),
